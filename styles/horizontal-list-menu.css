@@ -1,0 +1,16 @@
+.horizontal-list-menu {
+	list-style: none;
+	list-style-type: none;
+	padding: 0 20px;
+	margin: 0;
+	line-height: 26px;
+}
+
+.horizontal-list-menu li {
+	display: inline-block;
+	padding-right: 10px;
+}
+
+.horizontal-list-menu li.pull-right {
+	padding-right: 0px;
+}
