@@ -6,9 +6,14 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,400italic,700italic,300italic' rel='stylesheet' type='text/css'>
 
         <link rel="stylesheet" href="styles/normalize.css">
+        <link rel="stylesheet" href="styles/clearfix.css">
+        <link rel="stylesheet" href="styles/vertical-menu.css">
         <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/box.css">
+        <link rel="stylesheet" href="styles/comment.css">
         <script src="behaviour/vendor/modernizr-2.8.3.min.js"></script>
     </head>
     <body>
@@ -17,9 +22,66 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p>Hello world! This is Fergus Ruston's website.</p>
+        <section class="full-height introduction">
+            <div class="introduction-content">
+                <h1>Hi! My name's Fergus Ruston.</h1>
+                <p>I like building functional and usable interfaces.</p>
+            </div>
+        </section>
 
+        <section class="full-height examples">
+
+            <h2 class="section-title">comment component</h2>
+
+            <div id="comment-example"></div>
+
+        </section>
+
+        <script src="behaviour/vendor/react.js"></script>
+        <script src="behaviour/vendor/react-dom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
         <script src="behaviour/main.js"></script>
+
+        <script type="text/babel">
+            
+            var Comment = React.createClass({
+                
+                getInitialState: function() {
+                    return {
+                        username: 'ergusto',
+                        text: 'Comment text that lasts a lot longer than this...',
+                        createdAt: '12 minutes ago',
+                        shouldShowReplyForm: false,
+                    };
+                },
+                
+                render: function() {
+                    return (
+                        <li className="comment-item box">
+                            <header className="comment-item-header clearfix">
+                                <p className="muted"><small>{this.state.username}</small></p>
+                            </header>
+                            <div className="comment-item-body">
+                                <p>{this.state.text}</p>
+                            </div>
+                            <footer className="comment-item-footer clearfix">
+                                <ul className="vertical-text-menu muted">
+                                    <li className="pull-right">{this.state.createdAt}</li>
+                                    <li><a href="#" onClick={this.reply}>reply</a></li>
+                                </ul>
+                            </footer>
+                        </li>
+                    );
+                },
+
+            });
+
+            ReactDOM.render(
+                <Comment />,
+                document.getElementById('comment-example')
+            );
+
+        </script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

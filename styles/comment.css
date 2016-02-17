@@ -1,0 +1,35 @@
+#comment-example {
+	width: 100%;
+	padding: 0 20px;
+}
+
+.comment-item {
+	list-style-type: none;
+	list-style: none;
+	display: block;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.comment-item-header {
+	padding: 10px 20px 0;
+}
+
+.comment-item-body {
+	padding: 10px 20px 15px;
+}
+
+.comment-item-footer {
+	background: #f8f8f8;
+	border-top: 1px solid #ddd;
+	font-size: 80%;
+}
+
+.comment-item-footer a {
+	text-decoration: none;
+}
+
+.comment-item p {
+	margin: 0;
+	padding: 0;
+}
