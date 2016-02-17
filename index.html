@@ -43,34 +43,53 @@
         <script src="behaviour/main.js"></script>
 
         <script type="text/babel">
+
+            var CommentForm = React.createClass({
+
+                render: function() {
+                    <p>FUCK YEAH</p>
+                }
+
+            });
             
             var Comment = React.createClass({
                 
                 getInitialState: function() {
                     return {
                         username: 'ergusto',
-                        text: 'Comment text that lasts a lot longer than this...',
+                        text: 'Comment text that could be just about anything...',
                         createdAt: '12 minutes ago',
-                        shouldShowReplyForm: false,
+                        shouldShowReplyForm: true,
                     };
+                },
+
+                reply: function(event) {
+                    event.preventDefault();
                 },
                 
                 render: function() {
+                    var replyFormComponent;
+                    const shouldShowReplyForm = this.state.shouldShowReplyForm;
+                    if (shouldShowReplyForm) {
+                        replyFormComponent = <CommentForm />;
+                    }
                     return (
-                        <li className="comment-item box">
-                            <header className="comment-item-header clearfix">
-                                <p className="muted"><small>{this.state.username}</small></p>
-                            </header>
-                            <div className="comment-item-body">
-                                <p>{this.state.text}</p>
+                        <div>
+                            <div className="comment-item box">
+                                <header className="comment-item-header clearfix">
+                                    <p className="muted"><small>{this.state.username}</small></p>
+                                </header>
+                                <div className="comment-item-body">
+                                    <p>{this.state.text}</p>
+                                </div>
+                                <footer className="comment-item-footer clearfix">
+                                    <ul className="vertical-text-menu muted">
+                                        <li className="pull-right">{this.state.createdAt}</li>
+                                        <li><a href="#" onClick={this.reply}>reply</a></li>
+                                    </ul>
+                                </footer>
                             </div>
-                            <footer className="comment-item-footer clearfix">
-                                <ul className="vertical-text-menu muted">
-                                    <li className="pull-right">{this.state.createdAt}</li>
-                                    <li><a href="#" onClick={this.reply}>reply</a></li>
-                                </ul>
-                            </footer>
-                        </li>
+                        </div>
                     );
                 },
 
