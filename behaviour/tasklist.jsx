@@ -36,7 +36,7 @@ class Tasks {
 		this.broadcast();
 	}
 
-	registerChangeCallback(callback, id) {
+	register(callback, id) {
 		if (id) {
 			const callbacks = this.callbacks[id] || [];
 			callbacks.push(callback);
@@ -88,7 +88,7 @@ class TaskList extends React.Component {
 
 	constructor(props) {
 		super(props);
-		props.tasks.registerChangeCallback(this.forceUpdate.bind(this));
+		props.tasks.register(this.forceUpdate.bind(this));
 	}
 
 	clickHandler(id, event) {
@@ -104,7 +104,7 @@ class TaskList extends React.Component {
 		if (tasks.length) {
 			content = tasks.map(function(task) {
 				return (
-					<li key={task.id} onClick={component.clickHandler.bind(component, task.id)}>{task.title}</li>
+					<li key={task.id}><a href="#" onClick={component.clickHandler.bind(component, task.id)}>{task.title}</a></li>
 				);
 			});
 		} else {
@@ -125,15 +125,22 @@ class TaskDetail extends React.Component {
 	removeHandler(event) {
 		event.preventDefault();
 		this.props.tasks.removeTask(this.props.task.id);
-		this.props.clearActiveTask.call();
+		this.props.clearActiveTask();
 	}
 
 	render() {
 		const task = this.props.task;
+
+		var body;
+
+		if (task.text) {
+			body = (<p>{task.text}</p>)
+		}
+
 		return (
 			<div className="task-detail">
 				<h1>{task.title}</h1>
-				<p>{task.text}</p>
+				{body}
 				<div className="task-detail-controls">
 					<a href="#" className="btn" onClick={this.removeHandler.bind(this)}>remove</a>
 				</div>
@@ -148,7 +155,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 
-		props.tasks.registerChangeCallback(this.forceUpdate.bind(this));
+		props.tasks.register(this.forceUpdate.bind(this));
 
 		this.state = {};
 		this.state.shouldShowNewTaskForm = true;

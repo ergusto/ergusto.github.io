@@ -20,6 +20,14 @@ a {
 	color: inherit;
 }
 
+.hidden {
+	display: none;
+}
+
+.invisible {
+	visibility: hidden;
+}
+
 .muted {
 	color: #777;
 }

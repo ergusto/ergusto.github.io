@@ -53,10 +53,14 @@
 	margin-top: 10px;
 }
 
-.task-list li:hover {
-	cursor: pointer;
-}
-
 .task-list li:first-child {
 	margin-top: 0px;
+}
+
+.task-list a {
+	text-decoration: none;
+}
+
+.task-list a:hover {
+	color: white;
 }
