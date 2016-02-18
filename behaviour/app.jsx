@@ -6,7 +6,7 @@ const CommentForm = React.createClass({
 	},
 
 	submit: function(event) {
-		console.log(event);
+		event.preventDefault();
 		this.cancel();
 	},
 
