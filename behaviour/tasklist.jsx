@@ -52,17 +52,17 @@ class TaskForm extends React.Component {
 
 class TaskList extends React.Component {
 
-	clickHandler(event, id) {
+	clickHandler(id, event) {
 		event.preventDefault();
-		this.props.setActiveTask(id)
+		this.props.setActiveTask(id);
 	} 
 
 	render() {
-		const list = this;
+		const component = this;
 		const tasks = this.props.tasks.getTasks();
 		const taskItems = tasks.map(function(task) {
 			return (
-				<li key={task.id} onClick={list.clickHandler.bind(list, task.id)}>{task.title}</li>
+				<li key={task.id} onClick={component.clickHandler.bind(component, task.id)}>{task.title}</li>
 			);
 		});
 
