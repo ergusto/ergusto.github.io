@@ -54,6 +54,7 @@ a {
 
 .full-height {
 	min-height: 100vh;
+	padding: 20px;
 	-moz-align-items: center;
 	-webkit-align-items: center;
 	-ms-align-items: center;
@@ -83,10 +84,6 @@ a {
 .introduction h1, .introduction p {
 	color: white;
 	margin: 0;
-}
-
-.introduction-content {
-	padding: 0 20px;
 }
 
 .example {
