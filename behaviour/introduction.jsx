@@ -5,22 +5,36 @@ class Introduction extends React.Component {
 		
 		setTimeout(function() {
 
-			component.refs.namef1.classList.add('hidden');
-				component.refs.nameu1.classList.add('invisible');
-					component.refs.names1.classList.add('invisible');
+			component.refs.namef1.classList.add('black');
+
+			setTimeout(function() {
+				component.refs.nameu1.classList.add('black');
+
+				setTimeout(function() {
+					component.refs.names1.classList.add('black');
 
 					setTimeout(function() {
-						component.refs.namer2.classList.add('invisible');
-							component.refs.namen1.classList.add('hidden');
+						component.refs.namer2.classList.add('black');
+
+						setTimeout(function() {
+							component.refs.namen1.classList.add('black');
 
 							setTimeout(function() {
+								component.refs.namef1.classList.add('hidden');
 								component.refs.nameu1.classList.add('hidden');
 								component.refs.names1.classList.add('hidden');
 								component.refs.namer2.classList.add('hidden');
+								component.refs.namen1.classList.add('hidden');
 
-							}, 500);
+							}, 1000);
 
-			}, 500);
+						}, 700);
+
+					}, 700);
+
+				}, 700);
+
+			}, 700);
 
 		}, 1000);
 
