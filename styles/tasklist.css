@@ -10,7 +10,7 @@
 
 .tasklist-sidebar {
 	width: 40%;
-	background: rgb(55, 61, 64);
+	background: #373D40;
 	color: rgb(177, 180, 182);
 	padding: 20px;
 }
@@ -23,6 +23,7 @@
 .tasklist-content {
 	width: 60%;
 	padding: 20px;
+	color: #373D40;
 }
 
 .tasklist-content p {

@@ -2,18 +2,24 @@ class Tasks {
 
 	constructor() {
 		this.tasks = {};
-		this.count = 0;
+		this.callbacks = {};
+		this.callbacks.main = [];
+		this.idCount = 0;
 	}
 
-	addTask(title) {
-		this.count++;
+	addTask(title, text) {
+		this.idCount++;
 		const task = {};
 		
-		task.id = this.count;
+		task.id = this.idCount;
 		task.title = title;
 		task.completed = false;
+		task.text = text || '';
 		
 		this.tasks[task.id] = task;
+
+		this.broadcast(task, task.id);
+
 		return task;
 	}
 
@@ -27,33 +33,51 @@ class Tasks {
 
 	removeTask(id) {
 		delete this.tasks[id];
+		this.broadcast();
+	}
+
+	registerChangeCallback(callback, id) {
+		if (id) {
+			const callbacks = this.callbacks[id] || [];
+			callbacks.push(callback);
+			this.callbacks[id] = callbacks;
+		} else {
+			this.callbacks.main.push(callback);
+		}
+	}
+
+	broadcast(item, id) {
+		const callbacks = id ? this.callbacks[id] || [] : this.callbacks.main;
+		for (let i = 0, l = callbacks.length; i < l; i++) {
+			callbacks[i].call(this, item);
+		}
 	}
 
 }
 
 class TaskForm extends React.Component {
 
-	cancelHandler(event) {
-		event.preventDefault();
-		this.props.hideForm();
-	}
-
 	submitHandler(event) {
 		event.preventDefault();
-		const title = this.refs.taskinput.value;
-		const task = this.props.tasks.addTask(title);
-		this.props.hideForm();
-		this.props.setActiveTask(task.id);
+		const title = this.refs.taskTitleInput.value;
+		const text = this.refs.taskTextInput.value;
+		if (title.trim().length) {
+			const task = this.props.tasks.addTask(title, text);
+			this.props.setActiveTask(task.id);
+		}
 	}
 
 	render() {
 
 		return (
-			<form onSubmit={this.submitHandler.bind(this)} className="task-form">
-				<input ref="taskinput" placeholder="task" className="field" name="title" />
-				<a onClick={this.submitHandler.bind(this)} className="btn" href="#">submit</a>
-				<a onClick={this.cancelHandler.bind(this)} className="btn" href="#">cancel</a>
-			</form>
+			<div className="task-form">
+				<h3>new task</h3>
+				<form onSubmit={this.submitHandler.bind(this)} className="task-form">
+					<input ref="taskTitleInput" placeholder="task" className="field" name="title" />
+	            	<textarea ref="taskTextInput" placeholder="text" className="field" name="text"></textarea>
+					<a onClick={this.submitHandler.bind(this)} className="btn" href="#">submit</a>
+				</form>
+			</div>
 		)
 
 	}
@@ -61,6 +85,11 @@ class TaskForm extends React.Component {
 }
 
 class TaskList extends React.Component {
+
+	constructor(props) {
+		super(props);
+		props.tasks.registerChangeCallback(this.forceUpdate.bind(this));
+	}
 
 	clickHandler(id, event) {
 		event.preventDefault();
@@ -85,11 +114,19 @@ class TaskList extends React.Component {
 
 class TaskDetail extends React.Component {
 
+	removeHandler(event) {
+		event.preventDefault();
+		this.props.tasks.removeTask(this.props.task.id);
+		this.props.clearActiveTask.call();
+	}
+
 	render() {
 		const task = this.props.task;
 		return (
 			<div className="task-detail">
 				<h1>{task.title}</h1>
+				<p>{task.text}</p>
+				<a href="#" className="btn" onClick={this.removeHandler.bind(this)}>remove</a>
 			</div>
 		)
 	}
@@ -100,6 +137,8 @@ class App extends React.Component {
 
 	constructor(props) {
 		super(props);
+
+		props.tasks.registerChangeCallback(this.forceUpdate.bind(this));
 
 		this.state = {};
 		this.state.shouldShowNewTaskForm = true;
@@ -138,11 +177,11 @@ class App extends React.Component {
 		var content;
 
 		if (this.state.shouldShowNewTaskForm) {
-			content = <TaskForm tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} hideForm={this.hideNewTaskForm.bind(this)} />
+			content = <TaskForm tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} />
 		} else {
 			if (this.state.activeTaskId) {
 				const task = this.props.tasks.getTask(this.state.activeTaskId);
-				content = <TaskDetail task={task} />
+				content = <TaskDetail task={task} tasks={this.props.tasks} clearActiveTask={this.clearActiveTask.bind(this)} />
 			} else {
 
 			}
@@ -171,8 +210,8 @@ class App extends React.Component {
 
 const tasks = new Tasks();
 
-tasks.addTask('Get the groceries');
-tasks.addTask('Clean the bathroom');
+tasks.addTask('Get the groceries', 'Some peas, some toothpaste, and some fish stockings.');
+tasks.addTask('Clean the bathroom', 'It\'s dirty!');
 
 function renderTodoListComponent() {
 
