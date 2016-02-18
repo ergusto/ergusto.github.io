@@ -78,14 +78,27 @@ const Comment = React.createClass({
     	this.showEditForm();
     },
 
+    deleteHandler: function(event) {
+    	event.preventDefault();
+    	this.removeFromDOM();
+    	setTimeout(function() {
+    		renderCommentComponent();
+    	}, 1000)
+    },
+
     changeComment: function(comment) {
     	this.setState({
     		comment: comment,
     	});
     },
+
+    removeFromDOM: function() {
+    	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(this).parentNode);
+    },
     
     render: function() {
         const comment = this.state.comment.length ? this.state.comment : this.props.comment.comment;
+        const date = moment(this.props.comment.createdAt).fromNow();
         return (
             <div>
                 <div className="comment-item box">
@@ -97,10 +110,10 @@ const Comment = React.createClass({
                     </div>
                     <footer className="comment-item-footer clearfix">
                         <ul className="horizontal-list-menu muted">
-                            <li className="pull-right">{this.props.comment.createdAt}</li>
+                            <li className="pull-right">{date}</li>
                             <li><a href="#" onClick={this.replyHandler}>reply</a></li>
                             <li><a href="#" onClick={this.editHandler}>edit</a></li>
-                            <li><a href="#" onClick={this.remove}>delete</a></li>
+                            <li><a href="#" onClick={this.deleteHandler}>delete</a></li>
                         </ul>
                     </footer>
                 </div>
@@ -116,10 +129,16 @@ const Comment = React.createClass({
 const comment = {
     username: 'ergusto',
     comment: 'Comment text that could be just about anything...',
-    createdAt: '12 minutes ago',
+    createdAt: new Date(),
 };
 
-ReactDOM.render(
-    <Comment comment={comment} />,
-    document.getElementById('comment-example')
-);
+function renderCommentComponent() {
+
+	ReactDOM.render(
+	    <Comment comment={comment} />,
+	    document.getElementById('comment-example')
+	);
+
+}
+
+renderCommentComponent();
