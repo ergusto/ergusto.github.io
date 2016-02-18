@@ -14,10 +14,19 @@ class Tasks {
 		task.completed = false;
 		
 		this.tasks[task.id] = task;
+		return task;
 	}
 
 	getTasks() {
 		return Object.keys(this.tasks).map(key => this.tasks[key]);
+	}
+
+	getTask(id) {
+		return this.tasks[id];
+	}
+
+	removeTask(id) {
+		delete this.tasks[id];
 	}
 
 }
@@ -32,8 +41,9 @@ class TaskForm extends React.Component {
 	submitHandler(event) {
 		event.preventDefault();
 		const title = this.refs.taskinput.value;
-		this.props.tasks.addTask(title);
+		const task = this.props.tasks.addTask(title);
 		this.props.hideForm();
+		this.props.setActiveTask(task.id);
 	}
 
 	render() {
@@ -73,17 +83,31 @@ class TaskList extends React.Component {
 
 }
 
+class TaskDetail extends React.Component {
+
+	render() {
+		const task = this.props.task;
+		return (
+			<div className="task-detail">
+				<h1>{task.title}</h1>
+			</div>
+		)
+	}
+
+}
+
 class App extends React.Component {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {};
-		this.state.shouldShowNewTaskForm = false;
+		this.state.shouldShowNewTaskForm = true;
 		this.state.activeTaskId = null;
 	}
 
 	setActiveTask(id) {
+		this.hideNewTaskForm();
 		this.setState({
 			activeTaskId: id,
 		});
@@ -114,9 +138,14 @@ class App extends React.Component {
 		var content;
 
 		if (this.state.shouldShowNewTaskForm) {
-			content = <TaskForm tasks={this.props.tasks} hideForm={this.hideNewTaskForm.bind(this)} />
+			content = <TaskForm tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} hideForm={this.hideNewTaskForm.bind(this)} />
 		} else {
+			if (this.state.activeTaskId) {
+				const task = this.props.tasks.getTask(this.state.activeTaskId);
+				content = <TaskDetail task={task} />
+			} else {
 
+			}
 		}
 
 		return (
