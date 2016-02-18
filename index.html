@@ -11,12 +11,14 @@
         <link rel="stylesheet" href="styles/normalize.css">
         <link rel="stylesheet" href="styles/clearfix.css">
         <link rel="stylesheet" href="styles/forms.css">
+        <link rel="stylesheet" href="styles/flexcolumns.css">
         <link rel="stylesheet" href="styles/buttons.css">
-        <link rel="stylesheet" href="styles/horizontal-list-menu.css">
+        <link rel="stylesheet" href="styles/horizontallistmenu.css">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/box.css">
         <link rel="stylesheet" href="styles/comment.css">
-        <link rel="stylesheet" href="styles/comment-form.css">
+        <link rel="stylesheet" href="styles/commentform.css">
+        <link rel="stylesheet" href="styles/todolist.css">
     </head>
     <body>
         <section class="full-height introduction">
@@ -32,11 +34,18 @@
 
         </section>
 
+        <section class="full-height todolist-example">
+
+            <div id="todolist-example" class="example"></div>
+
+        </section>
+
         <script src="behaviour/vendor/react.js"></script>
         <script src="behaviour/vendor/react-dom.js"></script>
         <script src="behaviour/vendor/babel.js"></script>
         <script src="behaviour/vendor/moment.js"></script>
-        <script type="text/babel" src="behaviour/app.jsx"></script>
+        <script type="text/babel" src="behaviour/comment.jsx"></script>
+        <script type="text/babel" src="behaviour/todolist.jsx"></script>
 
     </body>
 </html>

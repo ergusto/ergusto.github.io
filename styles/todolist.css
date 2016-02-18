@@ -1,0 +1,41 @@
+.todolist {
+	width: 100%;
+	max-width: 800px;
+	background: white;
+	padding: 0;
+	margin: 0 auto;
+	min-height: 600px;
+	box-shadow: 0 4px 4px rgba( 0, 0, 0, .2 );
+}
+
+.todolist-sidebar {
+	width: 40%;
+	background: rgb(55, 61, 64);
+	color: rgb(177, 180, 182);
+	padding: 20px;
+}
+
+.todolist-sidebar h3 {
+	display: inline-block;
+	margin: 0;
+}
+
+.todolist-content {
+	width: 60%;
+	padding: 20px;
+}
+
+.todolist-content p {
+	margin: 0;
+}
+
+.plus-btn {
+	display: block;
+	text-decoration: none;
+	font-size: 150%;
+	line-height: 22px;
+}
+
+.plus-btn:hover {
+	color: white;
+}
