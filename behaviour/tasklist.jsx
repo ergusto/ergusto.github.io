@@ -18,7 +18,7 @@ class Tasks {
 		
 		this.tasks[task.id] = task;
 
-		this.broadcast(task, task.id);
+		this.broadcast(task);
 
 		return task;
 	}
@@ -46,8 +46,8 @@ class Tasks {
 		}
 	}
 
-	broadcast(item, id) {
-		const callbacks = id ? this.callbacks[id] || [] : this.callbacks.main;
+	broadcast(item) {
+		const callbacks = item ? this.callbacks[item.id] || [] : this.callbacks.main;
 		for (let i = 0, l = callbacks.length; i < l; i++) {
 			callbacks[i].call(this, item);
 		}
@@ -99,14 +99,22 @@ class TaskList extends React.Component {
 	render() {
 		const component = this;
 		const tasks = this.props.tasks.getTasks();
-		const taskItems = tasks.map(function(task) {
-			return (
-				<li key={task.id} onClick={component.clickHandler.bind(component, task.id)}>{task.title}</li>
-			);
-		});
+		let content;
+
+		if (tasks.length) {
+			content = tasks.map(function(task) {
+				return (
+					<li key={task.id} onClick={component.clickHandler.bind(component, task.id)}>{task.title}</li>
+				);
+			});
+		} else {
+			content = (
+				<li>No tasks!</li>
+			)
+		}
 
 		return (
-			<ul className="task-list">{taskItems}</ul>
+			<ul className="task-list">{content}</ul>
 		)
 	}
 
@@ -126,7 +134,9 @@ class TaskDetail extends React.Component {
 			<div className="task-detail">
 				<h1>{task.title}</h1>
 				<p>{task.text}</p>
-				<a href="#" className="btn" onClick={this.removeHandler.bind(this)}>remove</a>
+				<div className="task-detail-controls">
+					<a href="#" className="btn" onClick={this.removeHandler.bind(this)}>remove</a>
+				</div>
 			</div>
 		)
 	}
@@ -183,7 +193,7 @@ class App extends React.Component {
 				const task = this.props.tasks.getTask(this.state.activeTaskId);
 				content = <TaskDetail task={task} tasks={this.props.tasks} clearActiveTask={this.clearActiveTask.bind(this)} />
 			} else {
-
+				content = (<div><p>No task selected</p></div>);
 			}
 		}
 
