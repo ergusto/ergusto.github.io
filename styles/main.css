@@ -73,19 +73,13 @@ a {
 .section-title {
 	position: absolute;
 	color: #777;
-	margin-left: 20px;
 }
 
 .introduction {
 	background: #4696e5;
-	color: #d0e4f8;
+	color: white;
 }
 
 .introduction h1, .introduction p {
-	color: white;
 	margin: 0;
-}
-
-.example {
-	height: 100vh;
 }

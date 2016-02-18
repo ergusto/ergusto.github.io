@@ -2,8 +2,8 @@ class CommentForm extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {};
         const commentValue = this.props.commentValue || '';
+		this.state = {};
         this.state.commentLength = commentValue.length;
 
 		// http://stackoverflow.com/a/31362350/4566267
@@ -26,7 +26,8 @@ class CommentForm extends React.Component {
 
 	changeHandler(event) {
 		this.setState({
-			commentLength: event.target.value.length});
+			commentLength: event.target.value.length
+		});
 	}
 
     render() {
@@ -41,8 +42,10 @@ class CommentForm extends React.Component {
             	<span className="fieldCount pull-right">{this.state.commentLength}</span>
             	<label httmlFor="comment"><small>{formTitle}</small></label>
             	<textarea onChange={this.changeHandler.bind(this)} ref="commentInput" className="field" name="comment" defaultValue={commentValue}></textarea>
-            	<input type="submit" value="submit" className="btn"></input>
-                <a className="btn" href="#" onClick={this.cancelHandler.bind(this)}>cancel</a>
+            	<div className="btn-group">
+	            	<input type="submit" value="submit" className="btn"></input>
+	                <a className="btn" href="#" onClick={this.cancelHandler.bind(this)}>cancel</a>
+	            </div>
             </form>
         )
     }

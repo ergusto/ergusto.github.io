@@ -14,3 +14,7 @@
 .horizontal-list-menu li.pull-right {
 	padding-right: 0px;
 }
+
+.horizontal-list-menu a:hover {
+	color: black;
+}
