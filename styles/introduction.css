@@ -9,8 +9,15 @@
 }
 
 .introduction h1 {
-	font-size: 6vw;
+	font-size: 4vw;
 	margin-bottom: 10px;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+	.introduction h1 {
+		font-size: 10vw;
+		margin-bottom: 10px;
+	}
 }
 
 .introduction-content {
