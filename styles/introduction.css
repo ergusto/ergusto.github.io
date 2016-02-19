@@ -5,15 +5,16 @@
 
 .introduction h1, .introduction p {
 	margin: 0;
+	text-align: center;
 }
 
 .introduction h1 {
-	font-size: 2.5rem;
+	font-size: 6vw;
 	margin-bottom: 10px;
 }
 
 .introduction-content {
-	width: 370px;
+	width: 100%;
 }
 
 .name-tofadein {
