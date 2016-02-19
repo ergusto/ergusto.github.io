@@ -24,10 +24,15 @@ class CommentForm extends React.Component {
 		this.props.hideForm();
 	}
 
-	changeHandler(event) {
+	setCommentLength(length) {
+		var length = length || this.refs.commentInput.value.length;
 		this.setState({
-			commentLength: event.target.value.length
+			commentLength: length,
 		});
+	}
+
+	changeHandler() {
+		this.setCommentLength();
 	}
 
     render() {
@@ -109,7 +114,7 @@ class Comment extends React.Component {
     	this.removeFromDOM();
     	setTimeout(function() {
     		renderCommentComponent();
-    	}, 1000)
+    	}, 3000)
     }
 
     changeComment(comment) {
@@ -154,7 +159,7 @@ class Comment extends React.Component {
 
 Comment.defaultProps = {
     username: 'ergusto',
-    comment: 'Comment text that could be just about anything...',
+    comment: 'This site showcases some of the things I have created. Most examples are interactive. Try editing this comment.',
     createdAt: new Date(),
 };
 

@@ -26,17 +26,17 @@ class Introduction extends React.Component {
 								component.refs.namer2.classList.add('hidden');
 								component.refs.namen1.classList.add('hidden');
 
-							}, 1000);
+							}, 600);
 
-						}, 700);
+						}, 400);
 
-					}, 700);
+					}, 400);
 
-				}, 700);
+				}, 400);
 
-			}, 700);
+			}, 400);
 
-		}, 1000);
+		}, 2000);
 
 	}
 
