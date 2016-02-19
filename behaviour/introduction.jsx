@@ -46,7 +46,7 @@ class Introduction extends React.Component {
 										setTimeout(function() {
 											document.body.classList.remove('hide-overflow');
 											document.body.removeEventListener('touchmove', prevent);
-										}, 800);
+										}, 750);
 									}, 800);
 
 								}, 0);
