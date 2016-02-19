@@ -58,6 +58,11 @@ class Introduction extends React.Component {
 
 	componentDidMount() {
 		const component = this;
+		
+		document.querySelector('.hide-overflow').addEventListener('touchmove', function(event) {
+			event.preventDefault();
+		});
+		
 		setTimeout(function() {
 			component.fergusToErgusto();
 		}, 800);
