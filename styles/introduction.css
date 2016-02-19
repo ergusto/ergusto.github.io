@@ -1,5 +1,19 @@
+.introduction {
+	background: #4696e5;
+	color: white;
+}
+
+.introduction h1, .introduction p {
+	margin: 0;
+}
+
+.introduction h1 {
+	font-size: 3rem;
+	margin-bottom: 10px;
+}
+
 .introduction-content {
-	width: 450px;
+	width: 370px;
 }
 
 .name-tofadein {
