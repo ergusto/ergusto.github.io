@@ -24,11 +24,14 @@ class Introduction extends React.Component {
 								Velocity(refs.names1, { opacity: 0 });
 								Velocity(refs.namer2, { opacity: 0 });
 								Velocity(refs.namen1, { opacity: 0 }, function() {
-									Velocity(refs.namef1, { opacity: 0 }, { display: 'none' });
-									Velocity(refs.nameu1, { opacity: 0 }, { display: 'none' });
-									Velocity(refs.names1, { opacity: 0 }, { display: 'none' });
-									Velocity(refs.namer2, { opacity: 0 }, { display: 'none' });
-									Velocity(refs.namen1, { opacity: 0 }, { display: 'none' });
+
+									setTimeout(function() {
+										Velocity(refs.namef1, { opacity: 0 }, { display: 'none' });
+										Velocity(refs.nameu1, { opacity: 0 }, { display: 'none' });
+										Velocity(refs.names1, { opacity: 0 }, { display: 'none' });
+										Velocity(refs.namer2, { opacity: 0 }, { display: 'none' });
+										Velocity(refs.namen1, { opacity: 0 }, { display: 'none' });
+									}, 300);
 								});
 
 							}, 700);
@@ -41,7 +44,7 @@ class Introduction extends React.Component {
 
 			}, 400);
 
-		}, 1000);
+		}, 700);
 
 	}
 
