@@ -1,8 +1,12 @@
 .introduction-content {
-	width: 440px;
+	width: 450px;
 }
 
 .name-tofadein {
 	display: none;
 	opacity: 0;
+}
+
+.name span {
+	display: inline-block;
 }
