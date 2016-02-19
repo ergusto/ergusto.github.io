@@ -20,6 +20,13 @@
 	margin: 0;
 }
 
+.tasklist-content h3 {
+	margin: 0;
+	margin-bottom: 10px;
+	padding-bottom: 9px;
+	border-bottom: 1px solid black;
+}
+
 .tasklist-content {
 	width: 60%;
 	padding: 20px;
@@ -63,4 +70,8 @@
 
 .task-list a:hover {
 	color: white;
+}
+
+.remove-task {
+	line-height: 14px;
 }

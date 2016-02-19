@@ -1,8 +1,13 @@
-.task-detail h1 {
-	margin: 0;
-	margin-bottom: 10px;
+.task-detail {
+	display: block;
+	min-height: 100%;
 }
 
 .task-detail-controls {
 	margin-top: 10px;
+}
+
+.task-detail-body {
+	min-height: 25%;
+	display: block;
 }

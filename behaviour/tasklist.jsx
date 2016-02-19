@@ -47,10 +47,11 @@ class Tasks {
 	}
 
 	broadcast(item) {
+		const tasks = this;
 		const callbacks = item ? this.callbacks[item.id] || [] : this.callbacks.main;
-		for (let i = 0, l = callbacks.length; i < l; i++) {
-			callbacks[i].call(this, item);
-		}
+		callbacks.forEach(function(callback) {
+			callback.call(tasks, item);
+		});
 	}
 
 }
@@ -124,6 +125,12 @@ class TaskList extends React.Component {
 		this.props.setActiveTask(id);
 	} 
 
+	removeHandler(id, event) {
+		event.preventDefault();
+		this.props.tasks.removeTask(id);
+		this.props.clearActiveTask();
+	}
+
 	render() {
 		const component = this;
 		const tasks = this.props.tasks.getTasks();
@@ -132,7 +139,7 @@ class TaskList extends React.Component {
 		if (tasks.length) {
 			content = tasks.map(function(task) {
 				return (
-					<li key={task.id}><a href="#" onClick={component.clickHandler.bind(component, task.id)}>{task.title}</a></li>
+					<li key={task.id}><a href="#" onClick={component.clickHandler.bind(component, task.id)}>{task.title}</a> <a onClick={component.removeHandler.bind(component, task.id)} href="#" className="pull-right remove-task">x</a></li>
 				);
 			});
 		} else {
@@ -150,12 +157,6 @@ class TaskList extends React.Component {
 
 class TaskDetail extends React.Component {
 
-	removeHandler(event) {
-		event.preventDefault();
-		this.props.tasks.removeTask(this.props.task.id);
-		this.props.clearActiveTask();
-	}
-
 	render() {
 		const task = this.props.task;
 
@@ -167,10 +168,9 @@ class TaskDetail extends React.Component {
 
 		return (
 			<div className="task-detail">
-				<h1>{task.title}</h1>
-				{body}
-				<div className="task-detail-controls">
-					<a href="#" className="btn" onClick={this.removeHandler.bind(this)}>remove</a>
+				<h3>{task.title}</h3>
+				<div className="task-detail-body">
+					{body}
 				</div>
 			</div>
 		)
@@ -226,7 +226,7 @@ class App extends React.Component {
 		} else {
 			if (this.state.activeTaskId) {
 				const task = this.props.tasks.getTask(this.state.activeTaskId);
-				content = <TaskDetail task={task} tasks={this.props.tasks} clearActiveTask={this.clearActiveTask.bind(this)} />
+				content = <TaskDetail task={task} tasks={this.props.tasks} />
 			} else {
 				content = (<div><p>No task selected</p></div>);
 			}
@@ -239,7 +239,7 @@ class App extends React.Component {
 						<a onClick={this.newTaskHandler.bind(this)} href="#" className="plus-btn pull-right">+</a>
 						<h3>tasks</h3>
 						<hr />
-						<TaskList tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} />
+						<TaskList tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} clearActiveTask={this.clearActiveTask.bind(this)} />
 					</div>
 				</div>
 				<div className="tasklist-content flex-col">
