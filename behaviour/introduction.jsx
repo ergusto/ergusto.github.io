@@ -1,3 +1,9 @@
+const prevent = function(event) {
+	event.preventDefault();
+};
+
+document.body.addEventListener('touchmove', prevent);
+
 class Introduction extends React.Component {
 
 	fergusToErgusto() {
@@ -39,6 +45,7 @@ class Introduction extends React.Component {
 
 										setTimeout(function() {
 											document.body.classList.remove('hide-overflow');
+											document.body.removeEventListener('touchmove', prevent);
 										}, 800);
 									}, 800);
 
@@ -58,11 +65,7 @@ class Introduction extends React.Component {
 
 	componentDidMount() {
 		const component = this;
-		
-		document.querySelector('.hide-overflow').addEventListener('touchmove', function(event) {
-			event.preventDefault();
-		});
-		
+
 		setTimeout(function() {
 			component.fergusToErgusto();
 		}, 800);
