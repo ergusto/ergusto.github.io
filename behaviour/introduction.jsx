@@ -1,5 +1,3 @@
-const showingValues = {fergus: 'fergus', ergusto: 'ergusto'};
-
 class Introduction extends React.Component {
 
 	fergusToErgusto() {
