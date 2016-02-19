@@ -20,6 +20,11 @@ a {
 	color: inherit;
 }
 
+.hide-overflow {
+  	height: 100%;
+	overflow: hidden;
+}
+
 .black {
 	color: black;
 }
