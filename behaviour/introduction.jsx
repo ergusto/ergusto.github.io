@@ -53,7 +53,7 @@ class Introduction extends React.Component {
 		const component = this;
 		setTimeout(function() {
 			component.fergusToErgusto();
-		}, 1000);
+		}, 1700);
 	}
 
 	render() {
