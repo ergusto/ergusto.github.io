@@ -45,7 +45,7 @@ class Introduction extends React.Component {
 
 			}, 400);
 
-		}, 1000);
+		}, 800);
 
 	}
 
@@ -55,7 +55,7 @@ class Introduction extends React.Component {
 				<h1><span>Hi! My name is </span>
                     <span className="name">
                         <span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
-                        <span ref="wordspacer" className="invisible">X</span>
+                        <span ref="wordspacer" className="invisible">i</span>
                         <span className="name-r" ref="namer2"> R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
                     </span>.
                 </h1>
