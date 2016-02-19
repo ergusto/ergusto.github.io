@@ -8,17 +8,18 @@ class Tasks {
 	}
 
 	addTask(title, text) {
-		this.idCount++;
+		const tasks = this;
 		const task = {};
+		tasks.idCount++;
 		
-		task.id = this.idCount;
+		task.id = tasks.idCount;
 		task.title = title;
 		task.completed = false;
 		task.text = text || '';
 		
-		this.tasks[task.id] = task;
+		tasks.tasks[task.id] = task;
 
-		this.broadcast(task);
+		tasks.broadcast(task);
 
 		return task;
 	}
@@ -48,8 +49,13 @@ class Tasks {
 
 	broadcast(item) {
 		const tasks = this;
-		const callbacks = item ? this.callbacks[item.id] || [] : this.callbacks.main;
-		callbacks.forEach(function(callback) {
+		if (item) {
+			const callbacks = tasks.callbacks[item.id] || [];
+			callbacks.forEach(function(callback) {
+				callback.call(tasks, item);
+			});
+		}
+		tasks.callbacks.main.forEach(function(callback) {
 			callback.call(tasks, item);
 		});
 	}

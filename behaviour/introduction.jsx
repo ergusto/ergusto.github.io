@@ -3,6 +3,7 @@ class Introduction extends React.Component {
 	fergusToErgusto() {
 		const component = this;
 		const refs = component.refs;
+		const container = document.querySelector('.introduction');
 
 		Velocity(refs.namef1, { color: '#000' });
 
@@ -33,6 +34,10 @@ class Introduction extends React.Component {
 									Velocity(refs.namer2, { width: 0 }, { display: 'none' });
 									Velocity(refs.namen1, { width: 0 }, { display: 'none' });
 
+									setTimeout(function() {
+										Velocity(container, { 'min-height': '' }, { duration: 800 });
+									}, 800);
+
 								}, 0);
 							});
 
@@ -51,7 +56,7 @@ class Introduction extends React.Component {
 		const component = this;
 		setTimeout(function() {
 			component.fergusToErgusto();
-		}, 1700);
+		}, 1200);
 	}
 
 	render() {
