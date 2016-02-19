@@ -1,3 +1,8 @@
 .introduction-content {
 	width: 440px;
 }
+
+.name-tofadein {
+	display: none;
+	opacity: 0;
+}

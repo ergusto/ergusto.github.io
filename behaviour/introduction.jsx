@@ -1,32 +1,37 @@
 class Introduction extends React.Component {
 
 	componentDidMount() {
-		const component = this;
+		const refs = this.refs;
 		
 		setTimeout(function() {
-
-			component.refs.namef1.classList.add('black');
+			Velocity(refs.namef1, { color: '#000' });
 
 			setTimeout(function() {
-				component.refs.nameu1.classList.add('black');
+				Velocity(refs.nameu1, { color: '#000' });
 
 				setTimeout(function() {
-					component.refs.names1.classList.add('black');
+					Velocity(refs.names1, { color: '#000' });
 
 					setTimeout(function() {
-						component.refs.namer2.classList.add('black');
+						Velocity(refs.namer2, { color: '#000' });
 
 						setTimeout(function() {
-							component.refs.namen1.classList.add('black');
+							Velocity(refs.namen1, { color: '#000' });
 
 							setTimeout(function() {
-								component.refs.namef1.classList.add('hidden');
-								component.refs.nameu1.classList.add('hidden');
-								component.refs.names1.classList.add('hidden');
-								component.refs.namer2.classList.add('hidden');
-								component.refs.namen1.classList.add('hidden');
+								Velocity(refs.namef1, { opacity: 0 });
+								Velocity(refs.nameu1, { opacity: 0 });
+								Velocity(refs.names1, { opacity: 0 });
+								Velocity(refs.namer2, { opacity: 0 });
+								Velocity(refs.namen1, { opacity: 0 }, function() {
+									Velocity(refs.namef1, { opacity: 0 }, { display: 'none' });
+									Velocity(refs.nameu1, { opacity: 0 }, { display: 'none' });
+									Velocity(refs.names1, { opacity: 0 }, { display: 'none' });
+									Velocity(refs.namer2, { opacity: 0 }, { display: 'none' });
+									Velocity(refs.namen1, { opacity: 0 }, { display: 'none' });
+								});
 
-							}, 600);
+							}, 700);
 
 						}, 400);
 
@@ -36,7 +41,7 @@ class Introduction extends React.Component {
 
 			}, 400);
 
-		}, 2000);
+		}, 1000);
 
 	}
 
@@ -44,15 +49,11 @@ class Introduction extends React.Component {
 		return (
 			<div>
 				<h1><span>Hi! My name is </span>
-                    <span className="name">
-                    	<span className="firstName">
-                        	<span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
-                        </span>
+                    <span ref="name1" className="name">
+                        <span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
 
-                        <span className="secondName">
-                        	<span ref="namer2"> R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span> 
-                        </span>
-                    </span>.
+                        <span ref="namer2"> R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
+                    </span><span ref="name2" className="name name-tofadein">ergusto</span>.
                 </h1>
                 <p>I like making things.</p>
             </div>
