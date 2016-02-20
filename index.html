@@ -6,51 +6,28 @@
         <title>ergusto</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,400italic,700italic,300italic' rel='stylesheet' type='text/css'>
 
-        <link rel="stylesheet" href="styles/normalize.css">
-        <link rel="stylesheet" href="styles/clearfix.css">
-        <link rel="stylesheet" href="styles/forms.css">
-        <link rel="stylesheet" href="styles/flexcolumns.css">
-        <link rel="stylesheet" href="styles/buttons.css">
-        <link rel="stylesheet" href="styles/horizontallistmenu.css">
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href="styles/box.css">
-        <link rel="stylesheet" href="styles/introduction.css">
-        <link rel="stylesheet" href="styles/comment.css">
-        <link rel="stylesheet" href="styles/commentlist.css">
-        <link rel="stylesheet" href="styles/commentform.css">
-        <link rel="stylesheet" href="styles/tasklist.css">
-        <link rel="stylesheet" href="styles/taskdetail.css">
-        <link rel="stylesheet" href="styles/taskform.css">
+        <link rel="stylesheet" href="app/styles/normalize.css">
+        <link rel="stylesheet" href="app/styles/clearfix.css">
+        <link rel="stylesheet" href="app/styles/forms.css">
+        <link rel="stylesheet" href="app/styles/flexcolumns.css">
+        <link rel="stylesheet" href="app/styles/buttons.css">
+        <link rel="stylesheet" href="app/styles/horizontallistmenu.css">
+        <link rel="stylesheet" href="app/styles/main.css">
+        <link rel="stylesheet" href="app/styles/box.css">
+        <link rel="stylesheet" href="app/styles/introduction.css">
+        <link rel="stylesheet" href="app/styles/comment.css">
+        <link rel="stylesheet" href="app/styles/commentlist.css">
+        <link rel="stylesheet" href="app/styles/commentform.css">
+        <link rel="stylesheet" href="app/styles/tasklist.css">
+        <link rel="stylesheet" href="app/styles/taskdetail.css">
+        <link rel="stylesheet" href="app/styles/taskform.css">
     </head>
     <body class="hide-overflow">
-        <section class="full-height introduction">
 
-            <div id="introduction" class="introduction-content"></div>
-
-        </section>
-
-        <section class="full-height">
-
-            <div id="comment-example" class="example"></div>
-
-        </section>
-
-        <section class="full-height tasklist-example">
-
-            <div id="tasklist-example" class="example"></div>
-
-        </section>
-
-        <script src="behaviour/vendor/react.js"></script>
-        <script src="behaviour/vendor/react-dom.js"></script>
-        <script src="behaviour/vendor/babel.js"></script>
-        <script src="behaviour/vendor/moment.js"></script>
-        <script src="behaviour/vendor/velocity.js"></script>
-        <script type="text/babel" src="behaviour/introduction.jsx"></script>
-        <script type="text/babel" src="behaviour/comment.jsx"></script>
-        <script type="text/babel" src="behaviour/tasklist.jsx"></script>
+        <div id="container"></div>
+        
+        <script src="build/bundle.js"></script>
 
     </body>
 </html>

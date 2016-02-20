@@ -1,64 +1,5 @@
-class Comments {
-
-	constructor() {
-		this.comments = {};
-		this.callbacks = {};
-		this.callbacks.main = [];
-		this.idCount = 0;
-	}
-
-	addComment(text) {
-		const comments = this;
-		const comment = {};
-		comments.idCount++;
-		
-		comment.id = comments.idCount;
-		comment.text = text;
-		
-		comments.comments[comment.id] = comment;
-
-		comments.broadcast(comment);
-
-		return comment;
-	}
-
-	getComments() {
-		return Object.keys(this.comments).map(key => this.comments[key]);
-	}
-
-	getComment(id) {
-		return this.comments[id];
-	}
-
-	removeComment(id) {
-		delete this.comments[id];
-		this.broadcast();
-	}
-
-	register(callback, id) {
-		if (id) {
-			const callbacks = this.callbacks[id] || [];
-			callbacks.push(callback);
-			this.callbacks[id] = callbacks;
-		} else {
-			this.callbacks.main.push(callback);
-		}
-	}
-
-	broadcast(item) {
-		const comments = this;
-		if (item) {
-			const callbacks = comments.callbacks[item.id] || [];
-			callbacks.forEach(function(callback) {
-				callback.call(comments, item);
-			});
-		}
-		comments.callbacks.main.forEach(function(callback) {
-			callback.call(comments, item);
-		});
-	}
-
-}
+import React from 'react';
+import moment from 'moment';
 
 class CommentForm extends React.Component {
 
@@ -173,7 +114,7 @@ class Comment extends React.Component {
 
     addNewComment(comment) {
     	const component = this;
-    	component.props.comments.addComment(comment);
+    	component.props.comments.add(comment);
     }
 
     changeComment(comment) {
@@ -186,41 +127,48 @@ class Comment extends React.Component {
         const comment = this.state.comment && this.state.comment.length ? this.state.comment : this.props.comment;
         const date = moment(this.props.createdAt).fromNow();
         return (
-            <div>
-                <div className="comment-item box">
-                    <header className="comment-item-header clearfix">
-                        <p className="muted"><small>{this.props.username}</small></p>
-                    </header>
-                    <div className="comment-item-body">
-                        <p>{comment.text}</p>
-                    </div>
-                    <footer className="comment-item-footer clearfix">
-                        <ul className="horizontal-list-menu muted">
-                            <li className="pull-right">{date}</li>
-                            <li><a href="#" onClick={this.replyHandler.bind(this)}>reply</a></li>
-                            <li><a href="#" onClick={this.editHandler.bind(this)}>edit</a></li>
-                        </ul>
-                    </footer>
-                </div>
+        	 <section className="full-height">
 
-                <CommentForm formTitle="reply" shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.addNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
-                <CommentForm {...this.props} formTitle="edit" commentValue={comment} submitCallback={this.changeComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
-            </div>
+	            <div id="comment-example" className="example">
+
+	            	<div className="comment-item box">
+	                    <header className="comment-item-header clearfix">
+	                        <p className="muted"><small>{this.props.username}</small></p>
+	                    </header>
+	                    <div className="comment-item-body">
+	                        <p>{comment.text}</p>
+	                    </div>
+	                    <footer className="comment-item-footer clearfix">
+	                        <ul className="horizontal-list-menu muted">
+	                            <li className="pull-right">{date}</li>
+	                            <li><a href="#" onClick={this.replyHandler.bind(this)}>reply</a></li>
+	                            <li><a href="#" onClick={this.editHandler.bind(this)}>edit</a></li>
+	                        </ul>
+	                    </footer>
+	                </div>
+
+	                <CommentForm formTitle="reply" shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.addNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
+	                <CommentForm {...this.props} formTitle="edit" commentValue={comment} submitCallback={this.changeComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
+
+	            </div>
+
+	        </section>
         );
     }
 
 };
 
-class CommentList extends React.Component {
+export default class CommentListComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
+
 		props.comments.register(this.forceUpdate.bind(this));
 	}
 
 	render() {
 		const component = this;
-		const comments = this.props.comments.getComments();
+		const comments = this.props.comments.get();
 		let content;
 
 		if (comments.length) {
@@ -245,18 +193,3 @@ Comment.defaultProps = {
     comment: commentText,
     createdAt: new Date(),
 };
-
-const comments = new Comments();
-
-comments.addComment(commentText);
-
-function renderCommentComponent() {
-
-	ReactDOM.render(
-	    <CommentList comments={comments} />,
-	    document.getElementById('comment-example')
-	);
-
-}
-
-renderCommentComponent();
