@@ -1,11 +1,13 @@
 .introduction {
 	background: #4696e5;
 	color: white;
+	padding-top: 10px;
 }
 
 .introduction h1, .introduction p {
-	margin: 0;
-	text-align: center;
+	margin: 0 auto;
+	display: block;
+	max-width: 800px;
 }
 
 .introduction h1 {

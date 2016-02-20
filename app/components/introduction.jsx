@@ -49,11 +49,15 @@ export default class IntroductionComponent extends React.Component {
 
 									setTimeout(function() {
 										Velocity(container, { 'min-height': '' }, { duration: 800 });
+										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '2vw' }, { duration: 800 });
+										Velocity(refs.tagline, { 'margin-left': 0 }, { duration: 800 });
 
 										setTimeout(function() {
 											body.classList.remove('hide-overflow');
 											body.removeEventListener('touchmove', prevent);
+
 										}, 750);
+
 									}, 800);
 								});
 							});
@@ -79,14 +83,14 @@ export default class IntroductionComponent extends React.Component {
 
 	            <div id="introduction" className="introduction-content">
 
-	            	<h1 ref="heading">
+	            	<h1 ref="heading" className="introduction-heading">
 	                    <span className="name">
 	                        <span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
 	                        <span ref="wordspacer" className="invisible">i</span>
 	                        <span className="name-r" ref="namer2">R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
 	                    </span>
 	                </h1>
-	                <p>I like making things.</p>
+	                <p ref="tagline" className="introduction-tagline">I like making things.</p>
 
 	            </div>
 
