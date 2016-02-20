@@ -11,8 +11,17 @@
 }
 
 .introduction h1 {
-	font-size: 3rem;
+	font-size: 2.8rem;
 	margin-bottom: 4px;
+}
+
+@media only screen and (min-width : 320px) {
+	.introduction h1, .introduction p {
+		max-width: 230px;
+	}
+	.introduction h1 {
+		font-size: 2rem;        
+	}
 }
 
 .introduction-content {
