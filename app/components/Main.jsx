@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import IntroductionComponent from './introduction.jsx';
-import CommentListComponent from './comment.jsx';
-import TaskManagerComponent from './tasklist.jsx';
+import IntroductionComponent from './introduction/index.jsx';
+import CommentListComponent from './comment/index.jsx';
+import TaskManagerComponent from './tasklist/index.jsx';
 
 import Comments from '../collections/comments.js';
 import Tasks from '../collections/tasks.js';

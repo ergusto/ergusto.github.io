@@ -40,7 +40,6 @@ export default class IntroductionComponent extends React.Component {
 							Velocity(refs.namen1, { opacity: 0 }, function() {
 
 								setTimeout(function() {
-									Velocity(refs.namef1, { width: 0 }, { display: 'none' });
 									Velocity(refs.nameu1, { width: 0 }, { display: 'none' });
 									Velocity(refs.names1, { width: 0 }, { display: 'none' });
 									Velocity(refs.wordspacer, { width: 0 }, { display: 'none' });
@@ -51,6 +50,7 @@ export default class IntroductionComponent extends React.Component {
 										Velocity(container, { 'min-height': '' }, { duration: 800 });
 
 										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800 });
+										Velocity(refs.namef1, { width: 0 }, { display: 'none' });
 
 										setTimeout(function() {
 											body.classList.remove('hide-overflow');
