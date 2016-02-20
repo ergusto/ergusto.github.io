@@ -113,8 +113,7 @@ class Comment extends React.Component {
     }
 
     addNewComment(comment) {
-    	const component = this;
-    	component.props.comments.add(comment);
+    	this.props.comments.add(comment);
     }
 
     changeComment(comment) {
@@ -167,14 +166,13 @@ export default class CommentListComponent extends React.Component {
 	}
 
 	render() {
-		const component = this;
 		const comments = this.props.comments.get();
 		let content;
 
 		if (comments.length) {
-			content = comments.map(function(comment) {
+			content = comments.map((comment) => {
 				return (
-					<Comment key={comment.id} comment={comment} comments={component.props.comments} />
+					<Comment key={comment.id} comment={comment} comments={this.props.comments} />
 				);
 			});
 		}

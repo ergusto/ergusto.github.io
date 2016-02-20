@@ -15,8 +15,7 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	fergusToErgusto() {
-		const component = this;
-		const refs = component.refs;
+		const refs = this.refs;
 		const container = document.querySelector('.introduction');
 
 		Velocity(refs.namef1, { color: '#000' });
@@ -66,16 +65,14 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		const component = this;
 		body.scrollTop = document.documentElement.scrollTop = 0;
 
-		setTimeout(function() {
-			component.fergusToErgusto();
+		setTimeout(() => {
+			this.fergusToErgusto();
 		}, 1500);
 	}
 
 	render() {
-		const component = this;
 		return (
 
 	        <section className="full-height introduction">

@@ -76,14 +76,13 @@ class TaskList extends React.Component {
 	}
 
 	render() {
-		const component = this;
 		const tasks = this.props.tasks.get();
 		let content;
 
 		if (tasks.length) {
-			content = tasks.map(function(task) {
+			content = tasks.map((task) => {
 				return (
-					<li key={task.id}><a href="#" onClick={component.clickHandler.bind(component, task.id)}>{task.title}</a> <a onClick={component.removeHandler.bind(component, task.id)} href="#" className="pull-right remove-task">x</a></li>
+					<li key={task.id}><a href="#" onClick={this.clickHandler.bind(this, task.id)}>{task.title}</a> <a onClick={this.removeHandler.bind(this, task.id)} href="#" className="pull-right remove-task">x</a></li>
 				);
 			});
 		} else {

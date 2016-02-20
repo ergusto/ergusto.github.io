@@ -90,7 +90,11 @@
 
 	var comments = new _comments2.default();
 
-	comments.add({ text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.' });
+	comments.add({
+		text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
+		username: 'ergusto',
+		date: new Date()
+	});
 
 	var tasks = new _tasks2.default();
 
@@ -19777,8 +19781,7 @@
 		_createClass(IntroductionComponent, [{
 			key: 'fergusToErgusto',
 			value: function fergusToErgusto() {
-				var component = this;
-				var refs = component.refs;
+				var refs = this.refs;
 				var container = document.querySelector('.introduction');
 
 				(0, _velocityAnimate2.default)(refs.namef1, { color: '#000' });
@@ -19829,17 +19832,17 @@
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				var component = this;
+				var _this2 = this;
+
 				body.scrollTop = document.documentElement.scrollTop = 0;
 
 				setTimeout(function () {
-					component.fergusToErgusto();
+					_this2.fergusToErgusto();
 				}, 1500);
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				var component = this;
 				return _react2.default.createElement(
 					'section',
 					{ className: 'full-height introduction' },
@@ -24011,8 +24014,7 @@
 		}, {
 			key: 'addNewComment',
 			value: function addNewComment(comment) {
-				var component = this;
-				component.props.comments.add(comment);
+				this.props.comments.add(comment);
 			}
 		}, {
 			key: 'changeComment',
@@ -24116,13 +24118,14 @@
 		_createClass(CommentListComponent, [{
 			key: 'render',
 			value: function render() {
-				var component = this;
+				var _this4 = this;
+
 				var comments = this.props.comments.get();
 				var content = undefined;
 
 				if (comments.length) {
 					content = comments.map(function (comment) {
-						return _react2.default.createElement(Comment, { key: comment.id, comment: comment, comments: component.props.comments });
+						return _react2.default.createElement(Comment, { key: comment.id, comment: comment, comments: _this4.props.comments });
 					});
 				}
 
@@ -37257,7 +37260,8 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var component = this;
+				var _this3 = this;
+
 				var tasks = this.props.tasks.get();
 				var content = undefined;
 
@@ -37268,13 +37272,13 @@
 							{ key: task.id },
 							_react2.default.createElement(
 								'a',
-								{ href: '#', onClick: component.clickHandler.bind(component, task.id) },
+								{ href: '#', onClick: _this3.clickHandler.bind(_this3, task.id) },
 								task.title
 							),
 							' ',
 							_react2.default.createElement(
 								'a',
-								{ onClick: component.removeHandler.bind(component, task.id), href: '#', className: 'pull-right remove-task' },
+								{ onClick: _this3.removeHandler.bind(_this3, task.id), href: '#', className: 'pull-right remove-task' },
 								'x'
 							)
 						);
@@ -37348,14 +37352,14 @@
 		function TaskManagerComponent(props) {
 			_classCallCheck(this, TaskManagerComponent);
 
-			var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskManagerComponent).call(this, props));
+			var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskManagerComponent).call(this, props));
 
-			props.tasks.register(_this4.forceUpdate.bind(_this4));
+			props.tasks.register(_this5.forceUpdate.bind(_this5));
 
-			_this4.state = {};
-			_this4.state.shouldShowNewTaskForm = true;
-			_this4.state.activeTaskId = null;
-			return _this4;
+			_this5.state = {};
+			_this5.state.shouldShowNewTaskForm = true;
+			_this5.state.activeTaskId = null;
+			return _this5;
 		}
 
 		_createClass(TaskManagerComponent, [{

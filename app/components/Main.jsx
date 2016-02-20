@@ -14,7 +14,11 @@ const container = document.getElementById('container');
 
 const comments = new Comments();
 
-comments.add({text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.'});
+comments.add({
+	text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
+	username: 'ergusto',
+	date: new Date,
+});
 
 const tasks = new Tasks();
 
