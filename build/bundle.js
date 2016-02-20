@@ -19814,8 +19814,8 @@
 											setTimeout(function () {
 												(0, _velocityAnimate2.default)(container, { 'min-height': '' }, { duration: 800 });
 
-												(0, _velocityAnimate2.default)(refs.heading, { 'margin-left': 0, 'font-size': '30px' }, { duration: 800 });
-												(0, _velocityAnimate2.default)(refs.tagline, { 'margin-left': 0 }, { duration: 800 });
+												(0, _velocityAnimate2.default)(refs.heading, { 'margin-left': 0, 'font-size': '24px' }, { duration: 800 });
+												(0, _velocityAnimate2.default)(refs.tagline, { 'margin-left': 0, 'font-size': '12px' }, { duration: 800 });
 
 												setTimeout(function () {
 													body.classList.remove('hide-overflow');
