@@ -1,10 +1,15 @@
+const bod = document.body;
+
 const prevent = function(event) {
 	event.preventDefault();
 };
 
-document.body.addEventListener('touchmove', prevent);
-
 class Introduction extends React.Component {
+
+	constructor(props) {
+		super(props);
+		bod.addEventListener('touchmove', prevent);
+	}
 
 	fergusToErgusto() {
 		const component = this;
@@ -44,28 +49,22 @@ class Introduction extends React.Component {
 										Velocity(container, { 'min-height': '' }, { duration: 800 });
 
 										setTimeout(function() {
-											document.body.classList.remove('hide-overflow');
-											document.body.removeEventListener('touchmove', prevent);
+											bod.classList.remove('hide-overflow');
+											bod.removeEventListener('touchmove', prevent);
 										}, 750);
 									}, 800);
-
-								}, 0);
+								});
 							});
-
 						}, 700);
-
 					}, 400);
-
 				}, 400);
-
 			}, 400);
-
 		}, 400);
 	}
 
 	componentDidMount() {
 		const component = this;
-		document.body.scrollTop = document.documentElement.scrollTop = 0;
+		bod.scrollTop = document.documentElement.scrollTop = 0;
 
 		setTimeout(function() {
 			component.fergusToErgusto();

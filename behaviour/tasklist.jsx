@@ -203,6 +203,10 @@ class App extends React.Component {
 		});
 	}
 
+	getActiveTaskId() {
+		return this.state.activeTaskId;
+	}
+
 	clearActiveTask() {
 		this.setActiveTask(null);
 	}
@@ -245,7 +249,7 @@ class App extends React.Component {
 						<a onClick={this.newTaskHandler.bind(this)} href="#" className="plus-btn pull-right">+</a>
 						<h3>tasks</h3>
 						<hr />
-						<TaskList tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} clearActiveTask={this.clearActiveTask.bind(this)} />
+						<TaskList tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} getActiveTaskId={this.getActiveTaskId.bind(this)} clearActiveTask={this.clearActiveTask.bind(this)} />
 					</div>
 				</div>
 				<div className="tasklist-content flex-col">

@@ -1,3 +1,65 @@
+class Comments {
+
+	constructor() {
+		this.comments = {};
+		this.callbacks = {};
+		this.callbacks.main = [];
+		this.idCount = 0;
+	}
+
+	addComment(text) {
+		const comments = this;
+		const comment = {};
+		comments.idCount++;
+		
+		comment.id = comments.idCount;
+		comment.text = text;
+		
+		comments.comments[comment.id] = comment;
+
+		comments.broadcast(comment);
+
+		return comment;
+	}
+
+	getComments() {
+		return Object.keys(this.comments).map(key => this.comments[key]);
+	}
+
+	getComment(id) {
+		return this.comments[id];
+	}
+
+	removeComment(id) {
+		delete this.comments[id];
+		this.broadcast();
+	}
+
+	register(callback, id) {
+		if (id) {
+			const callbacks = this.callbacks[id] || [];
+			callbacks.push(callback);
+			this.callbacks[id] = callbacks;
+		} else {
+			this.callbacks.main.push(callback);
+		}
+	}
+
+	broadcast(item) {
+		const comments = this;
+		if (item) {
+			const callbacks = comments.callbacks[item.id] || [];
+			callbacks.forEach(function(callback) {
+				callback.call(comments, item);
+			});
+		}
+		comments.callbacks.main.forEach(function(callback) {
+			callback.call(comments, item);
+		});
+	}
+
+}
+
 class CommentForm extends React.Component {
 
 	constructor(props) {
@@ -21,6 +83,7 @@ class CommentForm extends React.Component {
 		const comment = this.refs.commentInput.value;
 
 		if (this.props.submitCallback) this.props.submitCallback(comment);
+		this.refs.commentInput.value = '';
 		this.props.hideForm();
 	}
 
@@ -69,7 +132,6 @@ class Comment extends React.Component {
 		// http://stackoverflow.com/a/31362350/4566267
 		this.replyHandler = this.replyHandler.bind(this);
 		this.editHandler = this.editHandler.bind(this);
-		this.deleteHandler = this.deleteHandler.bind(this);
 		this.changeComment = this.changeComment.bind(this);
 	}
 
@@ -109,22 +171,15 @@ class Comment extends React.Component {
     	this.showEditForm();
     }
 
-    deleteHandler(event) {
-    	event.preventDefault();
-    	this.removeFromDOM();
-    	setTimeout(function() {
-    		renderCommentComponent();
-    	}, 3000)
+    addNewComment(comment) {
+    	const component = this;
+    	component.props.comments.addComment(comment);
     }
 
     changeComment(comment) {
     	this.setState({
     		comment: comment,
     	});
-    }
-
-    removeFromDOM() {
-    	ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(this).parentNode);
     }
     
     render() {
@@ -137,19 +192,18 @@ class Comment extends React.Component {
                         <p className="muted"><small>{this.props.username}</small></p>
                     </header>
                     <div className="comment-item-body">
-                        <p>{comment}</p>
+                        <p>{comment.text}</p>
                     </div>
                     <footer className="comment-item-footer clearfix">
                         <ul className="horizontal-list-menu muted">
                             <li className="pull-right">{date}</li>
                             <li><a href="#" onClick={this.replyHandler.bind(this)}>reply</a></li>
                             <li><a href="#" onClick={this.editHandler.bind(this)}>edit</a></li>
-                            <li><a href="#" onClick={this.deleteHandler.bind(this)}>delete</a></li>
                         </ul>
                     </footer>
                 </div>
 
-                <CommentForm formTitle="reply" shouldShowForm={this.state.shouldShowReplyForm} hideForm={this.hideReplyForm.bind(this)} />
+                <CommentForm formTitle="reply" shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.addNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
                 <CommentForm {...this.props} formTitle="edit" commentValue={comment} submitCallback={this.changeComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
             </div>
         );
@@ -157,16 +211,49 @@ class Comment extends React.Component {
 
 };
 
+class CommentList extends React.Component {
+
+	constructor(props) {
+		super(props);
+		props.comments.register(this.forceUpdate.bind(this));
+	}
+
+	render() {
+		const component = this;
+		const comments = this.props.comments.getComments();
+		let content;
+
+		if (comments.length) {
+			content = comments.map(function(comment) {
+				return (
+					<Comment key={comment.id} comment={comment} comments={component.props.comments} />
+				);
+			});
+		}
+
+		return (
+			<ul className="comment-list">{content}</ul>
+		)
+	}
+
+}
+
+const commentText = 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.';
+
 Comment.defaultProps = {
     username: 'ergusto',
-    comment: 'This site showcases some of the things I have created. Most examples are interactive. Try editing this comment.',
+    comment: commentText,
     createdAt: new Date(),
 };
+
+const comments = new Comments();
+
+comments.addComment(commentText);
 
 function renderCommentComponent() {
 
 	ReactDOM.render(
-	    <Comment />,
+	    <CommentList comments={comments} />,
 	    document.getElementById('comment-example')
 	);
 
