@@ -51,7 +51,6 @@ export default class IntroductionComponent extends React.Component {
 										Velocity(container, { 'min-height': '' }, { duration: 800 });
 
 										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '24px' }, { duration: 800 });
-										Velocity(refs.tagline, { 'margin-left': 0, 'font-size': '12px' }, { duration: 800 });
 
 										setTimeout(function() {
 											body.classList.remove('hide-overflow');
@@ -91,7 +90,6 @@ export default class IntroductionComponent extends React.Component {
 	                        <span className="name-r" ref="namer2">R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
 	                    </span>
 	                </h1>
-	                <p ref="tagline" className="introduction-tagline">I like making things.</p>
 
 	            </div>
 
