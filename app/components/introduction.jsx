@@ -49,7 +49,8 @@ export default class IntroductionComponent extends React.Component {
 
 									setTimeout(function() {
 										Velocity(container, { 'min-height': '' }, { duration: 800 });
-										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '2vw' }, { duration: 800 });
+
+										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '30px' }, { duration: 800 });
 										Velocity(refs.tagline, { 'margin-left': 0 }, { duration: 800 });
 
 										setTimeout(function() {
