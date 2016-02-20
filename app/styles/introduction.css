@@ -7,11 +7,11 @@
 .introduction h1, .introduction p {
 	margin: 0 auto;
 	display: block;
-	max-width: 800px;
+	max-width: 360px;
 }
 
 .introduction h1 {
-	font-size: 6vmin;
+	font-size: 3rem;
 	margin-bottom: 4px;
 }
 
