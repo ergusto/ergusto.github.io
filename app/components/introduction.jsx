@@ -58,7 +58,7 @@ export default class IntroductionComponent extends React.Component {
 
 										}, 750);
 
-									}, 800);
+									}, 700);
 								});
 							});
 						}, 400);

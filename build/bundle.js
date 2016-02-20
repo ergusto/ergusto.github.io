@@ -19820,7 +19820,7 @@
 													body.classList.remove('hide-overflow');
 													body.removeEventListener('touchmove', prevent);
 												}, 750);
-											}, 800);
+											}, 700);
 										});
 									});
 								}, 400);
