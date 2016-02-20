@@ -126,32 +126,29 @@ class Comment extends React.Component {
         const comment = this.state.comment && this.state.comment.length ? this.state.comment : this.props.comment;
         const date = moment(this.props.createdAt).fromNow();
         return (
-        	 <section className="full-height">
 
-	            <div id="comment-example" className="example">
+        	<div>
 
-	            	<div className="comment-item box">
-	                    <header className="comment-item-header clearfix">
-	                        <p className="muted"><small>{this.props.username}</small></p>
-	                    </header>
-	                    <div className="comment-item-body">
-	                        <p>{comment.text}</p>
-	                    </div>
-	                    <footer className="comment-item-footer clearfix">
-	                        <ul className="horizontal-list-menu muted">
-	                            <li className="pull-right">{date}</li>
-	                            <li><a href="#" onClick={this.replyHandler.bind(this)}>reply</a></li>
-	                            <li><a href="#" onClick={this.editHandler.bind(this)}>edit</a></li>
-	                        </ul>
-	                    </footer>
+	        	<div className="comment-item box">
+	                <header className="comment-item-header clearfix">
+	                    <p className="muted"><small>{this.props.username}</small></p>
+	                </header>
+	                <div className="comment-item-body">
+	                    <p>{comment.text}</p>
 	                </div>
-
-	                <CommentForm formTitle="reply" shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.addNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
-	                <CommentForm {...this.props} formTitle="edit" commentValue={comment} submitCallback={this.changeComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
-
+	                <footer className="comment-item-footer clearfix">
+	                    <ul className="horizontal-list-menu muted">
+	                        <li className="pull-right">{date}</li>
+	                        <li><a href="#" onClick={this.replyHandler.bind(this)}>reply</a></li>
+	                        <li><a href="#" onClick={this.editHandler.bind(this)}>edit</a></li>
+	                    </ul>
+	                </footer>
 	            </div>
 
-	        </section>
+	            <CommentForm formTitle="reply" shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.addNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
+	            <CommentForm {...this.props} formTitle="edit" commentValue={comment} submitCallback={this.changeComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
+
+	        </div>
         );
     }
 
@@ -178,7 +175,15 @@ export default class CommentListComponent extends React.Component {
 		}
 
 		return (
-			<ul className="comment-list">{content}</ul>
+        	 <section className="full-height">
+
+	            <div id="comment-example" className="example">
+					
+					<ul className="comment-list">{content}</ul>
+
+	            </div>
+
+	        </section>
 		)
 	}
 

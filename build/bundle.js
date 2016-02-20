@@ -96,6 +96,12 @@
 		date: new Date()
 	});
 
+	comments.add({
+		text: 'You can do all sorts of things!',
+		username: 'ergusto',
+		date: new Date()
+	});
+
 	var tasks = new _tasks2.default();
 
 	tasks.add({ title: 'Get the groceries', text: 'Some peas, some toothpaste, and some fish stockings.' });
@@ -19814,7 +19820,7 @@
 											setTimeout(function () {
 												(0, _velocityAnimate2.default)(container, { 'min-height': '' }, { duration: 800 });
 
-												(0, _velocityAnimate2.default)(refs.heading, { 'margin-left': 0, 'font-size': '24px' }, { duration: 800 });
+												(0, _velocityAnimate2.default)(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800 });
 
 												setTimeout(function () {
 													body.classList.remove('hide-overflow');
@@ -24024,71 +24030,67 @@
 				var comment = this.state.comment && this.state.comment.length ? this.state.comment : this.props.comment;
 				var date = (0, _moment2.default)(this.props.createdAt).fromNow();
 				return _react2.default.createElement(
-					'section',
-					{ className: 'full-height' },
+					'div',
+					null,
 					_react2.default.createElement(
 						'div',
-						{ id: 'comment-example', className: 'example' },
+						{ className: 'comment-item box' },
 						_react2.default.createElement(
-							'div',
-							{ className: 'comment-item box' },
+							'header',
+							{ className: 'comment-item-header clearfix' },
 							_react2.default.createElement(
-								'header',
-								{ className: 'comment-item-header clearfix' },
+								'p',
+								{ className: 'muted' },
 								_react2.default.createElement(
-									'p',
-									{ className: 'muted' },
-									_react2.default.createElement(
-										'small',
-										null,
-										this.props.username
-									)
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'comment-item-body' },
-								_react2.default.createElement(
-									'p',
+									'small',
 									null,
-									comment.text
-								)
-							),
-							_react2.default.createElement(
-								'footer',
-								{ className: 'comment-item-footer clearfix' },
-								_react2.default.createElement(
-									'ul',
-									{ className: 'horizontal-list-menu muted' },
-									_react2.default.createElement(
-										'li',
-										{ className: 'pull-right' },
-										date
-									),
-									_react2.default.createElement(
-										'li',
-										null,
-										_react2.default.createElement(
-											'a',
-											{ href: '#', onClick: this.replyHandler.bind(this) },
-											'reply'
-										)
-									),
-									_react2.default.createElement(
-										'li',
-										null,
-										_react2.default.createElement(
-											'a',
-											{ href: '#', onClick: this.editHandler.bind(this) },
-											'edit'
-										)
-									)
+									this.props.username
 								)
 							)
 						),
-						_react2.default.createElement(CommentForm, { formTitle: 'reply', shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.addNewComment.bind(this), hideForm: this.hideReplyForm.bind(this) }),
-						_react2.default.createElement(CommentForm, _extends({}, this.props, { formTitle: 'edit', commentValue: comment, submitCallback: this.changeComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, hideForm: this.hideEditForm.bind(this) }))
-					)
+						_react2.default.createElement(
+							'div',
+							{ className: 'comment-item-body' },
+							_react2.default.createElement(
+								'p',
+								null,
+								comment.text
+							)
+						),
+						_react2.default.createElement(
+							'footer',
+							{ className: 'comment-item-footer clearfix' },
+							_react2.default.createElement(
+								'ul',
+								{ className: 'horizontal-list-menu muted' },
+								_react2.default.createElement(
+									'li',
+									{ className: 'pull-right' },
+									date
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										'a',
+										{ href: '#', onClick: this.replyHandler.bind(this) },
+										'reply'
+									)
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										'a',
+										{ href: '#', onClick: this.editHandler.bind(this) },
+										'edit'
+									)
+								)
+							)
+						)
+					),
+					_react2.default.createElement(CommentForm, { formTitle: 'reply', shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.addNewComment.bind(this), hideForm: this.hideReplyForm.bind(this) }),
+					_react2.default.createElement(CommentForm, _extends({}, this.props, { formTitle: 'edit', commentValue: comment, submitCallback: this.changeComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, hideForm: this.hideEditForm.bind(this) }))
 				);
 			}
 		}]);
@@ -24125,9 +24127,17 @@
 				}
 
 				return _react2.default.createElement(
-					'ul',
-					{ className: 'comment-list' },
-					content
+					'section',
+					{ className: 'full-height' },
+					_react2.default.createElement(
+						'div',
+						{ id: 'comment-example', className: 'example' },
+						_react2.default.createElement(
+							'ul',
+							{ className: 'comment-list' },
+							content
+						)
+					)
 				);
 			}
 		}]);

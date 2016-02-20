@@ -20,6 +20,12 @@ comments.add({
 	date: new Date,
 });
 
+comments.add({
+	text: 'You can do all sorts of things!',
+	username: 'ergusto',
+	date: new Date,
+});
+
 const tasks = new Tasks();
 
 tasks.add({ title: 'Get the groceries', text: 'Some peas, some toothpaste, and some fish stockings.' });
