@@ -62,7 +62,7 @@ export default class IntroductionComponent extends React.Component {
 									}, 800);
 								});
 							});
-						}, 700);
+						}, 400);
 					}, 400);
 				}, 400);
 			}, 400);
@@ -74,7 +74,7 @@ export default class IntroductionComponent extends React.Component {
 
 		setTimeout(() => {
 			this.fergusToErgusto();
-		}, 1500);
+		}, 1000);
 	}
 
 	render() {
