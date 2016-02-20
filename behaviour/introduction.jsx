@@ -65,10 +65,11 @@ class Introduction extends React.Component {
 
 	componentDidMount() {
 		const component = this;
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
 
 		setTimeout(function() {
 			component.fergusToErgusto();
-		}, 1200);
+		}, 1000);
 	}
 
 	render() {
