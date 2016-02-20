@@ -89,8 +89,8 @@
 	var container = document.getElementById('container');
 
 	var comments = new _comments2.default();
-	var commentText = 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.';
-	comments.add({ text: commentText });
+
+	comments.add({ text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.' });
 
 	var tasks = new _tasks2.default();
 
@@ -37029,13 +37029,12 @@
 		_createClass(Collection, [{
 			key: "add",
 			value: function add(model) {
-				var collection = this;
-				collection.idCount++;
+				this.idCount++;
 
-				model.id = collection.idCount;
+				model.id = this.idCount;
 
-				collection.models[model.id] = model;
-				collection.broadcast(model);
+				this.models[model.id] = model;
+				this.broadcast(model);
 
 				return model;
 			}
@@ -37069,15 +37068,16 @@
 		}, {
 			key: "broadcast",
 			value: function broadcast(item) {
-				var collection = this;
+				var _this2 = this;
+
 				if (item) {
-					var callbacks = collection.callbacks[item.id] || [];
+					var callbacks = this.callbacks[item.id] || [];
 					callbacks.forEach(function (callback) {
-						callback.call(collection, item);
+						callback.call(_this2, item);
 					});
 				}
-				collection.callbacks.main.forEach(function (callback) {
-					callback.call(collection, item);
+				this.callbacks.main.forEach(function (callback) {
+					callback.call(_this2, item);
 				});
 			}
 		}]);

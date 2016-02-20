@@ -8,13 +8,12 @@ export default class Collection {
 	}
 
 	add(model) {
-		const collection = this;
-		collection.idCount++;
+		this.idCount++;
 		
-		model.id = collection.idCount;
+		model.id = this.idCount;
 		
-		collection.models[model.id] = model;
-		collection.broadcast(model);
+		this.models[model.id] = model;
+		this.broadcast(model);
 
 		return model;
 	}
@@ -40,15 +39,14 @@ export default class Collection {
 	}
 
 	broadcast(item) {
-		const collection = this;
 		if (item) {
-			const callbacks = collection.callbacks[item.id] || [];
-			callbacks.forEach(function(callback) {
-				callback.call(collection, item);
+			const callbacks = this.callbacks[item.id] || [];
+			callbacks.forEach((callback) => {
+				callback.call(this, item);
 			});
 		}
-		collection.callbacks.main.forEach(function(callback) {
-			callback.call(collection, item);
+		this.callbacks.main.forEach((callback) => {
+			callback.call(this, item);
 		});
 	}
 

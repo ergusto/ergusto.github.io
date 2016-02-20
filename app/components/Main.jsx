@@ -13,8 +13,8 @@ import Tasks from '../collections/tasks.js';
 const container = document.getElementById('container');
 
 const comments = new Comments();
-const commentText = 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.';
-comments.add({text: commentText});
+
+comments.add({text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.'});
 
 const tasks = new Tasks();
 
