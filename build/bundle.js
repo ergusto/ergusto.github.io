@@ -128,7 +128,6 @@
 					'div',
 					null,
 					_react2.default.createElement(_index2.default, null),
-					_react2.default.createElement(_index8.default, null),
 					_react2.default.createElement(_index4.default, { comments: comments }),
 					_react2.default.createElement(_index6.default, { tasks: tasks })
 				);

@@ -39,7 +39,6 @@ class App extends React.Component {
 		return (
 			<div>
 				<IntroductionComponent />
-				<CalendarComponent />
 				<CommentListComponent comments={comments} />
 				<TaskManagerComponent tasks={tasks} />
 			</div>
