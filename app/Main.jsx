@@ -9,6 +9,8 @@ import CalendarComponent from './components/calendar/index.jsx';
 import Comments from './collections/comments.js';
 import Tasks from './collections/tasks.js';
 
+import User from './models/user.js';
+
 // end of imports
 
 const container = document.getElementById('container');
@@ -16,6 +18,9 @@ const container = document.getElementById('container');
 const comments = new Comments();
 
 const tasks = new Tasks();
+
+const currentUser = new User();
+currentUser.setShouldShowIntro(true);
 
 class App extends React.Component {
 
@@ -27,7 +32,7 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<IntroductionComponent />
+				<IntroductionComponent user={currentUser} />
 				{/*<CalendarComponent />*/}
 				<CommentListComponent comments={comments} />
 				<TaskManagerComponent tasks={tasks} />

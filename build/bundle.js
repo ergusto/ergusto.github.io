@@ -80,6 +80,10 @@
 
 	var _tasks2 = _interopRequireDefault(_tasks);
 
+	var _user = __webpack_require__(267);
+
+	var _user2 = _interopRequireDefault(_user);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -95,6 +99,9 @@
 	var comments = new _comments2.default();
 
 	var tasks = new _tasks2.default();
+
+	var currentUser = new _user2.default();
+	currentUser.setShouldShowIntro(true);
 
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
@@ -117,7 +124,7 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_index2.default, null),
+					_react2.default.createElement(_index2.default, { user: currentUser }),
 					_react2.default.createElement(_index4.default, { comments: comments }),
 					_react2.default.createElement(_index6.default, { tasks: tasks })
 				);
@@ -19775,9 +19782,6 @@
 			window.onbeforeunload = function () {
 				window.scrollTo(0, 0);
 			};
-
-			body.classList.add('hide-overflow');
-			body.addEventListener('touchmove', prevent);
 			return _this;
 		}
 
@@ -19839,16 +19843,107 @@
 			value: function componentDidMount() {
 				var _this2 = this;
 
-				setTimeout(function () {
-					_this2.fergusToErgusto();
-				}, 1000);
+				var shouldShowAnimation = this.props.user.shouldShowIntroAnimation();
+				if (shouldShowAnimation) {
+					setTimeout(function () {
+						_this2.fergusToErgusto();
+					}, 1000);
+				}
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var shouldShowAnimation = this.props.user.shouldShowIntroAnimation();
+				var panelClass = undefined;
+				var name = undefined;
+
+				if (shouldShowAnimation) {
+					body.classList.add('hide-overflow');
+					body.addEventListener('touchmove', prevent);
+					panelClass = 'full-height introduction';
+
+					name = _react2.default.createElement(
+						'span',
+						{ className: 'name' },
+						_react2.default.createElement(
+							'span',
+							{ ref: 'namef1' },
+							'F'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'namee1' },
+							'e'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'namer1' },
+							'r'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'nameg1' },
+							'g'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'nameu1' },
+							'u'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'names1' },
+							's'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'wordspacer', className: 'invisible' },
+							'i'
+						),
+						_react2.default.createElement(
+							'span',
+							{ className: 'name-r', ref: 'namer2' },
+							'R'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'nameu2' },
+							'u'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'names2' },
+							's'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'namet1' },
+							't'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'nameo1' },
+							'o'
+						),
+						_react2.default.createElement(
+							'span',
+							{ ref: 'namen1' },
+							'n'
+						)
+					);
+				} else {
+					panelClass = 'introduction introduction-no-animation';
+
+					name = _react2.default.createElement(
+						'span',
+						{ className: 'name' },
+						'ergusto'
+					);
+				}
+
 				return _react2.default.createElement(
 					'section',
-					{ ref: 'introductionPanel', className: 'full-height introduction' },
+					{ ref: 'introductionPanel', className: panelClass },
 					_react2.default.createElement(
 						'div',
 						{ id: 'introduction', className: 'introduction-content' },
@@ -19858,75 +19953,7 @@
 							_react2.default.createElement(
 								'a',
 								{ href: '/' },
-								_react2.default.createElement(
-									'span',
-									{ className: 'name' },
-									_react2.default.createElement(
-										'span',
-										{ ref: 'namef1' },
-										'F'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'namee1' },
-										'e'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'namer1' },
-										'r'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'nameg1' },
-										'g'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'nameu1' },
-										'u'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'names1' },
-										's'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'wordspacer', className: 'invisible' },
-										'i'
-									),
-									_react2.default.createElement(
-										'span',
-										{ className: 'name-r', ref: 'namer2' },
-										'R'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'nameu2' },
-										'u'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'names2' },
-										's'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'namet1' },
-										't'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'nameo1' },
-										'o'
-									),
-									_react2.default.createElement(
-										'span',
-										{ ref: 'namen1' },
-										'n'
-									)
-								)
+								name
 							)
 						)
 					)
@@ -39335,6 +39362,111 @@
 	  }
 	}.call(this));
 
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _underscore = __webpack_require__(266);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var User = function () {
+		function User() {
+			_classCallCheck(this, User);
+
+			this.user = {};
+			this.user.username = 'ergusto';
+
+			this.user.settings = {};
+			this.user.settings.showIntroAnimation = true;
+
+			this.callbacks = [];
+
+			this.localStorageName = 'ERGUSTO:user';
+
+			if (window.localStorage) {
+				var user = this.getUserFromLocalStorage();
+				this.usingLocalStorage = true;
+				if (user) this.user = user;
+			} else {
+				this.usingLocalStorage = false;
+			}
+		}
+
+		_createClass(User, [{
+			key: 'getUserFromLocalStorage',
+			value: function getUserFromLocalStorage() {
+				var store = localStorage.getItem(this.localStorageName);
+				return JSON.parse(store);
+			}
+		}, {
+			key: 'clearLocalStorage',
+			value: function clearLocalStorage() {
+				localStorage.setItem(this.localStorageName, '');
+			}
+		}, {
+			key: 'setLocalStorage',
+			value: function setLocalStorage() {
+				if (this.usingLocalStorage) {
+					var store = JSON.stringify(this.user);
+					localStorage.setItem(this.localStorageName, store);
+				}
+			}
+		}, {
+			key: 'getUser',
+			value: function getUser() {
+				return this.user.username;
+			}
+		}, {
+			key: 'setUsername',
+			value: function setUsername(username) {
+				this.user.username = username;
+				this.setLocalStorage();
+			}
+		}, {
+			key: 'setShouldShowIntro',
+			value: function setShouldShowIntro(boolean) {
+				this.user.settings.showIntroAnimation = boolean;
+				this.setLocalStorage();
+			}
+		}, {
+			key: 'shouldShowIntroAnimation',
+			value: function shouldShowIntroAnimation() {
+				return this.user.settings.showIntroAnimation;
+			}
+		}, {
+			key: 'register',
+			value: function register(callback) {
+				this.callbacks.push(callback);
+			}
+		}, {
+			key: 'broadcast',
+			value: function broadcast(model) {
+				var _this = this;
+
+				this.callbacks.forEach(function (callback) {
+					callback.call(_this, _this.user);
+				});
+			}
+		}]);
+
+		return User;
+	}();
+
+	exports.default = User;
 
 /***/ }
 /******/ ]);

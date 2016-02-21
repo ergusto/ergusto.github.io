@@ -11,6 +11,10 @@
 	margin: 0px auto 4px;
 }
 
+.introduction a {
+	text-decoration: none;
+}
+
 @media only screen and (min-width: 768px) {
 	.introduction h1 {
 		max-width: 357px;
@@ -18,6 +22,11 @@
 	.introduction h1 {
 		font-size: 3rem;        
 	}
+}
+
+.introduction-no-animation h1 {
+	font-size: 20px;
+	margin: 0 0 4px;
 }
 
 .introduction-content {

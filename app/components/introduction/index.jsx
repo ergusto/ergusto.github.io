@@ -15,9 +15,6 @@ export default class IntroductionComponent extends React.Component {
 		window.onbeforeunload = function(){
 			window.scrollTo(0,0);
 		}
-			
-		body.classList.add('hide-overflow');
-		body.addEventListener('touchmove', prevent);
 	}
 
 	fergusToErgusto() {
@@ -74,25 +71,45 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		setTimeout(() => {
-			this.fergusToErgusto();
-		}, 1000);
+		const shouldShowAnimation = this.props.user.shouldShowIntroAnimation();
+		if (shouldShowAnimation) {
+			setTimeout(() => {
+				this.fergusToErgusto();
+			}, 1000);
+		}
 	}
 
 	render() {
+		const shouldShowAnimation = this.props.user.shouldShowIntroAnimation();
+		let panelClass;
+		let name;
+
+		if (shouldShowAnimation) {
+			body.classList.add('hide-overflow');
+			body.addEventListener('touchmove', prevent);
+			panelClass = 'full-height introduction';
+
+			name = (<span className="name">
+                        <span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
+                        <span ref="wordspacer" className="invisible">i</span>
+                        <span className="name-r" ref="namer2">R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
+                    </span>)
+
+		} else {
+			panelClass = 'introduction introduction-no-animation';
+
+			name = (<span className="name">ergusto</span>);
+		}
+
 		return (
 
-	        <section ref="introductionPanel" className="full-height introduction">
+	        <section ref="introductionPanel" className={panelClass}>
 
 	            <div id="introduction" className="introduction-content">
 
 	            	<h1 ref="heading" className="introduction-heading">
 	            		<a href="/">
-		                    <span className="name">
-		                        <span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
-		                        <span ref="wordspacer" className="invisible">i</span>
-		                        <span className="name-r" ref="namer2">R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
-		                    </span>
+		                    {name}
 		                </a>
 	                </h1>
 
