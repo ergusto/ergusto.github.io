@@ -11,6 +11,10 @@ export default class IntroductionComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
+
+		window.onbeforeunload = function(){
+			window.scrollTo(0,0);
+		}
 			
 		body.classList.add('hide-overflow');
 		body.addEventListener('touchmove', prevent);

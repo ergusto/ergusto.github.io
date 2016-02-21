@@ -19772,6 +19772,10 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(IntroductionComponent).call(this, props));
 
+			window.onbeforeunload = function () {
+				window.scrollTo(0, 0);
+			};
+
 			body.classList.add('hide-overflow');
 			body.addEventListener('touchmove', prevent);
 			return _this;
