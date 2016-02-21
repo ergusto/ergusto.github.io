@@ -80,7 +80,7 @@
 
 	var _tasks2 = _interopRequireDefault(_tasks);
 
-	var _user = __webpack_require__(267);
+	var _user = __webpack_require__(274);
 
 	var _user2 = _interopRequireDefault(_user);
 
@@ -38933,111 +38933,7 @@
 
 
 /***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _underscore = __webpack_require__(266);
-
-	var _underscore2 = _interopRequireDefault(_underscore);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var User = function () {
-		function User() {
-			_classCallCheck(this, User);
-
-			this.user = {};
-			this.user.username = 'ergusto';
-
-			this.user.settings = {};
-			this.user.settings.showIntroAnimation = true;
-
-			this.callbacks = [];
-
-			this.localStorageName = 'ERGUSTO:user';
-
-			if (window.localStorage) {
-				var user = this.getUserFromLocalStorage();
-				this.usingLocalStorage = true;
-				if (user) this.user = user;
-			} else {
-				this.usingLocalStorage = false;
-			}
-		}
-
-		_createClass(User, [{
-			key: 'getUserFromLocalStorage',
-			value: function getUserFromLocalStorage() {
-				var store = localStorage.getItem(this.localStorageName);
-				return JSON.parse(store);
-			}
-		}, {
-			key: 'clearLocalStorage',
-			value: function clearLocalStorage() {
-				localStorage.setItem(this.localStorageName, '');
-			}
-		}, {
-			key: 'setLocalStorage',
-			value: function setLocalStorage() {
-				if (this.usingLocalStorage) {
-					var store = JSON.stringify(this.user);
-					localStorage.setItem(this.localStorageName, store);
-				}
-			}
-		}, {
-			key: 'getUser',
-			value: function getUser() {
-				return this.user.username;
-			}
-		}, {
-			key: 'setUsername',
-			value: function setUsername(username) {
-				this.user.username = username;
-				this.setLocalStorage();
-			}
-		}, {
-			key: 'setShouldShowIntro',
-			value: function setShouldShowIntro(boolean) {
-				this.user.settings.showIntroAnimation = boolean;
-				this.setLocalStorage();
-			}
-		}, {
-			key: 'shouldShowIntroAnimation',
-			value: function shouldShowIntroAnimation() {
-				return this.user.settings.showIntroAnimation;
-			}
-		}, {
-			key: 'register',
-			value: function register(callback) {
-				this.callbacks.push(callback);
-			}
-		}, {
-			key: 'broadcast',
-			value: function broadcast(model) {
-				var _this = this;
-
-				this.callbacks.forEach(function (callback) {
-					callback.call(_this, _this.user);
-				});
-			}
-		}]);
-
-		return User;
-	}();
-
-	exports.default = User;
-
-/***/ },
+/* 267 */,
 /* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -39680,6 +39576,111 @@
 	}(_react2.default.Component);
 
 	exports.default = TaskListComponent;
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _underscore = __webpack_require__(266);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var User = function () {
+		function User() {
+			_classCallCheck(this, User);
+
+			this.user = {};
+			this.user.username = 'ergusto';
+
+			this.user.settings = {};
+			this.user.settings.showIntroAnimation = true;
+
+			this.callbacks = [];
+
+			this.localStorageName = 'ERGUSTO:user';
+
+			if (window.localStorage) {
+				var user = this.getUserFromLocalStorage();
+				this.usingLocalStorage = true;
+				if (user) this.user = user;
+			} else {
+				this.usingLocalStorage = false;
+			}
+		}
+
+		_createClass(User, [{
+			key: 'getUserFromLocalStorage',
+			value: function getUserFromLocalStorage() {
+				var store = localStorage.getItem(this.localStorageName);
+				return JSON.parse(store);
+			}
+		}, {
+			key: 'clearLocalStorage',
+			value: function clearLocalStorage() {
+				localStorage.setItem(this.localStorageName, '');
+			}
+		}, {
+			key: 'setLocalStorage',
+			value: function setLocalStorage() {
+				if (this.usingLocalStorage) {
+					var store = JSON.stringify(this.user);
+					localStorage.setItem(this.localStorageName, store);
+				}
+			}
+		}, {
+			key: 'getUser',
+			value: function getUser() {
+				return this.user.username;
+			}
+		}, {
+			key: 'setUsername',
+			value: function setUsername(username) {
+				this.user.username = username;
+				this.setLocalStorage();
+			}
+		}, {
+			key: 'setShouldShowIntro',
+			value: function setShouldShowIntro(boolean) {
+				this.user.settings.showIntroAnimation = boolean;
+				this.setLocalStorage();
+			}
+		}, {
+			key: 'shouldShowIntroAnimation',
+			value: function shouldShowIntroAnimation() {
+				return this.user.settings.showIntroAnimation;
+			}
+		}, {
+			key: 'register',
+			value: function register(callback) {
+				this.callbacks.push(callback);
+			}
+		}, {
+			key: 'broadcast',
+			value: function broadcast(model) {
+				var _this = this;
+
+				this.callbacks.forEach(function (callback) {
+					callback.call(_this, _this.user);
+				});
+			}
+		}]);
+
+		return User;
+	}();
+
+	exports.default = User;
 
 /***/ }
 /******/ ]);

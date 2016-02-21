@@ -9,7 +9,7 @@ import CalendarComponent from './components/calendar/index.jsx';
 import Comments from './collections/comments.js';
 import Tasks from './collections/tasks.js';
 
-import User from './models/user.js';
+import User from './lib/user.js';
 
 // end of imports
 
