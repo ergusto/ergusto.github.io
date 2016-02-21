@@ -19826,8 +19826,8 @@
 													body.removeEventListener('touchmove', prevent);
 												}, 200);
 											}, 500);
-										});
-									});
+										}, 0);
+									}, 0);
 								}, 300);
 							}, 300);
 						}, 300);
@@ -37041,7 +37041,7 @@
 				var text = this.refs.taskTextInput.value;
 				this.clearError();
 				if (title.trim().length) {
-					var task = this.props.tasks.add({ title: title, text: text });
+					var task = this.props.tasks.addModel({ title: title, text: text });
 					this.props.setActiveTask(task.id);
 				} else {
 					this.addError('please enter a title');
@@ -37096,7 +37096,10 @@
 
 			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskList).call(this, props));
 
-			props.tasks.register(_this2.forceUpdate.bind(_this2));
+			var component = _this2;
+			props.tasks.register(function () {
+				component.forceUpdate();
+			});
 			return _this2;
 		}
 
@@ -37210,7 +37213,10 @@
 
 			var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskManagerComponent).call(this, props));
 
-			props.tasks.register(_this5.forceUpdate.bind(_this5));
+			var component = _this5;
+			props.tasks.register(function () {
+				component.forceUpdate();
+			});
 
 			_this5.state = {};
 			_this5.state.shouldShowNewTaskForm = true;
@@ -37587,12 +37593,12 @@
 				var _this = this;
 
 				this.localStorageName = 'ERGUSTO:collection:' + this.name;
-				this.hasLocallyStoredItems = this._hasLocallyStoredItems();
-				this.register(function (item) {
-					if (!_this.hasLocallyStoredItems) _this.hasLocallyStoredItems = true;
-					_this.addItemToLocalStorage(item);
+				this.hasLocallyStoredModels = this._hasLocallyStoredModels();
+				this.register(function (model) {
+					if (!_this.hasLocallyStoredModels) _this.hasLocallyStoredModels = true;
+					if (model) _this.addModelToLocalStorage(model);
 				});
-				if (this.hasLocallyStoredItems) {
+				if (this.hasLocallyStoredModels) {
 					var storeList = this.getListFromLocalStorage();
 					this.add(storeList);
 				} else {
@@ -37608,21 +37614,21 @@
 				}
 			}
 		}, {
-			key: '_hasLocallyStoredItems',
-			value: function _hasLocallyStoredItems() {
+			key: '_hasLocallyStoredModels',
+			value: function _hasLocallyStoredModels() {
 				var store = this.getFromLocalStorage();
 				return store && _underscore2.default.keys(store).length;
 			}
 		}, {
-			key: 'addItemToLocalStorage',
-			value: function addItemToLocalStorage(item) {
+			key: 'addModelToLocalStorage',
+			value: function addModelToLocalStorage(model) {
 				var stored = this.getFromLocalStorage();
-				stored[item.id] = item;
+				stored[model.id] = model;
 				this.setLocalStorage(stored);
 			}
 		}, {
-			key: 'removeItemFromLocalStorageById',
-			value: function removeItemFromLocalStorageById(id) {
+			key: 'removeModelFromLocalStorageById',
+			value: function removeModelFromLocalStorageById(id) {
 				var stored = this.getFromLocalStorage();
 				delete stored[id];
 				this.setLocalStorage(stored);
@@ -37688,13 +37694,14 @@
 		}, {
 			key: 'remove',
 			value: function remove(model) {
+				var id = undefined;
 				if (_underscore2.default.isObject(model)) {
 					id = model.id;
 				} else {
 					id = model;
 				}
 				delete this.models[id];
-				this.removeItemFromLocalStorageById(id);
+				this.removeModelFromLocalStorageById(id);
 				this.broadcast();
 			}
 		}, {
@@ -37710,17 +37717,17 @@
 			}
 		}, {
 			key: 'broadcast',
-			value: function broadcast(item) {
+			value: function broadcast(model) {
 				var _this4 = this;
 
-				if (item) {
-					var callbacks = this.callbacks[item.id] || [];
+				if (model) {
+					var callbacks = this.callbacks[model.id] || [];
 					callbacks.forEach(function (callback) {
-						callback.call(_this4, item);
+						callback.call(_this4, model);
 					});
 				}
 				this.callbacks.main.forEach(function (callback) {
-					callback.call(_this4, item);
+					callback.call(_this4, model);
 				});
 			}
 		}]);

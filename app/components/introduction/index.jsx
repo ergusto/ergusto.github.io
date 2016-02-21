@@ -63,10 +63,9 @@ export default class IntroductionComponent extends React.Component {
 											body.removeEventListener('touchmove', prevent);
 
 										}, 200);
-
 									}, 500);
-								});
-							});
+								}, 0);
+							}, 0);
 						}, 300);
 					}, 300);
 				}, 300);

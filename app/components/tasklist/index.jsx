@@ -26,7 +26,7 @@ class TaskForm extends React.Component {
 		const text = this.refs.taskTextInput.value;
 		this.clearError();
 		if (title.trim().length) {
-			const task = this.props.tasks.add({title: title, text: text});
+			const task = this.props.tasks.addModel({title: title, text: text});
 			this.props.setActiveTask(task.id);
 		} else {
 			this.addError('please enter a title');
@@ -61,7 +61,10 @@ class TaskList extends React.Component {
 
 	constructor(props) {
 		super(props);
-		props.tasks.register(this.forceUpdate.bind(this));
+		const component = this;
+		props.tasks.register(function() {
+			component.forceUpdate()
+		});
 	}
 
 	clickHandler(id, event) {
@@ -125,8 +128,10 @@ export default class TaskManagerComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
-
-		props.tasks.register(this.forceUpdate.bind(this));
+		const component = this;
+		props.tasks.register(function() {
+			component.forceUpdate()
+		});
 
 		this.state = {};
 		this.state.shouldShowNewTaskForm = true;

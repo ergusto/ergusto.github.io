@@ -4,19 +4,15 @@
 	padding: 10px 20px 10px;
 }
 
-.introduction h1, .introduction p {
-	margin: 0 auto;
+.introduction h1 {
 	display: block;
 	max-width: 262px;
-}
-
-.introduction h1 {
 	font-size: 2.2rem;
-	margin-bottom: 4px;
+	margin: 0px auto 4px;
 }
 
 @media only screen and (min-width: 768px) {
-	.introduction h1, .introduction p {
+	.introduction h1 {
 		max-width: 357px;
 	}
 	.introduction h1 {

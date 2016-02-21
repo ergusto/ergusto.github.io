@@ -19,12 +19,12 @@ export default class Collection {
 
 	setUpLocalStorage() {
 		this.localStorageName = 'ERGUSTO:collection:' + this.name;
-		this.hasLocallyStoredItems = this._hasLocallyStoredItems();
-		this.register((item) =>  {
-			if (!this.hasLocallyStoredItems) this.hasLocallyStoredItems = true;
-			this.addItemToLocalStorage(item);
+		this.hasLocallyStoredModels = this._hasLocallyStoredModels();
+		this.register((model) =>  {
+			if (!this.hasLocallyStoredModels) this.hasLocallyStoredModels = true;
+			if (model) this.addModelToLocalStorage(model);
 		});
-		if (this.hasLocallyStoredItems) {
+		if (this.hasLocallyStoredModels) {
 			const storeList = this.getListFromLocalStorage();
 			this.add(storeList);
 		} else {
@@ -39,18 +39,18 @@ export default class Collection {
 		}
 	}
 
-	_hasLocallyStoredItems() {
+	_hasLocallyStoredModels() {
 		const store = this.getFromLocalStorage();
 		return store && _.keys(store).length;
 	}
 
-	addItemToLocalStorage(item) {
+	addModelToLocalStorage(model) {
 		const stored = this.getFromLocalStorage();
-		stored[item.id] = item;
+		stored[model.id] = model;
 		this.setLocalStorage(stored);
 	}
 
-	removeItemFromLocalStorageById(id) {
+	removeModelFromLocalStorageById(id) {
 		const stored = this.getFromLocalStorage();
 		delete stored[id];
 		this.setLocalStorage(stored);
@@ -102,13 +102,14 @@ export default class Collection {
 	}
 
 	remove(model) {
+		let id;
 		if (_.isObject(model)) {
 			id = model.id;
 		} else {
 			id = model;
 		}
 		delete this.models[id];
-		this.removeItemFromLocalStorageById(id);
+		this.removeModelFromLocalStorageById(id);
 		this.broadcast();
 	}
 
@@ -122,15 +123,15 @@ export default class Collection {
 		}
 	}
 
-	broadcast(item) {
-		if (item) {
-			const callbacks = this.callbacks[item.id] || [];
+	broadcast(model) {
+		if (model) {
+			const callbacks = this.callbacks[model.id] || [];
 			callbacks.forEach((callback) => {
-				callback.call(this, item);
+				callback.call(this, model);
 			});
 		}
 		this.callbacks.main.forEach((callback) => {
-			callback.call(this, item);
+			callback.call(this, model);
 		});
 	}
 
