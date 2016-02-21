@@ -1,6 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 
+// import styles for this component
+require('!style!css!sass!./styles/form.scss');
+
 export default class CommentFormComponent extends React.Component {
 
 	constructor(props) {

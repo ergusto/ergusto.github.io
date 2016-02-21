@@ -2,6 +2,9 @@ import React from 'react';
 import Velocity from 'velocity-animate';
 import SettingsComponent from '../settings/index.jsx';
 
+// import styles for this component
+require('!style!css!sass!./styles/introduction.scss');
+
 const body = document.body;
 
 const prevent = function(event) {
@@ -56,14 +59,16 @@ export default class IntroductionComponent extends React.Component {
 									setTimeout(function() {
 										Velocity(container, { 'min-height': '' }, { duration: 800 });
 
-										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800 });
+										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 										Velocity(refs.namef1, { width: 0 }, { display: 'none' });
+										body.classList.remove('hide-overflow');
+										body.removeEventListener('touchmove', prevent);
 
 										setTimeout(function() {
-											body.classList.remove('hide-overflow');
-											body.removeEventListener('touchmove', prevent);
+											refs.settings.classList.remove('hidden');
+											Velocity(refs.settings, { opacity: 1 }, { duration: 800 });
 
-										}, 200);
+										}, 1000);
 									}, 500);
 								});
 							});
@@ -75,7 +80,7 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		const shouldShowAnimation = this.props.user.shouldShowIntroAnimation();
+		const shouldShowAnimation = this.props.user.shouldSeeIntroAnimation();
 		if (shouldShowAnimation) {
 			setTimeout(() => {
 				this.fergusToErgusto();
@@ -84,23 +89,27 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	render() {
-		const shouldShowAnimation = this.props.user.shouldShowIntroAnimation();
+		const user = this.props.user;
+		const shouldShowAnimation = user.shouldSeeIntroAnimation();
 		let panelClass;
 		let name;
+		let settingsClass;
 
 		if (shouldShowAnimation) {
 			body.classList.add('hide-overflow');
 			body.addEventListener('touchmove', prevent);
 			panelClass = 'full-height introduction';
+			settingsClass = 'hidden seethrough';
 
 			name = (<span className="name">
                         <span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
                         <span ref="wordspacer" className="invisible">i</span>
                         <span className="name-r" ref="namer2">R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
-                    </span>)
+                    </span>);
 
 		} else {
 			panelClass = 'introduction introduction-no-animation';
+			settingsClass = 'settings-container';
 
 			name = (<span className="name">ergusto</span>);
 		}
@@ -110,6 +119,10 @@ export default class IntroductionComponent extends React.Component {
 	        <section ref="introductionPanel" className={panelClass}>
 
 	            <div id="introduction" className="introduction-content">
+
+	            	<div ref="settings" className={settingsClass}>
+	            		<SettingsComponent user={user} />
+	            	</div>
 
 	            	<h1 ref="heading" className="introduction-heading">
 	            		<a href="/">

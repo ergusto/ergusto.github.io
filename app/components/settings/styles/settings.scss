@@ -1,0 +1,54 @@
+.settings {
+	display: inline-block;
+	color: black;
+	position: relative;
+}
+
+.settings-trigger {
+	margin: 0;
+	font-size: 2rem;
+	line-height: 2rem;
+	opacity: 0.7;
+	color: white;
+}
+
+.settings .dropdown {
+	bottom: -40px;
+	right: 10px;
+	min-width: 300px;
+	border-top: 0;
+	padding: 10px;
+}
+
+.settings-title {
+	margin: 0;
+	margin-bottom: 10px;
+	border-bottom: 1px solid black;
+	padding-bottom: 4px;
+}
+
+.settings-label {
+	margin-bottom: 6px;
+}
+
+@media only screen and (min-width : 480px) {
+	.settings .dropdown {
+		min-width: 400px;
+		bottom: -62px;
+	}
+}
+
+.settings-trigger:hover, .settings-trigger.opaque {
+	opacity: 1;
+}
+
+
+@media only screen and (min-width: 768px) {
+
+	.settings-trigger {
+		font-size: 2rem;
+		line-height: 1.25rem;
+		margin-right: 10px;
+	}
+
+}

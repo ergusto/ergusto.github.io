@@ -1,5 +1,8 @@
 import React from 'react';
 
+// import styles for this component
+require('!style!css!sass!./styles/form.scss');
+
 export default class TaskFormComponent extends React.Component {
 
 	constructor(props) {

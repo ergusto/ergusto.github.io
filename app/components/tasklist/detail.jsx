@@ -1,5 +1,8 @@
 import React from 'react';
 
+// import styles for this component
+require('!style!css!sass!./styles/detail.scss');
+
 export default class TaskDetailComponent extends React.Component {
 
 	render() {

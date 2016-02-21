@@ -1,5 +1,8 @@
 import React from 'react';
 
+// import styles for this component
+require('!style!css!sass!./styles/calendar.scss');
+
 const current_date = new Date();
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

@@ -1,5 +1,8 @@
 import React from 'react';
 
+// import styles for this component
+require('!style!css!sass!./styles/list.scss');
+
 export default class TaskListComponent extends React.Component {
 
 	constructor(props) {

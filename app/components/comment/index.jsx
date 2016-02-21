@@ -3,6 +3,9 @@ import moment from 'moment';
 
 import CommentComponent from './comment.jsx';
 
+// import styles for this component
+require('!style!css!sass!./styles/list.scss');
+
 export default class CommentListComponent extends React.Component {
 
 	constructor(props) {

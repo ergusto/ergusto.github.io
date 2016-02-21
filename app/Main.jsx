@@ -11,6 +11,9 @@ import Tasks from './collections/tasks.js';
 
 import User from './lib/user.js';
 
+// import styles for this component
+require('!style!css!sass!./styles/app.scss');
+
 // end of imports
 
 const container = document.getElementById('container');
@@ -25,8 +28,7 @@ currentUser.setShouldShowIntro(true);
 class App extends React.Component {
 
 	componentDidMount() {
-		const shouldShowAnimation = currentUser.shouldShowIntroAnimation();
-		console.log(currentUser)
+		const shouldShowAnimation = currentUser.shouldSeeIntroAnimation();
 		if (shouldShowAnimation) window.scrollTo(0,0);  
 	}
 

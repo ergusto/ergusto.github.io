@@ -52,7 +52,7 @@ export default class User {
 		this.setLocalStorage();
 	}
 
-	shouldShowIntroAnimation() {
+	shouldSeeIntroAnimation() {
 		return this.user.settings.showIntroAnimation;
 	}
 

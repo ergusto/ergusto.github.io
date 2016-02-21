@@ -2,6 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import CommentFormComponent from './form.jsx';
 
+// import styles for this component
+require('!style!css!sass!./styles/comment.scss');
+
 export default class CommentComponent extends React.Component {
 
 	constructor(props) {
