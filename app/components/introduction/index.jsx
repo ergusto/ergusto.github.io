@@ -2,6 +2,8 @@ import React from 'react';
 import Velocity from 'velocity-animate';
 import SettingsComponent from '../settings/index.jsx';
 
+import CurrentUser from '../../lib/user.js';
+
 // import styles for this component
 require('!style!css!sass!./styles/introduction.scss');
 
@@ -80,7 +82,7 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		const shouldShowAnimation = this.props.user.shouldSeeIntroAnimation();
+		const shouldShowAnimation = CurrentUser.shouldSeeIntroAnimation();
 		if (shouldShowAnimation) {
 			setTimeout(() => {
 				this.fergusToErgusto();
@@ -89,8 +91,7 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	render() {
-		const user = this.props.user;
-		const shouldShowAnimation = user.shouldSeeIntroAnimation();
+		const shouldShowAnimation = CurrentUser.shouldSeeIntroAnimation();
 		let panelClass;
 		let name;
 		let settingsClass;
@@ -121,7 +122,7 @@ export default class IntroductionComponent extends React.Component {
 	            <div id="introduction" className="introduction-content">
 
 	            	<div ref="settings" className={settingsClass}>
-	            		<SettingsComponent user={user} />
+	            		<SettingsComponent />
 	            	</div>
 
 	            	<h1 ref="heading" className="introduction-heading">

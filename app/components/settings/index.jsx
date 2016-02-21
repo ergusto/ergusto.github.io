@@ -1,6 +1,8 @@
 import _ from 'underscore';
 import React from 'react';
 
+import CurrentUser from '../../lib/user.js';
+
 // import styles for this component
 require('!style!css!sass!./styles/settings.scss');
 
@@ -11,6 +13,12 @@ export default class SettingsComponent extends  React.Component {
 
         this.state = {};
         this.state.shouldShowDropDown = false;
+        const component = this;
+        
+        CurrentUser.register(function() {
+            console.log('fuck')
+            component.forceUpdate();
+        });
     }
 
     triggerClickHandler(event) {
@@ -25,7 +33,7 @@ export default class SettingsComponent extends  React.Component {
     }
 
     setUserIntroAnimationSetting(setting) {
-    	this.props.user.setShouldShowIntro(setting);
+    	CurrentUser.setShouldShowIntro(setting);
     }
 
     showIntroHandler(event) {
@@ -39,18 +47,23 @@ export default class SettingsComponent extends  React.Component {
     }
 
     render() {
-    	let dropdownClass = 'hidden dropdown';
-    	let triggerClass = 'settings-trigger';
-    	let labelText = 'do not show animation';
-
-    	const introAnimationSettingEnabled = this.props.user.shouldSeeIntroAnimation();
+    	let dropdownClass;
+    	let triggerClass;
+    	let labelText;
 
     	if (this.state.shouldShowDropDown) {
     		dropdownClass = 'dropdown box';
     		triggerClass = 'settings-trigger opaque';
-    	}
+    	} else {
+            dropdownClass = 'hidden dropdown';
+            triggerClass = 'settings-trigger';
+        }
 
-    	if (introAnimationSettingEnabled) labelText = 'show animation';
+    	if (CurrentUser.shouldSeeIntroAnimation()) {
+            labelText = 'show animation';
+        } else {
+            labelText = 'do not show animation';
+        }
 
         return (
         	<div className="settings pull-right">
@@ -59,7 +72,8 @@ export default class SettingsComponent extends  React.Component {
         		<div className={dropdownClass}>
         			<h5 className="settings-title">settings</h5>
         			<label className="settings-label"><small>{labelText}</small></label>
-        			<a onClick={this.showIntroHandler.bind(this)} href="#" className="btn">show animation</a> <a href="#" className="btn">hide animation</a>
+        			<a onClick={this.showIntroHandler.bind(this)} href="#" className="btn">show animation</a>
+                    <a onClick={this.hideIntroHandler.bind(this)} href="#" className="btn">hide animation</a>
         		</div>
         	</div>
         );

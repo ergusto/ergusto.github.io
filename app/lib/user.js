@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-export default class User {
+class User {
 
 	constructor() {
 		this.user = {};
@@ -42,14 +42,24 @@ export default class User {
 		return this.user.username;
 	}
 
-	setUsername(username) {
-		this.user.username = username;
+	set(property, value) {
+		this.user[property] = value;
 		this.setLocalStorage();
+		this.broadcast();
+	}
+
+	setSetting(property, value) {
+		this.user.settings[property] = value;
+		this.setLocalStorage();
+		this.broadcast();
+	}
+
+	setUsername(username) {
+		this.set('username', username);
 	}
 
 	setShouldShowIntro(boolean) {
-		this.user.settings.showIntroAnimation = boolean;
-		this.setLocalStorage();
+		this.setSetting('showIntroAnimation', boolean);
 	}
 
 	shouldSeeIntroAnimation() {
@@ -60,10 +70,14 @@ export default class User {
 		this.callbacks.push(callback);
 	}
 
-	broadcast(model) {
+	broadcast() {
 		this.callbacks.forEach((callback) => {
-			callback.call(this, this.user);
+			callback.call(this);
 		});
 	}
 
 }
+
+const CurrentUser = new User();
+
+export default CurrentUser;

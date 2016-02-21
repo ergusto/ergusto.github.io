@@ -92,7 +92,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	// import styles for this component
+	// import generic/site wide styles
 	__webpack_require__(294);
 
 	// end of imports
@@ -102,9 +102,6 @@
 	var comments = new _comments2.default();
 
 	var tasks = new _tasks2.default();
-
-	var currentUser = new _user2.default();
-	currentUser.setShouldShowIntro(true);
 
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
@@ -118,7 +115,7 @@
 		_createClass(App, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				var shouldShowAnimation = currentUser.shouldSeeIntroAnimation();
+				var shouldShowAnimation = _user2.default.shouldSeeIntroAnimation();
 				if (shouldShowAnimation) window.scrollTo(0, 0);
 			}
 		}, {
@@ -128,7 +125,7 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_index2.default, { user: currentUser }),
+					_react2.default.createElement(_index2.default, null),
 					_react2.default.createElement(_index4.default, { comments: comments }),
 					_react2.default.createElement(_index6.default, { tasks: tasks })
 				);
@@ -19765,6 +19762,10 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
+	var _user = __webpack_require__(273);
+
+	var _user2 = _interopRequireDefault(_user);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19861,7 +19862,7 @@
 			value: function componentDidMount() {
 				var _this2 = this;
 
-				var shouldShowAnimation = this.props.user.shouldSeeIntroAnimation();
+				var shouldShowAnimation = _user2.default.shouldSeeIntroAnimation();
 				if (shouldShowAnimation) {
 					setTimeout(function () {
 						_this2.fergusToErgusto();
@@ -19871,8 +19872,7 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var user = this.props.user;
-				var shouldShowAnimation = user.shouldSeeIntroAnimation();
+				var shouldShowAnimation = _user2.default.shouldSeeIntroAnimation();
 				var panelClass = undefined;
 				var name = undefined;
 				var settingsClass = undefined;
@@ -19972,7 +19972,7 @@
 						_react2.default.createElement(
 							'div',
 							{ ref: 'settings', className: settingsClass },
-							_react2.default.createElement(_index2.default, { user: user })
+							_react2.default.createElement(_index2.default, null)
 						),
 						_react2.default.createElement(
 							'h1',
@@ -23904,6 +23904,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _user = __webpack_require__(273);
+
+	var _user2 = _interopRequireDefault(_user);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23925,6 +23929,12 @@
 
 	        _this.state = {};
 	        _this.state.shouldShowDropDown = false;
+	        var component = _this;
+
+	        _user2.default.register(function () {
+	            console.log('fuck');
+	            component.forceUpdate();
+	        });
 	        return _this;
 	    }
 
@@ -23944,7 +23954,7 @@
 	    }, {
 	        key: 'setUserIntroAnimationSetting',
 	        value: function setUserIntroAnimationSetting(setting) {
-	            this.props.user.setShouldShowIntro(setting);
+	            _user2.default.setShouldShowIntro(setting);
 	        }
 	    }, {
 	        key: 'showIntroHandler',
@@ -23961,18 +23971,23 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var dropdownClass = 'hidden dropdown';
-	            var triggerClass = 'settings-trigger';
-	            var labelText = 'do not show animation';
-
-	            var introAnimationSettingEnabled = this.props.user.shouldSeeIntroAnimation();
+	            var dropdownClass = undefined;
+	            var triggerClass = undefined;
+	            var labelText = undefined;
 
 	            if (this.state.shouldShowDropDown) {
 	                dropdownClass = 'dropdown box';
 	                triggerClass = 'settings-trigger opaque';
+	            } else {
+	                dropdownClass = 'hidden dropdown';
+	                triggerClass = 'settings-trigger';
 	            }
 
-	            if (introAnimationSettingEnabled) labelText = 'show animation';
+	            if (_user2.default.shouldSeeIntroAnimation()) {
+	                labelText = 'show animation';
+	            } else {
+	                labelText = 'do not show animation';
+	            }
 
 	            return _react2.default.createElement(
 	                'div',
@@ -24004,10 +24019,9 @@
 	                        { onClick: this.showIntroHandler.bind(this), href: '#', className: 'btn' },
 	                        'show animation'
 	                    ),
-	                    ' ',
 	                    _react2.default.createElement(
 	                        'a',
-	                        { href: '#', className: 'btn' },
+	                        { onClick: this.hideIntroHandler.bind(this), href: '#', className: 'btn' },
 	                        'hide animation'
 	                    )
 	                )
@@ -39772,16 +39786,28 @@
 				return this.user.username;
 			}
 		}, {
+			key: 'set',
+			value: function set(property, value) {
+				this.user[property] = value;
+				this.setLocalStorage();
+				this.broadcast();
+			}
+		}, {
+			key: 'setSetting',
+			value: function setSetting(property, value) {
+				this.user.settings[property] = value;
+				this.setLocalStorage();
+				this.broadcast();
+			}
+		}, {
 			key: 'setUsername',
 			value: function setUsername(username) {
-				this.user.username = username;
-				this.setLocalStorage();
+				this.set('username', username);
 			}
 		}, {
 			key: 'setShouldShowIntro',
 			value: function setShouldShowIntro(boolean) {
-				this.user.settings.showIntroAnimation = boolean;
-				this.setLocalStorage();
+				this.setSetting('showIntroAnimation', boolean);
 			}
 		}, {
 			key: 'shouldSeeIntroAnimation',
@@ -39795,11 +39821,11 @@
 			}
 		}, {
 			key: 'broadcast',
-			value: function broadcast(model) {
+			value: function broadcast() {
 				var _this = this;
 
 				this.callbacks.forEach(function (callback) {
-					callback.call(_this, _this.user);
+					callback.call(_this);
 				});
 			}
 		}]);
@@ -39807,7 +39833,9 @@
 		return User;
 	}();
 
-	exports.default = User;
+	var CurrentUser = new User();
+
+	exports.default = CurrentUser;
 
 /***/ },
 /* 274 */
@@ -40314,7 +40342,7 @@
 
 
 	// module
-	exports.push([module.id, ".settings {\n  display: inline-block;\n  color: black;\n  position: relative; }\n\n.settings-trigger {\n  margin: 0;\n  font-size: 2rem;\n  line-height: 2rem;\n  opacity: 0.7;\n  color: white; }\n\n.settings .dropdown {\n  bottom: -40px;\n  right: 10px;\n  min-width: 300px;\n  border-top: 0;\n  padding: 10px; }\n\n.settings-title {\n  margin: 0;\n  margin-bottom: 10px;\n  border-bottom: 1px solid black;\n  padding-bottom: 4px; }\n\n.settings-label {\n  margin-bottom: 6px; }\n\n@media only screen and (min-width: 480px) {\n  .settings .dropdown {\n    min-width: 400px;\n    bottom: -62px; } }\n\n.settings-trigger:hover, .settings-trigger.opaque {\n  opacity: 1; }\n\n@media only screen and (min-width: 768px) {\n  .settings-trigger {\n    font-size: 2rem;\n    line-height: 1.25rem;\n    margin-right: 10px; } }\n", ""]);
+	exports.push([module.id, ".settings {\n  display: inline-block;\n  color: black;\n  position: relative; }\n\n.settings-trigger {\n  margin: 0;\n  opacity: 0.7;\n  color: white;\n  font-size: 2rem;\n  line-height: 3rem; }\n\n@media only screen and (min-width: 320px) {\n  .settings-trigger {\n    font-size: 2rem;\n    line-height: 1.8rem; } }\n\n@media only screen and (min-width: 480px) {\n  .settings-trigger {\n    line-height: 1.4rem;\n    margin-right: 10px; } }\n\n.settings .dropdown {\n  right: 10px;\n  min-width: 300px;\n  border-top: 0;\n  padding: 10px;\n  bottom: -112px; }\n\n@media only screen and (min-width: 480px) {\n  .settings .dropdown {\n    min-width: 400px;\n    bottom: -112px; } }\n\n.settings-title {\n  margin: 0;\n  margin-bottom: 10px;\n  border-bottom: 1px solid black;\n  padding-bottom: 4px; }\n\n.settings .btn {\n  margin-right: 2px; }\n\n.settings-label {\n  margin-bottom: 6px; }\n\n.settings-trigger:hover, .settings-trigger.opaque {\n  opacity: 1; }\n", ""]);
 
 	// exports
 
@@ -40514,7 +40542,7 @@
 	exports.i(__webpack_require__(296), "");
 
 	// module
-	exports.push([module.id, "* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*:before,\n*:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n/**\n * For modern browsers\n * 1. The space content is one way to avoid an Opera bug when the\n *    contenteditable attribute is included anywhere else in the document.\n *    Otherwise it causes space to appear at the top and bottom of elements\n *    that are clearfixed.\n * 2. The use of `table` rather than `block` is only necessary if using\n *    `:before` to contain the top-margins of child elements.\n */\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  /* 1 */\n  display: table;\n  /* 2 */ }\n\n.clearfix:after {\n  clear: both; }\n\n/**\n * For IE 6/7 only\n * Include this rule to trigger hasLayout and contain floats.\n */\n.clearfix {\n  *zoom: 1; }\n\n.flex-col-container, .flex-col {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex; }\n\n.flex-col-container {\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.flex-col-inner {\n  width: 100%;\n  display: block; }\n\nlabel {\n  display: block;\n  color: #777;\n  margin-bottom: 4px; }\n\nform .btn {\n  margin-right: 2px; }\n\nform.padding {\n  padding: 15px 20px 20px; }\n\n.field {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 6px 8px;\n  margin-bottom: 10px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }\n\n.fieldCount {\n  color: #777;\n  font-size: 80%; }\n\n.field:focus {\n  outline: none;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);\n  border-color: black; }\n\n.form-error {\n  margin-bottom: 10px;\n  display: block; }\n\n.horizontal-list-menu {\n  list-style: none;\n  list-style-type: none;\n  padding: 0 20px;\n  margin: 0;\n  line-height: 26px; }\n\n.horizontal-list-menu li {\n  display: inline-block;\n  padding-right: 10px; }\n\n.horizontal-list-menu li.pull-right {\n  padding-right: 0px; }\n\n.horizontal-list-menu a:hover {\n  color: black; }\n\n.btn {\n  display: inline-block;\n  border: 1px solid #ccc;\n  background: white;\n  padding: 4px 8px;\n  text-decoration: none;\n  font-size: 90%;\n  color: #777;\n  border-radius: 0px; }\n\n.btn:hover {\n  border-color: black;\n  color: black;\n  cursor: pointer; }\n\n.btn:active {\n  border-color: #ccc;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.box {\n  background: white;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.dropdown {\n  position: absolute;\n  z-index: 1;\n  display: block;\n  bottom: -100%; }\n\nbody {\n  background: #FCFCFC;\n  font-size: 14px;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; }\n\na {\n  color: inherit; }\n\n.full-height {\n  min-height: 100vh;\n  padding: 20px;\n  -moz-align-items: center;\n  -webkit-align-items: center;\n  -ms-align-items: center;\n  align-items: center;\n  display: -moz-flex;\n  display: -webkit-flex;\n  display: -ms-flex;\n  display: flex;\n  -moz-justify-content: center;\n  -webkit-justify-content: center;\n  -ms-justify-content: center;\n  justify-content: center;\n  position: relative; }\n\n.example {\n  width: 100%; }\n\n.tasklist-example {\n  background: #c2e59c;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to left, #c2e59c, #64b3f4);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to left, #c2e59c, #64b3f4);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n\n.hide-overflow {\n  height: 100%;\n  overflow: hidden; }\n\n.opaque {\n  opacity: 1; }\n\n.black {\n  color: black; }\n\n.hidden {\n  display: none; }\n\n.seethrough {\n  opacity: 0; }\n\n.invisible {\n  visibility: hidden; }\n\n.muted {\n  color: #777; }\n\n.margin {\n  margin: 20px; }\n\n.margin-left {\n  margin-left: 20px; }\n\n.margin-bottom {\n  margin-bottom: 20px; }\n\n.margin-right {\n  margin-right: 20px; }\n\n.margin-top {\n  margin-top: 20px; }\n\n.padding {\n  padding: 20px; }\n\n.muted {\n  color: #777; }\n\n.pull-right {\n  float: right; }\n", ""]);
+	exports.push([module.id, "* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*:before,\n*:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n/**\n * For modern browsers\n * 1. The space content is one way to avoid an Opera bug when the\n *    contenteditable attribute is included anywhere else in the document.\n *    Otherwise it causes space to appear at the top and bottom of elements\n *    that are clearfixed.\n * 2. The use of `table` rather than `block` is only necessary if using\n *    `:before` to contain the top-margins of child elements.\n */\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  /* 1 */\n  display: table;\n  /* 2 */ }\n\n.clearfix:after {\n  clear: both; }\n\n/**\n * For IE 6/7 only\n * Include this rule to trigger hasLayout and contain floats.\n */\n.clearfix {\n  *zoom: 1; }\n\n.flex-col-container, .flex-col {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex; }\n\n.flex-col-container {\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.flex-col-inner {\n  width: 100%;\n  display: block; }\n\nlabel {\n  display: block;\n  color: #777;\n  margin-bottom: 4px; }\n\nform .btn {\n  margin-right: 2px; }\n\nform.padding {\n  padding: 15px 20px 20px; }\n\n.field {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 6px 8px;\n  margin-bottom: 10px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }\n\n.fieldCount {\n  color: #777;\n  font-size: 80%; }\n\n.field:focus {\n  outline: none;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);\n  border-color: black; }\n\n.form-error {\n  margin-bottom: 10px;\n  display: block; }\n\n.horizontal-list-menu {\n  list-style: none;\n  list-style-type: none;\n  padding: 0 20px;\n  margin: 0;\n  line-height: 26px; }\n\n.horizontal-list-menu li {\n  display: inline-block;\n  padding-right: 10px; }\n\n.horizontal-list-menu li.pull-right {\n  padding-right: 0px; }\n\n.horizontal-list-menu a:hover {\n  color: black; }\n\n.btn {\n  display: inline-block;\n  border: 1px solid #ccc;\n  background: white;\n  padding: 4px 8px;\n  text-decoration: none;\n  font-size: 90%;\n  color: #777;\n  border-radius: 0px; }\n\n.btn:hover {\n  border-color: black;\n  color: black;\n  cursor: pointer; }\n\n.btn:active {\n  border-color: #ccc;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.box {\n  background: white;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.dropdown {\n  position: absolute;\n  z-index: 1;\n  display: block; }\n\nbody {\n  background: #FCFCFC;\n  font-size: 14px;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; }\n\na {\n  color: inherit; }\n\n.full-height {\n  min-height: 100vh;\n  padding: 20px;\n  -moz-align-items: center;\n  -webkit-align-items: center;\n  -ms-align-items: center;\n  align-items: center;\n  display: -moz-flex;\n  display: -webkit-flex;\n  display: -ms-flex;\n  display: flex;\n  -moz-justify-content: center;\n  -webkit-justify-content: center;\n  -ms-justify-content: center;\n  justify-content: center;\n  position: relative; }\n\n.example {\n  width: 100%; }\n\n.tasklist-example {\n  background: #c2e59c;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to left, #c2e59c, #64b3f4);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to left, #c2e59c, #64b3f4);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n\n.hide-overflow {\n  height: 100%;\n  overflow: hidden; }\n\n.opaque {\n  opacity: 1; }\n\n.black {\n  color: black; }\n\n.hidden {\n  display: none; }\n\n.seethrough {\n  opacity: 0; }\n\n.invisible {\n  visibility: hidden; }\n\n.muted {\n  color: #777; }\n\n.margin {\n  margin: 20px; }\n\n.margin-left {\n  margin-left: 20px; }\n\n.margin-bottom {\n  margin-bottom: 20px; }\n\n.margin-right {\n  margin-right: 20px; }\n\n.margin-top {\n  margin-top: 20px; }\n\n.padding {\n  padding: 20px; }\n\n.muted {\n  color: #777; }\n\n.pull-right {\n  float: right; }\n", ""]);
 
 	// exports
 
