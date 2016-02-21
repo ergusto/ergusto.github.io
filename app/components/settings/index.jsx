@@ -1,8 +1,6 @@
 import _ from 'underscore';
 import React from 'react';
 
-import CurrentUser from '../../lib/user.js';
-
 // import styles for this component
 require('!style!css!sass!./styles/settings.scss');
 
@@ -13,11 +11,9 @@ export default class SettingsComponent extends  React.Component {
 
         this.state = {};
         this.state.shouldShowDropDown = false;
-        const component = this;
         
-        CurrentUser.register(function() {
-            console.log('fuck')
-            component.forceUpdate();
+        this.props.user.register(() => {
+            this.forceUpdate();
         });
     }
 
@@ -33,7 +29,7 @@ export default class SettingsComponent extends  React.Component {
     }
 
     setUserIntroAnimationSetting(setting) {
-    	CurrentUser.setShouldShowIntro(setting);
+    	this.props.user.setShouldShowIntro(setting);
     }
 
     showIntroHandler(event) {
@@ -59,10 +55,10 @@ export default class SettingsComponent extends  React.Component {
             triggerClass = 'settings-trigger';
         }
 
-    	if (CurrentUser.shouldSeeIntroAnimation()) {
-            labelText = 'show animation';
+    	if (this.props.user.shouldSeeIntroAnimation()) {
+            labelText = 'show intro animation';
         } else {
-            labelText = 'do not show animation';
+            labelText = 'do not show intro animation';
         }
 
         return (

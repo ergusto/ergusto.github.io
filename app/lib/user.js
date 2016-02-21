@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-class User {
+export default class User {
 
 	constructor() {
 		this.user = {};
@@ -14,8 +14,8 @@ class User {
 		this.localStorageName = 'ERGUSTO:user';
 
 		if (window.localStorage) {
-			const user = this.getUserFromLocalStorage();
 			this.usingLocalStorage = true;
+			const user = this.getUserFromLocalStorage();
 			if (user) this.user = user;
 		} else {
 			this.usingLocalStorage = false;
@@ -23,19 +23,20 @@ class User {
 	}
 
 	getUserFromLocalStorage() {
+		if (!this.usingLocalStorage) return;
 		const store = localStorage.getItem(this.localStorageName);
 		return JSON.parse(store);
 	}
 
 	clearLocalStorage() {
+		if (!this.usingLocalStorage) return;
 		localStorage.setItem(this.localStorageName, '');
 	}
 
 	setLocalStorage() {
-		if (this.usingLocalStorage) {
-			const store = JSON.stringify(this.user);
-			localStorage.setItem(this.localStorageName, store);
-		}
+		if (!this.usingLocalStorage) return;
+		const store = JSON.stringify(this.user);
+		localStorage.setItem(this.localStorageName, store);
 	}
 
 	getUser() {
@@ -77,7 +78,3 @@ class User {
 	}
 
 }
-
-const CurrentUser = new User();
-
-export default CurrentUser;

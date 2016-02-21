@@ -9,7 +9,7 @@ import CalendarComponent from './components/calendar/index.jsx';
 import Comments from './collections/comments.js';
 import Tasks from './collections/tasks.js';
 
-import CurrentUser from './lib/user.js';
+import User from './lib/user.js';
 
 // import generic/site wide styles
 require('!style!css!sass!./styles/app.scss');
@@ -18,14 +18,14 @@ require('!style!css!sass!./styles/app.scss');
 
 const container = document.getElementById('container');
 
+const user = new User();
 const comments = new Comments();
-
 const tasks = new Tasks();
 
 class App extends React.Component {
 
 	componentDidMount() {
-		const shouldShowAnimation = CurrentUser.shouldSeeIntroAnimation();
+		const shouldShowAnimation = this.props.user.shouldSeeIntroAnimation();
 		if (shouldShowAnimation) window.scrollTo(0,0);  
 	}
 
@@ -33,7 +33,7 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<IntroductionComponent />
+				<IntroductionComponent user={this.props.user} />
 				{/*<CalendarComponent />*/}
 				<CommentListComponent comments={comments} />
 				<TaskManagerComponent tasks={tasks} />
@@ -44,4 +44,4 @@ class App extends React.Component {
 
 }
 
-ReactDOM.render(<App />, container);
+ReactDOM.render(<App user={user} />, container);

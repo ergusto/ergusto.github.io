@@ -99,8 +99,8 @@
 
 	var container = document.getElementById('container');
 
+	var user = new _user2.default();
 	var comments = new _comments2.default();
-
 	var tasks = new _tasks2.default();
 
 	var App = function (_React$Component) {
@@ -115,7 +115,7 @@
 		_createClass(App, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				var shouldShowAnimation = _user2.default.shouldSeeIntroAnimation();
+				var shouldShowAnimation = this.props.user.shouldSeeIntroAnimation();
 				if (shouldShowAnimation) window.scrollTo(0, 0);
 			}
 		}, {
@@ -125,7 +125,7 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_index2.default, null),
+					_react2.default.createElement(_index2.default, { user: this.props.user }),
 					_react2.default.createElement(_index4.default, { comments: comments }),
 					_react2.default.createElement(_index6.default, { tasks: tasks })
 				);
@@ -135,7 +135,7 @@
 		return App;
 	}(_react2.default.Component);
 
-	_reactDom2.default.render(_react2.default.createElement(App, null), container);
+	_reactDom2.default.render(_react2.default.createElement(App, { user: user }), container);
 
 /***/ },
 /* 1 */
@@ -19762,10 +19762,6 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _user = __webpack_require__(273);
-
-	var _user2 = _interopRequireDefault(_user);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19862,7 +19858,8 @@
 			value: function componentDidMount() {
 				var _this2 = this;
 
-				var shouldShowAnimation = _user2.default.shouldSeeIntroAnimation();
+				var user = this.props.user;
+				var shouldShowAnimation = user.shouldSeeIntroAnimation();
 				if (shouldShowAnimation) {
 					setTimeout(function () {
 						_this2.fergusToErgusto();
@@ -19872,7 +19869,8 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var shouldShowAnimation = _user2.default.shouldSeeIntroAnimation();
+				var user = this.props.user;
+				var shouldShowAnimation = user.shouldSeeIntroAnimation();
 				var panelClass = undefined;
 				var name = undefined;
 				var settingsClass = undefined;
@@ -19972,7 +19970,7 @@
 						_react2.default.createElement(
 							'div',
 							{ ref: 'settings', className: settingsClass },
-							_react2.default.createElement(_index2.default, null)
+							_react2.default.createElement(_index2.default, { user: user })
 						),
 						_react2.default.createElement(
 							'h1',
@@ -23904,10 +23902,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _user = __webpack_require__(273);
-
-	var _user2 = _interopRequireDefault(_user);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23929,11 +23923,9 @@
 
 	        _this.state = {};
 	        _this.state.shouldShowDropDown = false;
-	        var component = _this;
 
-	        _user2.default.register(function () {
-	            console.log('fuck');
-	            component.forceUpdate();
+	        _this.props.user.register(function () {
+	            _this.forceUpdate();
 	        });
 	        return _this;
 	    }
@@ -23954,7 +23946,7 @@
 	    }, {
 	        key: 'setUserIntroAnimationSetting',
 	        value: function setUserIntroAnimationSetting(setting) {
-	            _user2.default.setShouldShowIntro(setting);
+	            this.props.user.setShouldShowIntro(setting);
 	        }
 	    }, {
 	        key: 'showIntroHandler',
@@ -23983,10 +23975,10 @@
 	                triggerClass = 'settings-trigger';
 	            }
 
-	            if (_user2.default.shouldSeeIntroAnimation()) {
-	                labelText = 'show animation';
+	            if (this.props.user.shouldSeeIntroAnimation()) {
+	                labelText = 'show intro animation';
 	            } else {
-	                labelText = 'do not show animation';
+	                labelText = 'do not show intro animation';
 	            }
 
 	            return _react2.default.createElement(
@@ -39753,8 +39745,8 @@
 			this.localStorageName = 'ERGUSTO:user';
 
 			if (window.localStorage) {
-				var user = this.getUserFromLocalStorage();
 				this.usingLocalStorage = true;
+				var user = this.getUserFromLocalStorage();
 				if (user) this.user = user;
 			} else {
 				this.usingLocalStorage = false;
@@ -39764,21 +39756,22 @@
 		_createClass(User, [{
 			key: 'getUserFromLocalStorage',
 			value: function getUserFromLocalStorage() {
+				if (!this.usingLocalStorage) return;
 				var store = localStorage.getItem(this.localStorageName);
 				return JSON.parse(store);
 			}
 		}, {
 			key: 'clearLocalStorage',
 			value: function clearLocalStorage() {
+				if (!this.usingLocalStorage) return;
 				localStorage.setItem(this.localStorageName, '');
 			}
 		}, {
 			key: 'setLocalStorage',
 			value: function setLocalStorage() {
-				if (this.usingLocalStorage) {
-					var store = JSON.stringify(this.user);
-					localStorage.setItem(this.localStorageName, store);
-				}
+				if (!this.usingLocalStorage) return;
+				var store = JSON.stringify(this.user);
+				localStorage.setItem(this.localStorageName, store);
 			}
 		}, {
 			key: 'getUser',
@@ -39833,9 +39826,7 @@
 		return User;
 	}();
 
-	var CurrentUser = new User();
-
-	exports.default = CurrentUser;
+	exports.default = User;
 
 /***/ },
 /* 274 */
