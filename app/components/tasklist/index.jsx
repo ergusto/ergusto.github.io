@@ -115,9 +115,7 @@ class TaskDetail extends React.Component {
 		return (
 			<div className="task-detail">
 				<h3>{task.title}</h3>
-				<div className="">
-					{body}
-				</div>
+				{body}
 			</div>
 		)
 	}

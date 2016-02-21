@@ -8,7 +8,7 @@ export default class Comments extends Collection {
 				username: 'ergusto',
 				date: new Date,
 			},
-			{	text: 'Your changes are visible only to you.',
+			{	text: 'Most features are backed by the localStorage API, so anything you do here will persist between visits, but will only be visible to you.',
 				username: 'ergusto',
 				date: new Date,
 			},

@@ -9,9 +9,11 @@ export default class Collection {
 		this.idCount = 0;
 		this.name = this.constructor.name;
 
-		if (localStorage) {
+		if (window.localStorage) {
+			this.usingLocalStorage = true;
 			this.setUpLocalStorage();
 		} else {
+			this.usingLocalStorage = false;
 			this.addDefaults();
 		}
 
@@ -22,7 +24,7 @@ export default class Collection {
 		this.hasLocallyStoredModels = this._hasLocallyStoredModels();
 		this.register((model) =>  {
 			if (!this.hasLocallyStoredModels) this.hasLocallyStoredModels = true;
-			if (model) this.addModelToLocalStorage(model);
+			if (model && this.usingLocalStorage) this.addModelToLocalStorage(model);
 		});
 		if (this.hasLocallyStoredModels) {
 			const storeList = this.getListFromLocalStorage();
@@ -109,7 +111,9 @@ export default class Collection {
 			id = model;
 		}
 		delete this.models[id];
-		this.removeModelFromLocalStorageById(id);
+		if (this.usingLocalStorage) {
+			this.removeModelFromLocalStorageById(id);
+		}
 		this.broadcast();
 	}
 

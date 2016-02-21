@@ -19826,8 +19826,8 @@
 													body.removeEventListener('touchmove', prevent);
 												}, 200);
 											}, 500);
-										}, 0);
-									}, 0);
+										});
+									});
 								}, 300);
 							}, 300);
 						}, 300);
@@ -37193,11 +37193,7 @@
 						null,
 						task.title
 					),
-					_react2.default.createElement(
-						'div',
-						{ className: '' },
-						body
-					)
+					body
 				);
 			}
 		}]);
@@ -37538,7 +37534,7 @@
 				return [{ text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
 					username: 'ergusto',
 					date: new Date()
-				}, { text: 'Your changes are visible only to you.',
+				}, { text: 'Most features are backed by the localStorage API, so anything you do here will persist between visits, but will only be visible to you.',
 					username: 'ergusto',
 					date: new Date()
 				}];
@@ -37580,9 +37576,11 @@
 			this.idCount = 0;
 			this.name = this.constructor.name;
 
-			if (localStorage) {
+			if (window.localStorage) {
+				this.usingLocalStorage = true;
 				this.setUpLocalStorage();
 			} else {
+				this.usingLocalStorage = false;
 				this.addDefaults();
 			}
 		}
@@ -37596,7 +37594,7 @@
 				this.hasLocallyStoredModels = this._hasLocallyStoredModels();
 				this.register(function (model) {
 					if (!_this.hasLocallyStoredModels) _this.hasLocallyStoredModels = true;
-					if (model) _this.addModelToLocalStorage(model);
+					if (model && _this.usingLocalStorage) _this.addModelToLocalStorage(model);
 				});
 				if (this.hasLocallyStoredModels) {
 					var storeList = this.getListFromLocalStorage();
@@ -37701,7 +37699,9 @@
 					id = model;
 				}
 				delete this.models[id];
-				this.removeModelFromLocalStorageById(id);
+				if (this.usingLocalStorage) {
+					this.removeModelFromLocalStorageById(id);
+				}
 				this.broadcast();
 			}
 		}, {
@@ -37773,7 +37773,7 @@
 		_createClass(Tasks, [{
 			key: 'defaultModels',
 			value: function defaultModels() {
-				return [{ title: 'Get the groceries', text: 'Some peas, some toothpaste, and some fish stockings.' }, { title: 'Clean the bathroom', text: 'It\'s dirty!' }];
+				return [{ title: 'Get the groceries', text: 'Some peas, some toothpaste, and 7 courgettes.' }, { title: 'Clean the bathroom', text: 'It\'s dirty!' }];
 			}
 		}]);
 
