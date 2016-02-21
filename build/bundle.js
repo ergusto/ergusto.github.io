@@ -101,7 +101,7 @@
 	var tasks = new _tasks2.default();
 
 	var currentUser = new _user2.default();
-	currentUser.setShouldShowIntro(true);
+	currentUser.setShouldShowIntro(false);
 
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
@@ -19757,6 +19757,10 @@
 
 	var _velocityAnimate2 = _interopRequireDefault(_velocityAnimate);
 
+	var _index = __webpack_require__(268);
+
+	var _index2 = _interopRequireDefault(_index);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19779,9 +19783,12 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(IntroductionComponent).call(this, props));
 
-			window.onbeforeunload = function () {
-				window.scrollTo(0, 0);
-			};
+			var shouldShowAnimation = _this.props.user.shouldShowIntroAnimation();
+			if (shouldShowAnimation) {
+				window.onbeforeunload = function () {
+					window.scrollTo(0, 0);
+				};
+			}
 			return _this;
 		}
 
@@ -23867,8 +23874,6 @@
 		value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -23879,6 +23884,10 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
+	var _comment = __webpack_require__(269);
+
+	var _comment2 = _interopRequireDefault(_comment);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23887,286 +23896,29 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var CommentForm = function (_React$Component) {
-		_inherits(CommentForm, _React$Component);
-
-		function CommentForm(props) {
-			_classCallCheck(this, CommentForm);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentForm).call(this, props));
-
-			var commentValue = _this.props.commentValue || '';
-			_this.state = {};
-			_this.state.commentLength = commentValue.length;
-
-			// http://stackoverflow.com/a/31362350/4566267
-			_this.cancelHandler = _this.cancelHandler.bind(_this);
-			_this.submitHandler = _this.submitHandler.bind(_this);
-			return _this;
-		}
-
-		_createClass(CommentForm, [{
-			key: 'cancelHandler',
-			value: function cancelHandler(event) {
-				event.preventDefault();
-				this.props.hideForm();
-			}
-		}, {
-			key: 'submitHandler',
-			value: function submitHandler(event) {
-				event.preventDefault();
-				var comment = this.refs.commentInput.value;
-
-				if (this.props.submitCallback) this.props.submitCallback(comment);
-				this.refs.commentInput.value = '';
-				this.props.hideForm();
-			}
-		}, {
-			key: 'setCommentLength',
-			value: function setCommentLength(length) {
-				var length = length || this.refs.commentInput.value.length;
-				this.setState({
-					commentLength: length
-				});
-			}
-		}, {
-			key: 'changeHandler',
-			value: function changeHandler() {
-				this.setCommentLength();
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var shouldShowForm = this.props.shouldShowForm;
-				var formTitle = this.props.formTitle || 'comment';
-				var commentValue = this.props.commentValue || '';
-
-				if (!shouldShowForm) return false;
-
-				return _react2.default.createElement(
-					'form',
-					{ onSubmit: this.submitHandler.bind(this), className: 'comment-form box padding margin-top' },
-					_react2.default.createElement(
-						'span',
-						{ className: 'fieldCount pull-right' },
-						this.state.commentLength
-					),
-					_react2.default.createElement(
-						'label',
-						{ httmlFor: 'comment' },
-						_react2.default.createElement(
-							'small',
-							null,
-							formTitle
-						)
-					),
-					_react2.default.createElement('textarea', { onChange: this.changeHandler.bind(this), ref: 'commentInput', className: 'field', name: 'comment', defaultValue: commentValue }),
-					_react2.default.createElement(
-						'div',
-						{ className: 'btn-group' },
-						_react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' }),
-						_react2.default.createElement(
-							'a',
-							{ className: 'btn', href: '#', onClick: this.cancelHandler.bind(this) },
-							'cancel'
-						)
-					)
-				);
-			}
-		}]);
-
-		return CommentForm;
-	}(_react2.default.Component);
-
-	var Comment = function (_React$Component2) {
-		_inherits(Comment, _React$Component2);
-
-		function Comment(props) {
-			_classCallCheck(this, Comment);
-
-			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).call(this, props));
-
-			_this2.state = {};
-			_this2.state.shouldShowReplyForm = false;
-			_this2.state.shouldShowEditForm = false;
-			_this2.state.comment = '';
-
-			// http://stackoverflow.com/a/31362350/4566267
-			_this2.replyHandler = _this2.replyHandler.bind(_this2);
-			_this2.editHandler = _this2.editHandler.bind(_this2);
-			_this2.changeComment = _this2.changeComment.bind(_this2);
-			return _this2;
-		}
-
-		_createClass(Comment, [{
-			key: 'showEditForm',
-			value: function showEditForm() {
-				this.hideReplyForm();
-				this.setState({
-					shouldShowEditForm: true
-				});
-			}
-		}, {
-			key: 'hideEditForm',
-			value: function hideEditForm() {
-				this.setState({
-					shouldShowEditForm: false
-				});
-			}
-		}, {
-			key: 'showReplyForm',
-			value: function showReplyForm() {
-				this.hideEditForm();
-				this.setState({
-					shouldShowReplyForm: true
-				});
-			}
-		}, {
-			key: 'hideReplyForm',
-			value: function hideReplyForm() {
-				this.setState({
-					shouldShowReplyForm: false
-				});
-			}
-		}, {
-			key: 'replyHandler',
-			value: function replyHandler(event) {
-				event.preventDefault();
-				this.showReplyForm();
-			}
-		}, {
-			key: 'editHandler',
-			value: function editHandler(event) {
-				event.preventDefault();
-				this.showEditForm();
-			}
-		}, {
-			key: 'addNewComment',
-			value: function addNewComment(comment) {
-				this.props.comments.add(comment);
-			}
-		}, {
-			key: 'removeHandler',
-			value: function removeHandler(comment, event) {
-				event.preventDefault();
-				this.props.comments.remove(comment.id);
-			}
-		}, {
-			key: 'changeComment',
-			value: function changeComment(comment) {
-				this.setState({
-					comment: comment
-				});
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var comment = this.props.comment;
-				var commentValue = this.state.comment && this.state.comment.length ? this.state.comment : comment.text;
-				var date = (0, _moment2.default)(this.props.createdAt).fromNow();
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'div',
-						{ className: 'comment-item box' },
-						_react2.default.createElement(
-							'header',
-							{ className: 'comment-item-header clearfix' },
-							_react2.default.createElement(
-								'p',
-								{ className: 'muted' },
-								_react2.default.createElement(
-									'small',
-									null,
-									this.props.comment.username
-								)
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'comment-item-body' },
-							_react2.default.createElement(
-								'p',
-								null,
-								commentValue
-							)
-						),
-						_react2.default.createElement(
-							'footer',
-							{ className: 'comment-item-footer clearfix' },
-							_react2.default.createElement(
-								'ul',
-								{ className: 'horizontal-list-menu muted' },
-								_react2.default.createElement(
-									'li',
-									{ className: 'pull-right' },
-									date
-								),
-								_react2.default.createElement(
-									'li',
-									null,
-									_react2.default.createElement(
-										'a',
-										{ href: '#', onClick: this.replyHandler.bind(this) },
-										'reply'
-									)
-								),
-								_react2.default.createElement(
-									'li',
-									null,
-									_react2.default.createElement(
-										'a',
-										{ href: '#', onClick: this.editHandler.bind(this) },
-										'edit'
-									)
-								),
-								_react2.default.createElement(
-									'li',
-									null,
-									_react2.default.createElement(
-										'a',
-										{ href: '#', onClick: this.removeHandler.bind(this, comment) },
-										'remove'
-									)
-								)
-							)
-						)
-					),
-					_react2.default.createElement(CommentForm, { formTitle: 'reply', shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.addNewComment.bind(this), hideForm: this.hideReplyForm.bind(this) }),
-					_react2.default.createElement(CommentForm, _extends({}, this.props, { formTitle: 'edit', commentValue: comment, submitCallback: this.changeComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, hideForm: this.hideEditForm.bind(this) }))
-				);
-			}
-		}]);
-
-		return Comment;
-	}(_react2.default.Component);
-
-	;
-
-	var CommentListComponent = function (_React$Component3) {
-		_inherits(CommentListComponent, _React$Component3);
+	var CommentListComponent = function (_React$Component) {
+		_inherits(CommentListComponent, _React$Component);
 
 		function CommentListComponent(props) {
 			_classCallCheck(this, CommentListComponent);
 
-			var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentListComponent).call(this, props));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentListComponent).call(this, props));
 
-			props.comments.register(_this3.forceUpdate.bind(_this3));
-			return _this3;
+			props.comments.register(_this.forceUpdate.bind(_this));
+			return _this;
 		}
 
 		_createClass(CommentListComponent, [{
 			key: 'render',
 			value: function render() {
-				var _this4 = this;
+				var _this2 = this;
 
 				var comments = this.props.comments.get();
 				var content = undefined;
 
 				if (comments.length) {
 					content = comments.map(function (comment) {
-						return _react2.default.createElement(Comment, { key: comment.id, comment: comment, comments: _this4.props.comments });
+						return _react2.default.createElement(_comment2.default, { key: comment.id, comment: comment, comments: _this2.props.comments });
 					});
 				}
 
@@ -37025,6 +36777,18 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _form = __webpack_require__(271);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	var _detail = __webpack_require__(272);
+
+	var _detail2 = _interopRequireDefault(_detail);
+
+	var _list = __webpack_require__(273);
+
+	var _list2 = _interopRequireDefault(_list);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37033,218 +36797,23 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var TaskForm = function (_React$Component) {
-		_inherits(TaskForm, _React$Component);
-
-		function TaskForm(props) {
-			_classCallCheck(this, TaskForm);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskForm).call(this, props));
-
-			_this.state = {};
-			_this.state.formError = '';
-			return _this;
-		}
-
-		_createClass(TaskForm, [{
-			key: 'addError',
-			value: function addError(error) {
-				this.setState({
-					formError: error
-				});
-			}
-		}, {
-			key: 'clearError',
-			value: function clearError() {
-				this.setState({
-					formError: null
-				});
-			}
-		}, {
-			key: 'submitHandler',
-			value: function submitHandler(event) {
-				event.preventDefault();
-				var title = this.refs.taskTitleInput.value;
-				var text = this.refs.taskTextInput.value;
-				this.clearError();
-				if (title.trim().length) {
-					var task = this.props.tasks.addModel({ title: title, text: text });
-					this.props.setActiveTask(task.id);
-				} else {
-					this.addError('please enter a title');
-				}
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var err = this.state.formError;
-				var errContent;
-
-				if (err) {
-					errContent = _react2.default.createElement(
-						'span',
-						{ className: 'form-error' },
-						err
-					);
-				}
-
-				return _react2.default.createElement(
-					'div',
-					{ className: 'task-form-container' },
-					_react2.default.createElement(
-						'h3',
-						null,
-						'new task'
-					),
-					_react2.default.createElement(
-						'form',
-						{ onSubmit: this.submitHandler.bind(this), className: 'task-form' },
-						_react2.default.createElement('input', { ref: 'taskTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
-						errContent,
-						_react2.default.createElement('textarea', { ref: 'taskTextInput', placeholder: 'text', className: 'field', name: 'text' }),
-						_react2.default.createElement(
-							'a',
-							{ onClick: this.submitHandler.bind(this), className: 'btn', href: '#' },
-							'submit'
-						)
-					)
-				);
-			}
-		}]);
-
-		return TaskForm;
-	}(_react2.default.Component);
-
-	var TaskList = function (_React$Component2) {
-		_inherits(TaskList, _React$Component2);
-
-		function TaskList(props) {
-			_classCallCheck(this, TaskList);
-
-			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskList).call(this, props));
-
-			var component = _this2;
-			props.tasks.register(function () {
-				component.forceUpdate();
-			});
-			return _this2;
-		}
-
-		_createClass(TaskList, [{
-			key: 'clickHandler',
-			value: function clickHandler(id, event) {
-				event.preventDefault();
-				this.props.setActiveTask(id);
-			}
-		}, {
-			key: 'removeHandler',
-			value: function removeHandler(id, event) {
-				event.preventDefault();
-				this.props.tasks.remove(id);
-				this.props.clearActiveTask();
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _this3 = this;
-
-				var tasks = this.props.tasks.get();
-				var content = undefined;
-
-				if (tasks.length) {
-					content = tasks.map(function (task) {
-						return _react2.default.createElement(
-							'li',
-							{ key: task.id },
-							_react2.default.createElement(
-								'a',
-								{ href: '#', onClick: _this3.clickHandler.bind(_this3, task.id) },
-								task.title
-							),
-							' ',
-							_react2.default.createElement(
-								'a',
-								{ onClick: _this3.removeHandler.bind(_this3, task.id), href: '#', className: 'pull-right remove-task' },
-								'x'
-							)
-						);
-					});
-				} else {
-					content = _react2.default.createElement(
-						'li',
-						null,
-						'No tasks!'
-					);
-				}
-
-				return _react2.default.createElement(
-					'ul',
-					{ className: 'task-list' },
-					content
-				);
-			}
-		}]);
-
-		return TaskList;
-	}(_react2.default.Component);
-
-	var TaskDetail = function (_React$Component3) {
-		_inherits(TaskDetail, _React$Component3);
-
-		function TaskDetail() {
-			_classCallCheck(this, TaskDetail);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(TaskDetail).apply(this, arguments));
-		}
-
-		_createClass(TaskDetail, [{
-			key: 'render',
-			value: function render() {
-				var task = this.props.task;
-
-				var body;
-
-				if (task.text) {
-					body = _react2.default.createElement(
-						'p',
-						null,
-						task.text
-					);
-				}
-
-				return _react2.default.createElement(
-					'div',
-					{ className: 'task-detail' },
-					_react2.default.createElement(
-						'h3',
-						null,
-						task.title
-					),
-					body
-				);
-			}
-		}]);
-
-		return TaskDetail;
-	}(_react2.default.Component);
-
-	var TaskManagerComponent = function (_React$Component4) {
-		_inherits(TaskManagerComponent, _React$Component4);
+	var TaskManagerComponent = function (_React$Component) {
+		_inherits(TaskManagerComponent, _React$Component);
 
 		function TaskManagerComponent(props) {
 			_classCallCheck(this, TaskManagerComponent);
 
-			var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskManagerComponent).call(this, props));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskManagerComponent).call(this, props));
 
-			var component = _this5;
+			var component = _this;
 			props.tasks.register(function () {
 				component.forceUpdate();
 			});
 
-			_this5.state = {};
-			_this5.state.shouldShowNewTaskForm = true;
-			_this5.state.activeTaskId = null;
-			return _this5;
+			_this.state = {};
+			_this.state.shouldShowNewTaskForm = true;
+			_this.state.activeTaskId = null;
+			return _this;
 		}
 
 		_createClass(TaskManagerComponent, [{
@@ -37291,11 +36860,11 @@
 				var content;
 
 				if (this.state.shouldShowNewTaskForm) {
-					content = _react2.default.createElement(TaskForm, { tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this) });
+					content = _react2.default.createElement(_form2.default, { tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this) });
 				} else {
 					if (this.state.activeTaskId) {
 						var task = this.props.tasks.get(this.state.activeTaskId);
-						content = _react2.default.createElement(TaskDetail, { task: task, tasks: this.props.tasks });
+						content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks });
 					} else {
 						content = _react2.default.createElement(
 							'div',
@@ -37335,7 +36904,7 @@
 										'tasks'
 									),
 									_react2.default.createElement('hr', null),
-									_react2.default.createElement(TaskList, { tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this), getActiveTaskId: this.getActiveTaskId.bind(this), clearActiveTask: this.clearActiveTask.bind(this) })
+									_react2.default.createElement(_list2.default, { tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this), getActiveTaskId: this.getActiveTaskId.bind(this), clearActiveTask: this.clearActiveTask.bind(this) })
 								)
 							),
 							_react2.default.createElement(
@@ -39467,6 +39036,650 @@
 	}();
 
 	exports.default = User;
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _underscore = __webpack_require__(266);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SettingsComponent = function (_React$Component) {
+	    _inherits(SettingsComponent, _React$Component);
+
+	    function SettingsComponent(props) {
+	        _classCallCheck(this, SettingsComponent);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SettingsComponent).call(this, props));
+	    }
+
+	    _createClass(SettingsComponent, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', null);
+	        }
+	    }]);
+
+	    return SettingsComponent;
+	}(_react2.default.Component);
+
+	exports.default = SettingsComponent;
+
+/***/ },
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _moment = __webpack_require__(162);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _form = __webpack_require__(270);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CommentComponent = function (_React$Component) {
+	    _inherits(CommentComponent, _React$Component);
+
+	    function CommentComponent(props) {
+	        _classCallCheck(this, CommentComponent);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentComponent).call(this, props));
+
+	        _this.state = {};
+	        _this.state.shouldShowReplyForm = false;
+	        _this.state.shouldShowEditForm = false;
+	        _this.state.comment = '';
+
+	        // http://stackoverflow.com/a/31362350/4566267
+	        _this.replyHandler = _this.replyHandler.bind(_this);
+	        _this.editHandler = _this.editHandler.bind(_this);
+	        _this.changeComment = _this.changeComment.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(CommentComponent, [{
+	        key: 'showEditForm',
+	        value: function showEditForm() {
+	            this.hideReplyForm();
+	            this.setState({
+	                shouldShowEditForm: true
+	            });
+	        }
+	    }, {
+	        key: 'hideEditForm',
+	        value: function hideEditForm() {
+	            this.setState({
+	                shouldShowEditForm: false
+	            });
+	        }
+	    }, {
+	        key: 'showReplyForm',
+	        value: function showReplyForm() {
+	            this.hideEditForm();
+	            this.setState({
+	                shouldShowReplyForm: true
+	            });
+	        }
+	    }, {
+	        key: 'hideReplyForm',
+	        value: function hideReplyForm() {
+	            this.setState({
+	                shouldShowReplyForm: false
+	            });
+	        }
+	    }, {
+	        key: 'replyHandler',
+	        value: function replyHandler(event) {
+	            event.preventDefault();
+	            this.showReplyForm();
+	        }
+	    }, {
+	        key: 'editHandler',
+	        value: function editHandler(event) {
+	            event.preventDefault();
+	            this.showEditForm();
+	        }
+	    }, {
+	        key: 'addNewComment',
+	        value: function addNewComment(comment) {
+	            this.props.comments.add(comment);
+	        }
+	    }, {
+	        key: 'removeHandler',
+	        value: function removeHandler(comment, event) {
+	            event.preventDefault();
+	            this.props.comments.remove(comment.id);
+	        }
+	    }, {
+	        key: 'changeComment',
+	        value: function changeComment(comment) {
+	            this.setState({
+	                comment: comment
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var comment = this.props.comment;
+	            var commentValue = this.state.comment && this.state.comment.length ? this.state.comment : comment.text;
+	            var date = (0, _moment2.default)(this.props.createdAt).fromNow();
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'comment-item box' },
+	                    _react2.default.createElement(
+	                        'header',
+	                        { className: 'comment-item-header clearfix' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'muted' },
+	                            _react2.default.createElement(
+	                                'small',
+	                                null,
+	                                this.props.comment.username
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'comment-item-body' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            commentValue
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'footer',
+	                        { className: 'comment-item-footer clearfix' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            { className: 'horizontal-list-menu muted' },
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'pull-right' },
+	                                date
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#', onClick: this.replyHandler.bind(this) },
+	                                    'reply'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#', onClick: this.editHandler.bind(this) },
+	                                    'edit'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#', onClick: this.removeHandler.bind(this, comment) },
+	                                    'remove'
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_form2.default, { formTitle: 'reply', shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.addNewComment.bind(this), hideForm: this.hideReplyForm.bind(this) }),
+	                _react2.default.createElement(_form2.default, _extends({}, this.props, { formTitle: 'edit', commentValue: comment, submitCallback: this.changeComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, hideForm: this.hideEditForm.bind(this) }))
+	            );
+	        }
+	    }]);
+
+	    return CommentComponent;
+	}(_react2.default.Component);
+
+	exports.default = CommentComponent;
+	;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _moment = __webpack_require__(162);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CommentFormComponent = function (_React$Component) {
+		_inherits(CommentFormComponent, _React$Component);
+
+		function CommentFormComponent(props) {
+			_classCallCheck(this, CommentFormComponent);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentFormComponent).call(this, props));
+
+			var commentValue = _this.props.commentValue || '';
+			_this.state = {};
+			_this.state.commentLength = commentValue.length;
+
+			// http://stackoverflow.com/a/31362350/4566267
+			_this.cancelHandler = _this.cancelHandler.bind(_this);
+			_this.submitHandler = _this.submitHandler.bind(_this);
+			return _this;
+		}
+
+		_createClass(CommentFormComponent, [{
+			key: 'cancelHandler',
+			value: function cancelHandler(event) {
+				event.preventDefault();
+				this.props.hideForm();
+			}
+		}, {
+			key: 'submitHandler',
+			value: function submitHandler(event) {
+				event.preventDefault();
+				var comment = this.refs.commentInput.value;
+
+				if (this.props.submitCallback) this.props.submitCallback(comment);
+				this.refs.commentInput.value = '';
+				this.props.hideForm();
+			}
+		}, {
+			key: 'setCommentLength',
+			value: function setCommentLength(length) {
+				var length = length || this.refs.commentInput.value.length;
+				this.setState({
+					commentLength: length
+				});
+			}
+		}, {
+			key: 'changeHandler',
+			value: function changeHandler() {
+				this.setCommentLength();
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var shouldShowForm = this.props.shouldShowForm;
+				var formTitle = this.props.formTitle || 'comment';
+				var commentValue = this.props.commentValue || '';
+
+				if (!shouldShowForm) return false;
+
+				return _react2.default.createElement(
+					'form',
+					{ onSubmit: this.submitHandler.bind(this), className: 'comment-form box padding margin-top' },
+					_react2.default.createElement(
+						'span',
+						{ className: 'fieldCount pull-right' },
+						this.state.commentLength
+					),
+					_react2.default.createElement(
+						'label',
+						{ httmlFor: 'comment' },
+						_react2.default.createElement(
+							'small',
+							null,
+							formTitle
+						)
+					),
+					_react2.default.createElement('textarea', { onChange: this.changeHandler.bind(this), ref: 'commentInput', className: 'field', name: 'comment', defaultValue: commentValue }),
+					_react2.default.createElement(
+						'div',
+						{ className: 'btn-group' },
+						_react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' }),
+						_react2.default.createElement(
+							'a',
+							{ className: 'btn', href: '#', onClick: this.cancelHandler.bind(this) },
+							'cancel'
+						)
+					)
+				);
+			}
+		}]);
+
+		return CommentFormComponent;
+	}(_react2.default.Component);
+
+	exports.default = CommentFormComponent;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TaskFormComponent = function (_React$Component) {
+		_inherits(TaskFormComponent, _React$Component);
+
+		function TaskFormComponent(props) {
+			_classCallCheck(this, TaskFormComponent);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskFormComponent).call(this, props));
+
+			_this.state = {};
+			_this.state.formError = '';
+			return _this;
+		}
+
+		_createClass(TaskFormComponent, [{
+			key: 'addError',
+			value: function addError(error) {
+				this.setState({
+					formError: error
+				});
+			}
+		}, {
+			key: 'clearError',
+			value: function clearError() {
+				this.setState({
+					formError: null
+				});
+			}
+		}, {
+			key: 'submitHandler',
+			value: function submitHandler(event) {
+				event.preventDefault();
+				var title = this.refs.taskTitleInput.value;
+				var text = this.refs.taskTextInput.value;
+				this.clearError();
+				if (title.trim().length) {
+					var task = this.props.tasks.addModel({ title: title, text: text });
+					this.props.setActiveTask(task.id);
+				} else {
+					this.addError('please enter a title');
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var err = this.state.formError;
+				var errContent;
+
+				if (err) {
+					errContent = _react2.default.createElement(
+						'span',
+						{ className: 'form-error' },
+						err
+					);
+				}
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'task-form-container' },
+					_react2.default.createElement(
+						'h3',
+						null,
+						'new task'
+					),
+					_react2.default.createElement(
+						'form',
+						{ onSubmit: this.submitHandler.bind(this), className: 'task-form' },
+						_react2.default.createElement('input', { ref: 'taskTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
+						errContent,
+						_react2.default.createElement('textarea', { ref: 'taskTextInput', placeholder: 'text', className: 'field', name: 'text' }),
+						_react2.default.createElement(
+							'a',
+							{ onClick: this.submitHandler.bind(this), className: 'btn', href: '#' },
+							'submit'
+						)
+					)
+				);
+			}
+		}]);
+
+		return TaskFormComponent;
+	}(_react2.default.Component);
+
+	exports.default = TaskFormComponent;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TaskDetailComponent = function (_React$Component) {
+		_inherits(TaskDetailComponent, _React$Component);
+
+		function TaskDetailComponent() {
+			_classCallCheck(this, TaskDetailComponent);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(TaskDetailComponent).apply(this, arguments));
+		}
+
+		_createClass(TaskDetailComponent, [{
+			key: "render",
+			value: function render() {
+				var task = this.props.task;
+
+				var body;
+
+				if (task.text) {
+					body = _react2.default.createElement(
+						"p",
+						null,
+						task.text
+					);
+				}
+
+				return _react2.default.createElement(
+					"div",
+					{ className: "task-detail" },
+					_react2.default.createElement(
+						"h3",
+						null,
+						task.title
+					),
+					body
+				);
+			}
+		}]);
+
+		return TaskDetailComponent;
+	}(_react2.default.Component);
+
+	exports.default = TaskDetailComponent;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TaskListComponent = function (_React$Component) {
+		_inherits(TaskListComponent, _React$Component);
+
+		function TaskListComponent(props) {
+			_classCallCheck(this, TaskListComponent);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskListComponent).call(this, props));
+
+			var component = _this;
+			props.tasks.register(function () {
+				component.forceUpdate();
+			});
+			return _this;
+		}
+
+		_createClass(TaskListComponent, [{
+			key: "clickHandler",
+			value: function clickHandler(id, event) {
+				event.preventDefault();
+				this.props.setActiveTask(id);
+			}
+		}, {
+			key: "removeHandler",
+			value: function removeHandler(id, event) {
+				event.preventDefault();
+				this.props.tasks.remove(id);
+				this.props.clearActiveTask();
+			}
+		}, {
+			key: "render",
+			value: function render() {
+				var _this2 = this;
+
+				var tasks = this.props.tasks.get();
+				var content = undefined;
+
+				if (tasks.length) {
+					content = tasks.map(function (task) {
+						return _react2.default.createElement(
+							"li",
+							{ key: task.id },
+							_react2.default.createElement(
+								"a",
+								{ href: "#", onClick: _this2.clickHandler.bind(_this2, task.id) },
+								task.title
+							),
+							" ",
+							_react2.default.createElement(
+								"a",
+								{ onClick: _this2.removeHandler.bind(_this2, task.id), href: "#", className: "pull-right remove-task" },
+								"x"
+							)
+						);
+					});
+				} else {
+					content = _react2.default.createElement(
+						"li",
+						null,
+						"No tasks!"
+					);
+				}
+
+				return _react2.default.createElement(
+					"ul",
+					{ className: "task-list" },
+					content
+				);
+			}
+		}]);
+
+		return TaskListComponent;
+	}(_react2.default.Component);
+
+	exports.default = TaskListComponent;
 
 /***/ }
 /******/ ]);

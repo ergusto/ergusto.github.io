@@ -1,5 +1,6 @@
 import React from 'react';
 import Velocity from 'velocity-animate';
+import SettingsComponent from '../settings/index.jsx';
 
 const body = document.body;
 
@@ -11,9 +12,11 @@ export default class IntroductionComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
-
-		window.onbeforeunload = function(){
-			window.scrollTo(0,0);
+		const shouldShowAnimation = this.props.user.shouldShowIntroAnimation();
+		if (shouldShowAnimation) {
+			window.onbeforeunload = function(){
+				window.scrollTo(0,0);
+			}
 		}
 	}
 
