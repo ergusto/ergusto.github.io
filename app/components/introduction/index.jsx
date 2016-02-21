@@ -12,11 +12,12 @@ export default class IntroductionComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
-		const shouldShowAnimation = this.props.user.shouldShowIntroAnimation();
-		if (shouldShowAnimation) {
-			window.onbeforeunload = function(){
-				window.scrollTo(0,0);
-			}
+		this.setBeforeUnload();
+	}
+
+	setBeforeUnload() {
+		window.onbeforeunload = function(){
+			window.scrollTo(0,0);
 		}
 	}
 

@@ -20,12 +20,14 @@ const comments = new Comments();
 const tasks = new Tasks();
 
 const currentUser = new User();
-currentUser.setShouldShowIntro(true);
+currentUser.setShouldShowIntro(false);
 
 class App extends React.Component {
 
-	componentDidMount() {   
-		window.scrollTo(0,0);  
+	componentDidMount() {
+		const shouldShowAnimation = currentUser.shouldShowIntroAnimation();
+		console.log(currentUser)
+		if (shouldShowAnimation) window.scrollTo(0,0);  
 	}
 
 	render() {
