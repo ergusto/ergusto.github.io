@@ -11,6 +11,8 @@ export default class IntroductionComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
+			
+		body.classList.add('hide-overflow');
 		body.addEventListener('touchmove', prevent);
 	}
 
@@ -58,20 +60,17 @@ export default class IntroductionComponent extends React.Component {
 
 										}, 200);
 
-									}, 700);
+									}, 500);
 								});
 							});
-						}, 400);
-					}, 400);
-				}, 400);
-			}, 400);
-		}, 400);
+						}, 300);
+					}, 300);
+				}, 300);
+			}, 300);
+		}, 300);
 	}
 
 	componentDidMount() {
-		scroll(0,0);
-		body.classList.add('hide-overflow');
-
 		setTimeout(() => {
 			this.fergusToErgusto();
 		}, 1000);

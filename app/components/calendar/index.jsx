@@ -23,22 +23,21 @@ export default class CalendarComponent extends React.Component {
     
     constructor(props) {
         super(props);
-        const month = current_date.getMonth();
-        const year = current_date.getFullYear();
+        this.month = current_date.getMonth();
+        this.year = current_date.getFullYear();
 
         this.date = current_date.getDate();
         this.currentDayNo = current_date.getDay();
         this.currentDay = days[this.currentDayNo];
-        this.firstDay = new Date(year, month, 1);
-        this.startingDay = this.firstDay.getDay();
+        this.firstDayOfMonth = new Date(this.year, this.month, 1);
+        this.startingDay = this.firstDayOfMonth.getDay();
         
-        this.month = months[month];
+        this.currentMonth = months[this.month];
         this.day = days[this.startingDay];
-        this.year = year;
         
-        this.currentMonthLength = this.month.days;
+        this.currentMonthLength = this.currentMonth.days;
 
-        if (month == 1) {
+        if (this.month == 1) {
         	// feb only
         	this.currentMonthLength = 29;
         }
@@ -48,23 +47,25 @@ export default class CalendarComponent extends React.Component {
     generateDateCells() {
     	let day = 1;
     	const weeks = [0,1,2,3,4,5,6,7,8];
-    	const weekdays = [0,1,2,3,4,5];
+    	const weekdays = [0,1,2,3,4,5,6,7,8];
 
     	return weeks.map((weekNo) => {
+
+			if (day > this.currentMonthLength) {
+				return;
+			}
     		
     		const weekdayhtml = weekdays.map((dayKey) => {
-
-    			if (day > this.currentMonthLength) {
-    				return;
-    			}
+    			let html;
 
     			if (day <= this.currentMonthLength && (weekNo > 0 || dayKey >= this.startingDay)) {
-    				const html = <div key={dayKey} className="calendar-day">{day}</div>;
+    				html = <div key={dayKey} className="calendar-day">{day}</div>;
     				day++;
-    				return html;
+    			} else {
+    				html = <div key={dayKey} className="calendar-day"></div>;
     			}
-
-    			return <div key={dayKey} className="calendar-day"></div>;
+    			
+    			return html;
 
     		});
 
@@ -99,7 +100,7 @@ export default class CalendarComponent extends React.Component {
 
 			            	<h1>Calendar!</h1>
 
-			            	<p>{this.currentDay}  {this.date} {this.month.name} {this.year}</p><br/>
+			            	<p>{this.currentDay}  {this.date} {this.currentMonth.name} {this.year}</p><br/>
 
 			            	<ul className="calendar-header-day-list">{days}</ul>
 

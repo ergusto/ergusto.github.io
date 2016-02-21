@@ -116,6 +116,11 @@ class Comment extends React.Component {
     	this.props.comments.add(comment);
     }
 
+    removeHandler(comment, event) {
+    	event.preventDefault();
+    	this.props.comments.remove(comment.id);
+    }
+
     changeComment(comment) {
     	this.setState({
     		comment: comment,
@@ -123,7 +128,8 @@ class Comment extends React.Component {
     }
     
     render() {
-        const comment = this.state.comment && this.state.comment.length ? this.state.comment : this.props.comment;
+    	const comment = this.props.comment;
+        const commentValue = this.state.comment && this.state.comment.length ? this.state.comment : comment.text;
         const date = moment(this.props.createdAt).fromNow();
         return (
 
@@ -131,16 +137,17 @@ class Comment extends React.Component {
 
 	        	<div className="comment-item box">
 	                <header className="comment-item-header clearfix">
-	                    <p className="muted"><small>{this.props.username}</small></p>
+	                    <p className="muted"><small>{this.props.comment.username}</small></p>
 	                </header>
 	                <div className="comment-item-body">
-	                    <p>{comment.text}</p>
+	                    <p>{commentValue}</p>
 	                </div>
 	                <footer className="comment-item-footer clearfix">
 	                    <ul className="horizontal-list-menu muted">
 	                        <li className="pull-right">{date}</li>
 	                        <li><a href="#" onClick={this.replyHandler.bind(this)}>reply</a></li>
 	                        <li><a href="#" onClick={this.editHandler.bind(this)}>edit</a></li>
+	                        <li><a href="#" onClick={this.removeHandler.bind(this, comment)}>remove</a></li>
 	                    </ul>
 	                </footer>
 	            </div>
@@ -188,11 +195,3 @@ export default class CommentListComponent extends React.Component {
 	}
 
 }
-
-const commentText = 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.';
-
-Comment.defaultProps = {
-    username: 'ergusto',
-    comment: commentText,
-    createdAt: new Date(),
-};
