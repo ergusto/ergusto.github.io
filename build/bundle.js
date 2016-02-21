@@ -101,6 +101,7 @@
 	var tasks = new _tasks2.default();
 
 	var currentUser = new _user2.default();
+	currentUser.setShouldShowIntro(true);
 
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
