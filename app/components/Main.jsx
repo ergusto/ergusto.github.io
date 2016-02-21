@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import IntroductionComponent from './introduction/index.jsx';
 import CommentListComponent from './comment/index.jsx';
 import TaskManagerComponent from './tasklist/index.jsx';
+import CalendarComponent from './calendar/index.jsx';
 
 import Comments from '../collections/comments.js';
 import Tasks from '../collections/tasks.js';
@@ -38,6 +39,7 @@ class App extends React.Component {
 		return (
 			<div>
 				<IntroductionComponent />
+				<CalendarComponent />
 				<CommentListComponent comments={comments} />
 				<TaskManagerComponent tasks={tasks} />
 			</div>

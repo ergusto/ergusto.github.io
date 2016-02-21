@@ -5,6 +5,7 @@ export default class Collection {
 		this.callbacks = {};
 		this.callbacks.main = [];
 		this.idCount = 0;
+		this.name = this.constructor.name;
 	}
 
 	add(model) {

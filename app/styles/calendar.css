@@ -1,0 +1,23 @@
+.calendar {
+
+}
+
+.calendar-header {
+
+}
+
+.calendar-body {
+
+}
+
+.calendar-week {
+	display: block;
+}
+
+.calendar-day {
+	height: 40px;
+	width: 40px;
+	float: left;
+	border: 1px solid #ccc;
+	background: purple;
+}

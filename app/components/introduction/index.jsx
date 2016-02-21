@@ -56,7 +56,7 @@ export default class IntroductionComponent extends React.Component {
 											body.classList.remove('hide-overflow');
 											body.removeEventListener('touchmove', prevent);
 
-										}, 750);
+										}, 200);
 
 									}, 700);
 								});
@@ -69,7 +69,8 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		body.scrollTop = document.documentElement.scrollTop = 0;
+		scroll(0,0);
+		body.classList.add('hide-overflow');
 
 		setTimeout(() => {
 			this.fergusToErgusto();
@@ -79,16 +80,18 @@ export default class IntroductionComponent extends React.Component {
 	render() {
 		return (
 
-	        <section className="full-height introduction">
+	        <section ref="introductionPanel" className="full-height introduction">
 
 	            <div id="introduction" className="introduction-content">
 
 	            	<h1 ref="heading" className="introduction-heading">
-	                    <span className="name">
-	                        <span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
-	                        <span ref="wordspacer" className="invisible">i</span>
-	                        <span className="name-r" ref="namer2">R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
-	                    </span>
+	            		<a href="/">
+		                    <span className="name">
+		                        <span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
+		                        <span ref="wordspacer" className="invisible">i</span>
+		                        <span className="name-r" ref="namer2">R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
+		                    </span>
+		                </a>
 	                </h1>
 
 	            </div>

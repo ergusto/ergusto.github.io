@@ -42,7 +42,7 @@ class TaskForm extends React.Component {
 		}
 
 		return (
-			<div className="task-form">
+			<div className="task-form-container">
 				<h3>new task</h3>
 				<form onSubmit={this.submitHandler.bind(this)} className="task-form">
 					<input ref="taskTitleInput" placeholder="title" className="field" name="title" />

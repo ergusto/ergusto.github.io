@@ -68,6 +68,10 @@
 
 	var _index6 = _interopRequireDefault(_index5);
 
+	var _index7 = __webpack_require__(265);
+
+	var _index8 = _interopRequireDefault(_index7);
+
 	var _comments = __webpack_require__(159);
 
 	var _comments2 = _interopRequireDefault(_comments);
@@ -124,6 +128,7 @@
 					'div',
 					null,
 					_react2.default.createElement(_index2.default, null),
+					_react2.default.createElement(_index8.default, null),
 					_react2.default.createElement(_index4.default, { comments: comments }),
 					_react2.default.createElement(_index6.default, { tasks: tasks })
 				);
@@ -19794,6 +19799,7 @@
 			this.callbacks = {};
 			this.callbacks.main = [];
 			this.idCount = 0;
+			this.name = this.constructor.name;
 		}
 
 		_createClass(Collection, [{
@@ -19982,7 +19988,7 @@
 												setTimeout(function () {
 													body.classList.remove('hide-overflow');
 													body.removeEventListener('touchmove', prevent);
-												}, 750);
+												}, 200);
 											}, 700);
 										});
 									});
@@ -19997,7 +20003,8 @@
 			value: function componentDidMount() {
 				var _this2 = this;
 
-				body.scrollTop = document.documentElement.scrollTop = 0;
+				scroll(0, 0);
+				body.classList.add('hide-overflow');
 
 				setTimeout(function () {
 					_this2.fergusToErgusto();
@@ -20008,7 +20015,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'section',
-					{ className: 'full-height introduction' },
+					{ ref: 'introductionPanel', className: 'full-height introduction' },
 					_react2.default.createElement(
 						'div',
 						{ id: 'introduction', className: 'introduction-content' },
@@ -20016,72 +20023,76 @@
 							'h1',
 							{ ref: 'heading', className: 'introduction-heading' },
 							_react2.default.createElement(
-								'span',
-								{ className: 'name' },
+								'a',
+								{ href: '/' },
 								_react2.default.createElement(
 									'span',
-									{ ref: 'namef1' },
-									'F'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'namee1' },
-									'e'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'namer1' },
-									'r'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'nameg1' },
-									'g'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'nameu1' },
-									'u'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'names1' },
-									's'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'wordspacer', className: 'invisible' },
-									'i'
-								),
-								_react2.default.createElement(
-									'span',
-									{ className: 'name-r', ref: 'namer2' },
-									'R'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'nameu2' },
-									'u'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'names2' },
-									's'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'namet1' },
-									't'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'nameo1' },
-									'o'
-								),
-								_react2.default.createElement(
-									'span',
-									{ ref: 'namen1' },
-									'n'
+									{ className: 'name' },
+									_react2.default.createElement(
+										'span',
+										{ ref: 'namef1' },
+										'F'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'namee1' },
+										'e'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'namer1' },
+										'r'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'nameg1' },
+										'g'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'nameu1' },
+										'u'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'names1' },
+										's'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'wordspacer', className: 'invisible' },
+										'i'
+									),
+									_react2.default.createElement(
+										'span',
+										{ className: 'name-r', ref: 'namer2' },
+										'R'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'nameu2' },
+										'u'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'names2' },
+										's'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'namet1' },
+										't'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'nameo1' },
+										'o'
+									),
+									_react2.default.createElement(
+										'span',
+										{ ref: 'namen1' },
+										'n'
+									)
 								)
 							)
 						)
@@ -37212,7 +37223,7 @@
 
 				return _react2.default.createElement(
 					'div',
-					{ className: 'task-form' },
+					{ className: 'task-form-container' },
 					_react2.default.createElement(
 						'h3',
 						null,
@@ -37477,6 +37488,169 @@
 	}(_react2.default.Component);
 
 	exports.default = TaskManagerComponent;
+
+/***/ },
+/* 265 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var current_date = new Date();
+
+	var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+	var months = [{ name: 'January', days: 31 }, { name: 'February', days: 28 }, { name: 'March', days: 31 }, { name: 'April', days: 30 }, { name: 'May', days: 31 }, { name: 'June', days: 30 }, { name: 'July', days: 31 }, { name: 'August', days: 31 }, { name: 'September', days: 30 }, { name: 'October', days: 31 }, { name: 'November', days: 30 }, { name: 'December', days: 31 }];
+
+	var CalendarComponent = function (_React$Component) {
+	    _inherits(CalendarComponent, _React$Component);
+
+	    function CalendarComponent(props) {
+	        _classCallCheck(this, CalendarComponent);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CalendarComponent).call(this, props));
+
+	        var month = current_date.getMonth();
+	        var year = current_date.getFullYear();
+
+	        _this.date = current_date.getDate();
+	        _this.currentDayNo = current_date.getDay();
+	        _this.currentDay = days[_this.currentDayNo];
+	        _this.firstDay = new Date(year, month, 1);
+	        _this.startingDay = _this.firstDay.getDay();
+
+	        _this.month = months[month];
+	        _this.day = days[_this.startingDay];
+	        _this.year = year;
+
+	        _this.currentMonthLength = _this.month.days;
+
+	        if (month == 1) {
+	            // feb only
+	            _this.currentMonthLength = 29;
+	        }
+
+	        return _this;
+	    }
+
+	    _createClass(CalendarComponent, [{
+	        key: 'generateDateCells',
+	        value: function generateDateCells() {
+	            var _this2 = this;
+
+	            var day = 1;
+	            var weeks = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+	            var weekdays = [0, 1, 2, 3, 4, 5];
+
+	            return weeks.map(function (weekNo) {
+
+	                var weekdayhtml = weekdays.map(function (dayKey) {
+
+	                    if (day > _this2.currentMonthLength) {
+	                        return;
+	                    }
+
+	                    if (day <= _this2.currentMonthLength && (weekNo > 0 || dayKey >= _this2.startingDay)) {
+	                        var html = _react2.default.createElement(
+	                            'div',
+	                            { key: dayKey, className: 'calendar-day' },
+	                            day
+	                        );
+	                        day++;
+	                        return html;
+	                    }
+
+	                    return _react2.default.createElement('div', { key: dayKey, className: 'calendar-day' });
+	                });
+
+	                return _react2.default.createElement(
+	                    'ul',
+	                    { key: weekNo, className: 'calendar-week clearfix' },
+	                    weekdayhtml
+	                );
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+
+	            var dayHeaderList = days.map(function (day) {
+	                return _react2.default.createElement(
+	                    'li',
+	                    { className: 'calendar-day-header-item' },
+	                    day
+	                );
+	            });
+
+	            var dateCells = this.generateDateCells();
+
+	            return _react2.default.createElement(
+	                'section',
+	                { className: 'full-height' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'calendar-example', className: 'example' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'box calendar' },
+	                        _react2.default.createElement(
+	                            'header',
+	                            { className: 'calendar-header' },
+	                            _react2.default.createElement(
+	                                'h1',
+	                                null,
+	                                'Calendar!'
+	                            ),
+	                            _react2.default.createElement(
+	                                'p',
+	                                null,
+	                                this.currentDay,
+	                                '  ',
+	                                this.date,
+	                                ' ',
+	                                this.month.name,
+	                                ' ',
+	                                this.year
+	                            ),
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement(
+	                                'ul',
+	                                { className: 'calendar-header-day-list' },
+	                                days
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'calendar-body' },
+	                            dateCells
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return CalendarComponent;
+	}(_react2.default.Component);
+
+	exports.default = CalendarComponent;
 
 /***/ }
 /******/ ]);
