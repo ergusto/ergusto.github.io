@@ -21,7 +21,7 @@ export default class CommentListComponent extends React.Component {
 		if (comments.length) {
 			content = comments.map((comment) => {
 				return (
-					<CommentComponent key={comment.id} comment={comment} comments={this.props.comments} />
+					<CommentComponent key={comment.id} user={this.props.user} comment={comment} comments={this.props.comments} />
 				);
 			});
 		}

@@ -30,12 +30,13 @@ class App extends React.Component {
 	}
 
 	render() {
+		const user = this.props.user;
 
 		return (
 			<div>
-				<IntroductionComponent user={this.props.user} />
+				<IntroductionComponent user={user} />
 				{/*<CalendarComponent />*/}
-				<CommentListComponent comments={comments} />
+				<CommentListComponent user={user} comments={comments} />
 				<TaskManagerComponent tasks={tasks} />
 			</div>
 		)

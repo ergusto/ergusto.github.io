@@ -39,7 +39,7 @@ export default class User {
 		localStorage.setItem(this.localStorageName, store);
 	}
 
-	getUser() {
+	getUsername() {
 		return this.user.username;
 	}
 

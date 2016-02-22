@@ -78,13 +78,13 @@ export default class Collection {
 		localStorage.setItem(this.localStorageName, store);
 	}
 
-	addModel(model) {
+	create(model) {
 		this.idCount++;
 		
 		model.id = this.idCount;
 		
 		this.models[model.id] = model;
-		this.broadcast(model);
+		this.broadcast();
 
 		return model;
 	}
@@ -93,7 +93,7 @@ export default class Collection {
 		const id = model.id;
 		if (id) {
 			this.models[id] = model;
-			this.broadcast(model);
+			this.broadcast();
 		}
 	}
 
@@ -101,7 +101,7 @@ export default class Collection {
 		const isArray = _.isArray(model);
 		const models = isArray ? model : [model];
 		models.forEach((model) => {
-			this.addModel(model);
+			this.create(model);
 		});
 	}
 

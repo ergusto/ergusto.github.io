@@ -60,12 +60,8 @@ export default class SettingsComponent extends  React.Component {
 
     	if (this.props.user.shouldSeeIntroAnimation()) {
             labelText = 'show intro animation';
-            showDisabled = true;
-            hideDisabled = false;
         } else {
             labelText = 'do not show intro animation';
-            showDisabled = true;
-            hideDisabled = false;
         }
 
         return (
@@ -75,8 +71,8 @@ export default class SettingsComponent extends  React.Component {
         		<div className={dropdownClass}>
         			<h5 className="settings-title">settings</h5>
         			<label className="settings-label"><small>{labelText}</small></label>
-        			<a onClick={this.showIntroHandler.bind(this)} disabled={showDisabled} href="#" className="btn">show animation</a>
-                    <a onClick={this.hideIntroHandler.bind(this)} disabled={hideDisabled} href="#" className="btn">hide animation</a>
+        			<input type="button" onClick={this.showIntroHandler.bind(this)} className="btn" value="show animation" />
+                    <input type="button" onClick={this.hideIntroHandler.bind(this)} className="btn" value="hide animation" />
         		</div>
         	</div>
         );

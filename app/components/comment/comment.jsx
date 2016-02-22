@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import TimeAgo from 'react-timeago';
 import CommentFormComponent from './form.jsx';
 
 // import styles for this component
@@ -57,6 +57,7 @@ export default class CommentComponent extends React.Component {
     }
 
     addNewComment(comment) {
+        console.log(comment);
     	this.props.comments.add(comment);
     }
 
@@ -66,7 +67,6 @@ export default class CommentComponent extends React.Component {
     }
 
     updateComment(comment) {
-        console.log(comment);
         return;
         this.props.comments.update(comment);
     }
@@ -74,21 +74,20 @@ export default class CommentComponent extends React.Component {
     render() {
     	const comment = this.props.comment;
         const commentValue = this.state.comment && this.state.comment.length ? this.state.comment : comment.text;
-        const date = moment(this.props.createdAt).fromNow();
         return (
 
         	<div>
 
 	        	<div className="comment-item box">
 	                <header className="comment-item-header clearfix">
-	                    <p className="muted"><small>{this.props.comment.username}</small></p>
+	                    <p className="muted"><small>{comment.username}</small></p>
 	                </header>
 	                <div className="comment-item-body">
 	                    <p>{commentValue}</p>
 	                </div>
 	                <footer className="comment-item-footer clearfix">
 	                    <ul className="horizontal-list-menu muted">
-	                        <li className="pull-right">{date}</li>
+	                        <li className="pull-right"><TimeAgo date={this.props.comment.date} /></li>
 	                        <li><a href="#" onClick={this.replyHandler.bind(this)}>reply</a></li>
 	                        <li><a href="#" onClick={this.editHandler.bind(this)}>edit</a></li>
 	                        <li><a href="#" onClick={this.removeHandler.bind(this, comment)}>remove</a></li>
@@ -96,8 +95,8 @@ export default class CommentComponent extends React.Component {
 	                </footer>
 	            </div>
 
-	            <CommentFormComponent formTitle="reply" shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.addNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
-	            <CommentFormComponent {...this.props} formTitle="edit" comment={comment} submitCallback={this.updateComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
+	            <CommentFormComponent user={this.props.user} formTitle="reply" shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.addNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
+	            <CommentFormComponent {...this.props} user={this.props.user} formTitle="edit" comment={comment} submitCallback={this.updateComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
 
 	        </div>
         );

@@ -121,12 +121,13 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				var user = this.props.user;
 
 				return _react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_index2.default, { user: this.props.user }),
-					_react2.default.createElement(_index4.default, { comments: comments }),
+					_react2.default.createElement(_index2.default, { user: user }),
+					_react2.default.createElement(_index4.default, { user: user, comments: comments }),
 					_react2.default.createElement(_index6.default, { tasks: tasks })
 				);
 			}
@@ -23981,12 +23982,8 @@
 
 	            if (this.props.user.shouldSeeIntroAnimation()) {
 	                labelText = 'show intro animation';
-	                showDisabled = true;
-	                hideDisabled = false;
 	            } else {
 	                labelText = 'do not show intro animation';
-	                showDisabled = true;
-	                hideDisabled = false;
 	            }
 
 	            return _react2.default.createElement(
@@ -24014,16 +24011,8 @@
 	                            labelText
 	                        )
 	                    ),
-	                    _react2.default.createElement(
-	                        'a',
-	                        { onClick: this.showIntroHandler.bind(this), disabled: showDisabled, href: '#', className: 'btn' },
-	                        'show animation'
-	                    ),
-	                    _react2.default.createElement(
-	                        'a',
-	                        { onClick: this.hideIntroHandler.bind(this), disabled: hideDisabled, href: '#', className: 'btn' },
-	                        'hide animation'
-	                    )
+	                    _react2.default.createElement('input', { type: 'button', onClick: this.showIntroHandler.bind(this), className: 'btn', value: 'show animation' }),
+	                    _react2.default.createElement('input', { type: 'button', onClick: this.hideIntroHandler.bind(this), className: 'btn', value: 'hide animation' })
 	                )
 	            );
 	        }
@@ -25645,7 +25634,7 @@
 
 				if (comments.length) {
 					content = comments.map(function (comment) {
-						return _react2.default.createElement(_comment2.default, { key: comment.id, comment: comment, comments: _this2.props.comments });
+						return _react2.default.createElement(_comment2.default, { key: comment.id, user: _this2.props.user, comment: comment, comments: _this2.props.comments });
 					});
 				}
 
@@ -38506,9 +38495,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _moment = __webpack_require__(164);
+	var _reactTimeago = __webpack_require__(299);
 
-	var _moment2 = _interopRequireDefault(_moment);
+	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 
 	var _form = __webpack_require__(264);
 
@@ -38590,6 +38579,7 @@
 	    }, {
 	        key: 'addNewComment',
 	        value: function addNewComment(comment) {
+	            console.log(comment);
 	            this.props.comments.add(comment);
 	        }
 	    }, {
@@ -38601,7 +38591,6 @@
 	    }, {
 	        key: 'updateComment',
 	        value: function updateComment(comment) {
-	            console.log(comment);
 	            return;
 	            this.props.comments.update(comment);
 	        }
@@ -38610,7 +38599,6 @@
 	        value: function render() {
 	            var comment = this.props.comment;
 	            var commentValue = this.state.comment && this.state.comment.length ? this.state.comment : comment.text;
-	            var date = (0, _moment2.default)(this.props.createdAt).fromNow();
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -38626,7 +38614,7 @@
 	                            _react2.default.createElement(
 	                                'small',
 	                                null,
-	                                this.props.comment.username
+	                                comment.username
 	                            )
 	                        )
 	                    ),
@@ -38648,7 +38636,7 @@
 	                            _react2.default.createElement(
 	                                'li',
 	                                { className: 'pull-right' },
-	                                date
+	                                _react2.default.createElement(_reactTimeago2.default, { date: this.props.comment.date })
 	                            ),
 	                            _react2.default.createElement(
 	                                'li',
@@ -38680,8 +38668,8 @@
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement(_form2.default, { formTitle: 'reply', shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.addNewComment.bind(this), hideForm: this.hideReplyForm.bind(this) }),
-	                _react2.default.createElement(_form2.default, _extends({}, this.props, { formTitle: 'edit', comment: comment, submitCallback: this.updateComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, hideForm: this.hideEditForm.bind(this) }))
+	                _react2.default.createElement(_form2.default, { user: this.props.user, formTitle: 'reply', shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.addNewComment.bind(this), hideForm: this.hideReplyForm.bind(this) }),
+	                _react2.default.createElement(_form2.default, _extends({}, this.props, { user: this.props.user, formTitle: 'edit', comment: comment, submitCallback: this.updateComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, hideForm: this.hideEditForm.bind(this) }))
 	            );
 	        }
 	    }]);
@@ -38738,6 +38726,8 @@
 			if (!_this.comment) {
 				_this.comment = {};
 				_this.comment.text = '';
+				_this.comment.children = [];
+				_this.parentId = '';
 			}
 
 			// http://stackoverflow.com/a/31362350/4566267
@@ -38757,6 +38747,20 @@
 			value: function submitHandler(event) {
 				event.preventDefault();
 				var comment = this.comment;
+				var newTextValue = this.refs.commentInput.value;
+
+				if (comment.id) {
+					// is reply form
+					var parent = comment;
+					comment = {};
+					comment.children = [];
+					comment.parentId = parent.id;
+				} else {
+					comment.username = this.props.user.getUsername();
+				}
+
+				comment.text = newTextValue;
+				comment.date = new Date();
 
 				if (this.props.submitCallback) this.props.submitCallback(comment);
 				this.refs.commentInput.value = '';
@@ -39473,10 +39477,10 @@
 			value: function defaultModels() {
 				return [{ text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
 					username: 'ergusto',
-					date: new Date()
-				}, { text: 'Almost everything uses the localStorage API, so anything you do here will persist between visits, but will only be visible to you.',
+					date: new Date('Mon Feb 22 2016 02:42:36 GMT+0000 (GMT)')
+				}, { text: 'Almost everything uses the localStorage API, so anything you do here will persist between visits, but only in this browser.',
 					username: 'ergusto',
-					date: new Date()
+					date: new Date('Mon Feb 22 2016 02:42:36 GMT+0000 (GMT)')
 				}];
 			}
 		}]);
@@ -39596,14 +39600,14 @@
 				localStorage.setItem(this.localStorageName, store);
 			}
 		}, {
-			key: 'addModel',
-			value: function addModel(model) {
+			key: 'create',
+			value: function create(model) {
 				this.idCount++;
 
 				model.id = this.idCount;
 
 				this.models[model.id] = model;
-				this.broadcast(model);
+				this.broadcast();
 
 				return model;
 			}
@@ -39613,7 +39617,7 @@
 				var id = model.id;
 				if (id) {
 					this.models[id] = model;
-					this.broadcast(model);
+					this.broadcast();
 				}
 			}
 		}, {
@@ -39624,7 +39628,7 @@
 				var isArray = _underscore2.default.isArray(model);
 				var models = isArray ? model : [model];
 				models.forEach(function (model) {
-					_this2.addModel(model);
+					_this2.create(model);
 				});
 			}
 		}, {
@@ -39782,8 +39786,8 @@
 				localStorage.setItem(this.localStorageName, store);
 			}
 		}, {
-			key: 'getUser',
-			value: function getUser() {
+			key: 'getUsername',
+			value: function getUsername() {
 				return this.user.username;
 			}
 		}, {
@@ -40558,6 +40562,141 @@
 	exports.push([module.id, "/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\n\nhtml {\n  font-family: sans-serif; /* 1 */\n  -ms-text-size-adjust: 100%; /* 2 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block; /* 1 */\n  vertical-align: baseline; /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit; /* 1 */\n  font: inherit; /* 2 */\n  margin: 0; /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"], /* 1 */\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button; /* 2 */\n  cursor: pointer; /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  box-sizing: content-box; /* 2 */\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n", ""]);
 
 	// exports
+
+
+/***/ },
+/* 297 */,
+/* 298 */,
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var React = __webpack_require__(1)
+	var assign = __webpack_require__(39)
+
+	module.exports = React.createClass(
+	  { displayName: 'Time-Ago'
+	  , timeoutId: 0
+	  , getDefaultProps: function(){
+	      return { live: true
+	             , component: 'span'
+	             , minPeriod: 0
+	             , maxPeriod: Infinity
+	             , formatter: function (value, unit, suffix) {
+	                 if(value !== 1){
+	                   unit += 's'
+	                 }
+	                 return value + ' ' + unit + ' ' + suffix
+	               }
+	             }
+	    }
+	  , propTypes:
+	      { live: React.PropTypes.bool.isRequired
+	      , minPeriod: React.PropTypes.number.isRequired
+	      , maxPeriod: React.PropTypes.number.isRequired
+	      , component: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.func]).isRequired
+	      , formatter: React.PropTypes.func.isRequired
+	      , date: React.PropTypes.oneOfType(
+	          [ React.PropTypes.string
+	          , React.PropTypes.number
+	          , React.PropTypes.instanceOf(Date)
+	          ]
+	        ).isRequired
+	      }
+	  , componentDidMount: function(){
+	      if(this.props.live) {
+	        this.tick(true)
+	      }
+	    }
+	  , componentDidUpdate: function(lastProps){
+	      if(this.props.live !== lastProps.live || this.props.date !== lastProps.date){
+	        if(!this.props.live && this.timeoutId){
+	          clearTimeout(this.timeoutId);
+	          this.timeoutId = undefined;
+	        }
+	        this.tick()
+	      }
+	    }
+	  , componentWillUnmount: function() {
+	    if(this.timeoutId) {
+	      clearTimeout(this.timeoutId);
+	      this.timeoutId = undefined;
+	    }
+	  }
+	  , tick: function(refresh){
+	      if(!this.isMounted() || !this.props.live){
+	        return
+	      }
+
+	      var period = 1000
+
+	      var then = (new Date(this.props.date)).valueOf()
+	      var now = Date.now()
+	      var seconds = Math.round(Math.abs(now-then)/1000)
+
+	      if(seconds < 60){
+	        period = 1000
+	      } else if(seconds < 60*60) {
+	        period = 1000 * 60
+	      } else if(seconds < 60*60*24) {
+	        period = 1000 * 60 * 60
+	      } else {
+	        period = 0
+	      }
+
+	      period = Math.min(Math.max(period, this.props.minPeriod), this.props.maxPeriod)
+
+	      if(!!period){
+	        this.timeoutId = setTimeout(this.tick, period)
+	      }
+
+	      if(!refresh){
+	        this.forceUpdate()
+	      }
+	    }
+	  , render: function(){
+	      var then = (new Date(this.props.date)).valueOf()
+	      var now = Date.now()
+	      var seconds = Math.round(Math.abs(now-then)/1000)
+
+	      var suffix = then < now ? 'ago' : 'from now'
+
+	      var value, unit
+
+	      if(seconds < 60){
+	        value = Math.round(seconds)
+	        unit = 'second'
+	      } else if(seconds < 60*60) {
+	        value = Math.round(seconds/60)
+	        unit = 'minute'
+	      } else if(seconds < 60*60*24) {
+	        value = Math.round(seconds/(60*60))
+	        unit = 'hour'
+	      } else if(seconds < 60*60*24*7) {
+	        value = Math.round(seconds/(60*60*24))
+	        unit = 'day'
+	      } else if(seconds < 60*60*24*30) {
+	        value = Math.round(seconds/(60*60*24*7))
+	        unit = 'week'
+	      } else if(seconds < 60*60*24*365) {
+	        value = Math.round(seconds/(60*60*24*30))
+	        unit = 'month'
+	      } else {
+	        value = Math.round(seconds/(60*60*24*365))
+	        unit = 'year'
+	      }
+
+	      var props = assign({}, this.props)
+
+	      delete props.date
+	      delete props.formatter
+	      delete props.component
+
+	      return React.createElement( this.props.component, props, this.props.formatter(value, unit, suffix, then) )
+	    }
+	  }
+	)
 
 
 /***/ }

@@ -15,6 +15,8 @@ export default class CommentFormComponent extends React.Component {
         if (!this.comment) {
         	this.comment = {};
         	this.comment.text = '';
+        	this.comment.children = [];
+        	this.parentId = '';
         }
 
 		// http://stackoverflow.com/a/31362350/4566267
@@ -29,7 +31,21 @@ export default class CommentFormComponent extends React.Component {
 
 	submitHandler(event) {
 		event.preventDefault();
-		const comment = this.comment;
+		let comment = this.comment;
+		const newTextValue = this.refs.commentInput.value;
+		
+		if (comment.id) {
+			// is reply form
+			const parent = comment;
+			comment = {};
+			comment.children = [];
+			comment.parentId = parent.id;
+		} else {
+			comment.username = this.props.user.getUsername();
+		}
+		
+		comment.text = newTextValue;
+		comment.date = new Date;
 
 		if (this.props.submitCallback) this.props.submitCallback(comment);
 		this.refs.commentInput.value = '';
