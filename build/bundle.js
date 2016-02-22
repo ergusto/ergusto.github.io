@@ -39910,11 +39910,11 @@
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _localstorage = __webpack_require__(311);
+	var _localstorage = __webpack_require__(313);
 
 	var _localstorage2 = _interopRequireDefault(_localstorage);
 
-	var _event = __webpack_require__(312);
+	var _event = __webpack_require__(314);
 
 	var _event2 = _interopRequireDefault(_event);
 
@@ -40099,7 +40099,7 @@
 
 	var _collection2 = _interopRequireDefault(_collection);
 
-	var _localstorage = __webpack_require__(311);
+	var _localstorage = __webpack_require__(313);
 
 	var _localstorage2 = _interopRequireDefault(_localstorage);
 
@@ -41040,7 +41040,67 @@
 
 
 /***/ },
-/* 311 */
+/* 311 */,
+/* 312 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _underscore = __webpack_require__(162);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var EventBehaviour = function () {
+		function EventBehaviour() {
+			_classCallCheck(this, EventBehaviour);
+
+			this.events = {};
+		}
+
+		_createClass(EventBehaviour, [{
+			key: 'get',
+			value: function get(eventName) {
+				var event = this.events[eventName];
+				if (!event) {
+					event = this.events[eventName] = [];
+				}
+				return event;
+			}
+		}, {
+			key: 'register',
+			value: function register(eventName, callback) {
+				var event = this.get(eventName);
+				event.push(callback);
+			}
+		}, {
+			key: 'broadcast',
+			value: function broadcast(eventName, model) {
+				var _this = this;
+
+				var event = this.get(eventName);
+				event.forEach(function (callback) {
+					callback.call(_this, model);
+				});
+			}
+		}]);
+
+		return EventBehaviour;
+	}();
+
+	exports.default = EventBehaviour;
+
+/***/ },
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41104,7 +41164,7 @@
 	exports.default = LocalStorageBehaviour;
 
 /***/ },
-/* 312 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

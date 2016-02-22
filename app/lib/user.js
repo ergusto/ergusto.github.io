@@ -1,6 +1,6 @@
 import _ from 'underscore';
-import LocalStorageBehaviour from './behaviours/localstorage.js';
-import EventBehaviour from './behaviours/event.js';
+import LocalStorageBehaviour from '../behaviours/localstorage.js';
+import EventBehaviour from '../behaviours/event.js';
 
 export default class User {
 

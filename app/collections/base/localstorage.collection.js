@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import Collection from './collection.js';
-import LocalStorageBehaviour from '../../lib/behaviours/localstorage.js';
+import LocalStorageBehaviour from '../../behaviours/localstorage.js';
 
 export default class LocalStorageCollection extends Collection {
 
