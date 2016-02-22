@@ -23938,12 +23938,13 @@
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            document.body.addEventListener('click', function (event) {
-	                _this2.hideDropdown();
-	            });
-	            this.refs.dropdown.addEventListener('click', function (event) {
-	                return event.stopPropagation();
-	            });
+	            var hideDropDownOnOutsideClickhandler = function hideDropDownOnOutsideClickhandler(event) {
+	                var target = event.target;
+	                if (!_this2.refs.dropdown.contains(target)) _this2.hideDropdown();
+	            };
+
+	            document.body.addEventListener('click', hideDropDownOnOutsideClickhandler);
+	            document.body.addEventListener('touchend', hideDropDownOnOutsideClickhandler);
 	        }
 	    }, {
 	        key: 'triggerClickHandler',
@@ -23968,9 +23969,7 @@
 	    }, {
 	        key: 'toggleDropdown',
 	        value: function toggleDropdown() {
-	            this.setState({
-	                shouldShowDropDown: !this.state.shouldShowDropDown
-	            });
+	            this.isShowing ? this.hideDropdown() : this.showDropDown();
 	        }
 	    }, {
 	        key: 'setUserIntroAnimationSetting',
@@ -24069,14 +24068,18 @@
 	                            )
 	                        ),
 	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', onClick: this.showIntroHandler.bind(this), className: 'btn' },
-	                            'show animation'
-	                        ),
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', onClick: this.hideIntroHandler.bind(this), className: 'btn' },
-	                            'hide animation'
+	                            'div',
+	                            { className: 'btn-group' },
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: '#', onClick: this.showIntroHandler.bind(this), className: 'btn' },
+	                                'show animation'
+	                            ),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: '#', onClick: this.hideIntroHandler.bind(this), className: 'btn' },
+	                                'hide animation'
+	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -24099,6 +24102,11 @@
 	                    )
 	                )
 	            );
+	        }
+	    }, {
+	        key: 'isShowing',
+	        get: function get() {
+	            return this.state.shouldShowDropDown;
 	        }
 	    }]);
 
@@ -25696,7 +25704,7 @@
 
 
 	// module
-	exports.push([module.id, ".settings {\n  display: inline-block;\n  color: black;\n  position: relative; }\n\n.settings-trigger {\n  margin: 0;\n  opacity: 0.7;\n  color: white;\n  font-size: 2rem;\n  line-height: 3rem; }\n\n.settings .field {\n  margin-bottom: 0px; }\n\n.settings-field {\n  margin-bottom: 10px; }\n\n.settings-field:last-child {\n  margin-bottom: 0px; }\n\n@media only screen and (min-width: 320px) {\n  .settings-trigger {\n    font-size: 2rem;\n    line-height: 1.8rem; } }\n\n@media only screen and (min-width: 480px) {\n  .settings-trigger {\n    line-height: 1.4rem;\n    margin-right: 10px; } }\n\n.settings .dropdown {\n  right: 10px;\n  min-width: 300px;\n  padding: 10px;\n  top: 50px; }\n\n@media only screen and (min-width: 480px) {\n  .settings .dropdown {\n    min-width: 400px; } }\n\n.settings-title {\n  margin: 0;\n  margin-bottom: 10px;\n  border-bottom: 1px solid black;\n  padding-bottom: 4px; }\n\n.settings .btn {\n  margin-right: 2px; }\n\n.settings-label {\n  margin-bottom: 6px; }\n\n.settings-trigger:hover, .settings-trigger.opaque {\n  opacity: 1; }\n", ""]);
+	exports.push([module.id, ".settings {\n  display: inline-block;\n  color: black;\n  position: relative; }\n\n.settings-trigger {\n  margin: 0;\n  opacity: 0.7;\n  color: white;\n  font-size: 2rem;\n  line-height: 3rem; }\n\n.settings .field {\n  margin-bottom: 0px; }\n\n.settings-field {\n  margin-bottom: 10px; }\n\n.settings-field:last-child {\n  margin-bottom: 0px; }\n\n@media only screen and (min-width: 320px) {\n  .settings-trigger {\n    font-size: 2rem;\n    line-height: 1.8rem; } }\n\n@media only screen and (min-width: 480px) {\n  .settings-trigger {\n    line-height: 1.4rem;\n    margin-right: 10px; } }\n\n.settings .dropdown {\n  right: 10px;\n  min-width: 300px;\n  padding: 10px;\n  top: 50px; }\n\n@media only screen and (min-width: 480px) {\n  .settings .dropdown {\n    min-width: 400px; } }\n\n.settings-title {\n  margin: 0;\n  margin-bottom: 10px;\n  border-bottom: 1px solid black;\n  padding-bottom: 4px; }\n\n.settings-label {\n  margin-bottom: 6px; }\n\n.settings-trigger:hover, .settings-trigger.opaque {\n  opacity: 1; }\n", ""]);
 
 	// exports
 
@@ -39967,7 +39975,7 @@
 				this.store = new _localstorage2.default(this.storeName);
 
 				var user = this.store.get();
-				if (_underscore2.default.keys(user).length) {
+				if (user && _underscore2.default.keys(user).length) {
 					this.user = user;
 				}
 			} else {
@@ -40067,7 +40075,7 @@
 	exports.i(__webpack_require__(297), "");
 
 	// module
-	exports.push([module.id, "* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*:before,\n*:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n/**\n * For modern browsers\n * 1. The space content is one way to avoid an Opera bug when the\n *    contenteditable attribute is included anywhere else in the document.\n *    Otherwise it causes space to appear at the top and bottom of elements\n *    that are clearfixed.\n * 2. The use of `table` rather than `block` is only necessary if using\n *    `:before` to contain the top-margins of child elements.\n */\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  /* 1 */\n  display: table;\n  /* 2 */ }\n\n.clearfix:after {\n  clear: both; }\n\n/**\n * For IE 6/7 only\n * Include this rule to trigger hasLayout and contain floats.\n */\n.clearfix {\n  *zoom: 1; }\n\n.flex-col-container, .flex-col {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex; }\n\n.flex-col-container {\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.flex-col-inner {\n  width: 100%;\n  display: block; }\n\nlabel {\n  display: block;\n  color: #777;\n  margin-bottom: 4px; }\n\nform .btn {\n  margin-right: 2px; }\n\nform.padding {\n  padding: 15px 20px 20px; }\n\n.field {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 6px 8px;\n  margin-bottom: 10px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }\n\n.fieldCount {\n  color: #777;\n  font-size: 80%; }\n\n.field:focus {\n  outline: none;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);\n  border-color: black; }\n\n.form-error {\n  margin-bottom: 10px;\n  display: block; }\n\n.horizontal-list-menu {\n  list-style: none;\n  list-style-type: none;\n  padding: 0 20px;\n  margin: 0;\n  line-height: 26px; }\n\n.horizontal-list-menu li {\n  display: inline-block;\n  padding-right: 10px; }\n\n.horizontal-list-menu li.pull-right {\n  padding-right: 0px; }\n\n.horizontal-list-menu a:hover {\n  color: black; }\n\n.btn {\n  display: inline-block;\n  border: 1px solid #ccc;\n  background: white;\n  padding: 4px 8px;\n  text-decoration: none;\n  font-size: 90%;\n  color: #777;\n  border-radius: 0px; }\n\n.btn:hover {\n  border-color: black;\n  color: black;\n  cursor: pointer; }\n\n.btn:active {\n  border-color: #ccc;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.box {\n  background: white;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.dropdown {\n  position: absolute;\n  z-index: 1;\n  display: block; }\n\nbody {\n  background: #FCFCFC;\n  font-size: 14px;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; }\n\na {\n  color: inherit; }\n\n.full-height {\n  min-height: 100vh; }\n\n.panel {\n  padding: 20px;\n  -moz-align-items: center;\n  -webkit-align-items: center;\n  -ms-align-items: center;\n  align-items: center;\n  display: -moz-flex;\n  display: -webkit-flex;\n  display: -ms-flex;\n  display: flex;\n  -moz-justify-content: center;\n  -webkit-justify-content: center;\n  -ms-justify-content: center;\n  justify-content: center;\n  position: relative; }\n\n.example {\n  width: 100%; }\n\n.tasklist-example {\n  background: #c2e59c;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to left, #c2e59c, #64b3f4);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to left, #c2e59c, #64b3f4);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n\n.hide-overflow {\n  height: 100%;\n  overflow: hidden; }\n\n.opaque {\n  opacity: 1; }\n\n.black {\n  color: black; }\n\n.hidden {\n  display: none; }\n\n.seethrough {\n  opacity: 0; }\n\n.invisible {\n  visibility: hidden; }\n\n.muted {\n  color: #777; }\n\n.margin {\n  margin: 20px; }\n\n.margin-left {\n  margin-left: 20px; }\n\n.margin-bottom {\n  margin-bottom: 20px; }\n\n.margin-right {\n  margin-right: 20px; }\n\n.margin-top {\n  margin-top: 20px; }\n\n.padding {\n  padding: 20px; }\n\n.muted {\n  color: #777; }\n\n.pull-right {\n  float: right; }\n", ""]);
+	exports.push([module.id, "* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*:before,\n*:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n/**\n * For modern browsers\n * 1. The space content is one way to avoid an Opera bug when the\n *    contenteditable attribute is included anywhere else in the document.\n *    Otherwise it causes space to appear at the top and bottom of elements\n *    that are clearfixed.\n * 2. The use of `table` rather than `block` is only necessary if using\n *    `:before` to contain the top-margins of child elements.\n */\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  /* 1 */\n  display: table;\n  /* 2 */ }\n\n.clearfix:after {\n  clear: both; }\n\n/**\n * For IE 6/7 only\n * Include this rule to trigger hasLayout and contain floats.\n */\n.clearfix {\n  *zoom: 1; }\n\n.flex-col-container, .flex-col {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex; }\n\n.flex-col-container {\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.flex-col-inner {\n  width: 100%;\n  display: block; }\n\nlabel {\n  display: block;\n  color: #777;\n  margin-bottom: 6px; }\n\nform .btn {\n  margin-right: 2px; }\n\nform.padding {\n  padding: 15px 20px 20px; }\n\n.field {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 6px 8px;\n  margin-bottom: 10px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 4px;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }\n\n.fieldCount {\n  color: #777;\n  font-size: 80%; }\n\n.field:focus {\n  outline: none;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);\n  border-color: black; }\n\n.form-error {\n  margin-bottom: 10px;\n  display: block; }\n\n.horizontal-list-menu {\n  list-style: none;\n  list-style-type: none;\n  padding: 0 20px;\n  margin: 0;\n  line-height: 26px; }\n\n.horizontal-list-menu li {\n  display: inline-block;\n  padding-right: 10px; }\n\n.horizontal-list-menu li.pull-right {\n  padding-right: 0px; }\n\n.horizontal-list-menu a:hover {\n  color: black; }\n\n.btn {\n  display: inline-block;\n  border: 1px solid #ccc;\n  background: white;\n  padding: 4px 8px;\n  text-decoration: none;\n  font-size: 90%;\n  color: #777;\n  border-radius: 0px; }\n\n.btn:hover {\n  border-color: black;\n  color: black;\n  cursor: pointer; }\n\n.btn:active {\n  border-color: #ccc;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.btn-group .btn {\n  margin-right: 2px; }\n\n.btn-group .btn:last-child {\n  margin-right: 0px; }\n\n.box {\n  background: white;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.dropdown {\n  position: absolute;\n  z-index: 100;\n  display: block; }\n\nbody {\n  background: #FCFCFC;\n  font-size: 14px;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; }\n\na {\n  color: inherit; }\n\n.full-height {\n  min-height: 100vh; }\n\n.panel {\n  padding: 20px;\n  -moz-align-items: center;\n  -webkit-align-items: center;\n  -ms-align-items: center;\n  align-items: center;\n  display: -moz-flex;\n  display: -webkit-flex;\n  display: -ms-flex;\n  display: flex;\n  -moz-justify-content: center;\n  -webkit-justify-content: center;\n  -ms-justify-content: center;\n  justify-content: center;\n  position: relative; }\n\n.example {\n  width: 100%; }\n\n.tasklist-example {\n  background: #c2e59c;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to left, #c2e59c, #64b3f4);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to left, #c2e59c, #64b3f4);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n\n.hide-overflow {\n  height: 100%;\n  overflow: hidden; }\n\n.opaque {\n  opacity: 1; }\n\n.black {\n  color: black; }\n\n.hidden {\n  display: none; }\n\n.seethrough {\n  opacity: 0; }\n\n.invisible {\n  visibility: hidden; }\n\n.muted {\n  color: #777; }\n\n.margin {\n  margin: 20px; }\n\n.margin-left {\n  margin-left: 20px; }\n\n.margin-bottom {\n  margin-bottom: 20px; }\n\n.margin-right {\n  margin-right: 20px; }\n\n.margin-top {\n  margin-top: 20px; }\n\n.padding {\n  padding: 20px; }\n\n.muted {\n  color: #777; }\n\n.pull-right {\n  float: right; }\n", ""]);
 
 	// exports
 
@@ -41200,21 +41208,15 @@
 
 /***/ },
 /* 314 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _underscore = __webpack_require__(162);
-
-	var _underscore2 = _interopRequireDefault(_underscore);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -41226,7 +41228,7 @@
 		}
 
 		_createClass(EventBehaviour, [{
-			key: 'get',
+			key: "get",
 			value: function get(eventName) {
 				var event = this.events[eventName];
 				if (!event) {
@@ -41235,19 +41237,20 @@
 				return event;
 			}
 		}, {
-			key: 'register',
+			key: "register",
 			value: function register(eventName, callback) {
 				var event = this.get(eventName);
 				event.push(callback);
 			}
 		}, {
-			key: 'broadcast',
-			value: function broadcast(eventName, model) {
+			key: "broadcast",
+			value: function broadcast(eventName) {
 				var _this = this;
 
 				var event = this.get(eventName);
+				var args = Array.prototype.slice.call(arguments, 1);
 				event.forEach(function (callback) {
-					callback.call(_this, model);
+					callback.apply(_this, args);
 				});
 			}
 		}]);

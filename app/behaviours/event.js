@@ -1,5 +1,3 @@
-import _ from 'underscore';
-
 export default class EventBehaviour {
 
 	constructor() {
@@ -19,10 +17,11 @@ export default class EventBehaviour {
 		event.push(callback);
 	}
 
-	broadcast(eventName, model) {
+	broadcast(eventName) {
 		const event = this.get(eventName);
+		const args = Array.prototype.slice.call(arguments, 1);
 		event.forEach((callback) => {
-			callback.call(this, model);
+			callback.apply(this, args);
 		});
 	}
 

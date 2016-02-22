@@ -18,15 +18,22 @@ export default class SettingsComponent extends  React.Component {
     }
 
     componentDidMount() {
-        document.body.addEventListener('click', (event) => {
-            this.hideDropdown();
-        });
-        this.refs.dropdown.addEventListener('click', (event) => event.stopPropagation());
+        const hideDropDownOnOutsideClickhandler = (event) => {
+            const target = event.target;
+            if (!this.refs.dropdown.contains(target)) this.hideDropdown();
+        }
+
+        document.body.addEventListener('click', hideDropDownOnOutsideClickhandler);
+        document.body.addEventListener('touchend', hideDropDownOnOutsideClickhandler);
     }
 
     triggerClickHandler(event) {
     	event.preventDefault();
     	this.toggleDropdown();
+    }
+
+    get isShowing() {
+        return this.state.shouldShowDropDown;
     }
 
     showDropDown() {
@@ -42,9 +49,7 @@ export default class SettingsComponent extends  React.Component {
     }
 
     toggleDropdown() {
-    	this.setState({
-    		shouldShowDropDown: !this.state.shouldShowDropDown
-    	});
+        this.isShowing ? this.hideDropdown() : this.showDropDown();
     }
 
     setUserIntroAnimationSetting(setting) {
@@ -105,8 +110,10 @@ export default class SettingsComponent extends  React.Component {
                     </div>
                     <div className="settings-field">
         				<label className="settings-label"><small>{animationSettingLabelText}</small></label>
-        				<a href="#" onClick={this.showIntroHandler.bind(this)} className="btn">show animation</a>
-                    	<a href="#" onClick={this.hideIntroHandler.bind(this)} className="btn">hide animation</a>
+                        <div className="btn-group">
+            				<a href="#" onClick={this.showIntroHandler.bind(this)} className="btn">show animation</a>
+                        	<a href="#" onClick={this.hideIntroHandler.bind(this)} className="btn">hide animation</a>
+                        </div>
                     </div>
                     <div className="settings-field">
                     	<label className="settings-label"><small>reset all data</small></label>

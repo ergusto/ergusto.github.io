@@ -20,7 +20,7 @@ export default class User {
 			this.store = new LocalStorageBehaviour(this.storeName);
 			
 			const user = this.store.get();
-			if (_.keys(user).length) {
+			if (user && _.keys(user).length) {
 				this.user = user;
 			}
 
