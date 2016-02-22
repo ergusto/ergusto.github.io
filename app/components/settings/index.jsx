@@ -47,6 +47,11 @@ export default class SettingsComponent extends  React.Component {
         this.props.user.setUsername(username);
     }
 
+    resetHandler(event) {
+        event.preventDefault();
+        this.props.user.resetAllLocalStorage();
+    }
+
     render() {
     	let dropdownClass;
     	let triggerClass;
@@ -78,8 +83,11 @@ export default class SettingsComponent extends  React.Component {
                     <label className="settings-label"><small>username: {username}</small></label>
                     <input onChange={this.usernameChangeHandler.bind(this)} type="text" className="field" defaultValue={username} />
         			<label className="settings-label"><small>{animationSettingLabelText}</small></label>
-        			<input onClick={this.showIntroHandler.bind(this)} type="button" className="btn" value="show animation" />
-                    <input onClick={this.hideIntroHandler.bind(this)} type="button" className="btn" value="hide animation" />
+        			<a href="#" onClick={this.showIntroHandler.bind(this)} className="btn">show animation</a>
+                    <a href="#" onClick={this.hideIntroHandler.bind(this)} className="btn">hide animation</a>
+                    <label className="settings-label"><small>reset all data</small></label>
+                    <a href="#" onClick={this.resetHandler.bind(this)} className="btn">reset</a>
+
         		</div>
         	</div>
         );

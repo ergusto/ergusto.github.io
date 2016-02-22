@@ -4,18 +4,25 @@ module.exports = {
 		filename: 'build/bundle.js',
 	},
 	module: {
+		preLoaders: [
+			{
+				test: /\.js$/,
+				loader: 'eslint',
+				exclude: /(node_modules|bower_components)/
+			}
+		],
 		loaders: [
 			{
 				test: /\.jsx?$/,
-				exclude: /(node_modules|bower_components)/,
 				loader: 'babel',
+				exclude: /(node_modules|bower_components)/,
 				query: {
 					presets: ['react', 'es2015']
 				}
 			},
 			{
 				test: /\.scss$/,
-				loaders: ["style", "css", "sass"],
+				loaders: ['style', 'css', 'sass'],
 			}
 		]
 	}

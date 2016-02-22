@@ -38,12 +38,12 @@ export default class Collection {
 	// e.g., models that already have an id, such as when 
 	// retrieved from local storage
 
-	onAdd(callback) {
-		this.register('add', callback);
-	}
-
 	onChange(callback) {
 		this.register('change', callback);
+	}
+
+	onAdd(callback) {
+		this.register('add', callback);
 	}
 
 	onCreate(callback) {

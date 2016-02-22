@@ -17,7 +17,7 @@ export default class LocalStorageCollection extends Collection {
 	setUpLocalStorage() {
 		this.localStorageName = 'ERGUSTO:collection:' + this.name;
 		this.hasLocallyStoredModels = this._hasLocallyStoredModels();
-		this.initialiseEvents();
+		this.initialiseLocalStorageEvents();
 
 		if (this.hasLocallyStoredModels) {
 			const storeList = this.getListFromLocalStorage();
@@ -27,7 +27,7 @@ export default class LocalStorageCollection extends Collection {
 		}
 	}
 
-	initialiseEvents() {
+	initialiseLocalStorageEvents() {
 		
 		this.onCreate((model) => {
 			if (!this.hasLocallyStoredModels) this.hasLocallyStoredModels = true;
@@ -36,17 +36,6 @@ export default class LocalStorageCollection extends Collection {
 				models.forEach((model) => {
 					if (model && model.id) {
 						this.addModelToLocalStorage(model);
-					}
-				});
-			}
-		});
-
-		this.onRemove((model) => {
-			if (model) {
-				const models = _.isArray(model) ? model : [model];
-				models.forEach((model) => {
-					if (model && model.id) {
-						this.removeModelFromLocalStorage(model);
 					}
 				});
 			}
@@ -63,44 +52,20 @@ export default class LocalStorageCollection extends Collection {
 			}
 		});
 
-	}
-
-	addDefaults() {
-		if (this.defaultModels) {
-			const defaults = this.defaultModels();
-			this.createMany(defaults);
-		}
-	}
-
-	_hasLocallyStoredModels() {
-		const store = this.getLocalStorage();
-		return store && !!_.keys(store).length;
-	}
-
-	addModelToLocalStorage(model) {
-		const store = this.getLocalStorage();
-		store[model.id] = model;
-		this.setLocalStorage(store);
-	}
-
-	removeModelFromLocalStorageById(id) {
-		const store = this.getLocalStorage();
-		delete store[id];
-		this.setLocalStorage(store);
-	}
-
-	removeModelFromLocalStorage(model) {
-		this.removeModelFromLocalStorageById(model.id);
-	}
-
-	getListFromLocalStorage() {
-		const store = this.getLocalStorage();
-		return _.keys(store).map(function(id) {
-			return store[id];
+		this.onRemove((model) => {
+			if (model) {
+				const models = _.isArray(model) ? model : [model];
+				models.forEach((model) => {
+					if (model && model.id) {
+						this.removeModelFromLocalStorage(model);
+					}
+				});
+			}
 		});
+
 	}
 
-	getLocalStorage() {
+	getFromLocalStorage() {
 		const store = localStorage.getItem(this.localStorageName);
 		return _.isString(store) ? JSON.parse(store) : {};
 	}
@@ -112,6 +77,41 @@ export default class LocalStorageCollection extends Collection {
 	setLocalStorage(store) {
 		if (!_.isString(store)) store = JSON.stringify(store);
 		localStorage.setItem(this.localStorageName, store);
+	}
+
+	addDefaults() {
+		if (this.defaultModels) {
+			const defaults = this.defaultModels();
+			this.createMany(defaults);
+		}
+	}
+
+	_hasLocallyStoredModels() {
+		const store = this.getFromLocalStorage();
+		return store && !!_.keys(store).length;
+	}
+
+	addModelToLocalStorage(model) {
+		const store = this.getFromLocalStorage();
+		store[model.id] = model;
+		this.setLocalStorage(store);
+	}
+
+	removeModelFromLocalStorageById(id) {
+		const store = this.getFromLocalStorage();
+		delete store[id];
+		this.setLocalStorage(store);
+	}
+
+	removeModelFromLocalStorage(model) {
+		this.removeModelFromLocalStorageById(model.id);
+	}
+
+	getListFromLocalStorage() {
+		const store = this.getFromLocalStorage();
+		return _.keys(store).map(function(id) {
+			return store[id];
+		});
 	}
 
 }

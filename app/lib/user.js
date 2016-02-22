@@ -33,6 +33,11 @@ export default class User {
 		localStorage.setItem(this.localStorageName, '');
 	}
 
+	resetAllLocalStorage() {
+		if (!this.usingLocalStorage) return;
+		localStorage.clear();
+	}
+
 	setLocalStorage() {
 		if (!this.usingLocalStorage) return;
 		const store = JSON.stringify(this.user);
@@ -40,7 +45,8 @@ export default class User {
 	}
 
 	getUsername() {
-		return this.user.username;
+		const username = this.user.username;
+		return username.length ? username : 'ergusto';
 	}
 
 	set(property, value) {

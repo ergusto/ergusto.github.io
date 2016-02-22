@@ -48,10 +48,10 @@ export default class CommentFormComponent extends React.Component {
 
 	submitHandler(event) {
 		event.preventDefault();
+		let saved;
 		const parent = this.parent;
 		const textInputValue = this.refs.commentInput.value;
 		const comment = this.props.comment || this.newComment();
-		let saved;
 
 		if (!this.state.isEditing) {
 			this.isEditing = true;

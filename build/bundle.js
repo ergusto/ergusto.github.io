@@ -23970,6 +23970,12 @@
 	            this.props.user.setUsername(username);
 	        }
 	    }, {
+	        key: 'resetHandler',
+	        value: function resetHandler(event) {
+	            event.preventDefault();
+	            this.props.user.resetAllLocalStorage();
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var dropdownClass = undefined;
@@ -24029,8 +24035,30 @@
 	                            animationSettingLabelText
 	                        )
 	                    ),
-	                    _react2.default.createElement('input', { onClick: this.showIntroHandler.bind(this), type: 'button', className: 'btn', value: 'show animation' }),
-	                    _react2.default.createElement('input', { onClick: this.hideIntroHandler.bind(this), type: 'button', className: 'btn', value: 'hide animation' })
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: '#', onClick: this.showIntroHandler.bind(this), className: 'btn' },
+	                        'show animation'
+	                    ),
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: '#', onClick: this.hideIntroHandler.bind(this), className: 'btn' },
+	                        'hide animation'
+	                    ),
+	                    _react2.default.createElement(
+	                        'label',
+	                        { className: 'settings-label' },
+	                        _react2.default.createElement(
+	                            'small',
+	                            null,
+	                            'reset all data'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'a',
+	                        { href: '#', onClick: this.resetHandler.bind(this), className: 'btn' },
+	                        'reset'
+	                    )
 	                )
 	            );
 	        }
@@ -39911,6 +39939,12 @@
 				localStorage.setItem(this.localStorageName, '');
 			}
 		}, {
+			key: 'resetAllLocalStorage',
+			value: function resetAllLocalStorage() {
+				if (!this.usingLocalStorage) return;
+				localStorage.clear();
+			}
+		}, {
 			key: 'setLocalStorage',
 			value: function setLocalStorage() {
 				if (!this.usingLocalStorage) return;
@@ -39920,7 +39954,8 @@
 		}, {
 			key: 'getUsername',
 			value: function getUsername() {
-				return this.user.username;
+				var username = this.user.username;
+				return username.length ? username : 'ergusto';
 			}
 		}, {
 			key: 'set',
@@ -40100,7 +40135,7 @@
 			value: function setUpLocalStorage() {
 				this.localStorageName = 'ERGUSTO:collection:' + this.name;
 				this.hasLocallyStoredModels = this._hasLocallyStoredModels();
-				this.initialiseEvents();
+				this.initialiseLocalStorageEvents();
 
 				if (this.hasLocallyStoredModels) {
 					var storeList = this.getListFromLocalStorage();
@@ -40110,12 +40145,23 @@
 				}
 			}
 		}, {
-			key: 'initialiseEvents',
-			value: function initialiseEvents() {
+			key: 'initialiseLocalStorageEvents',
+			value: function initialiseLocalStorageEvents() {
 				var _this2 = this;
 
 				this.onCreate(function (model) {
 					if (!_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
+					if (model) {
+						var models = _underscore2.default.isArray(model) ? model : [model];
+						models.forEach(function (model) {
+							if (model && model.id) {
+								_this2.addModelToLocalStorage(model);
+							}
+						});
+					}
+				});
+
+				this.onUpdate(function (model) {
 					if (model) {
 						var models = _underscore2.default.isArray(model) ? model : [model];
 						models.forEach(function (model) {
@@ -40136,62 +40182,10 @@
 						});
 					}
 				});
-
-				this.onUpdate(function (model) {
-					if (model) {
-						var models = _underscore2.default.isArray(model) ? model : [model];
-						models.forEach(function (model) {
-							if (model && model.id) {
-								_this2.addModelToLocalStorage(model);
-							}
-						});
-					}
-				});
 			}
 		}, {
-			key: 'addDefaults',
-			value: function addDefaults() {
-				if (this.defaultModels) {
-					var defaults = this.defaultModels();
-					this.createMany(defaults);
-				}
-			}
-		}, {
-			key: '_hasLocallyStoredModels',
-			value: function _hasLocallyStoredModels() {
-				var store = this.getLocalStorage();
-				return store && !!_underscore2.default.keys(store).length;
-			}
-		}, {
-			key: 'addModelToLocalStorage',
-			value: function addModelToLocalStorage(model) {
-				var store = this.getLocalStorage();
-				store[model.id] = model;
-				this.setLocalStorage(store);
-			}
-		}, {
-			key: 'removeModelFromLocalStorageById',
-			value: function removeModelFromLocalStorageById(id) {
-				var store = this.getLocalStorage();
-				delete store[id];
-				this.setLocalStorage(store);
-			}
-		}, {
-			key: 'removeModelFromLocalStorage',
-			value: function removeModelFromLocalStorage(model) {
-				this.removeModelFromLocalStorageById(model.id);
-			}
-		}, {
-			key: 'getListFromLocalStorage',
-			value: function getListFromLocalStorage() {
-				var store = this.getLocalStorage();
-				return _underscore2.default.keys(store).map(function (id) {
-					return store[id];
-				});
-			}
-		}, {
-			key: 'getLocalStorage',
-			value: function getLocalStorage() {
+			key: 'getFromLocalStorage',
+			value: function getFromLocalStorage() {
 				var store = localStorage.getItem(this.localStorageName);
 				return _underscore2.default.isString(store) ? JSON.parse(store) : {};
 			}
@@ -40205,6 +40199,47 @@
 			value: function setLocalStorage(store) {
 				if (!_underscore2.default.isString(store)) store = JSON.stringify(store);
 				localStorage.setItem(this.localStorageName, store);
+			}
+		}, {
+			key: 'addDefaults',
+			value: function addDefaults() {
+				if (this.defaultModels) {
+					var defaults = this.defaultModels();
+					this.createMany(defaults);
+				}
+			}
+		}, {
+			key: '_hasLocallyStoredModels',
+			value: function _hasLocallyStoredModels() {
+				var store = this.getFromLocalStorage();
+				return store && !!_underscore2.default.keys(store).length;
+			}
+		}, {
+			key: 'addModelToLocalStorage',
+			value: function addModelToLocalStorage(model) {
+				var store = this.getFromLocalStorage();
+				store[model.id] = model;
+				this.setLocalStorage(store);
+			}
+		}, {
+			key: 'removeModelFromLocalStorageById',
+			value: function removeModelFromLocalStorageById(id) {
+				var store = this.getFromLocalStorage();
+				delete store[id];
+				this.setLocalStorage(store);
+			}
+		}, {
+			key: 'removeModelFromLocalStorage',
+			value: function removeModelFromLocalStorage(model) {
+				this.removeModelFromLocalStorageById(model.id);
+			}
+		}, {
+			key: 'getListFromLocalStorage',
+			value: function getListFromLocalStorage() {
+				var store = this.getFromLocalStorage();
+				return _underscore2.default.keys(store).map(function (id) {
+					return store[id];
+				});
 			}
 		}]);
 
@@ -40282,14 +40317,14 @@
 			// retrieved from local storage
 
 		}, {
-			key: 'onAdd',
-			value: function onAdd(callback) {
-				this.register('add', callback);
-			}
-		}, {
 			key: 'onChange',
 			value: function onChange(callback) {
 				this.register('change', callback);
+			}
+		}, {
+			key: 'onAdd',
+			value: function onAdd(callback) {
+				this.register('add', callback);
 			}
 		}, {
 			key: 'onCreate',
@@ -40825,10 +40860,10 @@
 			key: 'submitHandler',
 			value: function submitHandler(event) {
 				event.preventDefault();
+				var saved = undefined;
 				var parent = this.parent;
 				var textInputValue = this.refs.commentInput.value;
 				var comment = this.props.comment || this.newComment();
-				var saved = undefined;
 
 				if (!this.state.isEditing) {
 					this.isEditing = true;
