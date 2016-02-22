@@ -17,9 +17,28 @@ export default class SettingsComponent extends  React.Component {
         });
     }
 
+    componentDidMount() {
+        document.body.addEventListener('click', (event) => {
+            this.hideDropdown();
+        });
+        this.refs.dropdown.addEventListener('click', (event) => event.stopPropagation());
+    }
+
     triggerClickHandler(event) {
     	event.preventDefault();
     	this.toggleDropdown();
+    }
+
+    showDropDown() {
+        this.setState({
+            shouldShowDropDown: true,
+        });
+    }
+
+    hideDropdown() {
+        this.setState({
+            shouldShowDropDown: false,
+        });
     }
 
     toggleDropdown() {
@@ -78,7 +97,7 @@ export default class SettingsComponent extends  React.Component {
         	<div className="settings pull-right">
         		<a onClick={this.triggerClickHandler.bind(this)} href="#" ref="dropdowntrigger" className={triggerClass}>&#x221e;</a>
 
-        		<div className={dropdownClass}>
+        		<div ref="dropdown" className={dropdownClass}>
         			<h5 className="settings-title">settings</h5>
                     <div className="settings-field">
                         <label className="settings-label"><small>username: {username}</small></label>
