@@ -57,6 +57,7 @@ export default class CommentComponent extends React.Component {
 
     createNewComment(comment) {
     	this.props.comments.create(comment);
+        this.hideReplyForm();
     }
 
     getChildren() {
@@ -70,6 +71,7 @@ export default class CommentComponent extends React.Component {
 
     updateComment(comment) {
         this.props.comments.update(comment);
+        this.hideEditForm();
     }
     
     render() {
@@ -107,8 +109,8 @@ export default class CommentComponent extends React.Component {
 	                </footer>
 	            </div>
 
-	            <CommentFormComponent user={this.props.user} formTitle="reply" parent={comment} shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.createNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
-	            <CommentFormComponent {...this.props} user={this.props.user} formTitle="edit" parent={comment} submitCallback={this.updateComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
+	            <CommentFormComponent user={this.props.user} formTitle="reply" parent={comment} shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.createNewComment.bind(this)} cancelCallback={this.hideReplyForm.bind(this)} />
+	            <CommentFormComponent {...this.props} user={this.props.user} formTitle="edit" comment={comment} submitCallback={this.updateComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} cancelCallback={this.hideEditForm.bind(this)} />
 
                 {childList}
 

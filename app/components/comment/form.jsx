@@ -10,19 +10,35 @@ export default class CommentFormComponent extends React.Component {
 		super(props);
         const comment = this.props.comment;
 		this.state = {};
-        this.state.commentLength = comment ? comment.text.length : 0;
+		this.state.formError = '';
         this.state.isEditing = false;
+        this.state.commentLength = comment ? comment.text.length : 0;
 
 		// http://stackoverflow.com/a/31362350/4566267
 		this.cancelHandler = this.cancelHandler.bind(this);
 		this.submitHandler = this.submitHandler.bind(this);
 	}
 
+	componentWillUnmount() {
+		this.clearError();
+	}
+
+	addError(error) {
+		this.setState({
+			formError: error,
+		});
+	}
+
+	clearError() {
+		this.setState({
+			formError: null,
+		});
+	}
+
 	newComment() {
 		const comment = {};
 		const parent = this.props.parent;
 		comment.text = '';
-		comment.children = [];
 		comment.date = new Date;
 		comment.parentId = parent && parent.id || '';
 		comment.username = this.props.user.getUsername();
@@ -31,22 +47,30 @@ export default class CommentFormComponent extends React.Component {
 
 	cancelHandler(event) {
 		event.preventDefault();
-		this.props.hideForm();
+		this.props.cancelCallback();
 	}
 
 	submitHandler(event) {
 		event.preventDefault();
 		const parent = this.parent;
-		const newTextValue = this.refs.commentInput.value;
+		const textInputValue = this.refs.commentInput.value;
 		const comment = this.props.comment || this.newComment();
 
-		if (!this.isEditing) {
+		if (!this.state.isEditing) {
 			this.isEditing = true;
-			comment.text = newTextValue;
 
-			if (this.props.submitCallback) this.props.submitCallback(comment);
+			if (!textInputValue.trim().length) {
+				this.addError('Please enter a comment');
+				this.isEditing = false;
+				return;
+			}
+
+			comment.text = textInputValue;
+
+			if (this.props.submitCallback) {
+				this.props.submitCallback(comment);
+			}
 			this.refs.commentInput.value = '';
-			this.props.hideForm();
 			this.isEditing = false;
 		}
 	}
@@ -66,17 +90,26 @@ export default class CommentFormComponent extends React.Component {
         const shouldShowForm = this.props.shouldShowForm;
         const formTitle = this.props.formTitle || 'comment';
         const comment = this.props.comment;
+		const err = this.state.formError;
+		let errContent;
         let defaultValue;
 
-        if (comment) defaultValue = comment.text;
+		if (err) {
+			errContent = (<span className="form-error">{err}</span>);
+		}
+
+        if (comment) {
+        	defaultValue = comment.text;
+        }
 
         if (!shouldShowForm) return false;
 
         return (
-            <form onSubmit={this.submitHandler.bind(this)} className="comment-form box padding margin-top">
+            <form refs="commentform" onSubmit={this.submitHandler.bind(this)} className="comment-form box padding margin-top">
             	<span className="fieldCount pull-right">{this.state.commentLength}</span>
             	<label httmlFor="comment"><small>{formTitle}</small></label>
             	<textarea onChange={this.changeHandler.bind(this)} ref="commentInput" className="field" name="comment" defaultValue={defaultValue}></textarea>
+				{errContent}
             	<div className="btn-group">
 	            	<input type="submit" value="submit" className="btn"></input>
 	                <a className="btn" href="#" onClick={this.cancelHandler.bind(this)}>cancel</a>

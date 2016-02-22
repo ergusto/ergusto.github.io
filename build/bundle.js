@@ -38971,6 +38971,7 @@
 	        key: 'createNewComment',
 	        value: function createNewComment(comment) {
 	            this.props.comments.create(comment);
+	            this.hideReplyForm();
 	        }
 	    }, {
 	        key: 'getChildren',
@@ -38987,6 +38988,7 @@
 	        key: 'updateComment',
 	        value: function updateComment(comment) {
 	            this.props.comments.update(comment);
+	            this.hideEditForm();
 	        }
 	    }, {
 	        key: 'render',
@@ -39079,8 +39081,8 @@
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement(_form2.default, { user: this.props.user, formTitle: 'reply', parent: comment, shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.createNewComment.bind(this), hideForm: this.hideReplyForm.bind(this) }),
-	                _react2.default.createElement(_form2.default, _extends({}, this.props, { user: this.props.user, formTitle: 'edit', parent: comment, submitCallback: this.updateComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, hideForm: this.hideEditForm.bind(this) })),
+	                _react2.default.createElement(_form2.default, { user: this.props.user, formTitle: 'reply', parent: comment, shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.createNewComment.bind(this), cancelCallback: this.hideReplyForm.bind(this) }),
+	                _react2.default.createElement(_form2.default, _extends({}, this.props, { user: this.props.user, formTitle: 'edit', comment: comment, submitCallback: this.updateComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, cancelCallback: this.hideEditForm.bind(this) })),
 	                childList
 	            );
 	        }
@@ -39266,8 +39268,9 @@
 
 			var comment = _this.props.comment;
 			_this.state = {};
-			_this.state.commentLength = comment ? comment.text.length : 0;
+			_this.state.formError = '';
 			_this.state.isEditing = false;
+			_this.state.commentLength = comment ? comment.text.length : 0;
 
 			// http://stackoverflow.com/a/31362350/4566267
 			_this.cancelHandler = _this.cancelHandler.bind(_this);
@@ -39276,12 +39279,30 @@
 		}
 
 		_createClass(CommentFormComponent, [{
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				this.clearError();
+			}
+		}, {
+			key: 'addError',
+			value: function addError(error) {
+				this.setState({
+					formError: error
+				});
+			}
+		}, {
+			key: 'clearError',
+			value: function clearError() {
+				this.setState({
+					formError: null
+				});
+			}
+		}, {
 			key: 'newComment',
 			value: function newComment() {
 				var comment = {};
 				var parent = this.props.parent;
 				comment.text = '';
-				comment.children = [];
 				comment.date = new Date();
 				comment.parentId = parent && parent.id || '';
 				comment.username = this.props.user.getUsername();
@@ -39291,23 +39312,31 @@
 			key: 'cancelHandler',
 			value: function cancelHandler(event) {
 				event.preventDefault();
-				this.props.hideForm();
+				this.props.cancelCallback();
 			}
 		}, {
 			key: 'submitHandler',
 			value: function submitHandler(event) {
 				event.preventDefault();
 				var parent = this.parent;
-				var newTextValue = this.refs.commentInput.value;
+				var textInputValue = this.refs.commentInput.value;
 				var comment = this.props.comment || this.newComment();
 
-				if (!this.isEditing) {
+				if (!this.state.isEditing) {
 					this.isEditing = true;
-					comment.text = newTextValue;
 
-					if (this.props.submitCallback) this.props.submitCallback(comment);
+					if (!textInputValue.trim().length) {
+						this.addError('Please enter a comment');
+						this.isEditing = false;
+						return;
+					}
+
+					comment.text = textInputValue;
+
+					if (this.props.submitCallback) {
+						this.props.submitCallback(comment);
+					}
 					this.refs.commentInput.value = '';
-					this.props.hideForm();
 					this.isEditing = false;
 				}
 			}
@@ -39330,15 +39359,27 @@
 				var shouldShowForm = this.props.shouldShowForm;
 				var formTitle = this.props.formTitle || 'comment';
 				var comment = this.props.comment;
+				var err = this.state.formError;
+				var errContent = undefined;
 				var defaultValue = undefined;
 
-				if (comment) defaultValue = comment.text;
+				if (err) {
+					errContent = _react2.default.createElement(
+						'span',
+						{ className: 'form-error' },
+						err
+					);
+				}
+
+				if (comment) {
+					defaultValue = comment.text;
+				}
 
 				if (!shouldShowForm) return false;
 
 				return _react2.default.createElement(
 					'form',
-					{ onSubmit: this.submitHandler.bind(this), className: 'comment-form box padding margin-top' },
+					{ refs: 'commentform', onSubmit: this.submitHandler.bind(this), className: 'comment-form box padding margin-top' },
 					_react2.default.createElement(
 						'span',
 						{ className: 'fieldCount pull-right' },
@@ -39354,6 +39395,7 @@
 						)
 					),
 					_react2.default.createElement('textarea', { onChange: this.changeHandler.bind(this), ref: 'commentInput', className: 'field', name: 'comment', defaultValue: defaultValue }),
+					errContent,
 					_react2.default.createElement(
 						'div',
 						{ className: 'btn-group' },
@@ -39711,6 +39753,11 @@
 				this.setState({
 					formError: null
 				});
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				this.clearError();
 			}
 		}, {
 			key: 'submitHandler',
@@ -40430,8 +40477,8 @@
 				this.register('update', callback);
 			}
 		}, {
-			key: 'onDelete',
-			value: function onDelete(callback) {
+			key: 'onRemove',
+			value: function onRemove(callback) {
 				this.register('remove', callback);
 			}
 
@@ -40524,7 +40571,8 @@
 				if (_underscore2.default.isObject(model)) {
 					id = model.id;
 				} else {
-					id = model;
+					model = this.get(model);
+					id = model.id;
 				}
 				delete this.models[id];
 				this.triggerRemove(model);
@@ -40831,7 +40879,6 @@
 				_this.usingLocalStorage = false;
 				_this.addDefaults();
 			}
-
 			return _this;
 		}
 
@@ -40846,11 +40893,22 @@
 
 				this.onCreate(function (model) {
 					if (!_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
-					if (model && _this2.usingLocalStorage) {
+					if (model) {
 						var models = _underscore2.default.isArray(model) ? model : [model];
 						models.forEach(function (model) {
 							if (model && model.id) {
 								_this2.addModelToLocalStorage(model);
+							}
+						});
+					}
+				});
+
+				this.onRemove(function (model) {
+					if (model) {
+						var models = _underscore2.default.isArray(model) ? model : [model];
+						models.forEach(function (model) {
+							if (model && model.id) {
+								_this2.removeModelFromLocalStorage(model);
 							}
 						});
 					}
@@ -40890,6 +40948,11 @@
 				var store = this.getFromLocalStorage();
 				delete store[id];
 				this.setLocalStorage(store);
+			}
+		}, {
+			key: 'removeModelFromLocalStorage',
+			value: function removeModelFromLocalStorage(model) {
+				this.removeModelFromLocalStorageById(model.id);
 			}
 		}, {
 			key: 'getListFromLocalStorage',

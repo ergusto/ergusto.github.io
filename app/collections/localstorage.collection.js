@@ -12,7 +12,6 @@ export default class LocalStorageCollection extends Collection {
 			this.usingLocalStorage = false;
 			this.addDefaults();
 		}
-
 	}
 
 	setUpLocalStorage() {
@@ -22,11 +21,22 @@ export default class LocalStorageCollection extends Collection {
 		
 		this.onCreate((model) => {
 			if (!this.hasLocallyStoredModels) this.hasLocallyStoredModels = true;
-			if (model && this.usingLocalStorage) {
+			if (model) {
 				const models = _.isArray(model) ? model : [model];
 				models.forEach((model) => {
 					if (model && model.id) {
 						this.addModelToLocalStorage(model);
+					}
+				});
+			}
+		});
+
+		this.onRemove((model) => {
+			if (model) {
+				const models = _.isArray(model) ? model : [model];
+				models.forEach((model) => {
+					if (model && model.id) {
+						this.removeModelFromLocalStorage(model);
 					}
 				});
 			}
@@ -62,6 +72,10 @@ export default class LocalStorageCollection extends Collection {
 		const store = this.getFromLocalStorage();
 		delete store[id];
 		this.setLocalStorage(store);
+	}
+
+	removeModelFromLocalStorage(model) {
+		this.removeModelFromLocalStorageById(model.id);
 	}
 
 	getListFromLocalStorage() {

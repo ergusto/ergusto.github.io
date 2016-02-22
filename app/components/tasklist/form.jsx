@@ -20,7 +20,11 @@ export default class TaskFormComponent extends React.Component {
 	clearError() {
 		this.setState({
 			formError: null,
-		})
+		});
+	}
+
+	componentWillUnmount() {
+		this.clearError();
 	}
 
 	submitHandler(event) {

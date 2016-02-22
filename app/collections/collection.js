@@ -54,7 +54,7 @@ export default class Collection {
 		this.register('update', callback);
 	}
 
-	onDelete(callback) {
+	onRemove(callback) {
 		this.register('remove', callback);
 	}
 
@@ -130,7 +130,8 @@ export default class Collection {
 		if (_.isObject(model)) {
 			id = model.id;
 		} else {
-			id = model;
+			model = this.get(model);
+			id = model.id;
 		}
 		delete this.models[id];
 		this.triggerRemove(model);
