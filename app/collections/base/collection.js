@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import Tools from '../lib/tools.js';
+import Tools from '../../lib/tools.js';
 
 export default class Collection {
 

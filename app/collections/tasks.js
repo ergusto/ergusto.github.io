@@ -1,4 +1,4 @@
-import LocalStorageCollection from './localstorage.collection.js';
+import LocalStorageCollection from './base/localstorage.collection.js';
 
 export default class Tasks extends LocalStorageCollection {
 

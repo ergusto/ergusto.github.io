@@ -78,7 +78,7 @@ export default class CommentComponent extends React.Component {
 
         if (childrenHTML) {
 
-            childList = (<ul className="children">{childrenHTML}</ul>);
+            childList = (<ul className="comment-children">{childrenHTML}</ul>);
 
         }
         return (

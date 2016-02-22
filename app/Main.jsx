@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import IntroductionComponent from './components/introduction/index.jsx';
-import CommentListComponent from './components/comment/index.jsx';
+import CommentListComponent from './components/comments/index.jsx';
 import TaskManagerComponent from './components/tasklist/index.jsx';
 import CalendarComponent from './components/calendar/index.jsx';
 

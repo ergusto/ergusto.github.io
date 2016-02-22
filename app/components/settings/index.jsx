@@ -42,26 +42,31 @@ export default class SettingsComponent extends  React.Component {
     	this.setUserIntroAnimationSetting(false);
     }
 
+    usernameChangeHandler(event) {
+        const username = event.target.value;
+        this.props.user.setUsername(username);
+    }
+
     render() {
     	let dropdownClass;
     	let triggerClass;
-    	let labelText;
+    	let animationSettingLabelText;
         let showDisabled;
         let hideDisabled;
+        const username = this.props.user.getUsername();
 
     	if (this.state.shouldShowDropDown) {
-    		dropdownClass = 'dropdown box';
+    		dropdownClass = 'dropdown box clearfix';
     		triggerClass = 'settings-trigger opaque';
-
     	} else {
-            dropdownClass = 'hidden dropdown';
+            dropdownClass = 'hidden dropdown clearfix';
             triggerClass = 'settings-trigger';
         }
 
     	if (this.props.user.shouldSeeIntroAnimation()) {
-            labelText = 'show intro animation';
+            animationSettingLabelText = 'show intro animation';
         } else {
-            labelText = 'do not show intro animation';
+            animationSettingLabelText = 'do not show intro animation';
         }
 
         return (
@@ -70,9 +75,11 @@ export default class SettingsComponent extends  React.Component {
 
         		<div className={dropdownClass}>
         			<h5 className="settings-title">settings</h5>
-        			<label className="settings-label"><small>{labelText}</small></label>
-        			<input type="button" onClick={this.showIntroHandler.bind(this)} className="btn" value="show animation" />
-                    <input type="button" onClick={this.hideIntroHandler.bind(this)} className="btn" value="hide animation" />
+                    <label className="settings-label"><small>username: {username}</small></label>
+                    <input onChange={this.usernameChangeHandler.bind(this)} type="text" className="field" defaultValue={username} />
+        			<label className="settings-label"><small>{animationSettingLabelText}</small></label>
+        			<input onClick={this.showIntroHandler.bind(this)} type="button" className="btn" value="show animation" />
+                    <input onClick={this.hideIntroHandler.bind(this)} type="button" className="btn" value="hide animation" />
         		</div>
         	</div>
         );

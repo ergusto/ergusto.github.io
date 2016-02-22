@@ -60,7 +60,7 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _index3 = __webpack_require__(169);
+	var _index3 = __webpack_require__(302);
 
 	var _index4 = _interopRequireDefault(_index3);
 
@@ -23964,26 +23964,33 @@
 	            this.setUserIntroAnimationSetting(false);
 	        }
 	    }, {
+	        key: 'usernameChangeHandler',
+	        value: function usernameChangeHandler(event) {
+	            var username = event.target.value;
+	            this.props.user.setUsername(username);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var dropdownClass = undefined;
 	            var triggerClass = undefined;
-	            var labelText = undefined;
+	            var animationSettingLabelText = undefined;
 	            var showDisabled = undefined;
 	            var hideDisabled = undefined;
+	            var username = this.props.user.getUsername();
 
 	            if (this.state.shouldShowDropDown) {
-	                dropdownClass = 'dropdown box';
+	                dropdownClass = 'dropdown box clearfix';
 	                triggerClass = 'settings-trigger opaque';
 	            } else {
-	                dropdownClass = 'hidden dropdown';
+	                dropdownClass = 'hidden dropdown clearfix';
 	                triggerClass = 'settings-trigger';
 	            }
 
 	            if (this.props.user.shouldSeeIntroAnimation()) {
-	                labelText = 'show intro animation';
+	                animationSettingLabelText = 'show intro animation';
 	            } else {
-	                labelText = 'do not show intro animation';
+	                animationSettingLabelText = 'do not show intro animation';
 	            }
 
 	            return _react2.default.createElement(
@@ -24008,11 +24015,22 @@
 	                        _react2.default.createElement(
 	                            'small',
 	                            null,
-	                            labelText
+	                            'username: ',
+	                            username
 	                        )
 	                    ),
-	                    _react2.default.createElement('input', { type: 'button', onClick: this.showIntroHandler.bind(this), className: 'btn', value: 'show animation' }),
-	                    _react2.default.createElement('input', { type: 'button', onClick: this.hideIntroHandler.bind(this), className: 'btn', value: 'hide animation' })
+	                    _react2.default.createElement('input', { onChange: this.usernameChangeHandler.bind(this), type: 'text', className: 'field', defaultValue: username }),
+	                    _react2.default.createElement(
+	                        'label',
+	                        { className: 'settings-label' },
+	                        _react2.default.createElement(
+	                            'small',
+	                            null,
+	                            animationSettingLabelText
+	                        )
+	                    ),
+	                    _react2.default.createElement('input', { onClick: this.showIntroHandler.bind(this), type: 'button', className: 'btn', value: 'show animation' }),
+	                    _react2.default.createElement('input', { onClick: this.hideIntroHandler.bind(this), type: 'button', className: 'btn', value: 'hide animation' })
 	                )
 	            );
 	        }
@@ -25612,7 +25630,7 @@
 
 
 	// module
-	exports.push([module.id, ".settings {\n  display: inline-block;\n  color: black;\n  position: relative; }\n\n.settings-trigger {\n  margin: 0;\n  opacity: 0.7;\n  color: white;\n  font-size: 2rem;\n  line-height: 3rem; }\n\n@media only screen and (min-width: 320px) {\n  .settings-trigger {\n    font-size: 2rem;\n    line-height: 1.8rem; } }\n\n@media only screen and (min-width: 480px) {\n  .settings-trigger {\n    line-height: 1.4rem;\n    margin-right: 10px; } }\n\n.settings .dropdown {\n  right: 10px;\n  min-width: 300px;\n  border-top: 0;\n  padding: 10px;\n  bottom: -112px; }\n\n@media only screen and (min-width: 480px) {\n  .settings .dropdown {\n    min-width: 400px;\n    bottom: -112px; } }\n\n.settings-title {\n  margin: 0;\n  margin-bottom: 10px;\n  border-bottom: 1px solid black;\n  padding-bottom: 4px; }\n\n.settings .btn {\n  margin-right: 2px; }\n\n.settings-label {\n  margin-bottom: 6px; }\n\n.settings-trigger:hover, .settings-trigger.opaque {\n  opacity: 1; }\n", ""]);
+	exports.push([module.id, ".settings {\n  display: inline-block;\n  color: black;\n  position: relative; }\n\n.settings-trigger {\n  margin: 0;\n  opacity: 0.7;\n  color: white;\n  font-size: 2rem;\n  line-height: 3rem; }\n\n@media only screen and (min-width: 320px) {\n  .settings-trigger {\n    font-size: 2rem;\n    line-height: 1.8rem; } }\n\n@media only screen and (min-width: 480px) {\n  .settings-trigger {\n    line-height: 1.4rem;\n    margin-right: 10px; } }\n\n.settings .dropdown {\n  right: 10px;\n  min-width: 300px;\n  border-top: 0;\n  padding: 10px;\n  top: 37px; }\n\n@media only screen and (min-width: 480px) {\n  .settings .dropdown {\n    min-width: 400px; } }\n\n.settings-title {\n  margin: 0;\n  margin-bottom: 10px;\n  border-bottom: 1px solid black;\n  padding-bottom: 4px; }\n\n.settings .btn {\n  margin-right: 2px; }\n\n.settings-label {\n  margin-bottom: 6px; }\n\n.settings-trigger:hover, .settings-trigger.opaque {\n  opacity: 1; }\n", ""]);
 
 	// exports
 
@@ -25968,90 +25986,7 @@
 
 
 /***/ },
-/* 169 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _moment = __webpack_require__(170);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _comment = __webpack_require__(269);
-
-	var _comment2 = _interopRequireDefault(_comment);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import styles for this component
-	__webpack_require__(276);
-
-	var CommentListComponent = function (_React$Component) {
-		_inherits(CommentListComponent, _React$Component);
-
-		function CommentListComponent(props) {
-			_classCallCheck(this, CommentListComponent);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentListComponent).call(this, props));
-
-			props.comments.onChange(function () {
-				_this.forceUpdate();
-			});
-			return _this;
-		}
-
-		_createClass(CommentListComponent, [{
-			key: 'render',
-			value: function render() {
-				var _this2 = this;
-
-				var comments = this.props.comments.getParentComments();
-				var content = undefined;
-
-				if (comments.length) {
-					content = comments.map(function (comment) {
-						return _react2.default.createElement(_comment2.default, { key: comment.id, user: _this2.props.user, comment: comment, comments: _this2.props.comments });
-					});
-				}
-
-				return _react2.default.createElement(
-					'section',
-					{ className: 'full-height panel' },
-					_react2.default.createElement(
-						'div',
-						{ id: 'comment-example', className: 'example' },
-						_react2.default.createElement(
-							'ul',
-							{ className: 'comment-list' },
-							content
-						)
-					)
-				);
-			}
-		}]);
-
-		return CommentListComponent;
-	}(_react2.default.Component);
-
-	exports.default = CommentListComponent;
-
-/***/ },
+/* 169 */,
 /* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -38870,237 +38805,7 @@
 	}));
 
 /***/ },
-/* 269 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactTimeago = __webpack_require__(270);
-
-	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
-
-	var _form = __webpack_require__(271);
-
-	var _form2 = _interopRequireDefault(_form);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import styles for this component
-	__webpack_require__(274);
-
-	var CommentComponent = function (_React$Component) {
-	    _inherits(CommentComponent, _React$Component);
-
-	    function CommentComponent(props) {
-	        _classCallCheck(this, CommentComponent);
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentComponent).call(this, props));
-
-	        _this.state = {};
-	        _this.state.shouldShowReplyForm = false;
-	        _this.state.shouldShowEditForm = false;
-	        return _this;
-	    }
-
-	    _createClass(CommentComponent, [{
-	        key: 'showEditForm',
-	        value: function showEditForm() {
-	            this.hideReplyForm();
-	            this.setState({
-	                shouldShowEditForm: true
-	            });
-	        }
-	    }, {
-	        key: 'hideEditForm',
-	        value: function hideEditForm() {
-	            this.setState({
-	                shouldShowEditForm: false
-	            });
-	        }
-	    }, {
-	        key: 'showReplyForm',
-	        value: function showReplyForm() {
-	            this.hideEditForm();
-	            this.setState({
-	                shouldShowReplyForm: true
-	            });
-	        }
-	    }, {
-	        key: 'hideReplyForm',
-	        value: function hideReplyForm() {
-	            this.setState({
-	                shouldShowReplyForm: false
-	            });
-	        }
-	    }, {
-	        key: 'replyHandler',
-	        value: function replyHandler(event) {
-	            event.preventDefault();
-	            this.showReplyForm();
-	        }
-	    }, {
-	        key: 'editHandler',
-	        value: function editHandler(event) {
-	            event.preventDefault();
-	            this.showEditForm();
-	        }
-	    }, {
-	        key: 'replyCallback',
-	        value: function replyCallback() {
-	            this.hideReplyForm();
-	        }
-	    }, {
-	        key: 'editCallback',
-	        value: function editCallback() {
-	            this.hideEditForm();
-	        }
-	    }, {
-	        key: 'getChildren',
-	        value: function getChildren() {
-	            return this.props.comments.getChildCommentsForComment(this.props.comment);
-	        }
-	    }, {
-	        key: 'removeHandler',
-	        value: function removeHandler(comment, event) {
-	            event.preventDefault();
-	            this.props.comments.remove(comment.id);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-
-	            var comment = this.props.comment;
-	            var children = this.getChildren();
-	            var childList = undefined;
-
-	            var childrenHTML = children.map(function (child) {
-	                return _react2.default.createElement(CommentComponent, { key: child.id, user: _this2.props.user, comment: child, comments: _this2.props.comments });
-	            });
-
-	            if (childrenHTML) {
-
-	                childList = _react2.default.createElement(
-	                    'ul',
-	                    { className: 'children' },
-	                    childrenHTML
-	                );
-	            }
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'comment-item box' },
-	                    _react2.default.createElement(
-	                        'header',
-	                        { className: 'comment-item-header clearfix' },
-	                        _react2.default.createElement(
-	                            'p',
-	                            { className: 'muted' },
-	                            _react2.default.createElement(
-	                                'small',
-	                                null,
-	                                comment.username
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'comment-item-body' },
-	                        _react2.default.createElement(
-	                            'p',
-	                            null,
-	                            comment.text
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'footer',
-	                        { className: 'comment-item-footer clearfix' },
-	                        _react2.default.createElement(
-	                            'ul',
-	                            { className: 'horizontal-list-menu muted' },
-	                            _react2.default.createElement(
-	                                'li',
-	                                { className: 'pull-right' },
-	                                _react2.default.createElement(_reactTimeago2.default, { date: comment.date })
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#', onClick: this.replyHandler.bind(this) },
-	                                    'reply'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#', onClick: this.editHandler.bind(this) },
-	                                    'edit'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'li',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'a',
-	                                    { href: '#', onClick: this.removeHandler.bind(this, comment) },
-	                                    'remove'
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(_form2.default, {
-	                    user: this.props.user,
-	                    formTitle: 'reply',
-	                    parent: comment,
-	                    comments: this.props.comments,
-	                    shouldShowForm: this.state.shouldShowReplyForm,
-	                    submitCallback: this.replyCallback.bind(this),
-	                    cancelCallback: this.hideReplyForm.bind(this)
-	                }),
-	                _react2.default.createElement(_form2.default, {
-	                    user: this.props.user,
-	                    formTitle: 'edit',
-	                    comment: comment,
-	                    comments: this.props.comments,
-	                    shouldShowForm: this.state.shouldShowEditForm,
-	                    submitCallback: this.editCallback.bind(this),
-	                    cancelCallback: this.hideEditForm.bind(this)
-	                }),
-	                childList
-	            );
-	        }
-	    }]);
-
-	    return CommentComponent;
-	}(_react2.default.Component);
-
-	exports.default = CommentComponent;
-	;
-
-/***/ },
+/* 269 */,
 /* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -39234,318 +38939,13 @@
 
 
 /***/ },
-/* 271 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _moment = __webpack_require__(170);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import styles for this component
-	__webpack_require__(272);
-
-	var CommentFormComponent = function (_React$Component) {
-		_inherits(CommentFormComponent, _React$Component);
-
-		function CommentFormComponent(props) {
-			_classCallCheck(this, CommentFormComponent);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentFormComponent).call(this, props));
-
-			var comment = _this.props.comment;
-			_this.state = {};
-			_this.state.formError = '';
-			_this.state.isEditing = false;
-			_this.state.commentLength = comment ? comment.text.length : 0;
-			return _this;
-		}
-
-		_createClass(CommentFormComponent, [{
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				this.clearError();
-			}
-		}, {
-			key: 'addError',
-			value: function addError(error) {
-				this.setState({
-					formError: error
-				});
-			}
-		}, {
-			key: 'clearError',
-			value: function clearError() {
-				this.setState({
-					formError: null
-				});
-			}
-		}, {
-			key: 'newComment',
-			value: function newComment() {
-				var comment = {};
-				var parent = this.props.parent;
-				comment.text = '';
-				comment.date = new Date();
-				comment.parentId = parent && parent.id || '';
-				comment.username = this.props.user.getUsername();
-				return comment;
-			}
-		}, {
-			key: 'cancelHandler',
-			value: function cancelHandler(event) {
-				event.preventDefault();
-				this.props.cancelCallback();
-			}
-		}, {
-			key: 'submitHandler',
-			value: function submitHandler(event) {
-				event.preventDefault();
-				var parent = this.parent;
-				var textInputValue = this.refs.commentInput.value;
-				var comment = this.props.comment || this.newComment();
-				var saved = undefined;
-
-				if (!this.state.isEditing) {
-					this.isEditing = true;
-
-					if (!textInputValue.trim().length) {
-						this.addError('Please enter a comment');
-						this.isEditing = false;
-						return;
-					}
-
-					comment.text = textInputValue;
-
-					if (comment.id) {
-						saved = this.props.comments.update(comment);
-					} else {
-						saved = this.props.comments.create(comment);
-					}
-
-					if (this.props.submitCallback) {
-						this.props.submitCallback(saved);
-					}
-
-					this.refs.commentInput.value = '';
-					this.isEditing = false;
-				}
-			}
-		}, {
-			key: 'setCommentLength',
-			value: function setCommentLength(length) {
-				var length = length || this.refs.commentInput.value.length;
-				this.setState({
-					commentLength: length
-				});
-			}
-		}, {
-			key: 'changeHandler',
-			value: function changeHandler() {
-				this.setCommentLength();
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var shouldShowForm = this.props.shouldShowForm;
-				var formTitle = this.props.formTitle || 'comment';
-				var comment = this.props.comment;
-				var err = this.state.formError;
-				var errContent = undefined;
-				var defaultValue = undefined;
-
-				if (err) {
-					errContent = _react2.default.createElement(
-						'span',
-						{ className: 'form-error' },
-						err
-					);
-				}
-
-				if (comment) {
-					defaultValue = comment.text;
-				}
-
-				if (!shouldShowForm) return false;
-
-				return _react2.default.createElement(
-					'form',
-					{ refs: 'commentform', onSubmit: this.submitHandler.bind(this), className: 'comment-form box padding margin-top' },
-					_react2.default.createElement(
-						'span',
-						{ className: 'fieldCount pull-right' },
-						this.state.commentLength
-					),
-					_react2.default.createElement(
-						'label',
-						{ httmlFor: 'comment' },
-						_react2.default.createElement(
-							'small',
-							null,
-							formTitle
-						)
-					),
-					_react2.default.createElement('textarea', { onChange: this.changeHandler.bind(this), ref: 'commentInput', className: 'field', name: 'comment', defaultValue: defaultValue }),
-					errContent,
-					_react2.default.createElement(
-						'div',
-						{ className: 'btn-group' },
-						_react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' }),
-						_react2.default.createElement(
-							'a',
-							{ className: 'btn', href: '#', onClick: this.cancelHandler.bind(this) },
-							'cancel'
-						)
-					)
-				);
-			}
-		}]);
-
-		return CommentFormComponent;
-	}(_react2.default.Component);
-
-	exports.default = CommentFormComponent;
-
-/***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(273);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(166)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./form.scss", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./form.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 273 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(165)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".comment-form {\n  display: block;\n  max-width: 600px;\n  margin: 20px auto 0px; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 274 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(275);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(166)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./comment.scss", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./comment.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 275 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(165)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".comment-item {\n  list-style-type: none;\n  list-style: none;\n  display: block;\n  max-width: 600px;\n  margin: 20px auto; }\n\n.comment-item-header {\n  padding: 10px 20px 0; }\n\n.comment-item-body {\n  padding: 10px 20px 15px; }\n\n.comment-item-footer {\n  background: #f8f8f8;\n  border-top: 1px solid #ddd;\n  font-size: 80%; }\n\n.comment-item-footer a {\n  text-decoration: none; }\n\n.comment-item p {\n  margin: 0;\n  padding: 0; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 276 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(277);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(166)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./list.scss", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./list.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 277 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(165)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".comment-list {\n  padding: 0;\n  margin: 0; }\n", ""]);
-
-	// exports
-
-
-/***/ },
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
 /* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -40339,7 +39739,7 @@
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _localstorageCollection = __webpack_require__(299);
+	var _localstorageCollection = __webpack_require__(300);
 
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 
@@ -40376,18 +39776,18 @@
 				return [{
 					text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
 					username: 'ergusto',
-					date: new Date('Mon Feb 22 2016 02:42:36 GMT+0000 (GMT)'),
+					date: new Date(),
 					parentId: false
 				}, {
-					text: 'Almost everything uses the localStorage API, so changes you make here will persist between visits, but only while you use this browser.',
+					text: 'Almost everything uses the localStorage API, so changes you make here will persist between visits, but only in this browser.',
 					username: 'ergusto',
-					date: new Date('Mon Feb 22 2016 02:42:36 GMT+0000 (GMT)'),
+					date: new Date(),
 					parentId: false
 				}];
 			}
 		}, {
-			key: 'getParentComments',
-			value: function getParentComments() {
+			key: 'getRootComments',
+			value: function getRootComments() {
 				var comments = this.get();
 				return _underscore2.default.filter(comments, function (comment) {
 					return !comment.parentId;
@@ -40409,216 +39809,7 @@
 	exports.default = Comments;
 
 /***/ },
-/* 292 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _underscore = __webpack_require__(162);
-
-	var _underscore2 = _interopRequireDefault(_underscore);
-
-	var _tools = __webpack_require__(298);
-
-	var _tools2 = _interopRequireDefault(_tools);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Collection = function () {
-		function Collection() {
-			_classCallCheck(this, Collection);
-
-			this.models = {};
-			this.events = {};
-			this.events.change = [];
-			this.events.create = [];
-			this.events.update = [];
-			this.events.remove = [];
-
-			this.name = this.constructor.name;
-		}
-
-		// events basics
-
-		_createClass(Collection, [{
-			key: 'getEvent',
-			value: function getEvent(eventName) {
-				return this.events[eventName];
-			}
-		}, {
-			key: 'register',
-			value: function register(eventName, callback) {
-				var event = this.getEvent(eventName);
-				if (event) event.push(callback);
-			}
-		}, {
-			key: 'broadcast',
-			value: function broadcast(eventName, model) {
-				var _this = this;
-
-				var event = this.getEvent(eventName);
-				if (event) {
-					event.forEach(function (callback) {
-						callback.call(_this, model);
-					});
-				}
-			}
-
-			// add models you don't want to instantiate with a new id
-			// e.g., models that already have an id, such as when
-			// retrieved from local storage
-
-		}, {
-			key: 'onAdd',
-			value: function onAdd(callback) {
-				this.register('add', callback);
-			}
-		}, {
-			key: 'onChange',
-			value: function onChange(callback) {
-				this.register('change', callback);
-			}
-		}, {
-			key: 'onCreate',
-			value: function onCreate(callback) {
-				this.register('create', callback);
-			}
-		}, {
-			key: 'onUpdate',
-			value: function onUpdate(callback) {
-				this.register('update', callback);
-			}
-		}, {
-			key: 'onRemove',
-			value: function onRemove(callback) {
-				this.register('remove', callback);
-			}
-
-			// triggering any event also triggers change event.
-
-		}, {
-			key: 'triggerChange',
-			value: function triggerChange() {
-				this.broadcast('change');
-			}
-		}, {
-			key: 'triggerAdd',
-			value: function triggerAdd(model) {
-				this.broadcast('add', model);
-				this.triggerChange();
-			}
-		}, {
-			key: 'triggerCreate',
-			value: function triggerCreate(model) {
-				this.broadcast('create', model);
-				this.triggerChange();
-			}
-		}, {
-			key: 'triggerUpdate',
-			value: function triggerUpdate(model) {
-				this.broadcast('update', model);
-				this.triggerChange();
-			}
-		}, {
-			key: 'triggerRemove',
-			value: function triggerRemove(model) {
-				this.broadcast('remove', model);
-				this.triggerChange();
-			}
-
-			// change models
-
-		}, {
-			key: 'create',
-			value: function create(model) {
-				model.id = _tools2.default.generateID();
-				this.models[model.id] = model;
-				this.triggerCreate(model);
-				return model;
-			}
-		}, {
-			key: 'createMany',
-			value: function createMany(models) {
-				var _this2 = this;
-
-				var created = models.map(function (model) {
-					model.id = _tools2.default.generateID();
-					_this2.models[model.id] = model;
-					return model;
-				});
-				this.triggerCreate(created);
-				return created;
-			}
-		}, {
-			key: 'add',
-			value: function add(model) {
-				this.models[model.id] = model;
-				this.triggerAdd(model);
-				return model;
-			}
-		}, {
-			key: 'addMany',
-			value: function addMany(models) {
-				var _this3 = this;
-
-				models.forEach(function (model) {
-					_this3.models[model.id] = model;
-				});
-				this.triggerAdd(models);
-				return models;
-			}
-		}, {
-			key: 'update',
-			value: function update(model) {
-				var id = model.id;
-				if (id) {
-					this.models[id] = model;
-					this.triggerUpdate(model);
-				}
-				return model;
-			}
-		}, {
-			key: 'remove',
-			value: function remove(model) {
-				var id = undefined;
-				if (_underscore2.default.isObject(model)) {
-					id = model.id;
-				} else {
-					model = this.get(model);
-					id = model.id;
-				}
-				delete this.models[id];
-				this.triggerRemove(model);
-			}
-
-			// query models
-
-		}, {
-			key: 'get',
-			value: function get(id) {
-				var _this4 = this;
-
-				if (id) return this.models[id];
-				return Object.keys(this.models).map(function (key) {
-					return _this4.models[key];
-				});
-			}
-		}]);
-
-		return Collection;
-	}();
-
-	exports.default = Collection;
-
-/***/ },
+/* 292 */,
 /* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -40630,7 +39821,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _localstorageCollection = __webpack_require__(299);
+	var _localstorageCollection = __webpack_require__(300);
 
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 
@@ -40858,7 +40049,8 @@
 	exports.default = Tools;
 
 /***/ },
-/* 299 */
+/* 299 */,
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40873,7 +40065,7 @@
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _collection = __webpack_require__(292);
+	var _collection = __webpack_require__(301);
 
 	var _collection2 = _interopRequireDefault(_collection);
 
@@ -41020,6 +40212,843 @@
 	}(_collection2.default);
 
 	exports.default = LocalStorageCollection;
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _underscore = __webpack_require__(162);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _tools = __webpack_require__(298);
+
+	var _tools2 = _interopRequireDefault(_tools);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Collection = function () {
+		function Collection() {
+			_classCallCheck(this, Collection);
+
+			this.models = {};
+			this.events = {};
+			this.events.change = [];
+			this.events.create = [];
+			this.events.update = [];
+			this.events.remove = [];
+
+			this.name = this.constructor.name;
+		}
+
+		// events basics
+
+		_createClass(Collection, [{
+			key: 'getEvent',
+			value: function getEvent(eventName) {
+				return this.events[eventName];
+			}
+		}, {
+			key: 'register',
+			value: function register(eventName, callback) {
+				var event = this.getEvent(eventName);
+				if (event) event.push(callback);
+			}
+		}, {
+			key: 'broadcast',
+			value: function broadcast(eventName, model) {
+				var _this = this;
+
+				var event = this.getEvent(eventName);
+				if (event) {
+					event.forEach(function (callback) {
+						callback.call(_this, model);
+					});
+				}
+			}
+
+			// add models you don't want to instantiate with a new id
+			// e.g., models that already have an id, such as when
+			// retrieved from local storage
+
+		}, {
+			key: 'onAdd',
+			value: function onAdd(callback) {
+				this.register('add', callback);
+			}
+		}, {
+			key: 'onChange',
+			value: function onChange(callback) {
+				this.register('change', callback);
+			}
+		}, {
+			key: 'onCreate',
+			value: function onCreate(callback) {
+				this.register('create', callback);
+			}
+		}, {
+			key: 'onUpdate',
+			value: function onUpdate(callback) {
+				this.register('update', callback);
+			}
+		}, {
+			key: 'onRemove',
+			value: function onRemove(callback) {
+				this.register('remove', callback);
+			}
+
+			// triggering any event also triggers change event.
+
+		}, {
+			key: 'triggerChange',
+			value: function triggerChange() {
+				this.broadcast('change');
+			}
+		}, {
+			key: 'triggerAdd',
+			value: function triggerAdd(model) {
+				this.broadcast('add', model);
+				this.triggerChange();
+			}
+		}, {
+			key: 'triggerCreate',
+			value: function triggerCreate(model) {
+				this.broadcast('create', model);
+				this.triggerChange();
+			}
+		}, {
+			key: 'triggerUpdate',
+			value: function triggerUpdate(model) {
+				this.broadcast('update', model);
+				this.triggerChange();
+			}
+		}, {
+			key: 'triggerRemove',
+			value: function triggerRemove(model) {
+				this.broadcast('remove', model);
+				this.triggerChange();
+			}
+
+			// change models
+
+		}, {
+			key: 'create',
+			value: function create(model) {
+				model.id = _tools2.default.generateID();
+				this.models[model.id] = model;
+				this.triggerCreate(model);
+				return model;
+			}
+		}, {
+			key: 'createMany',
+			value: function createMany(models) {
+				var _this2 = this;
+
+				var created = models.map(function (model) {
+					model.id = _tools2.default.generateID();
+					_this2.models[model.id] = model;
+					return model;
+				});
+				this.triggerCreate(created);
+				return created;
+			}
+		}, {
+			key: 'add',
+			value: function add(model) {
+				this.models[model.id] = model;
+				this.triggerAdd(model);
+				return model;
+			}
+		}, {
+			key: 'addMany',
+			value: function addMany(models) {
+				var _this3 = this;
+
+				models.forEach(function (model) {
+					_this3.models[model.id] = model;
+				});
+				this.triggerAdd(models);
+				return models;
+			}
+		}, {
+			key: 'update',
+			value: function update(model) {
+				var id = model.id;
+				if (id) {
+					this.models[id] = model;
+					this.triggerUpdate(model);
+				}
+				return model;
+			}
+		}, {
+			key: 'remove',
+			value: function remove(model) {
+				var id = undefined;
+				if (_underscore2.default.isObject(model)) {
+					id = model.id;
+				} else {
+					model = this.get(model);
+					id = model.id;
+				}
+				delete this.models[id];
+				this.triggerRemove(model);
+			}
+
+			// query models
+
+		}, {
+			key: 'get',
+			value: function get(id) {
+				var _this4 = this;
+
+				if (id) return this.models[id];
+				return Object.keys(this.models).map(function (key) {
+					return _this4.models[key];
+				});
+			}
+		}]);
+
+		return Collection;
+	}();
+
+	exports.default = Collection;
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _moment = __webpack_require__(170);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _comment = __webpack_require__(303);
+
+	var _comment2 = _interopRequireDefault(_comment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import styles for this component
+	__webpack_require__(309);
+
+	var CommentListComponent = function (_React$Component) {
+		_inherits(CommentListComponent, _React$Component);
+
+		function CommentListComponent(props) {
+			_classCallCheck(this, CommentListComponent);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentListComponent).call(this, props));
+
+			props.comments.onChange(function () {
+				_this.forceUpdate();
+			});
+			return _this;
+		}
+
+		_createClass(CommentListComponent, [{
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				var comments = this.props.comments.getRootComments();
+				var content = undefined;
+
+				if (comments.length) {
+					content = comments.map(function (comment) {
+						return _react2.default.createElement(_comment2.default, { key: comment.id, user: _this2.props.user, comment: comment, comments: _this2.props.comments });
+					});
+				}
+
+				return _react2.default.createElement(
+					'section',
+					{ className: 'full-height panel' },
+					_react2.default.createElement(
+						'div',
+						{ id: 'comment-example', className: 'example' },
+						_react2.default.createElement(
+							'ul',
+							{ className: 'comment-list' },
+							content
+						)
+					)
+				);
+			}
+		}]);
+
+		return CommentListComponent;
+	}(_react2.default.Component);
+
+	exports.default = CommentListComponent;
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactTimeago = __webpack_require__(270);
+
+	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
+
+	var _form = __webpack_require__(304);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import styles for this component
+	__webpack_require__(307);
+
+	var CommentComponent = function (_React$Component) {
+	    _inherits(CommentComponent, _React$Component);
+
+	    function CommentComponent(props) {
+	        _classCallCheck(this, CommentComponent);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentComponent).call(this, props));
+
+	        _this.state = {};
+	        _this.state.shouldShowReplyForm = false;
+	        _this.state.shouldShowEditForm = false;
+	        return _this;
+	    }
+
+	    _createClass(CommentComponent, [{
+	        key: 'showEditForm',
+	        value: function showEditForm() {
+	            this.hideReplyForm();
+	            this.setState({
+	                shouldShowEditForm: true
+	            });
+	        }
+	    }, {
+	        key: 'hideEditForm',
+	        value: function hideEditForm() {
+	            this.setState({
+	                shouldShowEditForm: false
+	            });
+	        }
+	    }, {
+	        key: 'showReplyForm',
+	        value: function showReplyForm() {
+	            this.hideEditForm();
+	            this.setState({
+	                shouldShowReplyForm: true
+	            });
+	        }
+	    }, {
+	        key: 'hideReplyForm',
+	        value: function hideReplyForm() {
+	            this.setState({
+	                shouldShowReplyForm: false
+	            });
+	        }
+	    }, {
+	        key: 'replyHandler',
+	        value: function replyHandler(event) {
+	            event.preventDefault();
+	            this.showReplyForm();
+	        }
+	    }, {
+	        key: 'editHandler',
+	        value: function editHandler(event) {
+	            event.preventDefault();
+	            this.showEditForm();
+	        }
+	    }, {
+	        key: 'replyCallback',
+	        value: function replyCallback() {
+	            this.hideReplyForm();
+	        }
+	    }, {
+	        key: 'editCallback',
+	        value: function editCallback() {
+	            this.hideEditForm();
+	        }
+	    }, {
+	        key: 'getChildren',
+	        value: function getChildren() {
+	            return this.props.comments.getChildCommentsForComment(this.props.comment);
+	        }
+	    }, {
+	        key: 'removeHandler',
+	        value: function removeHandler(comment, event) {
+	            event.preventDefault();
+	            this.props.comments.remove(comment.id);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+
+	            var comment = this.props.comment;
+	            var children = this.getChildren();
+	            var childList = undefined;
+
+	            var childrenHTML = children.map(function (child) {
+	                return _react2.default.createElement(CommentComponent, { key: child.id, user: _this2.props.user, comment: child, comments: _this2.props.comments });
+	            });
+
+	            if (childrenHTML) {
+
+	                childList = _react2.default.createElement(
+	                    'ul',
+	                    { className: 'comment-children' },
+	                    childrenHTML
+	                );
+	            }
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'comment-item box' },
+	                    _react2.default.createElement(
+	                        'header',
+	                        { className: 'comment-item-header clearfix' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'muted' },
+	                            _react2.default.createElement(
+	                                'small',
+	                                null,
+	                                comment.username
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'comment-item-body' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            comment.text
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'footer',
+	                        { className: 'comment-item-footer clearfix' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            { className: 'horizontal-list-menu muted' },
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'pull-right' },
+	                                _react2.default.createElement(_reactTimeago2.default, { date: comment.date })
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#', onClick: this.replyHandler.bind(this) },
+	                                    'reply'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#', onClick: this.editHandler.bind(this) },
+	                                    'edit'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: '#', onClick: this.removeHandler.bind(this, comment) },
+	                                    'remove'
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_form2.default, {
+	                    user: this.props.user,
+	                    formTitle: 'reply',
+	                    parent: comment,
+	                    comments: this.props.comments,
+	                    shouldShowForm: this.state.shouldShowReplyForm,
+	                    submitCallback: this.replyCallback.bind(this),
+	                    cancelCallback: this.hideReplyForm.bind(this)
+	                }),
+	                _react2.default.createElement(_form2.default, {
+	                    user: this.props.user,
+	                    formTitle: 'edit',
+	                    comment: comment,
+	                    comments: this.props.comments,
+	                    shouldShowForm: this.state.shouldShowEditForm,
+	                    submitCallback: this.editCallback.bind(this),
+	                    cancelCallback: this.hideEditForm.bind(this)
+	                }),
+	                childList
+	            );
+	        }
+	    }]);
+
+	    return CommentComponent;
+	}(_react2.default.Component);
+
+	exports.default = CommentComponent;
+	;
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _moment = __webpack_require__(170);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import styles for this component
+	__webpack_require__(305);
+
+	var CommentFormComponent = function (_React$Component) {
+		_inherits(CommentFormComponent, _React$Component);
+
+		function CommentFormComponent(props) {
+			_classCallCheck(this, CommentFormComponent);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentFormComponent).call(this, props));
+
+			var comment = _this.props.comment;
+			_this.state = {};
+			_this.state.formError = '';
+			_this.state.isEditing = false;
+			_this.state.commentLength = comment ? comment.text.length : 0;
+			return _this;
+		}
+
+		_createClass(CommentFormComponent, [{
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				this.clearError();
+			}
+		}, {
+			key: 'addError',
+			value: function addError(error) {
+				this.setState({
+					formError: error
+				});
+			}
+		}, {
+			key: 'clearError',
+			value: function clearError() {
+				this.setState({
+					formError: null
+				});
+			}
+		}, {
+			key: 'newComment',
+			value: function newComment() {
+				var comment = {};
+				var parent = this.props.parent;
+				comment.text = '';
+				comment.date = new Date();
+				comment.parentId = parent && parent.id || '';
+				comment.username = this.props.user.getUsername();
+				return comment;
+			}
+		}, {
+			key: 'cancelHandler',
+			value: function cancelHandler(event) {
+				event.preventDefault();
+				this.props.cancelCallback();
+			}
+		}, {
+			key: 'submitHandler',
+			value: function submitHandler(event) {
+				event.preventDefault();
+				var parent = this.parent;
+				var textInputValue = this.refs.commentInput.value;
+				var comment = this.props.comment || this.newComment();
+				var saved = undefined;
+
+				if (!this.state.isEditing) {
+					this.isEditing = true;
+
+					if (!textInputValue.trim().length) {
+						this.addError('Please enter a comment');
+						this.isEditing = false;
+						return;
+					}
+
+					comment.text = textInputValue;
+
+					if (comment.id) {
+						saved = this.props.comments.update(comment);
+					} else {
+						saved = this.props.comments.create(comment);
+					}
+
+					if (this.props.submitCallback) {
+						this.props.submitCallback(saved);
+					}
+
+					this.refs.commentInput.value = '';
+					this.isEditing = false;
+				}
+			}
+		}, {
+			key: 'setCommentLength',
+			value: function setCommentLength(length) {
+				var length = length || this.refs.commentInput.value.length;
+				this.setState({
+					commentLength: length
+				});
+			}
+		}, {
+			key: 'changeHandler',
+			value: function changeHandler() {
+				this.setCommentLength();
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var shouldShowForm = this.props.shouldShowForm;
+				var formTitle = this.props.formTitle || 'comment';
+				var comment = this.props.comment;
+				var err = this.state.formError;
+				var errContent = undefined;
+				var defaultValue = undefined;
+
+				if (err) {
+					errContent = _react2.default.createElement(
+						'span',
+						{ className: 'form-error' },
+						err
+					);
+				}
+
+				if (comment) {
+					defaultValue = comment.text;
+				}
+
+				if (!shouldShowForm) return false;
+
+				return _react2.default.createElement(
+					'form',
+					{ refs: 'commentform', onSubmit: this.submitHandler.bind(this), className: 'comment-form box padding margin-top' },
+					_react2.default.createElement(
+						'span',
+						{ className: 'fieldCount pull-right' },
+						this.state.commentLength
+					),
+					_react2.default.createElement(
+						'label',
+						{ httmlFor: 'comment' },
+						_react2.default.createElement(
+							'small',
+							null,
+							formTitle
+						)
+					),
+					_react2.default.createElement('textarea', { onChange: this.changeHandler.bind(this), ref: 'commentInput', className: 'field', name: 'comment', defaultValue: defaultValue }),
+					errContent,
+					_react2.default.createElement(
+						'div',
+						{ className: 'btn-group' },
+						_react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' }),
+						_react2.default.createElement(
+							'a',
+							{ className: 'btn', href: '#', onClick: this.cancelHandler.bind(this) },
+							'cancel'
+						)
+					)
+				);
+			}
+		}]);
+
+		return CommentFormComponent;
+	}(_react2.default.Component);
+
+	exports.default = CommentFormComponent;
+
+/***/ },
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(306);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./form.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./form.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(165)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".comment-form {\n  display: block;\n  max-width: 600px;\n  margin: 20px auto 0px; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(308);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./comment.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./comment.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 308 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(165)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".comment-item {\n  list-style-type: none;\n  list-style: none;\n  display: block;\n  max-width: 600px;\n  margin: 20px auto; }\n\n.comment-item-header {\n  padding: 10px 20px 0; }\n\n.comment-item-body {\n  padding: 10px 20px 15px; }\n\n.comment-item-footer {\n  background: #f8f8f8;\n  border-top: 1px solid #ddd;\n  font-size: 80%; }\n\n.comment-item-footer a {\n  text-decoration: none; }\n\n.comment-item p {\n  margin: 0;\n  padding: 0; }\n\n.comment-children {\n  padding-left: 20px; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 309 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(310);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(166)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./list.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./list.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 310 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(165)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".comment-list {\n  padding: 0;\n  margin: 0; }\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);
