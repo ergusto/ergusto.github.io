@@ -23927,7 +23927,7 @@
 	        _this.state = {};
 	        _this.state.shouldShowDropDown = false;
 
-	        _this.props.user.register(function () {
+	        _this.props.user.events.register('updated', function () {
 	            _this.forceUpdate();
 	        });
 	        return _this;
@@ -39910,6 +39910,14 @@
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
+	var _localstorage = __webpack_require__(311);
+
+	var _localstorage2 = _interopRequireDefault(_localstorage);
+
+	var _event = __webpack_require__(312);
+
+	var _event2 = _interopRequireDefault(_event);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39918,50 +39926,39 @@
 		function User() {
 			_classCallCheck(this, User);
 
+			this.events = new _event2.default();
+
 			this.user = {};
 			this.user.username = 'ergusto';
 
 			this.user.settings = {};
 			this.user.settings.showIntroAnimation = true;
 
-			this.callbacks = [];
-
-			this.localStorageName = 'ERGUSTO:user';
+			this.storeName = 'ERGUSTO:user';
 
 			if (window.localStorage) {
 				this.usingLocalStorage = true;
-				var user = this.getUserFromLocalStorage();
-				if (user) this.user = user;
+				this.store = new _localstorage2.default(this.storeName);
+
+				var user = this.store.get();
+				if (user) {
+					this.user = user;
+				}
 			} else {
 				this.usingLocalStorage = false;
 			}
 		}
 
 		_createClass(User, [{
-			key: 'getUserFromLocalStorage',
-			value: function getUserFromLocalStorage() {
-				if (!this.usingLocalStorage) return;
-				var store = localStorage.getItem(this.localStorageName);
-				return JSON.parse(store);
-			}
-		}, {
-			key: 'clearLocalStorage',
-			value: function clearLocalStorage() {
-				if (!this.usingLocalStorage) return;
-				localStorage.setItem(this.localStorageName, '');
+			key: 'updateStorage',
+			value: function updateStorage() {
+				var store = JSON.stringify(this.user);
+				this.store.set(store);
 			}
 		}, {
 			key: 'resetAllLocalStorage',
 			value: function resetAllLocalStorage() {
-				if (!this.usingLocalStorage) return;
 				localStorage.clear();
-			}
-		}, {
-			key: 'setLocalStorage',
-			value: function setLocalStorage() {
-				if (!this.usingLocalStorage) return;
-				var store = JSON.stringify(this.user);
-				localStorage.setItem(this.localStorageName, store);
 			}
 		}, {
 			key: 'getUsername',
@@ -39973,15 +39970,15 @@
 			key: 'set',
 			value: function set(property, value) {
 				this.user[property] = value;
-				this.setLocalStorage();
-				this.broadcast();
+				this.updateStorage();
+				this.events.broadcast('updated');
 			}
 		}, {
 			key: 'setSetting',
 			value: function setSetting(property, value) {
 				this.user.settings[property] = value;
-				this.setLocalStorage();
-				this.broadcast();
+				this.updateStorage();
+				this.events.broadcast('updated');
 			}
 		}, {
 			key: 'setUsername',
@@ -39997,20 +39994,6 @@
 			key: 'shouldSeeIntroAnimation',
 			value: function shouldSeeIntroAnimation() {
 				return this.user.settings.showIntroAnimation;
-			}
-		}, {
-			key: 'register',
-			value: function register(callback) {
-				this.callbacks.push(callback);
-			}
-		}, {
-			key: 'broadcast',
-			value: function broadcast() {
-				var _this = this;
-
-				this.callbacks.forEach(function (callback) {
-					callback.call(_this);
-				});
 			}
 		}]);
 
@@ -40116,6 +40099,10 @@
 
 	var _collection2 = _interopRequireDefault(_collection);
 
+	var _localstorage = __webpack_require__(311);
+
+	var _localstorage2 = _interopRequireDefault(_localstorage);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40133,7 +40120,9 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LocalStorageCollection).call(this));
 
 			if (window.localStorage) {
-				_this.usingLocalStorage = true;
+				// always add bevhaiour in the constructor
+				_this.storeName = 'ERGUSTO:collection:' + _this.constructor.name;
+				_this.store = new _localstorage2.default(_this.storeName);
 				_this.setUpLocalStorage();
 			} else {
 				_this.usingLocalStorage = false;
@@ -40145,8 +40134,8 @@
 		_createClass(LocalStorageCollection, [{
 			key: 'setUpLocalStorage',
 			value: function setUpLocalStorage() {
-				this.localStorageName = 'ERGUSTO:collection:' + this.name;
-				this.hasLocallyStoredModels = this._hasLocallyStoredModels();
+				this.usingLocalStorage = true;
+				this.hasLocallyStoredModels = this.store.hasContents();
 				this.initialiseLocalStorageEvents();
 
 				if (this.hasLocallyStoredModels) {
@@ -40196,23 +40185,6 @@
 				});
 			}
 		}, {
-			key: 'getFromLocalStorage',
-			value: function getFromLocalStorage() {
-				var store = localStorage.getItem(this.localStorageName);
-				return _underscore2.default.isString(store) ? JSON.parse(store) : {};
-			}
-		}, {
-			key: 'clearLocalStorage',
-			value: function clearLocalStorage() {
-				localStorage.setItem(this.localStorageName, '');
-			}
-		}, {
-			key: 'setLocalStorage',
-			value: function setLocalStorage(store) {
-				if (!_underscore2.default.isString(store)) store = JSON.stringify(store);
-				localStorage.setItem(this.localStorageName, store);
-			}
-		}, {
 			key: 'addDefaults',
 			value: function addDefaults() {
 				if (this.defaultModels) {
@@ -40221,24 +40193,20 @@
 				}
 			}
 		}, {
-			key: '_hasLocallyStoredModels',
-			value: function _hasLocallyStoredModels() {
-				var store = this.getFromLocalStorage();
-				return store && !!_underscore2.default.keys(store).length;
-			}
-		}, {
 			key: 'addModelToLocalStorage',
 			value: function addModelToLocalStorage(model) {
-				var store = this.getFromLocalStorage();
-				store[model.id] = model;
-				this.setLocalStorage(store);
+				this.store.update(function (store) {
+					store[model.id] = model;
+					return store;
+				});
 			}
 		}, {
 			key: 'removeModelFromLocalStorageById',
 			value: function removeModelFromLocalStorageById(id) {
-				var store = this.getFromLocalStorage();
-				delete store[id];
-				this.setLocalStorage(store);
+				this.store.update(function (store) {
+					delete store[id];
+					return store;
+				});
 			}
 		}, {
 			key: 'removeModelFromLocalStorage',
@@ -40248,7 +40216,7 @@
 		}, {
 			key: 'getListFromLocalStorage',
 			value: function getListFromLocalStorage() {
-				var store = this.getFromLocalStorage();
+				var store = this.store.get();
 				return _underscore2.default.keys(store).map(function (id) {
 					return store[id];
 				});
@@ -40280,6 +40248,10 @@
 
 	var _tools2 = _interopRequireDefault(_tools);
 
+	var _event = __webpack_require__(312);
+
+	var _event2 = _interopRequireDefault(_event);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40289,69 +40261,39 @@
 			_classCallCheck(this, Collection);
 
 			this.models = {};
-			this.events = {};
-			this.events.change = [];
-			this.events.create = [];
-			this.events.update = [];
-			this.events.remove = [];
+			this.events = new _event2.default();
 
 			this.name = this.constructor.name;
 		}
 
-		// events basics
+		// add models you don't want to instantiate with a new id
+		// e.g., models that already have an id, such as when
+		// retrieved from local storage
 
 		_createClass(Collection, [{
-			key: 'getEvent',
-			value: function getEvent(eventName) {
-				return this.events[eventName];
-			}
-		}, {
-			key: 'register',
-			value: function register(eventName, callback) {
-				var event = this.getEvent(eventName);
-				if (event) event.push(callback);
-			}
-		}, {
-			key: 'broadcast',
-			value: function broadcast(eventName, model) {
-				var _this = this;
-
-				var event = this.getEvent(eventName);
-				if (event) {
-					event.forEach(function (callback) {
-						callback.call(_this, model);
-					});
-				}
-			}
-
-			// add models you don't want to instantiate with a new id
-			// e.g., models that already have an id, such as when
-			// retrieved from local storage
-
-		}, {
 			key: 'onChange',
 			value: function onChange(callback) {
-				this.register('change', callback);
+				this.events.register('change', callback);
 			}
 		}, {
 			key: 'onAdd',
 			value: function onAdd(callback) {
-				this.register('add', callback);
+				this.events.register('add', callback);
 			}
 		}, {
 			key: 'onCreate',
 			value: function onCreate(callback) {
-				this.register('create', callback);
+				this.events.register('create', callback);
 			}
 		}, {
 			key: 'onUpdate',
 			value: function onUpdate(callback) {
-				this.register('update', callback);
+				this.events.register('update', callback);
 			}
 		}, {
 			key: 'onRemove',
 			value: function onRemove(callback) {
-				this.register('remove', callback);
+				this.events.register('remove', callback);
 			}
 
 			// triggering any event also triggers change event.
@@ -40359,30 +40301,30 @@
 		}, {
 			key: 'triggerChange',
 			value: function triggerChange() {
-				this.broadcast('change');
+				this.events.broadcast('change');
 			}
 		}, {
 			key: 'triggerAdd',
 			value: function triggerAdd(model) {
-				this.broadcast('add', model);
+				this.events.broadcast('add', model);
 				this.triggerChange();
 			}
 		}, {
 			key: 'triggerCreate',
 			value: function triggerCreate(model) {
-				this.broadcast('create', model);
+				this.events.broadcast('create', model);
 				this.triggerChange();
 			}
 		}, {
 			key: 'triggerUpdate',
 			value: function triggerUpdate(model) {
-				this.broadcast('update', model);
+				this.events.broadcast('update', model);
 				this.triggerChange();
 			}
 		}, {
 			key: 'triggerRemove',
 			value: function triggerRemove(model) {
-				this.broadcast('remove', model);
+				this.events.broadcast('remove', model);
 				this.triggerChange();
 			}
 
@@ -40399,11 +40341,11 @@
 		}, {
 			key: 'createMany',
 			value: function createMany(models) {
-				var _this2 = this;
+				var _this = this;
 
 				var created = models.map(function (model) {
 					model.id = _tools2.default.generateID();
-					_this2.models[model.id] = model;
+					_this.models[model.id] = model;
 					return model;
 				});
 				this.triggerCreate(created);
@@ -40419,10 +40361,10 @@
 		}, {
 			key: 'addMany',
 			value: function addMany(models) {
-				var _this3 = this;
+				var _this2 = this;
 
 				models.forEach(function (model) {
-					_this3.models[model.id] = model;
+					_this2.models[model.id] = model;
 				});
 				this.triggerAdd(models);
 				return models;
@@ -40456,11 +40398,11 @@
 		}, {
 			key: 'get',
 			value: function get(id) {
-				var _this4 = this;
+				var _this3 = this;
 
 				if (id) return this.models[id];
 				return Object.keys(this.models).map(function (key) {
-					return _this4.models[key];
+					return _this3.models[key];
 				});
 			}
 		}]);
@@ -41096,6 +41038,129 @@
 
 	// exports
 
+
+/***/ },
+/* 311 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _underscore = __webpack_require__(162);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var LocalStorageBehaviour = function () {
+		function LocalStorageBehaviour(storeName) {
+			_classCallCheck(this, LocalStorageBehaviour);
+
+			this.storeName = storeName;
+		}
+
+		_createClass(LocalStorageBehaviour, [{
+			key: 'get',
+			value: function get() {
+				var store = localStorage.getItem(this.storeName);
+				return _underscore2.default.isString(store) ? JSON.parse(store) : {};
+			}
+		}, {
+			key: 'clear',
+			value: function clear() {
+				localStorage.setItem(this.storeName, '');
+			}
+		}, {
+			key: 'set',
+			value: function set(store) {
+				if (!_underscore2.default.isString(store)) store = JSON.stringify(store);
+				localStorage.setItem(this.storeName, store);
+			}
+		}, {
+			key: 'hasContents',
+			value: function hasContents() {
+				var store = this.get();
+				return store && !!_underscore2.default.keys(store).length;
+			}
+		}, {
+			key: 'update',
+			value: function update(callback) {
+				var store = this.get();
+				var updated = callback(store);
+				this.set(updated);
+			}
+		}]);
+
+		return LocalStorageBehaviour;
+	}();
+
+	exports.default = LocalStorageBehaviour;
+
+/***/ },
+/* 312 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _underscore = __webpack_require__(162);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var EventBehaviour = function () {
+		function EventBehaviour() {
+			_classCallCheck(this, EventBehaviour);
+
+			this.events = {};
+		}
+
+		_createClass(EventBehaviour, [{
+			key: 'get',
+			value: function get(eventName) {
+				var event = this.events[eventName];
+				if (!event) {
+					event = this.events[eventName] = [];
+				}
+				return event;
+			}
+		}, {
+			key: 'register',
+			value: function register(eventName, callback) {
+				var event = this.get(eventName);
+				event.push(callback);
+			}
+		}, {
+			key: 'broadcast',
+			value: function broadcast(eventName, model) {
+				var _this = this;
+
+				var event = this.get(eventName);
+				event.forEach(function (callback) {
+					callback.call(_this, model);
+				});
+			}
+		}]);
+
+		return EventBehaviour;
+	}();
+
+	exports.default = EventBehaviour;
 
 /***/ }
 /******/ ]);

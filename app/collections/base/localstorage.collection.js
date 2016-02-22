@@ -1,12 +1,15 @@
 import _ from 'underscore';
 import Collection from './collection.js';
+import LocalStorageBehaviour from '../../lib/behaviours/localstorage.js';
 
 export default class LocalStorageCollection extends Collection {
 
 	constructor() {
 		super()
 		if (window.localStorage) {
-			this.usingLocalStorage = true;
+			// always add bevhaiour in the constructor
+			this.storeName = 'ERGUSTO:collection:' + this.constructor.name;
+			this.store = new LocalStorageBehaviour(this.storeName);
 			this.setUpLocalStorage();
 		} else {
 			this.usingLocalStorage = false;
@@ -15,8 +18,8 @@ export default class LocalStorageCollection extends Collection {
 	}
 
 	setUpLocalStorage() {
-		this.localStorageName = 'ERGUSTO:collection:' + this.name;
-		this.hasLocallyStoredModels = this._hasLocallyStoredModels();
+		this.usingLocalStorage = true;
+		this.hasLocallyStoredModels = this.store.hasContents();
 		this.initialiseLocalStorageEvents();
 
 		if (this.hasLocallyStoredModels) {
@@ -65,20 +68,6 @@ export default class LocalStorageCollection extends Collection {
 
 	}
 
-	getFromLocalStorage() {
-		const store = localStorage.getItem(this.localStorageName);
-		return _.isString(store) ? JSON.parse(store) : {};
-	}
-
-	clearLocalStorage() {
-		localStorage.setItem(this.localStorageName, '');
-	}
-
-	setLocalStorage(store) {
-		if (!_.isString(store)) store = JSON.stringify(store);
-		localStorage.setItem(this.localStorageName, store);
-	}
-
 	addDefaults() {
 		if (this.defaultModels) {
 			const defaults = this.defaultModels();
@@ -86,21 +75,18 @@ export default class LocalStorageCollection extends Collection {
 		}
 	}
 
-	_hasLocallyStoredModels() {
-		const store = this.getFromLocalStorage();
-		return store && !!_.keys(store).length;
-	}
-
 	addModelToLocalStorage(model) {
-		const store = this.getFromLocalStorage();
-		store[model.id] = model;
-		this.setLocalStorage(store);
+		this.store.update((store) => {
+			store[model.id] = model;
+			return store;
+		});
 	}
 
 	removeModelFromLocalStorageById(id) {
-		const store = this.getFromLocalStorage();
-		delete store[id];
-		this.setLocalStorage(store);
+		this.store.update((store) => {
+			delete store[id];
+			return store;
+		});
 	}
 
 	removeModelFromLocalStorage(model) {
@@ -108,7 +94,7 @@ export default class LocalStorageCollection extends Collection {
 	}
 
 	getListFromLocalStorage() {
-		const store = this.getFromLocalStorage();
+		const store = this.store.get();
 		return _.keys(store).map(function(id) {
 			return store[id];
 		});

@@ -12,7 +12,7 @@ export default class SettingsComponent extends  React.Component {
         this.state = {};
         this.state.shouldShowDropDown = false;
         
-        this.props.user.register(() => {
+        this.props.user.events.register('updated', () => {
             this.forceUpdate();
         });
     }

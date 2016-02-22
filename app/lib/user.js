@@ -1,47 +1,41 @@
 import _ from 'underscore';
+import LocalStorageBehaviour from './behaviours/localstorage.js';
+import EventBehaviour from './behaviours/event.js';
 
 export default class User {
 
 	constructor() {
+		this.events = new EventBehaviour();
+
 		this.user = {};
 		this.user.username = 'ergusto';
 
 		this.user.settings = {};
 		this.user.settings.showIntroAnimation = true;
-		
-		this.callbacks = [];
 
-		this.localStorageName = 'ERGUSTO:user';
+		this.storeName = 'ERGUSTO:user';
 
 		if (window.localStorage) {
 			this.usingLocalStorage = true;
-			const user = this.getUserFromLocalStorage();
-			if (user) this.user = user;
+			this.store = new LocalStorageBehaviour(this.storeName);
+			
+			const user = this.store.get();
+			if (user) {
+				this.user = user;
+			}
+
 		} else {
 			this.usingLocalStorage = false;
 		}
 	}
 
-	getUserFromLocalStorage() {
-		if (!this.usingLocalStorage) return;
-		const store = localStorage.getItem(this.localStorageName);
-		return JSON.parse(store);
-	}
-
-	clearLocalStorage() {
-		if (!this.usingLocalStorage) return;
-		localStorage.setItem(this.localStorageName, '');
+	updateStorage() {
+		const store = JSON.stringify(this.user);
+		this.store.set(store);
 	}
 
 	resetAllLocalStorage() {
-		if (!this.usingLocalStorage) return;
 		localStorage.clear();
-	}
-
-	setLocalStorage() {
-		if (!this.usingLocalStorage) return;
-		const store = JSON.stringify(this.user);
-		localStorage.setItem(this.localStorageName, store);
 	}
 
 	getUsername() {
@@ -51,14 +45,14 @@ export default class User {
 
 	set(property, value) {
 		this.user[property] = value;
-		this.setLocalStorage();
-		this.broadcast();
+		this.updateStorage();
+		this.events.broadcast('updated');
 	}
 
 	setSetting(property, value) {
 		this.user.settings[property] = value;
-		this.setLocalStorage();
-		this.broadcast();
+		this.updateStorage();
+		this.events.broadcast('updated');
 	}
 
 	setUsername(username) {
@@ -71,16 +65,6 @@ export default class User {
 
 	shouldSeeIntroAnimation() {
 		return this.user.settings.showIntroAnimation;
-	}
-
-	register(callback) {
-		this.callbacks.push(callback);
-	}
-
-	broadcast() {
-		this.callbacks.forEach((callback) => {
-			callback.call(this);
-		});
 	}
 
 }

@@ -1,37 +1,14 @@
 import _ from 'underscore';
 import Tools from '../../lib/tools.js';
+import EventBehaviour from '../../lib/behaviours/event.js';
 
 export default class Collection {
 
 	constructor() {
 		this.models = {};
-		this.events = {};
-		this.events.change = [];
-		this.events.create = [];
-		this.events.update = [];
-		this.events.remove = [];
+		this.events = new EventBehaviour();
 
 		this.name = this.constructor.name;
-	}
-
-	// events basics
-
-	getEvent(eventName) {
-		return this.events[eventName];
-	}
-
-	register(eventName, callback) {
-		const event = this.getEvent(eventName);
-		if (event) event.push(callback);
-	}
-
-	broadcast(eventName, model) {
-		const event = this.getEvent(eventName);
-		if (event) {
-			event.forEach((callback) => {
-				callback.call(this, model);
-			})
-		}
 	}
 
 	// add models you don't want to instantiate with a new id
@@ -39,48 +16,48 @@ export default class Collection {
 	// retrieved from local storage
 
 	onChange(callback) {
-		this.register('change', callback);
+		this.events.register('change', callback);
 	}
 
 	onAdd(callback) {
-		this.register('add', callback);
+		this.events.register('add', callback);
 	}
 
 	onCreate(callback) {
-		this.register('create', callback);
+		this.events.register('create', callback);
 	}
 
 	onUpdate(callback) {
-		this.register('update', callback);
+		this.events.register('update', callback);
 	}
 
 	onRemove(callback) {
-		this.register('remove', callback);
+		this.events.register('remove', callback);
 	}
 
 	// triggering any event also triggers change event.
 
 	triggerChange() {
-		this.broadcast('change');
+		this.events.broadcast('change');
 	}
 
 	triggerAdd(model) {
-		this.broadcast('add', model);
+		this.events.broadcast('add', model);
 		this.triggerChange();
 	}
 
 	triggerCreate(model) {
-		this.broadcast('create', model);
+		this.events.broadcast('create', model);
 		this.triggerChange();
 	}
 
 	triggerUpdate(model) {
-		this.broadcast('update', model);
+		this.events.broadcast('update', model);
 		this.triggerChange();
 	}
 
 	triggerRemove(model) {
-		this.broadcast('remove', model);
+		this.events.broadcast('remove', model);
 		this.triggerChange();
 	}
 
