@@ -31,4 +31,8 @@ export default class LocalStorageBehaviour {
 		this.set(updated);
 	}
 
+	resetBrowserLocalStorage() {
+		localStorage.clear();
+	}
+
 }

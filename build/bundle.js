@@ -23927,7 +23927,7 @@
 	        _this.state = {};
 	        _this.state.shouldShowDropDown = false;
 
-	        _this.props.user.events.register('updated', function () {
+	        _this.props.user.onUpdate(function () {
 	            _this.forceUpdate();
 	        });
 	        return _this;
@@ -39952,13 +39952,12 @@
 		_createClass(User, [{
 			key: 'updateStorage',
 			value: function updateStorage() {
-				var store = JSON.stringify(this.user);
-				this.store.set(store);
+				this.store.set(this.user);
 			}
 		}, {
 			key: 'resetAllLocalStorage',
 			value: function resetAllLocalStorage() {
-				localStorage.clear();
+				this.store.resetBrowserLocalStorage();
 			}
 		}, {
 			key: 'getUsername',
@@ -39967,18 +39966,23 @@
 				return username.length ? username : 'ergusto';
 			}
 		}, {
+			key: 'onUpdate',
+			value: function onUpdate(callback) {
+				this.events.register('update', callback);
+			}
+		}, {
 			key: 'set',
 			value: function set(property, value) {
 				this.user[property] = value;
 				this.updateStorage();
-				this.events.broadcast('updated');
+				this.events.broadcast('update');
 			}
 		}, {
 			key: 'setSetting',
 			value: function setSetting(property, value) {
 				this.user.settings[property] = value;
 				this.updateStorage();
-				this.events.broadcast('updated');
+				this.events.broadcast('update');
 			}
 		}, {
 			key: 'setUsername',
@@ -41155,6 +41159,11 @@
 				var store = this.get();
 				var updated = callback(store);
 				this.set(updated);
+			}
+		}, {
+			key: 'resetBrowserLocalStorage',
+			value: function resetBrowserLocalStorage() {
+				localStorage.clear();
 			}
 		}]);
 

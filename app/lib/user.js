@@ -30,12 +30,11 @@ export default class User {
 	}
 
 	updateStorage() {
-		const store = JSON.stringify(this.user);
-		this.store.set(store);
+		this.store.set(this.user);
 	}
 
 	resetAllLocalStorage() {
-		localStorage.clear();
+		this.store.resetBrowserLocalStorage();
 	}
 
 	getUsername() {
