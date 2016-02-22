@@ -58,7 +58,7 @@ export default class CommentComponent extends React.Component {
 
     addNewComment(comment) {
         console.log(comment);
-    	this.props.comments.add(comment);
+    	this.props.comments.create(comment);
     }
 
     removeHandler(comment, event) {

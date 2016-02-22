@@ -19,11 +19,12 @@ export default class Collection {
 	}
 
 	setUpLocalStorage() {
+		const collection = this;
 		this.localStorageName = 'ERGUSTO:collection:' + this.name;
 		this.hasLocallyStoredModels = this._hasLocallyStoredModels();
-		this.register((model) =>  {
-			if (!this.hasLocallyStoredModels) this.hasLocallyStoredModels = true;
-			if (model && this.usingLocalStorage) this.addModelToLocalStorage(model);
+		this.register(function(model) {
+			if (!collection.hasLocallyStoredModels) collection.hasLocallyStoredModels = true;
+			if (model && collection.usingLocalStorage) collection.addModelToLocalStorage(model);
 		});
 		if (this.hasLocallyStoredModels) {
 			const storeList = this.getListFromLocalStorage();
@@ -84,7 +85,7 @@ export default class Collection {
 		model.id = this.idCount;
 		
 		this.models[model.id] = model;
-		this.broadcast();
+		this.broadcast(model);
 
 		return model;
 	}
@@ -93,7 +94,7 @@ export default class Collection {
 		const id = model.id;
 		if (id) {
 			this.models[id] = model;
-			this.broadcast();
+			this.broadcast(model);
 		}
 	}
 
@@ -128,9 +129,9 @@ export default class Collection {
 		this.callbacks.push(callback);
 	}
 
-	broadcast() {
+	broadcast(model) {
 		this.callbacks.forEach((callback) => {
-			callback.call(this);
+			callback.call(this, model);
 		});
 	}
 

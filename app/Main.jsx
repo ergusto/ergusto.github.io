@@ -37,7 +37,7 @@ class App extends React.Component {
 				<IntroductionComponent user={user} />
 				{/*<CalendarComponent />*/}
 				<CommentListComponent user={user} comments={comments} />
-				<TaskManagerComponent tasks={tasks} />
+				<TaskManagerComponent user={user} tasks={tasks} />
 			</div>
 		)
 

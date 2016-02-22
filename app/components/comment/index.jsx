@@ -10,8 +10,11 @@ export default class CommentListComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
+		const component = this;
 
-		props.comments.register(this.forceUpdate.bind(this));
+		props.comments.register(() => {
+			component.forceUpdate();
+		});
 	}
 
 	render() {
