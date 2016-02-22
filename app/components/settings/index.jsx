@@ -80,13 +80,19 @@ export default class SettingsComponent extends  React.Component {
 
         		<div className={dropdownClass}>
         			<h5 className="settings-title">settings</h5>
-                    <label className="settings-label"><small>username: {username}</small></label>
-                    <input onChange={this.usernameChangeHandler.bind(this)} type="text" className="field" defaultValue={username} />
-        			<label className="settings-label"><small>{animationSettingLabelText}</small></label>
-        			<a href="#" onClick={this.showIntroHandler.bind(this)} className="btn">show animation</a>
-                    <a href="#" onClick={this.hideIntroHandler.bind(this)} className="btn">hide animation</a>
-                    <label className="settings-label"><small>reset all data</small></label>
-                    <a href="#" onClick={this.resetHandler.bind(this)} className="btn">reset</a>
+                    <div className="settings-field">
+                        <label className="settings-label"><small>username: {username}</small></label>
+                        <input onChange={this.usernameChangeHandler.bind(this)} type="text" className="field" defaultValue={username} />
+                    </div>
+                    <div className="settings-field">
+        				<label className="settings-label"><small>{animationSettingLabelText}</small></label>
+        				<a href="#" onClick={this.showIntroHandler.bind(this)} className="btn">show animation</a>
+                    	<a href="#" onClick={this.hideIntroHandler.bind(this)} className="btn">hide animation</a>
+                    </div>
+                    <div className="settings-field">
+                    	<label className="settings-label"><small>reset all data</small></label>
+                    	<a href="#" onClick={this.resetHandler.bind(this)} className="btn">reset</a>
+                    </div>
 
         		</div>
         	</div>

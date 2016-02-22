@@ -24016,48 +24016,60 @@
 	                        'settings'
 	                    ),
 	                    _react2.default.createElement(
-	                        'label',
-	                        { className: 'settings-label' },
+	                        'div',
+	                        { className: 'settings-field' },
 	                        _react2.default.createElement(
-	                            'small',
-	                            null,
-	                            'username: ',
-	                            username
+	                            'label',
+	                            { className: 'settings-label' },
+	                            _react2.default.createElement(
+	                                'small',
+	                                null,
+	                                'username: ',
+	                                username
+	                            )
+	                        ),
+	                        _react2.default.createElement('input', { onChange: this.usernameChangeHandler.bind(this), type: 'text', className: 'field', defaultValue: username })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'settings-field' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { className: 'settings-label' },
+	                            _react2.default.createElement(
+	                                'small',
+	                                null,
+	                                animationSettingLabelText
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '#', onClick: this.showIntroHandler.bind(this), className: 'btn' },
+	                            'show animation'
+	                        ),
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '#', onClick: this.hideIntroHandler.bind(this), className: 'btn' },
+	                            'hide animation'
 	                        )
 	                    ),
-	                    _react2.default.createElement('input', { onChange: this.usernameChangeHandler.bind(this), type: 'text', className: 'field', defaultValue: username }),
 	                    _react2.default.createElement(
-	                        'label',
-	                        { className: 'settings-label' },
+	                        'div',
+	                        { className: 'settings-field' },
 	                        _react2.default.createElement(
-	                            'small',
-	                            null,
-	                            animationSettingLabelText
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '#', onClick: this.showIntroHandler.bind(this), className: 'btn' },
-	                        'show animation'
-	                    ),
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '#', onClick: this.hideIntroHandler.bind(this), className: 'btn' },
-	                        'hide animation'
-	                    ),
-	                    _react2.default.createElement(
-	                        'label',
-	                        { className: 'settings-label' },
+	                            'label',
+	                            { className: 'settings-label' },
+	                            _react2.default.createElement(
+	                                'small',
+	                                null,
+	                                'reset all data'
+	                            )
+	                        ),
 	                        _react2.default.createElement(
-	                            'small',
-	                            null,
-	                            'reset all data'
+	                            'a',
+	                            { href: '#', onClick: this.resetHandler.bind(this), className: 'btn' },
+	                            'reset'
 	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '#', onClick: this.resetHandler.bind(this), className: 'btn' },
-	                        'reset'
 	                    )
 	                )
 	            );
@@ -25658,7 +25670,7 @@
 
 
 	// module
-	exports.push([module.id, ".settings {\n  display: inline-block;\n  color: black;\n  position: relative; }\n\n.settings-trigger {\n  margin: 0;\n  opacity: 0.7;\n  color: white;\n  font-size: 2rem;\n  line-height: 3rem; }\n\n@media only screen and (min-width: 320px) {\n  .settings-trigger {\n    font-size: 2rem;\n    line-height: 1.8rem; } }\n\n@media only screen and (min-width: 480px) {\n  .settings-trigger {\n    line-height: 1.4rem;\n    margin-right: 10px; } }\n\n.settings .dropdown {\n  right: 10px;\n  min-width: 300px;\n  border-top: 0;\n  padding: 10px;\n  top: 37px; }\n\n@media only screen and (min-width: 480px) {\n  .settings .dropdown {\n    min-width: 400px; } }\n\n.settings-title {\n  margin: 0;\n  margin-bottom: 10px;\n  border-bottom: 1px solid black;\n  padding-bottom: 4px; }\n\n.settings .btn {\n  margin-right: 2px; }\n\n.settings-label {\n  margin-bottom: 6px; }\n\n.settings-trigger:hover, .settings-trigger.opaque {\n  opacity: 1; }\n", ""]);
+	exports.push([module.id, ".settings {\n  display: inline-block;\n  color: black;\n  position: relative; }\n\n.settings-trigger {\n  margin: 0;\n  opacity: 0.7;\n  color: white;\n  font-size: 2rem;\n  line-height: 3rem; }\n\n.settings .field {\n  margin-bottom: 0px; }\n\n.settings-field {\n  margin-bottom: 10px; }\n\n.settings-field:last-child {\n  margin-bottom: 0px; }\n\n@media only screen and (min-width: 320px) {\n  .settings-trigger {\n    font-size: 2rem;\n    line-height: 1.8rem; } }\n\n@media only screen and (min-width: 480px) {\n  .settings-trigger {\n    line-height: 1.4rem;\n    margin-right: 10px; } }\n\n.settings .dropdown {\n  right: 10px;\n  min-width: 300px;\n  border-top: 0;\n  padding: 10px;\n  top: 37px; }\n\n@media only screen and (min-width: 480px) {\n  .settings .dropdown {\n    min-width: 400px; } }\n\n.settings-title {\n  margin: 0;\n  margin-bottom: 10px;\n  border-bottom: 1px solid black;\n  padding-bottom: 4px; }\n\n.settings .btn {\n  margin-right: 2px; }\n\n.settings-label {\n  margin-bottom: 6px; }\n\n.settings-trigger:hover, .settings-trigger.opaque {\n  opacity: 1; }\n", ""]);
 
 	// exports
 

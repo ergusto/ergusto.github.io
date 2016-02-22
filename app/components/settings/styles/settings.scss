@@ -12,6 +12,18 @@
 	line-height: 3rem;
 }
 
+.settings .field {
+	margin-bottom: 0px;
+}
+
+.settings-field {
+	margin-bottom: 10px;
+}
+
+.settings-field:last-child {
+	margin-bottom: 0px;
+}
+
 @media only screen and (min-width : 320px) {
 	.settings-trigger {
 		font-size: 2rem;
