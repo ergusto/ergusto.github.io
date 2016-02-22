@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import _ from 'lodash';
 import React from 'react';
 
 // import styles for this component

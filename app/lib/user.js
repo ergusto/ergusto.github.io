@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import _ from 'lodash';
 import LocalStorageBehaviour from '../behaviours/localstorage.js';
 import EventBehaviour from '../behaviours/event.js';
 

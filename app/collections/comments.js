@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import _ from 'lodash';
 import LocalStorageCollection from './base/localstorage.collection.js';
 
 export default class Comments extends LocalStorageCollection {

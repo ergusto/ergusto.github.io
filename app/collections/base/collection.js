@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import _ from 'lodash';
 import Tools from '../../lib/tools.js';
 import EventBehaviour from '../../behaviours/event.js';
 

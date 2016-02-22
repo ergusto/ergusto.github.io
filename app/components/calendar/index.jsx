@@ -93,7 +93,7 @@ export default class CalendarComponent extends React.Component {
 
         return (
 
-        	<section className="full-height panel">
+        	<section className="full-height panel calendar-example">
 
 	            <div id="calendar-example" className="example">
 
