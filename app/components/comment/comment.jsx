@@ -12,11 +12,6 @@ export default class CommentComponent extends React.Component {
 		this.state = {};
 		this.state.shouldShowReplyForm = false;
 		this.state.shouldShowEditForm = false;
-
-		// http://stackoverflow.com/a/31362350/4566267
-		this.replyHandler = this.replyHandler.bind(this);
-		this.editHandler = this.editHandler.bind(this);
-		this.updateComment = this.updateComment.bind(this);
 	}
 
     showEditForm() {
@@ -55,9 +50,12 @@ export default class CommentComponent extends React.Component {
     	this.showEditForm();
     }
 
-    createNewComment(comment) {
-    	this.props.comments.create(comment);
+    replyCallback() {
         this.hideReplyForm();
+    }
+
+    editCallback() {
+        this.hideEditForm();
     }
 
     getChildren() {
@@ -68,11 +66,6 @@ export default class CommentComponent extends React.Component {
     	event.preventDefault();
     	this.props.comments.remove(comment.id);
     }
-
-    updateComment(comment) {
-        this.props.comments.update(comment);
-        this.hideEditForm();
-    }
     
     render() {
     	const comment = this.props.comment;
@@ -80,7 +73,6 @@ export default class CommentComponent extends React.Component {
         let childList;
 
         const childrenHTML = children.map((child) => {
-            return;
             return <CommentComponent key={child.id} user={this.props.user} comment={child} comments={this.props.comments} />
         });
 
@@ -109,8 +101,25 @@ export default class CommentComponent extends React.Component {
 	                </footer>
 	            </div>
 
-	            <CommentFormComponent user={this.props.user} formTitle="reply" parent={comment} shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.createNewComment.bind(this)} cancelCallback={this.hideReplyForm.bind(this)} />
-	            <CommentFormComponent {...this.props} user={this.props.user} formTitle="edit" comment={comment} submitCallback={this.updateComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} cancelCallback={this.hideEditForm.bind(this)} />
+	            <CommentFormComponent 
+                    user={this.props.user} 
+                    formTitle="reply" 
+                    parent={comment}
+                    comments={this.props.comments}
+                    shouldShowForm={this.state.shouldShowReplyForm} 
+                    submitCallback={this.replyCallback.bind(this)} 
+                    cancelCallback={this.hideReplyForm.bind(this)} 
+                />
+	            
+                <CommentFormComponent 
+                    user={this.props.user} 
+                    formTitle="edit" 
+                    comment={comment} 
+                    comments={this.props.comments}
+                    shouldShowForm={this.state.shouldShowEditForm} 
+                    submitCallback={this.editCallback.bind(this)}
+                    cancelCallback={this.hideEditForm.bind(this)} 
+                />
 
                 {childList}
 

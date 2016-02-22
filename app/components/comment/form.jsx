@@ -13,10 +13,6 @@ export default class CommentFormComponent extends React.Component {
 		this.state.formError = '';
         this.state.isEditing = false;
         this.state.commentLength = comment ? comment.text.length : 0;
-
-		// http://stackoverflow.com/a/31362350/4566267
-		this.cancelHandler = this.cancelHandler.bind(this);
-		this.submitHandler = this.submitHandler.bind(this);
 	}
 
 	componentWillUnmount() {
@@ -55,6 +51,7 @@ export default class CommentFormComponent extends React.Component {
 		const parent = this.parent;
 		const textInputValue = this.refs.commentInput.value;
 		const comment = this.props.comment || this.newComment();
+		let saved;
 
 		if (!this.state.isEditing) {
 			this.isEditing = true;
@@ -67,9 +64,16 @@ export default class CommentFormComponent extends React.Component {
 
 			comment.text = textInputValue;
 
-			if (this.props.submitCallback) {
-				this.props.submitCallback(comment);
+			if (comment.id) {
+				saved = this.props.comments.update(comment);
+			} else {
+				saved = this.props.comments.create(comment);
 			}
+
+			if (this.props.submitCallback) {
+				this.props.submitCallback(saved);
+			}
+
 			this.refs.commentInput.value = '';
 			this.isEditing = false;
 		}

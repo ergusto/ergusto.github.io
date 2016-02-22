@@ -123,6 +123,7 @@ export default class Collection {
 			this.models[id] = model;
 			this.triggerUpdate(model);
 		}
+		return model;
 	}
 
 	remove(model) {

@@ -3,6 +3,20 @@ import LocalStorageCollection from './localstorage.collection.js';
 
 export default class Comments extends LocalStorageCollection {
 
+	constructor() {
+		super();
+
+		this.onRemove((model) => {
+
+			const children = this.getChildCommentsForComment(model);
+
+			children.forEach((child) => {
+				this.remove(child);
+			});
+
+		});
+	}
+
 	defaultModels() {
 		return [{
 			text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
@@ -27,7 +41,7 @@ export default class Comments extends LocalStorageCollection {
 	getChildCommentsForComment(parent) {
 		const comments = this.get();
 		return _.filter(comments, (comment) => {
-			return comment.parentId = parent.id;
+			return comment.parentId == parent.id;
 		});
 	}
 	

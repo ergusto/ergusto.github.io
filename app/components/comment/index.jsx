@@ -17,7 +17,7 @@ export default class CommentListComponent extends React.Component {
 	}
 
 	render() {
-		const comments = this.props.comments.get();
+		const comments = this.props.comments.getParentComments();
 		let content;
 
 		if (comments.length) {

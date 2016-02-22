@@ -26021,7 +26021,7 @@
 			value: function render() {
 				var _this2 = this;
 
-				var comments = this.props.comments.get();
+				var comments = this.props.comments.getParentComments();
 				var content = undefined;
 
 				if (comments.length) {
@@ -38879,8 +38879,6 @@
 	    value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -38917,11 +38915,6 @@
 	        _this.state = {};
 	        _this.state.shouldShowReplyForm = false;
 	        _this.state.shouldShowEditForm = false;
-
-	        // http://stackoverflow.com/a/31362350/4566267
-	        _this.replyHandler = _this.replyHandler.bind(_this);
-	        _this.editHandler = _this.editHandler.bind(_this);
-	        _this.updateComment = _this.updateComment.bind(_this);
 	        return _this;
 	    }
 
@@ -38968,10 +38961,14 @@
 	            this.showEditForm();
 	        }
 	    }, {
-	        key: 'createNewComment',
-	        value: function createNewComment(comment) {
-	            this.props.comments.create(comment);
+	        key: 'replyCallback',
+	        value: function replyCallback() {
 	            this.hideReplyForm();
+	        }
+	    }, {
+	        key: 'editCallback',
+	        value: function editCallback() {
+	            this.hideEditForm();
 	        }
 	    }, {
 	        key: 'getChildren',
@@ -38985,12 +38982,6 @@
 	            this.props.comments.remove(comment.id);
 	        }
 	    }, {
-	        key: 'updateComment',
-	        value: function updateComment(comment) {
-	            this.props.comments.update(comment);
-	            this.hideEditForm();
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
@@ -39000,7 +38991,6 @@
 	            var childList = undefined;
 
 	            var childrenHTML = children.map(function (child) {
-	                return;
 	                return _react2.default.createElement(CommentComponent, { key: child.id, user: _this2.props.user, comment: child, comments: _this2.props.comments });
 	            });
 
@@ -39081,8 +39071,24 @@
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement(_form2.default, { user: this.props.user, formTitle: 'reply', parent: comment, shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.createNewComment.bind(this), cancelCallback: this.hideReplyForm.bind(this) }),
-	                _react2.default.createElement(_form2.default, _extends({}, this.props, { user: this.props.user, formTitle: 'edit', comment: comment, submitCallback: this.updateComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, cancelCallback: this.hideEditForm.bind(this) })),
+	                _react2.default.createElement(_form2.default, {
+	                    user: this.props.user,
+	                    formTitle: 'reply',
+	                    parent: comment,
+	                    comments: this.props.comments,
+	                    shouldShowForm: this.state.shouldShowReplyForm,
+	                    submitCallback: this.replyCallback.bind(this),
+	                    cancelCallback: this.hideReplyForm.bind(this)
+	                }),
+	                _react2.default.createElement(_form2.default, {
+	                    user: this.props.user,
+	                    formTitle: 'edit',
+	                    comment: comment,
+	                    comments: this.props.comments,
+	                    shouldShowForm: this.state.shouldShowEditForm,
+	                    submitCallback: this.editCallback.bind(this),
+	                    cancelCallback: this.hideEditForm.bind(this)
+	                }),
 	                childList
 	            );
 	        }
@@ -39271,10 +39277,6 @@
 			_this.state.formError = '';
 			_this.state.isEditing = false;
 			_this.state.commentLength = comment ? comment.text.length : 0;
-
-			// http://stackoverflow.com/a/31362350/4566267
-			_this.cancelHandler = _this.cancelHandler.bind(_this);
-			_this.submitHandler = _this.submitHandler.bind(_this);
 			return _this;
 		}
 
@@ -39321,6 +39323,7 @@
 				var parent = this.parent;
 				var textInputValue = this.refs.commentInput.value;
 				var comment = this.props.comment || this.newComment();
+				var saved = undefined;
 
 				if (!this.state.isEditing) {
 					this.isEditing = true;
@@ -39333,9 +39336,16 @@
 
 					comment.text = textInputValue;
 
-					if (this.props.submitCallback) {
-						this.props.submitCallback(comment);
+					if (comment.id) {
+						saved = this.props.comments.update(comment);
+					} else {
+						saved = this.props.comments.create(comment);
 					}
+
+					if (this.props.submitCallback) {
+						this.props.submitCallback(saved);
+					}
+
 					this.refs.commentInput.value = '';
 					this.isEditing = false;
 				}
@@ -40347,7 +40357,17 @@
 		function Comments() {
 			_classCallCheck(this, Comments);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Comments).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Comments).call(this));
+
+			_this.onRemove(function (model) {
+
+				var children = _this.getChildCommentsForComment(model);
+
+				children.forEach(function (child) {
+					_this.remove(child);
+				});
+			});
+			return _this;
 		}
 
 		_createClass(Comments, [{
@@ -40378,7 +40398,7 @@
 			value: function getChildCommentsForComment(parent) {
 				var comments = this.get();
 				return _underscore2.default.filter(comments, function (comment) {
-					return comment.parentId = parent.id;
+					return comment.parentId == parent.id;
 				});
 			}
 		}]);
@@ -40563,6 +40583,7 @@
 					this.models[id] = model;
 					this.triggerUpdate(model);
 				}
+				return model;
 			}
 		}, {
 			key: 'remove',
