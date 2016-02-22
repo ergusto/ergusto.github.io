@@ -39941,7 +39941,7 @@
 				this.store = new _localstorage2.default(this.storeName);
 
 				var user = this.store.get();
-				if (user) {
+				if (_underscore2.default.keys(user).length) {
 					this.user = user;
 				}
 			} else {
