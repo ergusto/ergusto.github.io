@@ -39779,7 +39779,7 @@
 					date: new Date(),
 					parentId: false
 				}, {
-					text: 'Almost everything uses the localStorage API, so changes you make here will persist between visits, but only in this browser.',
+					text: 'Almost everything uses the localStorage API, so changes you make will persist between visits, but only in the browser you are currently using.',
 					username: 'ergusto',
 					date: new Date(),
 					parentId: false
