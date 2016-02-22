@@ -16,7 +16,7 @@ export default class LocalStorageBehaviour {
 	}
 
 	set(store) {
-		if (!_.isString(store)) store = JSON.stringify(store);
+		if (_.isObject(store)) store = JSON.stringify(store);
 		localStorage.setItem(this.storeName, store);
 	}
 

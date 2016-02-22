@@ -13,13 +13,13 @@ export default class TaskFormComponent extends React.Component {
 
 	addError(error) {
 		this.setState({
-			formError: error,
+			formError: error
 		});
 	}
 
 	clearError() {
 		this.setState({
-			formError: null,
+			formError: null
 		});
 	}
 
@@ -54,7 +54,7 @@ export default class TaskFormComponent extends React.Component {
 				<form onSubmit={this.submitHandler.bind(this)} className="task-form">
 					<input ref="taskTitleInput" placeholder="title" className="field" name="title" />
 					{errContent}
-	            	<textarea ref="taskTextInput" placeholder="text" className="field" name="text"></textarea>
+					<textarea ref="taskTextInput" placeholder="text" className="field" name="text"></textarea>
 					<a onClick={this.submitHandler.bind(this)} className="btn" href="#">submit</a>
 				</form>
 			</div>

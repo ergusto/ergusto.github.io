@@ -38,7 +38,7 @@ export default class LocalStorageCollection extends Collection {
 				const models = _.isArray(model) ? model : [model];
 				models.forEach((model) => {
 					if (model && model.id) {
-						this.addModelToLocalStorage(model);
+						this.addOrUpdateModelToLocalStorage(model);
 					}
 				});
 			}
@@ -49,7 +49,7 @@ export default class LocalStorageCollection extends Collection {
 				const models = _.isArray(model) ? model : [model];
 				models.forEach((model) => {
 					if (model && model.id) {
-						this.addModelToLocalStorage(model);
+						this.addOrUpdateModelToLocalStorage(model);
 					}
 				})
 			}
@@ -75,7 +75,7 @@ export default class LocalStorageCollection extends Collection {
 		}
 	}
 
-	addModelToLocalStorage(model) {
+	addOrUpdateModelToLocalStorage(model) {
 		this.store.update((store) => {
 			store[model.id] = model;
 			return store;

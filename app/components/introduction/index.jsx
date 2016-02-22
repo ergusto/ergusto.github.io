@@ -105,10 +105,10 @@ export default class IntroductionComponent extends React.Component {
 			settingsClass = 'hidden seethrough';
 
 			name = (<span className="name">
-                        <span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
-                        <span ref="wordspacer" className="invisible">i</span>
-                        <span className="name-r" ref="namer2">R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
-                    </span>);
+						<span ref="namef1">F</span><span ref="namee1">e</span><span ref="namer1">r</span><span ref="nameg1">g</span><span ref="nameu1">u</span><span ref="names1">s</span> 
+						<span ref="wordspacer" className="invisible">i</span>
+						<span className="name-r" ref="namer2">R</span><span ref="nameu2">u</span><span ref="names2">s</span><span ref="namet1">t</span><span ref="nameo1">o</span><span ref="namen1">n</span>
+					</span>);
 
 		} else {
 			panelClass = 'panel introduction introduction-no-animation';
@@ -119,24 +119,24 @@ export default class IntroductionComponent extends React.Component {
 
 		return (
 
-	        <section ref="panel" className={panelClass}>
+			<section ref="panel" className={panelClass}>
 
-	            <div id="introduction" className="introduction-content">
+				<div id="introduction" className="introduction-content">
 
-	            	<div ref="settings" className={settingsClass}>
-	            		<SettingsComponent user={user} />
-	            	</div>
+					<div ref="settings" className={settingsClass}>
+						<SettingsComponent user={user} />
+					</div>
 
-	            	<h1 ref="heading" className="introduction-heading">
-	            		<a href="/">
-		                    {name}
-		                </a>
-	                </h1>
+					<h1 ref="heading" className="introduction-heading">
+						<a href="/">
+							{name}
+						</a>
+					</h1>
 
-	            </div>
+				</div>
 
-	        </section>
-	        
+			</section>
+			
 		)
 	}
 

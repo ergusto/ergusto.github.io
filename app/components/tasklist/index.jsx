@@ -20,7 +20,7 @@ export default class TaskManagerComponent extends React.Component {
 	setActiveTask(id) {
 		this.hideNewTaskForm();
 		this.setState({
-			activeTaskId: id,
+			activeTaskId: id
 		});
 	}
 
@@ -34,13 +34,13 @@ export default class TaskManagerComponent extends React.Component {
 
 	showNewTaskForm() {
 		this.setState({
-			shouldShowNewTaskForm: true,
+			shouldShowNewTaskForm: true
 		})
 	}
 
 	hideNewTaskForm() {
 		this.setState({
-			shouldShowNewTaskForm: false,
+			shouldShowNewTaskForm: false
 		})
 	}
 
@@ -66,9 +66,9 @@ export default class TaskManagerComponent extends React.Component {
 		return (
 			 <section className="full-height panel tasklist-example">
 
-	            <div id="tasklist-example" className="example">
+				<div id="tasklist-example" className="example">
 
-	            	<div className="tasklist flex-col-container">
+					<div className="tasklist flex-col-container">
 						<div className="tasklist-sidebar flex-col">
 							<div className="flex-col-inner">
 								<a onClick={this.newTaskHandler.bind(this)} href="#" className="plus-btn pull-right">+</a>
@@ -84,9 +84,9 @@ export default class TaskManagerComponent extends React.Component {
 						</div>
 					</div>
 
-	            </div>
+				</div>
 
-	        </section>
+			</section>
 		)
 	}
 

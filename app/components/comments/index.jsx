@@ -1,6 +1,4 @@
 import React from 'react';
-import moment from 'moment';
-
 import CommentComponent from './comment.jsx';
 
 // import styles for this component
@@ -29,15 +27,15 @@ export default class CommentListComponent extends React.Component {
 		}
 
 		return (
-        	 <section className="full-height panel">
+			 <section className="full-height panel">
 
-	            <div id="comment-example" className="example">
+				<div id="comment-example" className="example">
 					
 					<ul className="comment-list">{content}</ul>
 
-	            </div>
+				</div>
 
-	        </section>
+			</section>
 		)
 	}
 

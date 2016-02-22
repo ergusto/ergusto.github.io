@@ -23,103 +23,103 @@ const months = [
 ];
 
 export default class CalendarComponent extends React.Component {
-    
-    constructor(props) {
-        super(props);
-        this.month = current_date.getMonth();
-        this.year = current_date.getFullYear();
+	
+	constructor(props) {
+		super(props);
+		this.month = current_date.getMonth();
+		this.year = current_date.getFullYear();
 
-        this.date = current_date.getDate();
-        this.currentDayNo = current_date.getDay();
-        this.currentDay = days[this.currentDayNo];
-        this.firstDayOfMonth = new Date(this.year, this.month, 1);
-        this.startingDay = this.firstDayOfMonth.getDay();
-        
-        this.currentMonth = months[this.month];
-        this.day = days[this.startingDay];
-        
-        this.currentMonthLength = this.currentMonth.days;
+		this.date = current_date.getDate();
+		this.currentDayNo = current_date.getDay();
+		this.currentDay = days[this.currentDayNo];
+		this.firstDayOfMonth = new Date(this.year, this.month, 1);
+		this.startingDay = this.firstDayOfMonth.getDay();
+		
+		this.currentMonth = months[this.month];
+		this.day = days[this.startingDay];
+		
+		this.currentMonthLength = this.currentMonth.days;
 
-        if (this.month == 1) {
-        	// feb only
-        	this.currentMonthLength = 29;
-        }
+		if (this.month == 1) {
+			// feb only
+			this.currentMonthLength = 29;
+		}
 
-    }
+	}
 
-    generateDateCells() {
-    	let day = 1;
-    	const weeks = [0,1,2,3,4,5,6,7,8];
-    	const weekdays = [0,1,2,3,4,5,6,7,8];
+	generateDateCells() {
+		let day = 1;
+		const weeks = [0,1,2,3,4,5,6,7,8];
+		const weekdays = [0,1,2,3,4,5,6,7,8];
 
-    	return weeks.map((weekNo) => {
+		return weeks.map((weekNo) => {
 
 			if (day > this.currentMonthLength) {
 				return;
 			}
-    		
-    		const weekdayhtml = weekdays.map((dayKey) => {
-    			let html;
+			
+			const weekdayhtml = weekdays.map((dayKey) => {
+				let html;
 
-    			if (day <= this.currentMonthLength && (weekNo > 0 || dayKey >= this.startingDay)) {
-    				html = <div key={dayKey} className="calendar-day">{day}</div>;
-    				day++;
-    			} else {
-    				html = <div key={dayKey} className="calendar-day"></div>;
-    			}
-    			
-    			return html;
+				if (day <= this.currentMonthLength && (weekNo > 0 || dayKey >= this.startingDay)) {
+					html = <div key={dayKey} className="calendar-day">{day}</div>;
+					day++;
+				} else {
+					html = <div key={dayKey} className="calendar-day"></div>;
+				}
+				
+				return html;
 
-    		});
+			});
 
-    		return (
-    			<ul key={weekNo} className="calendar-week clearfix">
-    				{weekdayhtml}
-    			</ul>
-    		)
+			return (
+				<ul key={weekNo} className="calendar-week clearfix">
+					{weekdayhtml}
+				</ul>
+			)
 
-    	});
-    }
+		});
+	}
 
-    render() {
+	render() {
 
-    	const dayHeaderList = days.map((day) => {
-    		return (
-    			<li className="calendar-day-header-item">{day}</li>
-    		)
-    	});
+		const dayHeaderList = days.map((day) => {
+			return (
+				<li className="calendar-day-header-item">{day}</li>
+			)
+		});
 
-    	const dateCells = this.generateDateCells();
+		const dateCells = this.generateDateCells();
 
-        return (
+		return (
 
-        	<section className="full-height panel calendar-example">
+			<section className="full-height panel calendar-example">
 
-	            <div id="calendar-example" className="example">
+				<div id="calendar-example" className="example">
 
-	            	<div className="box calendar">
+					<div className="box calendar">
 
-	            		<header className="calendar-header">
+						<header className="calendar-header">
 
-			            	<h1>Calendar!</h1>
+							<h1>Calendar!</h1>
 
-			            	<p>{this.currentDay}  {this.date} {this.currentMonth.name} {this.year}</p><br/>
+							<p>{this.currentDay}  {this.date} {this.currentMonth.name} {this.year}</p><br/>
 
-			            	<ul className="calendar-header-day-list">{days}</ul>
+							<ul className="calendar-header-day-list">{days}</ul>
 
-			            </header>
+						</header>
 
-			            <div className="calendar-body">
+						<div className="calendar-body">
 
-		            		{dateCells}
+							{dateCells}
 
-		            	</div>
+						</div>
 
-		            </div>
+					</div>
 
-	            </div>
-        	
-        	</section>
-        );
-    }
+				</div>
+			
+			</section>
+		);
+	}
 }

@@ -1,7 +1,7 @@
 module.exports = {
 	entry: './app/Main.jsx',
 	output: {
-		filename: 'build/bundle.js',
+		filename: 'build/bundle.js'
 	},
 	module: {
 		preLoaders: [
@@ -15,14 +15,14 @@ module.exports = {
 			{
 				test: /\.jsx?$/,
 				loader: 'babel',
-				exclude: /(node_modules|bower_components)/,
+				exclude: /(node_modules|bower_components)/
 				query: {
 					presets: ['react', 'es2015']
 				}
 			},
 			{
 				test: /\.scss$/,
-				loaders: ['style', 'css', 'sass'],
+				loaders: ['style', 'css', 'sass']
 			}
 		]
 	}
