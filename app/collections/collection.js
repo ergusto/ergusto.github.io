@@ -4,8 +4,7 @@ export default class Collection {
 
 	constructor() {
 		this.models = {};
-		this.callbacks = {};
-		this.callbacks.main = [];
+		this.callbacks = [];
 		this.idCount = 0;
 		this.name = this.constructor.name;
 
@@ -47,15 +46,15 @@ export default class Collection {
 	}
 
 	addModelToLocalStorage(model) {
-		const stored = this.getFromLocalStorage();
-		stored[model.id] = model;
-		this.setLocalStorage(stored);
+		const store = this.getFromLocalStorage();
+		store[model.id] = model;
+		this.setLocalStorage(store);
 	}
 
 	removeModelFromLocalStorageById(id) {
-		const stored = this.getFromLocalStorage();
-		delete stored[id];
-		this.setLocalStorage(stored);
+		const store = this.getFromLocalStorage();
+		delete store[id];
+		this.setLocalStorage(store);
 	}
 
 	getListFromLocalStorage() {
@@ -90,6 +89,14 @@ export default class Collection {
 		return model;
 	}
 
+	update(model) {
+		const id = model.id;
+		if (id) {
+			this.models[id] = model;
+			this.broadcast(model);
+		}
+	}
+
 	add(model) {
 		const isArray = _.isArray(model);
 		const models = isArray ? model : [model];
@@ -117,25 +124,13 @@ export default class Collection {
 		this.broadcast();
 	}
 
-	register(callback, id) {
-		if (id) {
-			const callbacks = this.callbacks[id] || [];
-			callbacks.push(callback);
-			this.callbacks[id] = callbacks;
-		} else {
-			this.callbacks.main.push(callback);
-		}
+	register(callback) {
+		this.callbacks.push(callback);
 	}
 
-	broadcast(model) {
-		if (model) {
-			const callbacks = this.callbacks[model.id] || [];
-			callbacks.forEach((callback) => {
-				callback.call(this, model);
-			});
-		}
-		this.callbacks.main.forEach((callback) => {
-			callback.call(this, model);
+	broadcast() {
+		this.callbacks.forEach((callback) => {
+			callback.call(this);
 		});
 	}
 

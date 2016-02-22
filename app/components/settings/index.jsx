@@ -46,10 +46,13 @@ export default class SettingsComponent extends  React.Component {
     	let dropdownClass;
     	let triggerClass;
     	let labelText;
+        let showDisabled;
+        let hideDisabled;
 
     	if (this.state.shouldShowDropDown) {
     		dropdownClass = 'dropdown box';
     		triggerClass = 'settings-trigger opaque';
+
     	} else {
             dropdownClass = 'hidden dropdown';
             triggerClass = 'settings-trigger';
@@ -57,8 +60,12 @@ export default class SettingsComponent extends  React.Component {
 
     	if (this.props.user.shouldSeeIntroAnimation()) {
             labelText = 'show intro animation';
+            showDisabled = true;
+            hideDisabled = false;
         } else {
             labelText = 'do not show intro animation';
+            showDisabled = true;
+            hideDisabled = false;
         }
 
         return (
@@ -68,8 +75,8 @@ export default class SettingsComponent extends  React.Component {
         		<div className={dropdownClass}>
         			<h5 className="settings-title">settings</h5>
         			<label className="settings-label"><small>{labelText}</small></label>
-        			<a onClick={this.showIntroHandler.bind(this)} href="#" className="btn">show animation</a>
-                    <a onClick={this.hideIntroHandler.bind(this)} href="#" className="btn">hide animation</a>
+        			<a onClick={this.showIntroHandler.bind(this)} disabled={showDisabled} href="#" className="btn">show animation</a>
+                    <a onClick={this.hideIntroHandler.bind(this)} disabled={hideDisabled} href="#" className="btn">hide animation</a>
         		</div>
         	</div>
         );

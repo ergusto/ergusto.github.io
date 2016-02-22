@@ -17,7 +17,7 @@ export default class CommentComponent extends React.Component {
 		// http://stackoverflow.com/a/31362350/4566267
 		this.replyHandler = this.replyHandler.bind(this);
 		this.editHandler = this.editHandler.bind(this);
-		this.changeComment = this.changeComment.bind(this);
+		this.updateComment = this.updateComment.bind(this);
 	}
 
     showEditForm() {
@@ -65,10 +65,10 @@ export default class CommentComponent extends React.Component {
     	this.props.comments.remove(comment.id);
     }
 
-    changeComment(comment) {
-    	this.setState({
-    		comment: comment,
-    	});
+    updateComment(comment) {
+        console.log(comment);
+        return;
+        this.props.comments.update(comment);
     }
     
     render() {
@@ -97,7 +97,7 @@ export default class CommentComponent extends React.Component {
 	            </div>
 
 	            <CommentFormComponent formTitle="reply" shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.addNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
-	            <CommentFormComponent {...this.props} formTitle="edit" commentValue={comment} submitCallback={this.changeComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
+	            <CommentFormComponent {...this.props} formTitle="edit" comment={comment} submitCallback={this.updateComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
 
 	        </div>
         );

@@ -67,6 +67,8 @@ export default class IntroductionComponent extends React.Component {
 										setTimeout(function() {
 											refs.settings.classList.remove('hidden');
 											Velocity(refs.settings, { opacity: 1 }, { duration: 800 });
+											refs.panel.classList.remove('full-height');
+											refs.panel.classList.remove('panel');
 
 										}, 1000);
 									}, 500);
@@ -99,7 +101,7 @@ export default class IntroductionComponent extends React.Component {
 		if (shouldShowAnimation) {
 			body.classList.add('hide-overflow');
 			body.addEventListener('touchmove', prevent);
-			panelClass = 'full-height introduction';
+			panelClass = 'full-height panel introduction';
 			settingsClass = 'hidden seethrough';
 
 			name = (<span className="name">
@@ -109,7 +111,7 @@ export default class IntroductionComponent extends React.Component {
                     </span>);
 
 		} else {
-			panelClass = 'introduction introduction-no-animation';
+			panelClass = 'panel introduction introduction-no-animation';
 			settingsClass = 'settings-container';
 
 			name = (<span className="name">ergusto</span>);
@@ -117,7 +119,7 @@ export default class IntroductionComponent extends React.Component {
 
 		return (
 
-	        <section ref="introductionPanel" className={panelClass}>
+	        <section ref="panel" className={panelClass}>
 
 	            <div id="introduction" className="introduction-content">
 

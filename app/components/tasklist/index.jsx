@@ -65,7 +65,7 @@ export default class TaskManagerComponent extends React.Component {
 		}
 
 		return (
-			 <section className="full-height tasklist-example">
+			 <section className="full-height panel tasklist-example">
 
 	            <div id="tasklist-example" className="example">
 
