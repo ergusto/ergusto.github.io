@@ -94,7 +94,7 @@ export default class Collection {
 	}
 
 	createMany(models) {
-		var created = models.map((model) => {
+		const created = models.map((model) => {
 			model.id = Tools.generateID();
 			this.models[model.id] = model;
 			return model;

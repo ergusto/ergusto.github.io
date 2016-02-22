@@ -16,8 +16,18 @@ export default class LocalStorageCollection extends Collection {
 
 	setUpLocalStorage() {
 		this.localStorageName = 'ERGUSTO:collection:' + this.name;
-		
 		this.hasLocallyStoredModels = this._hasLocallyStoredModels();
+		this.initialiseEvents();
+
+		if (this.hasLocallyStoredModels) {
+			const storeList = this.getListFromLocalStorage();
+			this.addMany(storeList);
+		} else {
+			this.addDefaults();
+		}
+	}
+
+	initialiseEvents() {
 		
 		this.onCreate((model) => {
 			if (!this.hasLocallyStoredModels) this.hasLocallyStoredModels = true;
@@ -41,13 +51,18 @@ export default class LocalStorageCollection extends Collection {
 				});
 			}
 		});
-		
-		if (this.hasLocallyStoredModels) {
-			const storeList = this.getListFromLocalStorage();
-			this.addMany(storeList);
-		} else {
-			this.addDefaults();
-		}
+
+		this.onUpdate((model) => {
+			if (model) {
+				const models = _.isArray(model) ? model : [model];
+				models.forEach((model) => {
+					if (model && model.id) {
+						this.addModelToLocalStorage(model);
+					}
+				})
+			}
+		});
+
 	}
 
 	addDefaults() {
@@ -58,18 +73,18 @@ export default class LocalStorageCollection extends Collection {
 	}
 
 	_hasLocallyStoredModels() {
-		const store = this.getFromLocalStorage();
+		const store = this.getLocalStorage();
 		return store && !!_.keys(store).length;
 	}
 
 	addModelToLocalStorage(model) {
-		const store = this.getFromLocalStorage();
+		const store = this.getLocalStorage();
 		store[model.id] = model;
 		this.setLocalStorage(store);
 	}
 
 	removeModelFromLocalStorageById(id) {
-		const store = this.getFromLocalStorage();
+		const store = this.getLocalStorage();
 		delete store[id];
 		this.setLocalStorage(store);
 	}
@@ -79,13 +94,13 @@ export default class LocalStorageCollection extends Collection {
 	}
 
 	getListFromLocalStorage() {
-		const store = this.getFromLocalStorage();
+		const store = this.getLocalStorage();
 		return _.keys(store).map(function(id) {
 			return store[id];
 		});
 	}
 
-	getFromLocalStorage() {
+	getLocalStorage() {
 		const store = localStorage.getItem(this.localStorageName);
 		return _.isString(store) ? JSON.parse(store) : {};
 	}

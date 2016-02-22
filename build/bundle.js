@@ -40353,15 +40353,15 @@
 		_createClass(Comments, [{
 			key: 'defaultModels',
 			value: function defaultModels() {
-				return [{ text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
+				return [{
+					text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
 					username: 'ergusto',
 					date: new Date('Mon Feb 22 2016 02:42:36 GMT+0000 (GMT)'),
-					children: [],
 					parentId: false
-				}, { text: 'Almost everything uses the localStorage API, so changes you make here will persist between visits, but only while you use this browser.',
+				}, {
+					text: 'Almost everything uses the localStorage API, so changes you make here will persist between visits, but only while you use this browser.',
 					username: 'ergusto',
 					date: new Date('Mon Feb 22 2016 02:42:36 GMT+0000 (GMT)'),
-					children: [],
 					parentId: false
 				}];
 			}
@@ -40885,11 +40885,21 @@
 		_createClass(LocalStorageCollection, [{
 			key: 'setUpLocalStorage',
 			value: function setUpLocalStorage() {
-				var _this2 = this;
-
 				this.localStorageName = 'ERGUSTO:collection:' + this.name;
-
 				this.hasLocallyStoredModels = this._hasLocallyStoredModels();
+				this.initialiseEvents();
+
+				if (this.hasLocallyStoredModels) {
+					var storeList = this.getListFromLocalStorage();
+					this.addMany(storeList);
+				} else {
+					this.addDefaults();
+				}
+			}
+		}, {
+			key: 'initialiseEvents',
+			value: function initialiseEvents() {
+				var _this2 = this;
 
 				this.onCreate(function (model) {
 					if (!_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
@@ -40914,12 +40924,16 @@
 					}
 				});
 
-				if (this.hasLocallyStoredModels) {
-					var storeList = this.getListFromLocalStorage();
-					this.addMany(storeList);
-				} else {
-					this.addDefaults();
-				}
+				this.onUpdate(function (model) {
+					if (model) {
+						var models = _underscore2.default.isArray(model) ? model : [model];
+						models.forEach(function (model) {
+							if (model && model.id) {
+								_this2.addModelToLocalStorage(model);
+							}
+						});
+					}
+				});
 			}
 		}, {
 			key: 'addDefaults',
@@ -40932,20 +40946,20 @@
 		}, {
 			key: '_hasLocallyStoredModels',
 			value: function _hasLocallyStoredModels() {
-				var store = this.getFromLocalStorage();
+				var store = this.getLocalStorage();
 				return store && !!_underscore2.default.keys(store).length;
 			}
 		}, {
 			key: 'addModelToLocalStorage',
 			value: function addModelToLocalStorage(model) {
-				var store = this.getFromLocalStorage();
+				var store = this.getLocalStorage();
 				store[model.id] = model;
 				this.setLocalStorage(store);
 			}
 		}, {
 			key: 'removeModelFromLocalStorageById',
 			value: function removeModelFromLocalStorageById(id) {
-				var store = this.getFromLocalStorage();
+				var store = this.getLocalStorage();
 				delete store[id];
 				this.setLocalStorage(store);
 			}
@@ -40957,14 +40971,14 @@
 		}, {
 			key: 'getListFromLocalStorage',
 			value: function getListFromLocalStorage() {
-				var store = this.getFromLocalStorage();
+				var store = this.getLocalStorage();
 				return _underscore2.default.keys(store).map(function (id) {
 					return store[id];
 				});
 			}
 		}, {
-			key: 'getFromLocalStorage',
-			value: function getFromLocalStorage() {
+			key: 'getLocalStorage',
+			value: function getLocalStorage() {
 				var store = localStorage.getItem(this.localStorageName);
 				return _underscore2.default.isString(store) ? JSON.parse(store) : {};
 			}
