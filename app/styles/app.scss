@@ -1,11 +1,20 @@
-@import 'normalize.css';
-@import 'resets.scss';
-@import 'clearfix.scss';
-@import 'flexcolumns.scss';
-@import 'forms.scss';
-@import 'horizontallistmenu.scss';
-@import 'buttons.scss';
-@import 'box.scss';
-@import 'dropdown.scss';
-@import 'main.scss';
-@import 'tools.scss';
+/* vendor */
+@import 'vendor/normalize';
+
+/* base */
+@import 'base/resets';
+@import 'base/generic';
+@import 'base/buttons';
+@import 'base/forms';
+
+/* helpers */
+@import 'helpers/clearfix';
+@import 'helpers/flexcolumns';
+@import 'helpers/tools';
+
+/* objects */
+@import 'objects/box';
+@import 'objects/dropdown';
+@import 'objects/horizontalmenu';
+
+@import 'main';

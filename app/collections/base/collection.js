@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import Tools from '../../lib/tools.js';
-import EventBehaviour from '../../lib/behaviours/event.js';
+import EventBehaviour from '../../behaviours/event.js';
 
 export default class Collection {
 
