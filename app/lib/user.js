@@ -43,16 +43,20 @@ export default class User {
 		return username.length ? username : 'ergusto';
 	}
 
+	onUpdate(callback) {
+		this.events.register('update', callback);
+	}
+
 	set(property, value) {
 		this.user[property] = value;
 		this.updateStorage();
-		this.events.broadcast('updated');
+		this.events.broadcast('update');
 	}
 
 	setSetting(property, value) {
 		this.user.settings[property] = value;
 		this.updateStorage();
-		this.events.broadcast('updated');
+		this.events.broadcast('update');
 	}
 
 	setUsername(username) {
