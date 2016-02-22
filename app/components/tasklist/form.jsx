@@ -29,7 +29,7 @@ export default class TaskFormComponent extends React.Component {
 		const text = this.refs.taskTextInput.value;
 		this.clearError();
 		if (title.trim().length) {
-			const task = this.props.tasks.addModel({title: title, text: text});
+			const task = this.props.tasks.create({title: title, text: text});
 			this.props.setActiveTask(task.id);
 		} else {
 			this.addError('please enter a title');
@@ -38,7 +38,7 @@ export default class TaskFormComponent extends React.Component {
 
 	render() {
 		const err = this.state.formError;
-		var errContent;
+		let errContent;
 
 		if (err) {
 			errContent = (<span className="form-error">{err}</span>);

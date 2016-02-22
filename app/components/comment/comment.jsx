@@ -12,7 +12,6 @@ export default class CommentComponent extends React.Component {
 		this.state = {};
 		this.state.shouldShowReplyForm = false;
 		this.state.shouldShowEditForm = false;
-		this.state.comment = '';
 
 		// http://stackoverflow.com/a/31362350/4566267
 		this.replyHandler = this.replyHandler.bind(this);
@@ -56,9 +55,12 @@ export default class CommentComponent extends React.Component {
     	this.showEditForm();
     }
 
-    addNewComment(comment) {
-        console.log(comment);
+    createNewComment(comment) {
     	this.props.comments.create(comment);
+    }
+
+    getChildren() {
+        return this.props.comments.getChildCommentsForComment(this.props.comment);
     }
 
     removeHandler(comment, event) {
@@ -67,27 +69,37 @@ export default class CommentComponent extends React.Component {
     }
 
     updateComment(comment) {
-        return;
         this.props.comments.update(comment);
     }
     
     render() {
     	const comment = this.props.comment;
-        const commentValue = this.state.comment && this.state.comment.length ? this.state.comment : comment.text;
+        const children = this.getChildren();
+        let childList;
+
+        const childrenHTML = children.map((child) => {
+            return;
+            return <CommentComponent key={child.id} user={this.props.user} comment={child} comments={this.props.comments} />
+        });
+
+        if (childrenHTML) {
+
+            childList = (<ul className="children">{childrenHTML}</ul>);
+
+        }
         return (
 
         	<div>
-
 	        	<div className="comment-item box">
 	                <header className="comment-item-header clearfix">
 	                    <p className="muted"><small>{comment.username}</small></p>
 	                </header>
 	                <div className="comment-item-body">
-	                    <p>{commentValue}</p>
+	                    <p>{comment.text}</p>
 	                </div>
 	                <footer className="comment-item-footer clearfix">
 	                    <ul className="horizontal-list-menu muted">
-	                        <li className="pull-right"><TimeAgo date={this.props.comment.date} /></li>
+	                        <li className="pull-right"><TimeAgo date={comment.date} /></li>
 	                        <li><a href="#" onClick={this.replyHandler.bind(this)}>reply</a></li>
 	                        <li><a href="#" onClick={this.editHandler.bind(this)}>edit</a></li>
 	                        <li><a href="#" onClick={this.removeHandler.bind(this, comment)}>remove</a></li>
@@ -95,8 +107,10 @@ export default class CommentComponent extends React.Component {
 	                </footer>
 	            </div>
 
-	            <CommentFormComponent user={this.props.user} formTitle="reply" shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.addNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
-	            <CommentFormComponent {...this.props} user={this.props.user} formTitle="edit" comment={comment} submitCallback={this.updateComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
+	            <CommentFormComponent user={this.props.user} formTitle="reply" parent={comment} shouldShowForm={this.state.shouldShowReplyForm} submitCallback={this.createNewComment.bind(this)} hideForm={this.hideReplyForm.bind(this)} />
+	            <CommentFormComponent {...this.props} user={this.props.user} formTitle="edit" parent={comment} submitCallback={this.updateComment.bind(this)} shouldShowForm={this.state.shouldShowEditForm} hideForm={this.hideEditForm.bind(this)} />
+
+                {childList}
 
 	        </div>
         );

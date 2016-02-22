@@ -7,9 +7,8 @@ export default class TaskListComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
-		const component = this;
-		props.tasks.register(function() {
-			component.forceUpdate()
+		props.tasks.onChange(() => {
+			this.forceUpdate()
 		});
 	}
 

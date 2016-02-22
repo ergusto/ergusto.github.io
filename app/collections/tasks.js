@@ -1,6 +1,6 @@
-import Collection from './collection.js';
+import LocalStorageCollection from './localstorage.collection.js';
 
-export default class Tasks extends Collection {
+export default class Tasks extends LocalStorageCollection {
 
 	defaultModels() {
 		return [

@@ -1,114 +1,128 @@
 import _ from 'underscore';
+import Tools from '../lib/tools.js';
 
 export default class Collection {
 
 	constructor() {
 		this.models = {};
-		this.callbacks = [];
-		this.idCount = 0;
+		this.events = {};
+		this.events.change = [];
+		this.events.create = [];
+		this.events.update = [];
+		this.events.remove = [];
+
 		this.name = this.constructor.name;
-
-		if (window.localStorage) {
-			this.usingLocalStorage = true;
-			this.setUpLocalStorage();
-		} else {
-			this.usingLocalStorage = false;
-			this.addDefaults();
-		}
-
 	}
 
-	setUpLocalStorage() {
-		const collection = this;
-		this.localStorageName = 'ERGUSTO:collection:' + this.name;
-		this.hasLocallyStoredModels = this._hasLocallyStoredModels();
-		this.register(function(model) {
-			if (!collection.hasLocallyStoredModels) collection.hasLocallyStoredModels = true;
-			if (model && collection.usingLocalStorage) collection.addModelToLocalStorage(model);
-		});
-		if (this.hasLocallyStoredModels) {
-			const storeList = this.getListFromLocalStorage();
-			this.add(storeList);
-		} else {
-			this.addDefaults();
+	// events basics
+
+	getEvent(eventName) {
+		return this.events[eventName];
+	}
+
+	register(eventName, callback) {
+		const event = this.getEvent(eventName);
+		if (event) event.push(callback);
+	}
+
+	broadcast(eventName, model) {
+		const event = this.getEvent(eventName);
+		if (event) {
+			event.forEach((callback) => {
+				callback.call(this, model);
+			})
 		}
 	}
 
-	addDefaults() {
-		if (this.defaultModels) {
-			const defaults = this.defaultModels();
-			this.add(defaults);
-		}
+	// add models you don't want to instantiate with a new id
+	// e.g., models that already have an id, such as when 
+	// retrieved from local storage
+
+	onAdd(callback) {
+		this.register('add', callback);
 	}
 
-	_hasLocallyStoredModels() {
-		const store = this.getFromLocalStorage();
-		return store && _.keys(store).length;
+	onChange(callback) {
+		this.register('change', callback);
 	}
 
-	addModelToLocalStorage(model) {
-		const store = this.getFromLocalStorage();
-		store[model.id] = model;
-		this.setLocalStorage(store);
+	onCreate(callback) {
+		this.register('create', callback);
 	}
 
-	removeModelFromLocalStorageById(id) {
-		const store = this.getFromLocalStorage();
-		delete store[id];
-		this.setLocalStorage(store);
+	onUpdate(callback) {
+		this.register('update', callback);
 	}
 
-	getListFromLocalStorage() {
-		const store = this.getFromLocalStorage();
-		return _.keys(store).map(function(id) {
-			return store[id];
-		});
+	onDelete(callback) {
+		this.register('remove', callback);
 	}
 
-	getFromLocalStorage() {
-		const store = localStorage.getItem(this.localStorageName);
-		return _.isString(store) ? JSON.parse(store) : {};
+	// triggering any event also triggers change event.
+
+	triggerChange() {
+		this.broadcast('change');
 	}
 
-	clearLocalStorage() {
-		localStorage.setItem(this.localStorageName, '');
+	triggerAdd(model) {
+		this.broadcast('add', model);
+		this.triggerChange();
 	}
 
-	setLocalStorage(store) {
-		if (!_.isString(store)) store = JSON.stringify(store);
-		localStorage.setItem(this.localStorageName, store);
+	triggerCreate(model) {
+		this.broadcast('create', model);
+		this.triggerChange();
 	}
+
+	triggerUpdate(model) {
+		this.broadcast('update', model);
+		this.triggerChange();
+	}
+
+	triggerRemove(model) {
+		this.broadcast('remove', model);
+		this.triggerChange();
+	}
+
+	// change models
 
 	create(model) {
-		this.idCount++;
-		
-		model.id = this.idCount;
-		
+		model.id = Tools.generateID();
 		this.models[model.id] = model;
-		this.broadcast(model);
-
+		this.triggerCreate(model);
 		return model;
+	}
+
+	createMany(models) {
+		var created = models.map((model) => {
+			model.id = Tools.generateID();
+			this.models[model.id] = model;
+			return model;
+		});
+		this.triggerCreate(created);
+		return created;
+	}
+
+	add(model) {
+		this.models[model.id] = model;
+		this.triggerAdd(model);
+		return model;
+	}
+
+	addMany(models) {
+		models.forEach((model) => {
+			this.models[model.id] = model;
+		});
+		this.triggerAdd(models);
+		return models;
 	}
 
 	update(model) {
 		const id = model.id;
 		if (id) {
 			this.models[id] = model;
-			this.broadcast(model);
+			this.triggerUpdate(model);
 		}
-	}
-
-	add(model) {
-		const isArray = _.isArray(model);
-		const models = isArray ? model : [model];
-		models.forEach((model) => {
-			this.create(model);
-		});
-	}
-
-	get(id) {
-		if (id) return this.models[id];
-		return Object.keys(this.models).map(key => this.models[key]);
 	}
 
 	remove(model) {
@@ -119,20 +133,14 @@ export default class Collection {
 			id = model;
 		}
 		delete this.models[id];
-		if (this.usingLocalStorage) {
-			this.removeModelFromLocalStorageById(id);
-		}
-		this.broadcast();
+		this.triggerRemove(model);
 	}
 
-	register(callback) {
-		this.callbacks.push(callback);
-	}
+	// query models
 
-	broadcast(model) {
-		this.callbacks.forEach((callback) => {
-			callback.call(this, model);
-		});
+	get(id) {
+		if (id) return this.models[id];
+		return Object.keys(this.models).map(key => this.models[key]);
 	}
 
 }

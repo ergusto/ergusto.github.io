@@ -26010,10 +26010,8 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentListComponent).call(this, props));
 
-			var component = _this;
-
-			props.comments.register(function () {
-				component.forceUpdate();
+			props.comments.onChange(function () {
+				_this.forceUpdate();
 			});
 			return _this;
 		}
@@ -38919,7 +38917,6 @@
 	        _this.state = {};
 	        _this.state.shouldShowReplyForm = false;
 	        _this.state.shouldShowEditForm = false;
-	        _this.state.comment = '';
 
 	        // http://stackoverflow.com/a/31362350/4566267
 	        _this.replyHandler = _this.replyHandler.bind(_this);
@@ -38971,10 +38968,14 @@
 	            this.showEditForm();
 	        }
 	    }, {
-	        key: 'addNewComment',
-	        value: function addNewComment(comment) {
-	            console.log(comment);
+	        key: 'createNewComment',
+	        value: function createNewComment(comment) {
 	            this.props.comments.create(comment);
+	        }
+	    }, {
+	        key: 'getChildren',
+	        value: function getChildren() {
+	            return this.props.comments.getChildCommentsForComment(this.props.comment);
 	        }
 	    }, {
 	        key: 'removeHandler',
@@ -38985,14 +38986,30 @@
 	    }, {
 	        key: 'updateComment',
 	        value: function updateComment(comment) {
-	            return;
 	            this.props.comments.update(comment);
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
 	            var comment = this.props.comment;
-	            var commentValue = this.state.comment && this.state.comment.length ? this.state.comment : comment.text;
+	            var children = this.getChildren();
+	            var childList = undefined;
+
+	            var childrenHTML = children.map(function (child) {
+	                return;
+	                return _react2.default.createElement(CommentComponent, { key: child.id, user: _this2.props.user, comment: child, comments: _this2.props.comments });
+	            });
+
+	            if (childrenHTML) {
+
+	                childList = _react2.default.createElement(
+	                    'ul',
+	                    { className: 'children' },
+	                    childrenHTML
+	                );
+	            }
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -39018,7 +39035,7 @@
 	                        _react2.default.createElement(
 	                            'p',
 	                            null,
-	                            commentValue
+	                            comment.text
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -39030,7 +39047,7 @@
 	                            _react2.default.createElement(
 	                                'li',
 	                                { className: 'pull-right' },
-	                                _react2.default.createElement(_reactTimeago2.default, { date: this.props.comment.date })
+	                                _react2.default.createElement(_reactTimeago2.default, { date: comment.date })
 	                            ),
 	                            _react2.default.createElement(
 	                                'li',
@@ -39062,8 +39079,9 @@
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement(_form2.default, { user: this.props.user, formTitle: 'reply', shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.addNewComment.bind(this), hideForm: this.hideReplyForm.bind(this) }),
-	                _react2.default.createElement(_form2.default, _extends({}, this.props, { user: this.props.user, formTitle: 'edit', comment: comment, submitCallback: this.updateComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, hideForm: this.hideEditForm.bind(this) }))
+	                _react2.default.createElement(_form2.default, { user: this.props.user, formTitle: 'reply', parent: comment, shouldShowForm: this.state.shouldShowReplyForm, submitCallback: this.createNewComment.bind(this), hideForm: this.hideReplyForm.bind(this) }),
+	                _react2.default.createElement(_form2.default, _extends({}, this.props, { user: this.props.user, formTitle: 'edit', parent: comment, submitCallback: this.updateComment.bind(this), shouldShowForm: this.state.shouldShowEditForm, hideForm: this.hideEditForm.bind(this) })),
+	                childList
 	            );
 	        }
 	    }]);
@@ -39246,16 +39264,10 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentFormComponent).call(this, props));
 
-			_this.comment = _this.props.comment || false;
+			var comment = _this.props.comment;
 			_this.state = {};
-			_this.state.commentLength = _this.comment ? _this.comment.text.length : 0;
-
-			if (!_this.comment) {
-				_this.comment = {};
-				_this.comment.text = '';
-				_this.comment.children = [];
-				_this.parentId = '';
-			}
+			_this.state.commentLength = comment ? comment.text.length : 0;
+			_this.state.isEditing = false;
 
 			// http://stackoverflow.com/a/31362350/4566267
 			_this.cancelHandler = _this.cancelHandler.bind(_this);
@@ -39264,6 +39276,18 @@
 		}
 
 		_createClass(CommentFormComponent, [{
+			key: 'newComment',
+			value: function newComment() {
+				var comment = {};
+				var parent = this.props.parent;
+				comment.text = '';
+				comment.children = [];
+				comment.date = new Date();
+				comment.parentId = parent && parent.id || '';
+				comment.username = this.props.user.getUsername();
+				return comment;
+			}
+		}, {
 			key: 'cancelHandler',
 			value: function cancelHandler(event) {
 				event.preventDefault();
@@ -39273,25 +39297,19 @@
 			key: 'submitHandler',
 			value: function submitHandler(event) {
 				event.preventDefault();
-				var comment = this.comment;
+				var parent = this.parent;
 				var newTextValue = this.refs.commentInput.value;
+				var comment = this.props.comment || this.newComment();
 
-				if (comment.id) {
-					// is reply form
-					var parent = comment;
-					comment = {};
-					comment.children = [];
-					comment.parentId = parent.id;
-				} else {
-					comment.username = this.props.user.getUsername();
+				if (!this.isEditing) {
+					this.isEditing = true;
+					comment.text = newTextValue;
+
+					if (this.props.submitCallback) this.props.submitCallback(comment);
+					this.refs.commentInput.value = '';
+					this.props.hideForm();
+					this.isEditing = false;
 				}
-
-				comment.text = newTextValue;
-				comment.date = new Date();
-
-				if (this.props.submitCallback) this.props.submitCallback(comment);
-				this.refs.commentInput.value = '';
-				this.props.hideForm();
 			}
 		}, {
 			key: 'setCommentLength',
@@ -39311,6 +39329,10 @@
 			value: function render() {
 				var shouldShowForm = this.props.shouldShowForm;
 				var formTitle = this.props.formTitle || 'comment';
+				var comment = this.props.comment;
+				var defaultValue = undefined;
+
+				if (comment) defaultValue = comment.text;
 
 				if (!shouldShowForm) return false;
 
@@ -39331,7 +39353,7 @@
 							formTitle
 						)
 					),
-					_react2.default.createElement('textarea', { onChange: this.changeHandler.bind(this), ref: 'commentInput', className: 'field', name: 'comment', defaultValue: this.comment.text }),
+					_react2.default.createElement('textarea', { onChange: this.changeHandler.bind(this), ref: 'commentInput', className: 'field', name: 'comment', defaultValue: defaultValue }),
 					_react2.default.createElement(
 						'div',
 						{ className: 'btn-group' },
@@ -39515,9 +39537,8 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskManagerComponent).call(this, props));
 
-			var component = _this;
-			props.tasks.register(function () {
-				component.forceUpdate();
+			props.tasks.onChange(function () {
+				_this.forceUpdate();
 			});
 
 			_this.state = {};
@@ -39699,7 +39720,7 @@
 				var text = this.refs.taskTextInput.value;
 				this.clearError();
 				if (title.trim().length) {
-					var task = this.props.tasks.addModel({ title: title, text: text });
+					var task = this.props.tasks.create({ title: title, text: text });
 					this.props.setActiveTask(task.id);
 				} else {
 					this.addError('please enter a title');
@@ -39709,7 +39730,7 @@
 			key: 'render',
 			value: function render() {
 				var err = this.state.formError;
-				var errContent;
+				var errContent = undefined;
 
 				if (err) {
 					errContent = _react2.default.createElement(
@@ -39932,9 +39953,8 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskListComponent).call(this, props));
 
-			var component = _this;
-			props.tasks.register(function () {
-				component.forceUpdate();
+			props.tasks.onChange(function () {
+				_this.forceUpdate();
 			});
 			return _this;
 		}
@@ -40258,9 +40278,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _collection = __webpack_require__(292);
+	var _underscore = __webpack_require__(162);
 
-	var _collection2 = _interopRequireDefault(_collection);
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _localstorageCollection = __webpack_require__(299);
+
+	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40270,8 +40294,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Comments = function (_Collection) {
-		_inherits(Comments, _Collection);
+	var Comments = function (_LocalStorageCollecti) {
+		_inherits(Comments, _LocalStorageCollecti);
 
 		function Comments() {
 			_classCallCheck(this, Comments);
@@ -40284,16 +40308,36 @@
 			value: function defaultModels() {
 				return [{ text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
 					username: 'ergusto',
-					date: new Date('Mon Feb 22 2016 02:42:36 GMT+0000 (GMT)')
-				}, { text: 'Almost everything uses the localStorage API, so anything you do here will persist between visits, but only in this browser.',
+					date: new Date('Mon Feb 22 2016 02:42:36 GMT+0000 (GMT)'),
+					children: [],
+					parentId: false
+				}, { text: 'Almost everything uses the localStorage API, so changes you make here will persist between visits, but only while you use this browser.',
 					username: 'ergusto',
-					date: new Date('Mon Feb 22 2016 02:42:36 GMT+0000 (GMT)')
+					date: new Date('Mon Feb 22 2016 02:42:36 GMT+0000 (GMT)'),
+					children: [],
+					parentId: false
 				}];
+			}
+		}, {
+			key: 'getParentComments',
+			value: function getParentComments() {
+				var comments = this.get();
+				return _underscore2.default.filter(comments, function (comment) {
+					return !comment.parentId;
+				});
+			}
+		}, {
+			key: 'getChildCommentsForComment',
+			value: function getChildCommentsForComment(parent) {
+				var comments = this.get();
+				return _underscore2.default.filter(comments, function (comment) {
+					return comment.parentId = parent.id;
+				});
 			}
 		}]);
 
 		return Comments;
-	}(_collection2.default);
+	}(_localstorageCollection2.default);
 
 	exports.default = Comments;
 
@@ -40313,6 +40357,10 @@
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
+	var _tools = __webpack_require__(298);
+
+	var _tools2 = _interopRequireDefault(_tools);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40322,100 +40370,143 @@
 			_classCallCheck(this, Collection);
 
 			this.models = {};
-			this.callbacks = [];
-			this.idCount = 0;
-			this.name = this.constructor.name;
+			this.events = {};
+			this.events.change = [];
+			this.events.create = [];
+			this.events.update = [];
+			this.events.remove = [];
 
-			if (window.localStorage) {
-				this.usingLocalStorage = true;
-				this.setUpLocalStorage();
-			} else {
-				this.usingLocalStorage = false;
-				this.addDefaults();
-			}
+			this.name = this.constructor.name;
 		}
 
+		// events basics
+
 		_createClass(Collection, [{
-			key: 'setUpLocalStorage',
-			value: function setUpLocalStorage() {
-				var collection = this;
-				this.localStorageName = 'ERGUSTO:collection:' + this.name;
-				this.hasLocallyStoredModels = this._hasLocallyStoredModels();
-				this.register(function (model) {
-					if (!collection.hasLocallyStoredModels) collection.hasLocallyStoredModels = true;
-					if (model && collection.usingLocalStorage) collection.addModelToLocalStorage(model);
-				});
-				if (this.hasLocallyStoredModels) {
-					var storeList = this.getListFromLocalStorage();
-					this.add(storeList);
-				} else {
-					this.addDefaults();
+			key: 'getEvent',
+			value: function getEvent(eventName) {
+				return this.events[eventName];
+			}
+		}, {
+			key: 'register',
+			value: function register(eventName, callback) {
+				var event = this.getEvent(eventName);
+				if (event) event.push(callback);
+			}
+		}, {
+			key: 'broadcast',
+			value: function broadcast(eventName, model) {
+				var _this = this;
+
+				var event = this.getEvent(eventName);
+				if (event) {
+					event.forEach(function (callback) {
+						callback.call(_this, model);
+					});
 				}
 			}
+
+			// add models you don't want to instantiate with a new id
+			// e.g., models that already have an id, such as when
+			// retrieved from local storage
+
 		}, {
-			key: 'addDefaults',
-			value: function addDefaults() {
-				if (this.defaultModels) {
-					var defaults = this.defaultModels();
-					this.add(defaults);
-				}
+			key: 'onAdd',
+			value: function onAdd(callback) {
+				this.register('add', callback);
 			}
 		}, {
-			key: '_hasLocallyStoredModels',
-			value: function _hasLocallyStoredModels() {
-				var store = this.getFromLocalStorage();
-				return store && _underscore2.default.keys(store).length;
+			key: 'onChange',
+			value: function onChange(callback) {
+				this.register('change', callback);
 			}
 		}, {
-			key: 'addModelToLocalStorage',
-			value: function addModelToLocalStorage(model) {
-				var store = this.getFromLocalStorage();
-				store[model.id] = model;
-				this.setLocalStorage(store);
+			key: 'onCreate',
+			value: function onCreate(callback) {
+				this.register('create', callback);
 			}
 		}, {
-			key: 'removeModelFromLocalStorageById',
-			value: function removeModelFromLocalStorageById(id) {
-				var store = this.getFromLocalStorage();
-				delete store[id];
-				this.setLocalStorage(store);
+			key: 'onUpdate',
+			value: function onUpdate(callback) {
+				this.register('update', callback);
 			}
 		}, {
-			key: 'getListFromLocalStorage',
-			value: function getListFromLocalStorage() {
-				var store = this.getFromLocalStorage();
-				return _underscore2.default.keys(store).map(function (id) {
-					return store[id];
-				});
+			key: 'onDelete',
+			value: function onDelete(callback) {
+				this.register('remove', callback);
+			}
+
+			// triggering any event also triggers change event.
+
+		}, {
+			key: 'triggerChange',
+			value: function triggerChange() {
+				this.broadcast('change');
 			}
 		}, {
-			key: 'getFromLocalStorage',
-			value: function getFromLocalStorage() {
-				var store = localStorage.getItem(this.localStorageName);
-				return _underscore2.default.isString(store) ? JSON.parse(store) : {};
+			key: 'triggerAdd',
+			value: function triggerAdd(model) {
+				this.broadcast('add', model);
+				this.triggerChange();
 			}
 		}, {
-			key: 'clearLocalStorage',
-			value: function clearLocalStorage() {
-				localStorage.setItem(this.localStorageName, '');
+			key: 'triggerCreate',
+			value: function triggerCreate(model) {
+				this.broadcast('create', model);
+				this.triggerChange();
 			}
 		}, {
-			key: 'setLocalStorage',
-			value: function setLocalStorage(store) {
-				if (!_underscore2.default.isString(store)) store = JSON.stringify(store);
-				localStorage.setItem(this.localStorageName, store);
+			key: 'triggerUpdate',
+			value: function triggerUpdate(model) {
+				this.broadcast('update', model);
+				this.triggerChange();
 			}
+		}, {
+			key: 'triggerRemove',
+			value: function triggerRemove(model) {
+				this.broadcast('remove', model);
+				this.triggerChange();
+			}
+
+			// change models
+
 		}, {
 			key: 'create',
 			value: function create(model) {
-				this.idCount++;
-
-				model.id = this.idCount;
-
+				model.id = _tools2.default.generateID();
 				this.models[model.id] = model;
-				this.broadcast(model);
-
+				this.triggerCreate(model);
 				return model;
+			}
+		}, {
+			key: 'createMany',
+			value: function createMany(models) {
+				var _this2 = this;
+
+				var created = models.map(function (model) {
+					model.id = _tools2.default.generateID();
+					_this2.models[model.id] = model;
+					return model;
+				});
+				this.triggerCreate(created);
+				return created;
+			}
+		}, {
+			key: 'add',
+			value: function add(model) {
+				this.models[model.id] = model;
+				this.triggerAdd(model);
+				return model;
+			}
+		}, {
+			key: 'addMany',
+			value: function addMany(models) {
+				var _this3 = this;
+
+				models.forEach(function (model) {
+					_this3.models[model.id] = model;
+				});
+				this.triggerAdd(models);
+				return models;
 			}
 		}, {
 			key: 'update',
@@ -40423,29 +40514,8 @@
 				var id = model.id;
 				if (id) {
 					this.models[id] = model;
-					this.broadcast(model);
+					this.triggerUpdate(model);
 				}
-			}
-		}, {
-			key: 'add',
-			value: function add(model) {
-				var _this = this;
-
-				var isArray = _underscore2.default.isArray(model);
-				var models = isArray ? model : [model];
-				models.forEach(function (model) {
-					_this.create(model);
-				});
-			}
-		}, {
-			key: 'get',
-			value: function get(id) {
-				var _this2 = this;
-
-				if (id) return this.models[id];
-				return Object.keys(this.models).map(function (key) {
-					return _this2.models[key];
-				});
 			}
 		}, {
 			key: 'remove',
@@ -40457,23 +40527,19 @@
 					id = model;
 				}
 				delete this.models[id];
-				if (this.usingLocalStorage) {
-					this.removeModelFromLocalStorageById(id);
-				}
-				this.broadcast();
+				this.triggerRemove(model);
 			}
-		}, {
-			key: 'register',
-			value: function register(callback) {
-				this.callbacks.push(callback);
-			}
-		}, {
-			key: 'broadcast',
-			value: function broadcast(model) {
-				var _this3 = this;
 
-				this.callbacks.forEach(function (callback) {
-					callback.call(_this3, model);
+			// query models
+
+		}, {
+			key: 'get',
+			value: function get(id) {
+				var _this4 = this;
+
+				if (id) return this.models[id];
+				return Object.keys(this.models).map(function (key) {
+					return _this4.models[key];
 				});
 			}
 		}]);
@@ -40495,9 +40561,9 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _collection = __webpack_require__(292);
+	var _localstorageCollection = __webpack_require__(299);
 
-	var _collection2 = _interopRequireDefault(_collection);
+	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40507,8 +40573,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Tasks = function (_Collection) {
-		_inherits(Tasks, _Collection);
+	var Tasks = function (_LocalStorageCollecti) {
+		_inherits(Tasks, _LocalStorageCollecti);
 
 		function Tasks() {
 			_classCallCheck(this, Tasks);
@@ -40524,7 +40590,7 @@
 		}]);
 
 		return Tasks;
-	}(_collection2.default);
+	}(_localstorageCollection2.default);
 
 	exports.default = Tasks;
 
@@ -40699,6 +40765,163 @@
 
 	// exports
 
+
+/***/ },
+/* 298 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var Tools = {
+
+		generateID: function generateID() {
+			// Math.random should be unique because of its seeding algorithm.
+			// Convert it to base 36 (numbers + letters), and grab the first 9 characters
+			// after the decimal.
+			return '_' + Math.random().toString(36).substr(2, 9);
+		}
+
+	};
+
+	exports.default = Tools;
+
+/***/ },
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _underscore = __webpack_require__(162);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _collection = __webpack_require__(292);
+
+	var _collection2 = _interopRequireDefault(_collection);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LocalStorageCollection = function (_Collection) {
+		_inherits(LocalStorageCollection, _Collection);
+
+		function LocalStorageCollection() {
+			_classCallCheck(this, LocalStorageCollection);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LocalStorageCollection).call(this));
+
+			if (window.localStorage) {
+				_this.usingLocalStorage = true;
+				_this.setUpLocalStorage();
+			} else {
+				_this.usingLocalStorage = false;
+				_this.addDefaults();
+			}
+
+			return _this;
+		}
+
+		_createClass(LocalStorageCollection, [{
+			key: 'setUpLocalStorage',
+			value: function setUpLocalStorage() {
+				var _this2 = this;
+
+				this.localStorageName = 'ERGUSTO:collection:' + this.name;
+
+				this.hasLocallyStoredModels = this._hasLocallyStoredModels();
+
+				this.onCreate(function (model) {
+					if (!_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
+					if (model && _this2.usingLocalStorage) {
+						var models = _underscore2.default.isArray(model) ? model : [model];
+						models.forEach(function (model) {
+							if (model && model.id) {
+								_this2.addModelToLocalStorage(model);
+							}
+						});
+					}
+				});
+
+				if (this.hasLocallyStoredModels) {
+					var storeList = this.getListFromLocalStorage();
+					this.addMany(storeList);
+				} else {
+					this.addDefaults();
+				}
+			}
+		}, {
+			key: 'addDefaults',
+			value: function addDefaults() {
+				if (this.defaultModels) {
+					var defaults = this.defaultModels();
+					this.createMany(defaults);
+				}
+			}
+		}, {
+			key: '_hasLocallyStoredModels',
+			value: function _hasLocallyStoredModels() {
+				var store = this.getFromLocalStorage();
+				return store && !!_underscore2.default.keys(store).length;
+			}
+		}, {
+			key: 'addModelToLocalStorage',
+			value: function addModelToLocalStorage(model) {
+				var store = this.getFromLocalStorage();
+				store[model.id] = model;
+				this.setLocalStorage(store);
+			}
+		}, {
+			key: 'removeModelFromLocalStorageById',
+			value: function removeModelFromLocalStorageById(id) {
+				var store = this.getFromLocalStorage();
+				delete store[id];
+				this.setLocalStorage(store);
+			}
+		}, {
+			key: 'getListFromLocalStorage',
+			value: function getListFromLocalStorage() {
+				var store = this.getFromLocalStorage();
+				return _underscore2.default.keys(store).map(function (id) {
+					return store[id];
+				});
+			}
+		}, {
+			key: 'getFromLocalStorage',
+			value: function getFromLocalStorage() {
+				var store = localStorage.getItem(this.localStorageName);
+				return _underscore2.default.isString(store) ? JSON.parse(store) : {};
+			}
+		}, {
+			key: 'clearLocalStorage',
+			value: function clearLocalStorage() {
+				localStorage.setItem(this.localStorageName, '');
+			}
+		}, {
+			key: 'setLocalStorage',
+			value: function setLocalStorage(store) {
+				if (!_underscore2.default.isString(store)) store = JSON.stringify(store);
+				localStorage.setItem(this.localStorageName, store);
+			}
+		}]);
+
+		return LocalStorageCollection;
+	}(_collection2.default);
+
+	exports.default = LocalStorageCollection;
 
 /***/ }
 /******/ ]);
