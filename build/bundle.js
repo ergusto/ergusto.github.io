@@ -19795,9 +19795,13 @@
 		_createClass(IntroductionComponent, [{
 			key: 'setBeforeUnload',
 			value: function setBeforeUnload() {
-				window.onbeforeunload = function () {
-					window.scrollTo(0, 0);
-				};
+				var user = this.props.user;
+				var shouldShowAnimation = user.shouldSeeIntroAnimation();
+				if (shouldShowAnimation) {
+					window.onbeforeunload = function () {
+						window.scrollTo(0, 0);
+					};
+				}
 			}
 		}, {
 			key: 'fergusToErgusto',
@@ -24495,7 +24499,7 @@
 
 
 	// module
-	exports.push([module.id, "section.introduction {\n  background: #4696e5;\n  color: white;\n  padding: 10px 20px 10px; }\n\n.introduction h1 {\n  display: block;\n  max-width: 262px;\n  font-size: 2.2rem;\n  margin: 0px auto 4px; }\n\n.introduction a {\n  text-decoration: none; }\n\n@media only screen and (min-width: 768px) {\n  .introduction h1 {\n    max-width: 357px; }\n  .introduction h1 {\n    font-size: 3rem; } }\n\n.introduction-no-animation h1 {\n  font-size: 20px;\n  margin: 0 0 4px; }\n\n.introduction-content {\n  width: 100%; }\n\n.name-tofadein {\n  display: none;\n  opacity: 0; }\n\n.name span {\n  display: inline-block; }\n", ""]);
+	exports.push([module.id, "section.introduction {\n  background: #4696e5;\n  color: white;\n  padding: 10px 20px 10px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n\n.introduction h1 {\n  display: block;\n  max-width: 262px;\n  font-size: 2.2rem;\n  margin: 0px auto 4px; }\n\n.introduction a {\n  text-decoration: none; }\n\n@media only screen and (min-width: 768px) {\n  .introduction h1 {\n    max-width: 357px; }\n  .introduction h1 {\n    font-size: 3rem; } }\n\n.introduction-no-animation h1 {\n  font-size: 20px;\n  margin: 0 0 4px; }\n\n.introduction-content {\n  width: 100%; }\n\n.name-tofadein {\n  display: none;\n  opacity: 0; }\n\n.name span {\n  display: inline-block; }\n", ""]);
 
 	// exports
 
@@ -25412,23 +25416,41 @@
 			});
 
 			_this.state = {};
-			_this.state.shouldShowNewTaskForm = true;
+			_this.state.editTaskId = null;
 			_this.state.activeTaskId = null;
+			_this.state.shouldShowNewTaskForm = true;
 			return _this;
 		}
 
 		_createClass(TaskManagerComponent, [{
+			key: 'getActiveTaskId',
+			value: function getActiveTaskId() {
+				return this.state.activeTaskId;
+			}
+		}, {
+			key: 'setEditingTask',
+			value: function setEditingTask(id) {
+				this.hideAll();
+				this.setState({
+					editTaskId: id
+				});
+			}
+		}, {
 			key: 'setActiveTask',
 			value: function setActiveTask(id) {
-				this.hideNewTaskForm();
+				this.hideAll();
 				this.setState({
 					activeTaskId: id
 				});
 			}
 		}, {
-			key: 'getActiveTaskId',
-			value: function getActiveTaskId() {
-				return this.state.activeTaskId;
+			key: 'hideAll',
+			value: function hideAll() {
+				this.setState({
+					editTaskId: null,
+					activeTaskId: null,
+					shouldShowNewTaskForm: false
+				});
 			}
 		}, {
 			key: 'clearActiveTask',
@@ -25438,6 +25460,7 @@
 		}, {
 			key: 'showNewTaskForm',
 			value: function showNewTaskForm() {
+				this.hideAll();
 				this.setState({
 					shouldShowNewTaskForm: true
 				});
@@ -25458,25 +25481,36 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var content;
+				var editTaskId = this.state.editTaskId;
+				var activeTaskId = this.state.activeTaskId;
+
+				var content = undefined;
+				var task = undefined;
 
 				if (this.state.shouldShowNewTaskForm) {
 					content = _react2.default.createElement(_form2.default, { tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this) });
-				} else {
-					if (this.state.activeTaskId) {
-						var task = this.props.tasks.get(this.state.activeTaskId);
-						content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks });
-					} else {
-						content = _react2.default.createElement(
-							'div',
+				}
+
+				if (activeTaskId) {
+					task = this.props.tasks.get(activeTaskId);
+					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks });
+				}
+
+				if (editTaskId) {
+					task = this.props.tasks.get(editTaskId);
+					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks });
+				}
+
+				if (!content) {
+					content = _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							'p',
 							null,
-							_react2.default.createElement(
-								'p',
-								null,
-								'No task selected'
-							)
-						);
-					}
+							'No task selected'
+						)
+					);
 				}
 
 				return _react2.default.createElement(
@@ -25505,7 +25539,11 @@
 										'tasks'
 									),
 									_react2.default.createElement('hr', null),
-									_react2.default.createElement(_list2.default, { tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this), getActiveTaskId: this.getActiveTaskId.bind(this), clearActiveTask: this.clearActiveTask.bind(this) })
+									_react2.default.createElement(_list2.default, {
+										tasks: this.props.tasks,
+										setActiveTask: this.setActiveTask.bind(this),
+										clearActiveTask: this.clearActiveTask.bind(this)
+									})
 								)
 							),
 							_react2.default.createElement(

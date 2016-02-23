@@ -2,6 +2,10 @@ section.introduction {
 	background: #4696e5;
 	color: white;
 	padding: 10px 20px 10px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	z-index: 1;
 }
 
 .introduction h1 {

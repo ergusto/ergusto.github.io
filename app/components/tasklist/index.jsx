@@ -13,19 +13,35 @@ export default class TaskManagerComponent extends React.Component {
 		});
 
 		this.state = {};
-		this.state.shouldShowNewTaskForm = true;
+		this.state.editTaskId = null;
 		this.state.activeTaskId = null;
+		this.state.shouldShowNewTaskForm = true;
+	}
+
+	getActiveTaskId() {
+		return this.state.activeTaskId;
+	}
+
+	setEditingTask(id) {
+		this.hideAll();
+		this.setState({
+			editTaskId: id
+		});
 	}
 
 	setActiveTask(id) {
-		this.hideNewTaskForm();
+		this.hideAll();
 		this.setState({
 			activeTaskId: id
 		});
 	}
 
-	getActiveTaskId() {
-		return this.state.activeTaskId;
+	hideAll() {
+		this.setState({
+			editTaskId: null,
+			activeTaskId: null,
+			shouldShowNewTaskForm: false
+		});
 	}
 
 	clearActiveTask() {
@@ -33,6 +49,7 @@ export default class TaskManagerComponent extends React.Component {
 	}
 
 	showNewTaskForm() {
+		this.hideAll();
 		this.setState({
 			shouldShowNewTaskForm: true
 		})
@@ -50,17 +67,28 @@ export default class TaskManagerComponent extends React.Component {
 	}
 
 	render() {
-		var content;
+		const editTaskId = this.state.editTaskId;
+		const activeTaskId = this.state.activeTaskId;
+
+		let content;
+		let task;
 
 		if (this.state.shouldShowNewTaskForm) {
 			content = <TaskFormComponent tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} />
-		} else {
-			if (this.state.activeTaskId) {
-				const task = this.props.tasks.get(this.state.activeTaskId);
-				content = <TaskDetailComponent task={task} tasks={this.props.tasks} />
-			} else {
-				content = (<div><p>No task selected</p></div>);
-			}
+		} 
+
+		if (activeTaskId) {
+			task = this.props.tasks.get(activeTaskId);
+			content = <TaskDetailComponent task={task} tasks={this.props.tasks} />
+		}
+
+		if (editTaskId) {
+			task = this.props.tasks.get(editTaskId);
+			content = <TaskFormComponent task={task} tasks={this.props.tasks} />
+		}
+
+		if (!content) {
+			content = (<div><p>No task selected</p></div>);
 		}
 
 		return (
@@ -74,7 +102,11 @@ export default class TaskManagerComponent extends React.Component {
 								<a onClick={this.newTaskHandler.bind(this)} href="#" className="plus-btn pull-right">+</a>
 								<h3>tasks</h3>
 								<hr />
-								<TaskListComponent tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} getActiveTaskId={this.getActiveTaskId.bind(this)} clearActiveTask={this.clearActiveTask.bind(this)} />
+								<TaskListComponent
+									tasks={this.props.tasks} 
+									setActiveTask={this.setActiveTask.bind(this)} 
+									clearActiveTask={this.clearActiveTask.bind(this)} 
+								/>
 							</div>
 						</div>
 						<div className="tasklist-content flex-col">
