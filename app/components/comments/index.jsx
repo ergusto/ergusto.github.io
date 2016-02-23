@@ -27,7 +27,7 @@ export default class CommentListComponent extends React.Component {
 		}
 
 		return (
-			 <section className="full-height panel">
+			 <section className="full-height panel comments-example">
 
 				<div id="comment-example" className="example">
 					
