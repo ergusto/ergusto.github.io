@@ -26543,7 +26543,7 @@
 				var _this2 = this;
 
 				this.onCreate(function (model) {
-					if (!_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
+					if (model && !_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
 					if (model) {
 						var models = _lodash2.default.isArray(model) ? model : [model];
 						models.forEach(function (created) {
