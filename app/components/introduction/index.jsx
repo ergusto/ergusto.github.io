@@ -65,16 +65,19 @@ export default class IntroductionComponent extends React.Component {
 
 										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 										Velocity(refs.namef1, { width: 0 }, { display: 'none' });
-										body.classList.remove('hide-overflow');
-										body.removeEventListener('touchmove', prevent);
 
 										setTimeout(function() {
-											refs.settings.classList.remove('hidden');
-											Velocity(refs.settings, { opacity: 1 }, { duration: 800 });
-											refs.panel.classList.remove('full-height');
-											refs.panel.classList.remove('panel');
+											body.classList.remove('hide-overflow');
+											body.removeEventListener('touchmove', prevent);
 
-										}, 1000);
+											setTimeout(function() {
+												refs.settings.classList.remove('hidden');
+												Velocity(refs.settings, { opacity: 1 }, { duration: 800 });
+												refs.panel.classList.remove('full-height');
+												refs.panel.classList.remove('panel');
+
+											}, 300);
+										}, 700);
 									}, 500);
 								});
 							});
