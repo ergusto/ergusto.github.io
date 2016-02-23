@@ -1,5 +1,8 @@
 .panel {
 	padding: 20px;
+}
+
+.justify-centre {
 	-moz-align-items: center;
 	-webkit-align-items: center;
 	-ms-align-items: center;
@@ -19,8 +22,12 @@
 	width: 100%;
 }
 
+.bookmarks-example {
+	padding-top: 100px;
+}
+
 .comments-example {
-	padding-top: 50px;
+	padding-top: 67px;
 }
 
 .tasklist-example {

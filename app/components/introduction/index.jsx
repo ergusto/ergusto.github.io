@@ -75,6 +75,7 @@ export default class IntroductionComponent extends React.Component {
 												Velocity(refs.settings, { opacity: 1 }, { duration: 800 });
 												refs.panel.classList.remove('full-height');
 												refs.panel.classList.remove('panel');
+												refs.panel.classList.remove('justify-centre');
 
 											}, 300);
 										}, 700);
@@ -108,7 +109,7 @@ export default class IntroductionComponent extends React.Component {
 		if (shouldShowAnimation) {
 			body.classList.add('hide-overflow');
 			body.addEventListener('touchmove', prevent);
-			panelClass = 'introduction panel full-height';
+			panelClass = 'introduction panel justify-centre full-height';
 			settingsClass = 'hidden seethrough';
 
 			name = (<span className="name">

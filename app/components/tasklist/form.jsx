@@ -11,6 +11,14 @@ export default class TaskFormComponent extends React.Component {
 		this.state.formError = '';
 	}
 
+	newTask() {
+		const task = {};
+		task.title = '';
+		task.text = '';
+		task.date = new Date;
+		return task;
+	}
+
 	addError(error) {
 		this.setState({
 			formError: error
@@ -29,20 +37,43 @@ export default class TaskFormComponent extends React.Component {
 
 	submitHandler(event) {
 		event.preventDefault();
+		let saved;
 		const title = this.refs.taskTitleInput.value;
 		const text = this.refs.taskTextInput.value;
-		this.clearError();
-		if (title.trim().length) {
-			const task = this.props.tasks.create({title: title, text: text});
-			this.props.setActiveTask(task.id);
-		} else {
+		const task = this.props.task || this.newTask();
+
+		if (!title.trim().length) {
 			this.addError('please enter a title');
+			return;
 		}
+
+		task.title = title;
+		task.text = text;
+
+		if (task.id) {
+			saved = this.props.tasks.update(task);
+		} else {
+			saved = this.props.tasks.create(task);
+		}
+		
+		this.props.setActiveTask(saved.id);
 	}
 
 	render() {
 		const err = this.state.formError;
+		const task = this.props.task;
 		let errContent;
+		let formTitleContent;
+		let titleDefaultValue;
+		let textDefaultValue;
+
+		if (task) {
+			formTitleContent = 'edit task';
+			titleDefaultValue = task.title;
+			textDefaultValue = task.text;
+		} else {
+			formTitleContent = 'new task';
+		}
 
 		if (err) {
 			errContent = (<span className="form-error">{err}</span>);
@@ -50,11 +81,11 @@ export default class TaskFormComponent extends React.Component {
 
 		return (
 			<div className="task-form-container">
-				<h3>new task</h3>
+				<h3>{formTitleContent}</h3>
 				<form onSubmit={this.submitHandler.bind(this)} className="task-form">
-					<input ref="taskTitleInput" placeholder="title" className="field" name="title" />
+					<input defaultValue={titleDefaultValue} ref="taskTitleInput" placeholder="title" className="field" name="title" />
 					{errContent}
-					<textarea ref="taskTextInput" placeholder="text" className="field" name="text"></textarea>
+					<textarea defaultValue={textDefaultValue} ref="taskTextInput" placeholder="text" className="field" name="text"></textarea>
 					<a onClick={this.submitHandler.bind(this)} className="btn" href="#">submit</a>
 				</form>
 			</div>

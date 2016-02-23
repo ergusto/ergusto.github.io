@@ -1,5 +1,7 @@
 import React from 'react';
 
+import ActiveModelBehaviour from '../../behaviours/active.model.js';
+
 import TaskFormComponent from './form.jsx';
 import TaskDetailComponent from './detail.jsx';
 import TaskListComponent from './list.jsx';
@@ -13,39 +15,36 @@ export default class TaskManagerComponent extends React.Component {
 		});
 
 		this.state = {};
-		this.state.editTaskId = null;
-		this.state.activeTaskId = null;
+		//dont forget about this
+		this.activeTaskDetail = new ActiveModelBehaviour(this);
+		this.activeEditTask = new ActiveModelBehaviour(this);
 		this.state.shouldShowNewTaskForm = true;
 	}
 
-	getActiveTaskId() {
-		return this.state.activeTaskId;
+	clearActiveTaskDetail() {
+		this.activeTaskDetail.clear();
 	}
 
-	clearActiveTask() {
-		this.setActiveTask(null);
+	clearActiveEditTask() {
+		this.activeEditTask.clear();
 	}
 
 	hideAll() {
+		this.clearActiveTaskDetail();
+		this.clearActiveEditTask();
 		this.setState({
-			editTaskId: null,
-			activeTaskId: null,
 			shouldShowNewTaskForm: false
 		});
 	}
 
 	setEditingTask(id) {
 		this.hideAll();
-		this.setState({
-			editTaskId: id
-		});
+		this.activeEditTask.set(id);
 	}
 
 	setActiveTask(id) {
 		this.hideAll();
-		this.setState({
-			activeTaskId: id
-		});
+		this.activeTaskDetail.set(id);
 	}
 
 	showNewTaskForm() {
@@ -67,20 +66,20 @@ export default class TaskManagerComponent extends React.Component {
 	}
 
 	render() {
-		const editTaskId = this.state.editTaskId;
-		const activeTaskId = this.state.activeTaskId;
+		const editTaskId = this.activeEditTask.current;
+		const activeTaskId = this.activeTaskDetail.current;
 
 		let content;
 		let task;
 
 		if (activeTaskId) {
 			task = this.props.tasks.get(activeTaskId);
-			content = <TaskDetailComponent task={task} tasks={this.props.tasks} />
+			content = <TaskDetailComponent task={task} tasks={this.props.tasks} setEditingTask={this.setEditingTask.bind(this)} />
 		}
 
 		if (editTaskId) {
 			task = this.props.tasks.get(editTaskId);
-			content = <TaskFormComponent task={task} tasks={this.props.tasks} />
+			content = <TaskFormComponent task={task} tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} />
 		}
 
 		if (this.state.shouldShowNewTaskForm || !content) {
@@ -88,7 +87,7 @@ export default class TaskManagerComponent extends React.Component {
 		}
 
 		return (
-			 <section className="full-height panel tasklist-example">
+			 <section className="tasklist-example full-height panel justify-centre">
 
 				<div id="tasklist-example" className="example">
 
@@ -101,7 +100,7 @@ export default class TaskManagerComponent extends React.Component {
 								<TaskListComponent
 									tasks={this.props.tasks} 
 									setActiveTask={this.setActiveTask.bind(this)} 
-									clearActiveTask={this.clearActiveTask.bind(this)} 
+									clearActiveTask={this.clearActiveTaskDetail.bind(this)} 
 								/>
 							</div>
 						</div>

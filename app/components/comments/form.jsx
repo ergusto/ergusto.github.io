@@ -10,7 +10,7 @@ export default class CommentFormComponent extends React.Component {
 		const comment = this.props.comment;
 		this.state = {};
 		this.state.formError = '';
-		this.state.isEditing = false;
+		this.state.isSubmitting = false;
 		this.state.commentLength = comment ? comment.text.length : 0;
 	}
 
@@ -30,16 +30,6 @@ export default class CommentFormComponent extends React.Component {
 		});
 	}
 
-	newComment() {
-		const comment = {};
-		const parent = this.props.parent;
-		comment.text = '';
-		comment.date = new Date;
-		comment.parentId = parent && parent.id || '';
-		comment.username = this.props.user.getUsername();
-		return comment;
-	}
-
 	cancelHandler(event) {
 		event.preventDefault();
 		this.props.cancelCallback();
@@ -48,32 +38,28 @@ export default class CommentFormComponent extends React.Component {
 	submitHandler(event) {
 		event.preventDefault();
 		let saved;
-		const textInputValue = this.refs.commentInput.value;
-		const comment = this.props.comment || this.newComment();
+		const parent = this.props.parent;
+		const text = this.refs.commentInput.value;
+		const comment = this.props.comment || this.props.comments.shell();
 
-		if (!this.state.isEditing) {
-			this.isEditing = true;
+		if (!text.trim().length) {
+			this.addError('Please enter a comment');
+			return;
+		}
 
-			if (!textInputValue.trim().length) {
-				this.addError('Please enter a comment');
-				this.isEditing = false;
-				return;
-			}
+		comment.text = text;
+		comment.date = new Date;
+		comment.parentid = parent && parent.id || '';
+		comment.username = this.props.user.getUsername();
 
-			comment.text = textInputValue;
+		if (comment.id) {
+			saved = this.props.comments.update(comment);
+		} else {
+			saved = this.props.comments.create(comment);
+		}
 
-			if (comment.id) {
-				saved = this.props.comments.update(comment);
-			} else {
-				saved = this.props.comments.create(comment);
-			}
-
-			if (this.props.submitCallback) {
-				this.props.submitCallback(saved);
-			}
-
-			this.refs.commentInput.value = '';
-			this.isEditing = false;
+		if (this.props.submitCallback) {
+			this.props.submitCallback(saved);
 		}
 	}
 
@@ -97,7 +83,7 @@ export default class CommentFormComponent extends React.Component {
 		let defaultValue;
 
 		if (err) {
-			errContent = (<span className="form-error">{err}</span>);
+			errContent = <span className="form-error">{err}</span>;
 		}
 
 		if (comment) {

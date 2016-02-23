@@ -15,6 +15,15 @@ export default class Comments extends LocalStorageCollection {
 		});
 	}
 
+	shell() {
+		const comment = {};
+		comment.text = '';
+		comment.date = '';
+		comment.parentid = '';
+		comment.username = '';
+		return comment;
+	}
+
 	defaultModels() {
 		return [{
 			text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',

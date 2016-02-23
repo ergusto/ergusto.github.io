@@ -25,3 +25,8 @@
 .horizontal-list-menu--btns li {
 	padding-right: 0px;
 }
+
+.horizontal-list-menu--btns .btn.active {
+	color: black;
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);
+}

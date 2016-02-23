@@ -2,6 +2,14 @@ import LocalStorageCollection from './base/localstorage.collection.js';
 
 export default class Bookmarks extends LocalStorageCollection {
 
+	shell() {
+		const bookmark = {};
+		bookmark.title = '';
+		bookmark.url = '';
+		bookmark.text = '';
+		return bookmark;
+	}
+
 	defaultModels() {
 		return [
 			{ 

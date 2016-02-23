@@ -6,7 +6,7 @@ export default class LocalStorageBehaviour {
 		this.storeName = storeName;
 	}
 
-	static resetBrowserLocalStorage() {
+	resetBrowserLocalStorage() {
 		localStorage.clear();
 	}
 

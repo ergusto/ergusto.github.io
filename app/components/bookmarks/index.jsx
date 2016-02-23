@@ -22,16 +22,26 @@ export default class BookmarkManagerComponent extends React.Component {
 		this.tabs.open(tab);
 	}
 
+	submitCallback(bookmark) {
+		this.tabs.open('list');
+	}
+
 	render() {
 		let content;
 		const bookmarks = this.props.bookmarks;
+		const tabClass = 'btn';
+		let listTabClass = tabClass;
+		let addTabClass = tabClass;
 
 		if (this.tabs.isOpen('list')) {
+			listTabClass += ' active';
 			content = <BookmarkListComponent bookmarks={bookmarks} />;
+
 		}
 
 		if (this.tabs.isOpen('add')) {
-			content = <BookmarkFormComponent bookmarks={bookmarks} />;
+			addTabClass += ' active';
+			content = <BookmarkFormComponent bookmarks={bookmarks} submitCallback={this.submitCallback.bind(this)} />;
 		}
 
 		return (
@@ -39,16 +49,16 @@ export default class BookmarkManagerComponent extends React.Component {
 
 				<div id="bookmarks-example" className="example">
 
-					<div className="bookmark-manager box centred margin-top">
+					<div className="bookmark-manager centred">
 
-						<header className="bookmark-manager-header clearfix">
+						<header className="bookmark-manager-header box clearfix">
 
 							<h3 className="bookmark-manager-title pull-left muted padding">bookmarks</h3>
 
 							<ul className="bookmark-manager-control horizontal-list-menu horizontal-list-menu--btns pull-right">
 
-								<li><a onClick={this.showTab.bind(this, 'list')} href="#" className="btn">list</a></li>
-								<li><a onClick={this.showTab.bind(this, 'add')} href="#" className="btn">add</a></li>
+								<li><a onClick={this.showTab.bind(this, 'list')} href="#" className={listTabClass}>list</a></li>
+								<li><a onClick={this.showTab.bind(this, 'add')} href="#" className={addTabClass}>add</a></li>
 
 							</ul>
 

@@ -12,7 +12,7 @@ export default class BookmarkListComponent extends React.Component {
 		if (bookmarks.length) {
 			content = bookmarks.map((bookmark) => {
 				return (
-					<div key={bookmark.id} className="bookmark-item">
+					<div key={bookmark.id} className="bookmark-item box margin-vertical padding">
 						<p>{bookmark.title}</p>
 						<p>{bookmark.url}</p>
 					</div>

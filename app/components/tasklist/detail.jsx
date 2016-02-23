@@ -5,6 +5,11 @@ require('!style!css!sass!./styles/detail.scss');
 
 export default class TaskDetailComponent extends React.Component {
 
+	setManagerEditingTask(event) {
+		event.preventDefault();
+		this.props.setEditingTask(this.props.task.id);
+	}
+
 	render() {
 		const task = this.props.task;
 
@@ -18,6 +23,7 @@ export default class TaskDetailComponent extends React.Component {
 			<div className="task-detail">
 				<h3>{task.title}</h3>
 				{body}
+				<a onClick={this.setManagerEditingTask.bind(this)} href="#" className="btn margin-top-sm">edit</a>
 			</div>
 		)
 	}

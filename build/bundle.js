@@ -19862,6 +19862,7 @@
 														(0, _velocityAnimate2.default)(refs.settings, { opacity: 1 }, { duration: 800 });
 														refs.panel.classList.remove('full-height');
 														refs.panel.classList.remove('panel');
+														refs.panel.classList.remove('justify-centre');
 													}, 300);
 												}, 700);
 											}, 500);
@@ -19898,7 +19899,7 @@
 				if (shouldShowAnimation) {
 					body.classList.add('hide-overflow');
 					body.addEventListener('touchmove', prevent);
-					panelClass = 'introduction panel full-height';
+					panelClass = 'introduction panel justify-centre full-height';
 					settingsClass = 'hidden seethrough';
 
 					name = _react2.default.createElement(
@@ -24233,22 +24234,45 @@
 
 /***/ },
 /* 164 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var Tools = {
 
-		generateID: function generateID() {
-			// Math.random should be unique because of its seeding algorithm.
-			// Convert it to base 36 (numbers + letters), and grab the first 9 characters
-			// after the decimal.
-			return '_' + Math.random().toString(36).substr(2, 9);
+	var _lodash = __webpack_require__(204);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Tools = {};
+
+	Tools.generateID = function () {
+		// Math.random should be unique because of its seeding algorithm.
+		// Convert it to base 36 (numbers + letters), and grab the first 9 characters
+		// after the decimal.
+		return '_' + Math.random().toString(36).substr(2, 9);
+	};
+
+	Tools.isURL = function (string) {
+		var urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
+		var url = new RegExp(urlRegex, 'i');
+		return string.length < 2083 && url.test(string);
+	};
+
+	Tools.isImageUrl = function (url) {
+		if (_lodash2.default.isString(url)) {
+			return Tools.isUrl(url) && url.match(/\.(jpeg|jpg|gif|png)$/) != null;
 		}
+		return false;
+	};
 
+	Tools.containsSpaces = function (string) {
+		return (/\s/g.test(string)
+		);
 	};
 
 	exports.default = Tools;
@@ -24702,17 +24726,27 @@
 				this.tabs.open(tab);
 			}
 		}, {
+			key: 'submitCallback',
+			value: function submitCallback(bookmark) {
+				this.tabs.open('list');
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var content = undefined;
 				var bookmarks = this.props.bookmarks;
+				var tabClass = 'btn';
+				var listTabClass = tabClass;
+				var addTabClass = tabClass;
 
 				if (this.tabs.isOpen('list')) {
+					listTabClass += ' active';
 					content = _react2.default.createElement(_list2.default, { bookmarks: bookmarks });
 				}
 
 				if (this.tabs.isOpen('add')) {
-					content = _react2.default.createElement(_form2.default, { bookmarks: bookmarks });
+					addTabClass += ' active';
+					content = _react2.default.createElement(_form2.default, { bookmarks: bookmarks, submitCallback: this.submitCallback.bind(this) });
 				}
 
 				return _react2.default.createElement(
@@ -24723,10 +24757,10 @@
 						{ id: 'bookmarks-example', className: 'example' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'bookmark-manager box centred margin-top' },
+							{ className: 'bookmark-manager centred' },
 							_react2.default.createElement(
 								'header',
-								{ className: 'bookmark-manager-header clearfix' },
+								{ className: 'bookmark-manager-header box clearfix' },
 								_react2.default.createElement(
 									'h3',
 									{ className: 'bookmark-manager-title pull-left muted padding' },
@@ -24740,7 +24774,7 @@
 										null,
 										_react2.default.createElement(
 											'a',
-											{ onClick: this.showTab.bind(this, 'list'), href: '#', className: 'btn' },
+											{ onClick: this.showTab.bind(this, 'list'), href: '#', className: listTabClass },
 											'list'
 										)
 									),
@@ -24749,7 +24783,7 @@
 										null,
 										_react2.default.createElement(
 											'a',
-											{ onClick: this.showTab.bind(this, 'add'), href: '#', className: 'btn' },
+											{ onClick: this.showTab.bind(this, 'add'), href: '#', className: addTabClass },
 											'add'
 										)
 									)
@@ -24813,7 +24847,7 @@
 					content = bookmarks.map(function (bookmark) {
 						return _react2.default.createElement(
 							'div',
-							{ key: bookmark.id, className: 'bookmark-item' },
+							{ key: bookmark.id, className: 'bookmark-item box margin-vertical padding' },
 							_react2.default.createElement(
 								'p',
 								null,
@@ -24891,7 +24925,7 @@
 /* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -24911,19 +24945,109 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	// import styles for this component
+	__webpack_require__(215);
+
 	var BookmarkFormComponent = function (_React$Component) {
 	    _inherits(BookmarkFormComponent, _React$Component);
 
 	    function BookmarkFormComponent(props) {
 	        _classCallCheck(this, BookmarkFormComponent);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(BookmarkFormComponent).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BookmarkFormComponent).call(this, props));
+
+	        _this.state = {};
+	        _this.state.formError = '';
+	        return _this;
 	    }
 
 	    _createClass(BookmarkFormComponent, [{
-	        key: "render",
+	        key: 'addError',
+	        value: function addError(error) {
+	            this.setState({
+	                formError: error
+	            });
+	        }
+	    }, {
+	        key: 'clearError',
+	        value: function clearError() {
+	            this.setState({
+	                formError: null
+	            });
+	        }
+	    }, {
+	        key: 'submitHandler',
+	        value: function submitHandler(event) {
+	            event.preventDefault();
+	            var saved = undefined;
+	            var title = this.refs.bookmarkTitleInput.value;
+	            var url = this.refs.bookmarkUrlInput.value;
+	            var text = this.refs.bookmarkTextInput.value;
+	            var bookmark = this.props.bookmark || this.props.bookmarks.shell();
+
+	            if (!title.trim().length) {
+	                this.addError('Please enter a title');
+	                return;
+	            }
+
+	            if (!url.trim().length) {
+	                this.addError('Please enter a URL');
+	                return;
+	            }
+
+	            bookmark.title = title;
+	            bookmark.url = url;
+	            bookmark.text = text;
+
+	            if (bookmark.id) {
+	                this.props.bookmarks.update(bookmark);
+	            } else {
+	                this.props.bookmarks.create(bookmark);
+	            }
+
+	            if (this.props.submitCallback) {
+	                this.props.submitCallback(saved);
+	            }
+	        }
+	    }, {
+	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement("div", { className: "bookmark-form padding" });
+	            var err = this.state.formError;
+	            var errContent = undefined;
+
+	            if (err) {
+	                errContent = _react2.default.createElement(
+	                    'span',
+	                    { className: 'form-error' },
+	                    err
+	                );
+	            }
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'bookmark-form-container box margin-top' },
+	                _react2.default.createElement(
+	                    'header',
+	                    { className: 'box-header' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        { className: 'bookmark-form-title muted' },
+	                        'new bookmark'
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'form',
+	                    { onSubmit: this.submitHandler.bind(this), className: 'bookmark-form padding' },
+	                    _react2.default.createElement('input', { ref: 'bookmarkTitleInput', name: 'title', placeholder: 'title', className: 'field' }),
+	                    _react2.default.createElement('input', { ref: 'bookmarkUrlInput', name: 'url', placeholder: 'url', type: 'url', className: 'field' }),
+	                    _react2.default.createElement('textarea', { ref: 'bookmarkTextInput', name: 'text', placeholder: 'text', className: 'field' }),
+	                    errContent,
+	                    _react2.default.createElement(
+	                        'a',
+	                        { onClick: this.submitHandler.bind(this), className: 'btn', href: '#' },
+	                        'submit'
+	                    )
+	                )
+	            );
 	        }
 	    }]);
 
@@ -25014,7 +25138,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-manager {\n  max-width: 1000px;\n  position: relative; }\n\n.bookmark-manager-header {\n  border-bottom: 0;\n  border-bottom: 1px solid #ccc; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block;\n  line-height: 58px; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 14px;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n", ""]);
+	exports.push([module.id, ".bookmark-manager {\n  max-width: 800px;\n  position: relative;\n  min-height: 600px; }\n\n.bookmark-manager-header {\n  border-bottom: 0;\n  border-bottom: 1px solid #ccc; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block;\n  line-height: 58px; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 14px;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n", ""]);
 
 	// exports
 
@@ -25080,7 +25204,7 @@
 
 				return _react2.default.createElement(
 					'section',
-					{ className: 'comments-example full-height panel' },
+					{ className: 'comments-example full-height panel justify-centre' },
 					_react2.default.createElement(
 						'div',
 						{ id: 'comment-example', className: 'example' },
@@ -25499,7 +25623,7 @@
 			var comment = _this.props.comment;
 			_this.state = {};
 			_this.state.formError = '';
-			_this.state.isEditing = false;
+			_this.state.isSubmitting = false;
 			_this.state.commentLength = comment ? comment.text.length : 0;
 			return _this;
 		}
@@ -25524,17 +25648,6 @@
 				});
 			}
 		}, {
-			key: 'newComment',
-			value: function newComment() {
-				var comment = {};
-				var parent = this.props.parent;
-				comment.text = '';
-				comment.date = new Date();
-				comment.parentId = parent && parent.id || '';
-				comment.username = this.props.user.getUsername();
-				return comment;
-			}
-		}, {
 			key: 'cancelHandler',
 			value: function cancelHandler(event) {
 				event.preventDefault();
@@ -25545,32 +25658,28 @@
 			value: function submitHandler(event) {
 				event.preventDefault();
 				var saved = undefined;
-				var textInputValue = this.refs.commentInput.value;
-				var comment = this.props.comment || this.newComment();
+				var parent = this.props.parent;
+				var text = this.refs.commentInput.value;
+				var comment = this.props.comment || this.props.comments.shell();
 
-				if (!this.state.isEditing) {
-					this.isEditing = true;
+				if (!text.trim().length) {
+					this.addError('Please enter a comment');
+					return;
+				}
 
-					if (!textInputValue.trim().length) {
-						this.addError('Please enter a comment');
-						this.isEditing = false;
-						return;
-					}
+				comment.text = text;
+				comment.date = new Date();
+				comment.parentid = parent && parent.id || '';
+				comment.username = this.props.user.getUsername();
 
-					comment.text = textInputValue;
+				if (comment.id) {
+					saved = this.props.comments.update(comment);
+				} else {
+					saved = this.props.comments.create(comment);
+				}
 
-					if (comment.id) {
-						saved = this.props.comments.update(comment);
-					} else {
-						saved = this.props.comments.create(comment);
-					}
-
-					if (this.props.submitCallback) {
-						this.props.submitCallback(saved);
-					}
-
-					this.refs.commentInput.value = '';
-					this.isEditing = false;
+				if (this.props.submitCallback) {
+					this.props.submitCallback(saved);
 				}
 			}
 		}, {
@@ -25784,6 +25893,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _activeModel = __webpack_require__(217);
+
+	var _activeModel2 = _interopRequireDefault(_activeModel);
+
 	var _form = __webpack_require__(190);
 
 	var _form2 = _interopRequireDefault(_form);
@@ -25817,28 +25930,29 @@
 			});
 
 			_this.state = {};
-			_this.state.editTaskId = null;
-			_this.state.activeTaskId = null;
+			//dont forget about this
+			_this.activeTaskDetail = new _activeModel2.default(_this);
+			_this.activeEditTask = new _activeModel2.default(_this);
 			_this.state.shouldShowNewTaskForm = true;
 			return _this;
 		}
 
 		_createClass(TaskManagerComponent, [{
-			key: 'getActiveTaskId',
-			value: function getActiveTaskId() {
-				return this.state.activeTaskId;
+			key: 'clearActiveTaskDetail',
+			value: function clearActiveTaskDetail() {
+				this.activeTaskDetail.clear();
 			}
 		}, {
-			key: 'clearActiveTask',
-			value: function clearActiveTask() {
-				this.setActiveTask(null);
+			key: 'clearActiveEditTask',
+			value: function clearActiveEditTask() {
+				this.activeEditTask.clear();
 			}
 		}, {
 			key: 'hideAll',
 			value: function hideAll() {
+				this.clearActiveTaskDetail();
+				this.clearActiveEditTask();
 				this.setState({
-					editTaskId: null,
-					activeTaskId: null,
 					shouldShowNewTaskForm: false
 				});
 			}
@@ -25846,17 +25960,13 @@
 			key: 'setEditingTask',
 			value: function setEditingTask(id) {
 				this.hideAll();
-				this.setState({
-					editTaskId: id
-				});
+				this.activeEditTask.set(id);
 			}
 		}, {
 			key: 'setActiveTask',
 			value: function setActiveTask(id) {
 				this.hideAll();
-				this.setState({
-					activeTaskId: id
-				});
+				this.activeTaskDetail.set(id);
 			}
 		}, {
 			key: 'showNewTaskForm',
@@ -25882,20 +25992,20 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var editTaskId = this.state.editTaskId;
-				var activeTaskId = this.state.activeTaskId;
+				var editTaskId = this.activeEditTask.current;
+				var activeTaskId = this.activeTaskDetail.current;
 
 				var content = undefined;
 				var task = undefined;
 
 				if (activeTaskId) {
 					task = this.props.tasks.get(activeTaskId);
-					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks });
+					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks, setEditingTask: this.setEditingTask.bind(this) });
 				}
 
 				if (editTaskId) {
 					task = this.props.tasks.get(editTaskId);
-					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks });
+					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this) });
 				}
 
 				if (this.state.shouldShowNewTaskForm || !content) {
@@ -25904,7 +26014,7 @@
 
 				return _react2.default.createElement(
 					'section',
-					{ className: 'full-height panel tasklist-example' },
+					{ className: 'tasklist-example full-height panel justify-centre' },
 					_react2.default.createElement(
 						'div',
 						{ id: 'tasklist-example', className: 'example' },
@@ -25931,7 +26041,7 @@
 									_react2.default.createElement(_list2.default, {
 										tasks: this.props.tasks,
 										setActiveTask: this.setActiveTask.bind(this),
-										clearActiveTask: this.clearActiveTask.bind(this)
+										clearActiveTask: this.clearActiveTaskDetail.bind(this)
 									})
 								)
 							),
@@ -25996,6 +26106,15 @@
 		}
 
 		_createClass(TaskFormComponent, [{
+			key: 'newTask',
+			value: function newTask() {
+				var task = {};
+				task.title = '';
+				task.text = '';
+				task.date = new Date();
+				return task;
+			}
+		}, {
 			key: 'addError',
 			value: function addError(error) {
 				this.setState({
@@ -26018,21 +26137,44 @@
 			key: 'submitHandler',
 			value: function submitHandler(event) {
 				event.preventDefault();
+				var saved = undefined;
 				var title = this.refs.taskTitleInput.value;
 				var text = this.refs.taskTextInput.value;
-				this.clearError();
-				if (title.trim().length) {
-					var task = this.props.tasks.create({ title: title, text: text });
-					this.props.setActiveTask(task.id);
-				} else {
+				var task = this.props.task || this.newTask();
+
+				if (!title.trim().length) {
 					this.addError('please enter a title');
+					return;
 				}
+
+				task.title = title;
+				task.text = text;
+
+				if (task.id) {
+					saved = this.props.tasks.update(task);
+				} else {
+					saved = this.props.tasks.create(task);
+				}
+
+				this.props.setActiveTask(saved.id);
 			}
 		}, {
 			key: 'render',
 			value: function render() {
 				var err = this.state.formError;
+				var task = this.props.task;
 				var errContent = undefined;
+				var formTitleContent = undefined;
+				var titleDefaultValue = undefined;
+				var textDefaultValue = undefined;
+
+				if (task) {
+					formTitleContent = 'edit task';
+					titleDefaultValue = task.title;
+					textDefaultValue = task.text;
+				} else {
+					formTitleContent = 'new task';
+				}
 
 				if (err) {
 					errContent = _react2.default.createElement(
@@ -26048,14 +26190,14 @@
 					_react2.default.createElement(
 						'h3',
 						null,
-						'new task'
+						formTitleContent
 					),
 					_react2.default.createElement(
 						'form',
 						{ onSubmit: this.submitHandler.bind(this), className: 'task-form' },
-						_react2.default.createElement('input', { ref: 'taskTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
+						_react2.default.createElement('input', { defaultValue: titleDefaultValue, ref: 'taskTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
 						errContent,
-						_react2.default.createElement('textarea', { ref: 'taskTextInput', placeholder: 'text', className: 'field', name: 'text' }),
+						_react2.default.createElement('textarea', { defaultValue: textDefaultValue, ref: 'taskTextInput', placeholder: 'text', className: 'field', name: 'text' }),
 						_react2.default.createElement(
 							'a',
 							{ onClick: this.submitHandler.bind(this), className: 'btn', href: '#' },
@@ -26148,6 +26290,12 @@
 		}
 
 		_createClass(TaskDetailComponent, [{
+			key: 'setManagerEditingTask',
+			value: function setManagerEditingTask(event) {
+				event.preventDefault();
+				this.props.setEditingTask(this.props.task.id);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var task = this.props.task;
@@ -26170,7 +26318,12 @@
 						null,
 						task.title
 					),
-					body
+					body,
+					_react2.default.createElement(
+						'a',
+						{ onClick: this.setManagerEditingTask.bind(this), href: '#', className: 'btn margin-top-sm' },
+						'edit'
+					)
 				);
 			}
 		}]);
@@ -26602,6 +26755,15 @@
 		}
 
 		_createClass(Bookmarks, [{
+			key: 'shell',
+			value: function shell() {
+				var bookmark = {};
+				bookmark.title = '';
+				bookmark.url = '';
+				bookmark.text = '';
+				return bookmark;
+			}
+		}, {
 			key: 'defaultModels',
 			value: function defaultModels() {
 				return [{
@@ -41993,6 +42155,11 @@
 		}
 
 		_createClass(LocalStorageBehaviour, [{
+			key: 'resetBrowserLocalStorage',
+			value: function resetBrowserLocalStorage() {
+				localStorage.clear();
+			}
+		}, {
 			key: 'get',
 			value: function get() {
 				var store = localStorage.getItem(this.storeName);
@@ -42021,11 +42188,6 @@
 				var store = this.get();
 				var updated = callback(store);
 				this.set(updated);
-			}
-		}], [{
-			key: 'resetBrowserLocalStorage',
-			value: function resetBrowserLocalStorage() {
-				localStorage.clear();
 			}
 		}]);
 
@@ -42081,6 +42243,16 @@
 		}
 
 		_createClass(Comments, [{
+			key: 'shell',
+			value: function shell() {
+				var comment = {};
+				comment.text = '';
+				comment.date = '';
+				comment.parentid = '';
+				comment.username = '';
+				return comment;
+			}
+		}, {
 			key: 'defaultModels',
 			value: function defaultModels() {
 				return [{
@@ -42310,10 +42482,111 @@
 
 
 	// module
-	exports.push([module.id, "/* vendor */\n/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */ }\n\n/**\n * Remove default margin.\n */\nbody {\n  margin: 0; }\n\n/* HTML5 display definitions\n   ========================================================================== */\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block; }\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n[hidden],\ntemplate {\n  display: none; }\n\n/* Links\n   ========================================================================== */\n/**\n * Remove the gray background color from active links in IE 10.\n */\na {\n  background-color: transparent; }\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\na:active,\na:hover {\n  outline: 0; }\n\n/* Text-level semantics\n   ========================================================================== */\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\nb,\nstrong {\n  font-weight: bold; }\n\n/**\n * Address styling not present in Safari and Chrome.\n */\ndfn {\n  font-style: italic; }\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0; }\n\n/**\n * Address styling not present in IE 8/9.\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\nsmall {\n  font-size: 80%; }\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\n   ========================================================================== */\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\nimg {\n  border: 0; }\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\n   ========================================================================== */\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\nfigure {\n  margin: 1em 40px; }\n\n/**\n * Address differences between Firefox and other browsers.\n */\nhr {\n  box-sizing: content-box;\n  height: 0; }\n\n/**\n * Contain overflow in all browsers.\n */\npre {\n  overflow: auto; }\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em; }\n\n/* Forms\n   ========================================================================== */\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\nbutton {\n  overflow: visible; }\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\nbutton,\nselect {\n  text-transform: none; }\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\nbutton,\nhtml input[type=\"button\"],\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\n * Re-set default cursor for disabled elements.\n */\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default; }\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\ninput {\n  line-height: normal; }\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  box-sizing: content-box;\n  /* 2 */ }\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\n * Define consistent border, margin, and padding.\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\ntextarea {\n  overflow: auto; }\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\n   ========================================================================== */\n/**\n * Remove most spacing between table cells.\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd,\nth {\n  padding: 0; }\n\n/* base */\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*:before,\n*:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\nbody {\n  background: #FCFCFC;\n  font-size: 14px;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; }\n\na {\n  color: inherit; }\n\n.btn {\n  display: inline-block;\n  border: 1px solid #ccc;\n  background: white;\n  padding: 4px 8px;\n  text-decoration: none;\n  font-size: 90%;\n  color: #777;\n  border-radius: 0px; }\n\n.btn:hover {\n  border-color: black;\n  color: black;\n  cursor: pointer; }\n\n.btn:active {\n  border-color: #ccc;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.btn-group .btn {\n  margin-right: 2px; }\n\n.btn-group .btn:last-child {\n  margin-right: 0px; }\n\nlabel {\n  display: block;\n  color: #777;\n  margin-bottom: 6px; }\n\nform .btn {\n  margin-right: 2px; }\n\nform.padding {\n  padding: 15px 20px 20px; }\n\n.field {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 6px 8px;\n  margin-bottom: 10px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 0px;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }\n\n.fieldCount {\n  color: #777;\n  font-size: 80%; }\n\n.field:focus {\n  outline: none;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);\n  border-color: black; }\n\n.form-error {\n  margin-bottom: 10px;\n  display: block; }\n\n/* helpers */\n/**\n * For modern browsers\n * 1. The space content is one way to avoid an Opera bug when the\n *    contenteditable attribute is included anywhere else in the document.\n *    Otherwise it causes space to appear at the top and bottom of elements\n *    that are clearfixed.\n * 2. The use of `table` rather than `block` is only necessary if using\n *    `:before` to contain the top-margins of child elements.\n */\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  /* 1 */\n  display: table;\n  /* 2 */ }\n\n.clearfix:after {\n  clear: both; }\n\n/**\n * For IE 6/7 only\n * Include this rule to trigger hasLayout and contain floats.\n */\n.clearfix {\n  *zoom: 1; }\n\n.flex-col-container, .flex-col {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex; }\n\n.flex-col-container {\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.flex-col-inner {\n  width: 100%;\n  display: block; }\n\n.hide-overflow {\n  height: 100%;\n  overflow: hidden; }\n\n.opaque {\n  opacity: 1; }\n\n.black {\n  color: black; }\n\n.hidden {\n  display: none; }\n\n.seethrough {\n  opacity: 0; }\n\n.invisible {\n  visibility: hidden; }\n\n.muted {\n  color: #777; }\n\n.margin {\n  margin: 20px; }\n\n.margin-left {\n  margin-left: 20px; }\n\n.margin-bottom {\n  margin-bottom: 20px; }\n\n.margin-right {\n  margin-right: 20px; }\n\n.margin-top {\n  margin-top: 20px; }\n\n.padding {\n  padding: 20px; }\n\n.muted {\n  color: #777; }\n\n.pull-right {\n  float: right; }\n\n.full-height {\n  min-height: 100vh; }\n\n.centred {\n  margin: 0 auto; }\n\n.centred.margin-top {\n  margin: 20px auto 0px; }\n\n.centred.margin-bottom {\n  margin: 0px auto 20px; }\n\n/* objects */\n.box {\n  background: white;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.dropdown {\n  position: absolute;\n  z-index: 100;\n  display: block; }\n\n.dropdown.hidden {\n  display: none; }\n\n.horizontal-list-menu {\n  list-style: none;\n  list-style-type: none;\n  padding: 0 20px;\n  margin: 0; }\n\n.horizontal-list-menu li {\n  display: inline-block;\n  padding-right: 10px; }\n\n.horizontal-list-menu li.pull-right {\n  padding-right: 0px; }\n\n.horizontal-list-menu a {\n  margin-right: 0px; }\n\n.horizontal-list-menu a:hover {\n  color: black; }\n\n.horizontal-list-menu--btns li {\n  padding-right: 0px; }\n\n.panel {\n  padding: 20px;\n  -moz-align-items: center;\n  -webkit-align-items: center;\n  -ms-align-items: center;\n  align-items: center;\n  display: -moz-flex;\n  display: -webkit-flex;\n  display: -ms-flex;\n  display: flex;\n  -moz-justify-content: center;\n  -webkit-justify-content: center;\n  -ms-justify-content: center;\n  justify-content: center;\n  position: relative; }\n\n.example {\n  width: 100%; }\n\n.comments-example {\n  padding-top: 50px; }\n\n.tasklist-example {\n  background: #c2e59c;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to left, #c2e59c, #64b3f4);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to left, #c2e59c, #64b3f4);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n\n.calendar-example {\n  background: #699bc8;\n  background: -moz-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -webkit-gradient(radial, top left, 0px, top left, 100%, color-stop(0%, #699bc8), color-stop(57%, #b5c5d8));\n  background: -webkit-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -o-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -ms-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: radial-gradient(ellipse at top left, #699bc8 0%, #b5c5d8 57%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#699bc8', endColorstr='#b5c5d8',GradientType=1 ); }\n", ""]);
+	exports.push([module.id, "/* vendor */\n/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */ }\n\n/**\n * Remove default margin.\n */\nbody {\n  margin: 0; }\n\n/* HTML5 display definitions\n   ========================================================================== */\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block; }\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n[hidden],\ntemplate {\n  display: none; }\n\n/* Links\n   ========================================================================== */\n/**\n * Remove the gray background color from active links in IE 10.\n */\na {\n  background-color: transparent; }\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\na:active,\na:hover {\n  outline: 0; }\n\n/* Text-level semantics\n   ========================================================================== */\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\nb,\nstrong {\n  font-weight: bold; }\n\n/**\n * Address styling not present in Safari and Chrome.\n */\ndfn {\n  font-style: italic; }\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0; }\n\n/**\n * Address styling not present in IE 8/9.\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\nsmall {\n  font-size: 80%; }\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\n   ========================================================================== */\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\nimg {\n  border: 0; }\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\n   ========================================================================== */\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\nfigure {\n  margin: 1em 40px; }\n\n/**\n * Address differences between Firefox and other browsers.\n */\nhr {\n  box-sizing: content-box;\n  height: 0; }\n\n/**\n * Contain overflow in all browsers.\n */\npre {\n  overflow: auto; }\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em; }\n\n/* Forms\n   ========================================================================== */\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\nbutton {\n  overflow: visible; }\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\nbutton,\nselect {\n  text-transform: none; }\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\nbutton,\nhtml input[type=\"button\"],\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\n * Re-set default cursor for disabled elements.\n */\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default; }\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\ninput {\n  line-height: normal; }\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  box-sizing: content-box;\n  /* 2 */ }\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\n * Define consistent border, margin, and padding.\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\ntextarea {\n  overflow: auto; }\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\n   ========================================================================== */\n/**\n * Remove most spacing between table cells.\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd,\nth {\n  padding: 0; }\n\n/* base */\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*:before,\n*:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\nbody {\n  background: #FCFCFC;\n  font-size: 14px;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; }\n\na {\n  color: inherit; }\n\n.btn {\n  display: inline-block;\n  border: 1px solid #ccc;\n  background: white;\n  padding: 4px 8px;\n  text-decoration: none;\n  font-size: 90%;\n  color: #777;\n  border-radius: 0px; }\n\n.btn:hover {\n  border-color: black;\n  color: black;\n  cursor: pointer; }\n\n.btn:active {\n  border-color: #ccc;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.btn-group .btn {\n  margin-right: 2px; }\n\n.btn-group .btn:last-child {\n  margin-right: 0px; }\n\nlabel {\n  display: block;\n  color: #777;\n  margin-bottom: 6px; }\n\nform {\n  padding: 0;\n  margin: 0; }\n\nform .btn {\n  margin-right: 2px; }\n\n.field {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 6px 8px;\n  margin-bottom: 10px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 0px;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }\n\n.fieldCount {\n  color: #777;\n  font-size: 80%; }\n\n.field:focus {\n  outline: none;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);\n  border-color: black; }\n\n.form-error {\n  margin-bottom: 10px;\n  display: block;\n  color: #777; }\n\n/* helpers */\n/**\n * For modern browsers\n * 1. The space content is one way to avoid an Opera bug when the\n *    contenteditable attribute is included anywhere else in the document.\n *    Otherwise it causes space to appear at the top and bottom of elements\n *    that are clearfixed.\n * 2. The use of `table` rather than `block` is only necessary if using\n *    `:before` to contain the top-margins of child elements.\n */\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  /* 1 */\n  display: table;\n  /* 2 */ }\n\n.clearfix:after {\n  clear: both; }\n\n/**\n * For IE 6/7 only\n * Include this rule to trigger hasLayout and contain floats.\n */\n.clearfix {\n  *zoom: 1; }\n\n.flex-col-container, .flex-col {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex; }\n\n.flex-col-container {\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.flex-col-inner {\n  width: 100%;\n  display: block; }\n\n.hide-overflow {\n  height: 100%;\n  overflow: hidden; }\n\n.opaque {\n  opacity: 1; }\n\n.black {\n  color: black; }\n\n.hidden {\n  display: none; }\n\n.seethrough {\n  opacity: 0; }\n\n.invisible {\n  visibility: hidden; }\n\n.muted {\n  color: #777; }\n\n.margin {\n  margin: 20px; }\n\n.margin-left {\n  margin-left: 20px; }\n\n.margin-bottom {\n  margin-bottom: 20px; }\n\n.margin-right {\n  margin-right: 20px; }\n\n.margin-top {\n  margin-top: 20px; }\n\n.margin-vertical {\n  margin: 20px 0; }\n\n.margin-horizontal {\n  margin: 0 20px; }\n\n.margin-left-sm {\n  margin-left: 10px; }\n\n.margin-bottom-sm {\n  margin-bottom: 10px; }\n\n.margin-right-sm {\n  margin-right: 10px; }\n\n.margin-top-sm {\n  margin-top: 10px; }\n\n.padding {\n  padding: 20px; }\n\n.padding-left {\n  padding-bottom: 20px; }\n\n.padding-bottom {\n  padding-bottom: 20px; }\n\n.padding-right {\n  padding-right: 20px; }\n\n.padding-top {\n  padding-top: 20px; }\n\n.padding-vertical {\n  padding: 20px 0; }\n\n.padding-horizontal {\n  padding: 0 20px; }\n\n.muted {\n  color: #777; }\n\n.pull-right {\n  float: right; }\n\n.full-height {\n  min-height: 100vh; }\n\n.centred {\n  margin: 0 auto; }\n\n.centred.margin-top {\n  margin: 20px auto 0px; }\n\n.centred.margin-bottom {\n  margin: 0px auto 20px; }\n\n/* objects */\n.box {\n  background: white;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.box-header {\n  border-bottom: 1px solid #ccc;\n  padding: 15px 20px; }\n\n.dropdown {\n  position: absolute;\n  z-index: 100;\n  display: block; }\n\n.dropdown.hidden {\n  display: none; }\n\n.horizontal-list-menu {\n  list-style: none;\n  list-style-type: none;\n  padding: 0 20px;\n  margin: 0; }\n\n.horizontal-list-menu li {\n  display: inline-block;\n  padding-right: 10px; }\n\n.horizontal-list-menu li.pull-right {\n  padding-right: 0px; }\n\n.horizontal-list-menu a {\n  margin-right: 0px; }\n\n.horizontal-list-menu a:hover {\n  color: black; }\n\n.horizontal-list-menu--btns li {\n  padding-right: 0px; }\n\n.horizontal-list-menu--btns .btn.active {\n  color: black;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.panel {\n  padding: 20px; }\n\n.justify-centre {\n  -moz-align-items: center;\n  -webkit-align-items: center;\n  -ms-align-items: center;\n  align-items: center;\n  display: -moz-flex;\n  display: -webkit-flex;\n  display: -ms-flex;\n  display: flex;\n  -moz-justify-content: center;\n  -webkit-justify-content: center;\n  -ms-justify-content: center;\n  justify-content: center;\n  position: relative; }\n\n.example {\n  width: 100%; }\n\n.bookmarks-example {\n  padding-top: 100px; }\n\n.comments-example {\n  padding-top: 67px; }\n\n.tasklist-example {\n  background: #c2e59c;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to left, #c2e59c, #64b3f4);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to left, #c2e59c, #64b3f4);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n\n.calendar-example {\n  background: #699bc8;\n  background: -moz-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -webkit-gradient(radial, top left, 0px, top left, 100%, color-stop(0%, #699bc8), color-stop(57%, #b5c5d8));\n  background: -webkit-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -o-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -ms-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: radial-gradient(ellipse at top left, #699bc8 0%, #b5c5d8 57%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#699bc8', endColorstr='#b5c5d8',GradientType=1 ); }\n", ""]);
 
 	// exports
 
+
+/***/ },
+/* 214 */,
+/* 215 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(216);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(168)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./form.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./form.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 216 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(167)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".bookmark-form-title {\n  margin: 0; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 217 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _componentStateModifier = __webpack_require__(163);
+
+	var _componentStateModifier2 = _interopRequireDefault(_componentStateModifier);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	// for when you need to reactively keep track of a model id value
+
+	var ActiveModelBehaviour = function () {
+
+		// must be called from constructor of react component
+
+		function ActiveModelBehaviour(component, defaultState) {
+			_classCallCheck(this, ActiveModelBehaviour);
+
+			defaultState = defaultState || null;
+			this.activeModelState = new _componentStateModifier2.default(component, defaultState);
+		}
+
+		_createClass(ActiveModelBehaviour, [{
+			key: 'set',
+			value: function set(id) {
+				this.activeModelState.set(id);
+			}
+		}, {
+			key: 'clear',
+			value: function clear() {
+				this.activeModelState.set(null);
+			}
+		}, {
+			key: 'is',
+			value: function is(id) {
+				return this.activeModelState.current == id;
+			}
+		}, {
+			key: 'current',
+			get: function get() {
+				return this.activeModelState.current;
+			}
+		}]);
+
+		return ActiveModelBehaviour;
+	}();
+
+	exports.default = ActiveModelBehaviour;
 
 /***/ }
 /******/ ]);
