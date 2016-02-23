@@ -34,43 +34,43 @@ export default class IntroductionComponent extends React.Component {
 
 		Velocity(refs.namef1, { color: '#000' });
 
-		setTimeout(function() {
+		setTimeout(() => {
 			Velocity(refs.nameu1, { color: '#000' });
 
-			setTimeout(function() {
+			setTimeout(() => {
 				Velocity(refs.names1, { color: '#000' });
 
-				setTimeout(function() {
+				setTimeout(() => {
 					Velocity(refs.namer2, { color: '#000' });
 
-					setTimeout(function() {
+					setTimeout(() => {
 						Velocity(refs.namen1, { color: '#000' });
 
-						setTimeout(function() {
+						setTimeout(() => {
 							Velocity(refs.namef1, { opacity: 0 });
 							Velocity(refs.nameu1, { opacity: 0 });
 							Velocity(refs.names1, { opacity: 0 });
 							Velocity(refs.namer2, { opacity: 0 });
-							Velocity(refs.namen1, { opacity: 0 }, function() {
+							Velocity(refs.namen1, { opacity: 0 }, () => {
 
-								setTimeout(function() {
+								setTimeout(() => {
 									Velocity(refs.nameu1, { width: 0 }, { display: 'none' });
 									Velocity(refs.names1, { width: 0 }, { display: 'none' });
 									Velocity(refs.wordspacer, { width: 0 }, { display: 'none' });
 									Velocity(refs.namer2, { width: 0 }, { display: 'none' });
 									Velocity(refs.namen1, { width: 0 }, { display: 'none' });
 
-									setTimeout(function() {
+									setTimeout(() => {
 										Velocity(container, { 'min-height': '' }, { duration: 800 });
 
 										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 										Velocity(refs.namef1, { width: 0 }, { display: 'none' });
 
-										setTimeout(function() {
+										setTimeout(() => {
 											body.classList.remove('hide-overflow');
 											body.removeEventListener('touchmove', prevent);
 
-											setTimeout(function() {
+											setTimeout(() => {
 												refs.settings.classList.remove('hidden');
 												Velocity(refs.settings, { opacity: 1 }, { duration: 800 });
 												refs.panel.classList.remove('full-height');
