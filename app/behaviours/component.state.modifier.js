@@ -21,10 +21,6 @@ export default class ComponentSingleStateModifierBehaviour {
 		this.component.setState(set);
 	}
 
-	init() {
-		this.set(this.defaultState);
-	}
-
 	get current() {
 		return this.get(this.stateName);
 	}

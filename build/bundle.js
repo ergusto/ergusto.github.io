@@ -42296,11 +42296,6 @@
 				this.component.setState(set);
 			}
 		}, {
-			key: 'init',
-			value: function init() {
-				this.set(this.defaultState);
-			}
-		}, {
 			key: 'isCurrent',
 			value: function isCurrent(value) {
 				return this.current == value;
