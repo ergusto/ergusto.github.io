@@ -136,6 +136,7 @@
 				return _react2.default.createElement(
 					'div',
 					null,
+					_react2.default.createElement(_index4.default, { user: user, bookmarks: bookmarks }),
 					_react2.default.createElement(_index2.default, { user: user }),
 					_react2.default.createElement(_index6.default, { user: user, comments: comments }),
 					_react2.default.createElement(_index8.default, { user: user, tasks: tasks })
@@ -42207,48 +42208,48 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var DropDownBehaviour = function () {
+	var DropdownBehaviour = function () {
 
 		// must be called from constructor of react component
 
-		function DropDownBehaviour(component) {
-			_classCallCheck(this, DropDownBehaviour);
+		function DropdownBehaviour(component) {
+			_classCallCheck(this, DropdownBehaviour);
 
 			var defaultState = false;
-			this.dropDownState = new _componentStateModifier2.default(component, defaultState);
+			this.dropdownState = new _componentStateModifier2.default(component, defaultState);
 		}
 
-		_createClass(DropDownBehaviour, [{
+		_createClass(DropdownBehaviour, [{
 			key: 'open',
 			value: function open() {
-				this.dropDownState.set(true);
+				this.dropdownState.set(true);
 			}
 		}, {
 			key: 'close',
 			value: function close() {
-				this.dropDownState.set(false);
+				this.dropdownState.set(false);
 			}
 		}, {
 			key: 'toggle',
 			value: function toggle() {
-				this.dropDownState.set(!this.dropDownState.current);
+				this.dropdownState.set(!this.dropdownState.current);
 			}
 		}, {
 			key: 'isOpen',
 			value: function isOpen() {
-				return !!this.dropDownState.current;
+				return !!this.dropdownState.current;
 			}
 		}, {
 			key: 'isClosed',
 			value: function isClosed() {
-				return !this.dropDownState.current;
+				return !this.dropdownState.current;
 			}
 		}]);
 
-		return DropDownBehaviour;
+		return DropdownBehaviour;
 	}();
 
-	exports.default = DropDownBehaviour;
+	exports.default = DropdownBehaviour;
 
 /***/ },
 /* 213 */

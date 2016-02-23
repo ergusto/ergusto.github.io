@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DropDownBehaviour from '../../behaviours/dropdown.js';
+import DropdownBehaviour from '../../behaviours/dropdown.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/settings.scss');
@@ -11,7 +11,7 @@ export default class SettingsComponent extends  React.Component {
 		super(props);
 
 		this.state = {};
-		this.dropdown = new DropDownBehaviour(this);
+		this.dropdown = new DropdownBehaviour(this);
 		
 		this.props.user.onUpdate(() => {
 			this.forceUpdate();
