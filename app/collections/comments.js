@@ -19,14 +19,14 @@ export default class Comments extends LocalStorageCollection {
 		const comment = {};
 		comment.text = '';
 		comment.date = '';
-		comment.parentid = '';
+		comment.parentId = false;
 		comment.username = '';
 		return comment;
 	}
 
 	defaultModels() {
 		return [{
-			text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
+			text: 'This site showcases some of the things I have created with React. Most examples are interactive. Try replying to or editing this comment.',
 			username: 'ergusto',
 			date: new Date(),
 			parentId: false
@@ -41,7 +41,7 @@ export default class Comments extends LocalStorageCollection {
 	getRootComments() {
 		const comments = this.get();
 		return _.filter(comments, (comment) => {
-			return !comment.parentId;
+			return comment.parentId == false;
 		});
 	}
 

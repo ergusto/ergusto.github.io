@@ -15,16 +15,13 @@
 	padding: 20px;
 }
 
-.tasklist-sidebar h3 {
-	display: inline-block;
-	margin: 0;
+.tasklist-sidebar-header {
+	border-bottom: 1px solid #777;
 }
 
-.tasklist-content h3 {
+.tasklist-sidebar-title {
+	display: inline-block;
 	margin: 0;
-	margin-bottom: 10px;
-	padding-bottom: 9px;
-	border-bottom: 1px solid black;
 }
 
 .tasklist-content {

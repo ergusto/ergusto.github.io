@@ -1,10 +1,10 @@
 import React from 'react';
 
-import ActiveModelBehaviour from '../../behaviours/active.model.js';
-
 import TaskFormComponent from './form.jsx';
 import TaskDetailComponent from './detail.jsx';
 import TaskListComponent from './list.jsx';
+
+import ActiveModelBehaviour from '../../behaviours/active.model.js';
 
 export default class TaskManagerComponent extends React.Component {
 
@@ -94,9 +94,10 @@ export default class TaskManagerComponent extends React.Component {
 					<div className="tasklist flex-col-container">
 						<div className="tasklist-sidebar flex-col">
 							<div className="flex-col-inner">
-								<a onClick={this.newTaskHandler.bind(this)} href="#" className="plus-btn pull-right">+</a>
-								<h3>tasks</h3>
-								<hr />
+								<header className="tasklist-sidebar-header padding-bottom-sm margin-bottom-sm">
+									<a onClick={this.newTaskHandler.bind(this)} href="#" className="plus-btn pull-right">+</a>
+									<h3 className="tasklist-sidebar-title">tasks</h3>
+								</header>
 								<TaskListComponent
 									tasks={this.props.tasks} 
 									setActiveTask={this.setActiveTask.bind(this)} 

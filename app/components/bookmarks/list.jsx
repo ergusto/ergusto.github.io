@@ -5,6 +5,18 @@ require('!style!css!sass!./styles/list.scss');
 
 export default class BookmarkListComponent extends React.Component {
 
+	constructor(props) {
+		super(props);
+		props.bookmarks.onChange(() => {
+			this.forceUpdate()
+		});
+	}
+
+	clickHandler(id, event) {
+		event.preventDefault();
+		this.props.setActiveBookmark(id);
+	}
+
 	render() {
 		const bookmarks = this.props.bookmarks.get();
 		let content;
@@ -12,7 +24,7 @@ export default class BookmarkListComponent extends React.Component {
 		if (bookmarks.length) {
 			content = bookmarks.map((bookmark) => {
 				return (
-					<div key={bookmark.id} className="bookmark-item box margin-vertical padding">
+					<div onClick={this.clickHandler.bind(this, bookmark.id)} key={bookmark.id} className="bookmark-item box margin-vertical padding">
 						<p>{bookmark.title}</p>
 						<p>{bookmark.url}</p>
 					</div>

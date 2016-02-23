@@ -49,7 +49,7 @@ export default class CommentFormComponent extends React.Component {
 
 		comment.text = text;
 		comment.date = new Date;
-		comment.parentid = parent && parent.id || '';
+		comment.parentId = parent && parent.id || '';
 		comment.username = this.props.user.getUsername();
 
 		if (comment.id) {

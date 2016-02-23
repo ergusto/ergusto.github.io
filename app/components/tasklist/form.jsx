@@ -81,7 +81,7 @@ export default class TaskFormComponent extends React.Component {
 
 		return (
 			<div className="task-form-container">
-				<h3>{formTitleContent}</h3>
+				<h3 className="tasklist-form-title padding-bottom-sm margin-bottom-sm">{formTitleContent}</h3>
 				<form onSubmit={this.submitHandler.bind(this)} className="task-form">
 					<input defaultValue={titleDefaultValue} ref="taskTitleInput" placeholder="title" className="field" name="title" />
 					{errContent}

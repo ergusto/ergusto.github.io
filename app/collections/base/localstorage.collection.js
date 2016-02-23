@@ -8,7 +8,7 @@ export default class LocalStorageCollection extends Collection {
 		super()
 		if (window.localStorage) {
 			// always add bevhaiour in the constructor
-			this.storeName = 'ERGUSTO:collection:' + this.constructor.name;
+			this.storeName = 'ERGUSTO:collection:' + this.name;
 			this.store = new LocalStorageBehaviour(this.storeName);
 			this.setUpLocalStorage();
 		} else {

@@ -7,7 +7,6 @@ export default class Collection {
 	constructor() {
 		this.models = {};
 		this.events = new EventBehaviour();
-
 		this.name = this.constructor.name;
 	}
 

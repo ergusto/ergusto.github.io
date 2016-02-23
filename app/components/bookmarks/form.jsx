@@ -59,6 +59,7 @@ export default class BookmarkFormComponent extends React.Component {
 
     render() {
         const err = this.state.formError;
+        const bookmark = this.props.bookmark;
         let errContent;
 
         if (err) {

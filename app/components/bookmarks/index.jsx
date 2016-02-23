@@ -1,9 +1,11 @@
 import React from 'react';
 
+import BookmarkDetailComponent from './detail.jsx';
 import BookmarkListComponent from './list.jsx';
 import BookmarkFormComponent from './form.jsx';
 
 import TabbedStateBehaviour from '../../behaviours/tabs.js';
+import ActiveModelBehaviour from '../../behaviours/active.model.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/manager.scss');
@@ -15,6 +17,16 @@ export default class BookmarkManagerComponent extends React.Component {
 
 		this.state = {};
 		this.tabs = new TabbedStateBehaviour(this, 'list');
+		this.activeBookmark = new ActiveModelBehaviour(this);
+	}
+
+	clearActiveBookmark() {
+		this.activeBookmark.clear();
+	}
+
+	setActiveBookmark(id) {
+		this.activeBookmark.set(id);
+		this.tabs.open('detail');
 	}
 
 	showTab(tab, event) {
@@ -30,18 +42,24 @@ export default class BookmarkManagerComponent extends React.Component {
 		let content;
 		const bookmarks = this.props.bookmarks;
 		const tabClass = 'btn';
+		const activeClass = ' active';
 		let listTabClass = tabClass;
 		let addTabClass = tabClass;
 
 		if (this.tabs.isOpen('list')) {
-			listTabClass += ' active';
-			content = <BookmarkListComponent bookmarks={bookmarks} />;
+			listTabClass += activeClass;
+			content = <BookmarkListComponent setActiveBookmark={this.setActiveBookmark.bind(this)} bookmarks={bookmarks} />;
 
 		}
 
 		if (this.tabs.isOpen('add')) {
-			addTabClass += ' active';
+			addTabClass += activeClass;
 			content = <BookmarkFormComponent bookmarks={bookmarks} submitCallback={this.submitCallback.bind(this)} />;
+		}
+
+		if (this.tabs.isOpen('detail')) {
+			const bookmark = bookmarks.get(this.activeBookmark.current);
+			content = <BookmarkDetailComponent bookmark={bookmark} />
 		}
 
 		return (
