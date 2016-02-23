@@ -1,35 +1,22 @@
-import _ from 'lodash';
-import Tools from '../lib/tools.js';
+import ComponentSingleStateModifierBehaviour from './component.state.modifier.js';
 
 export default class TabbedStateBehaviour {
 
 	constructor(component, defaultTab) {
-		this.component = component;
-		this.defaultTab = defaultTab;
-		this.stateName = 'ERGUSTOtabName' + this.component.name + ':' + Tools.generateID();
+		console.log('TabbedStateBehaviour:', defaultTab);
+		this.tabState = new ComponentSingleStateModifierBehaviour(component, defaultTab);
 	}
 
 	init() {
-		this.set(this.stateName, this.defaultTab);
+		this.tabState.init();
 	}
 
-	get(property) {
-		return this.component.state[property];
+	open(tabName) {
+		this.tabState.set(tabName);
 	}
 
-	set(property, value) {
-		let set = {};
-		set = _.extend(set, this.component.state);
-		set[property] = value;
-		this.component.setState(set);
-	}
-
-	get current() {
-		return this.get(this.stateName);
-	}
-
-	isCurrent(name) {
-		return this.current == name;
+	isOpen(tabName) {
+		return this.tabState.isCurrent(tabName);
 	}
 
 }

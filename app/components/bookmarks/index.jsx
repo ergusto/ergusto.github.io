@@ -19,24 +19,25 @@ export default class BookmarkManagerComponent extends React.Component {
 
 	componentDidMount() {
 		// necessary to set state on this component from the behaviour definition
+		// as it can't be done in the constructor
 		this.tabs.init();
 	}
 
-	showTab(tab) {
-		this.tabs.set(tab);
+	showTab(tab, event) {
+		event.preventDefault();
+		this.tabs.open(tab);
 	}
 
 	render() {
 		let content;
 		const bookmarks = this.props.bookmarks;
 
-		if (this.tabs.isCurrent('list')) {
-			content = <BookmarkListComponent bookmarks={bookmarks} />
+		if (this.tabs.isOpen('list')) {
+			content = <BookmarkListComponent bookmarks={bookmarks} />;
 		}
 
-		if (this.tabs.isCurrent('add')) {
-			content = <BookmarkFormComponent bookmarks={bookmarks} />
-			
+		if (this.tabs.isOpen('add')) {
+			content = <BookmarkFormComponent bookmarks={bookmarks} />;
 		}
 
 		return (

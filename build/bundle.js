@@ -24551,12 +24551,14 @@
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				// necessary to set state on this component from the behaviour definition
+				// as it can't be done in the constructor
 				this.tabs.init();
 			}
 		}, {
 			key: 'showTab',
-			value: function showTab(tab) {
-				this.tabs.set(tab);
+			value: function showTab(tab, event) {
+				event.preventDefault();
+				this.tabs.open(tab);
 			}
 		}, {
 			key: 'render',
@@ -24564,11 +24566,11 @@
 				var content = undefined;
 				var bookmarks = this.props.bookmarks;
 
-				if (this.tabs.isCurrent('list')) {
+				if (this.tabs.isOpen('list')) {
 					content = _react2.default.createElement(_list2.default, { bookmarks: bookmarks });
 				}
 
-				if (this.tabs.isCurrent('add')) {
+				if (this.tabs.isOpen('add')) {
 					content = _react2.default.createElement(_form2.default, { bookmarks: bookmarks });
 				}
 
@@ -24801,13 +24803,9 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lodash = __webpack_require__(201);
+	var _componentStateModifier = __webpack_require__(213);
 
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	var _tools = __webpack_require__(204);
-
-	var _tools2 = _interopRequireDefault(_tools);
+	var _componentStateModifier2 = _interopRequireDefault(_componentStateModifier);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24817,38 +24815,24 @@
 		function TabbedStateBehaviour(component, defaultTab) {
 			_classCallCheck(this, TabbedStateBehaviour);
 
-			this.component = component;
-			this.defaultTab = defaultTab;
-			this.stateName = 'ERGUSTOtabName' + this.component.name + ':' + _tools2.default.generateID();
+			console.log('TabbedStateBehaviour:', defaultTab);
+			this.tabState = new _componentStateModifier2.default(component, defaultTab);
 		}
 
 		_createClass(TabbedStateBehaviour, [{
 			key: 'init',
 			value: function init() {
-				this.set(this.stateName, this.defaultTab);
+				this.tabState.init();
 			}
 		}, {
-			key: 'get',
-			value: function get(property) {
-				return this.component.state[property];
+			key: 'open',
+			value: function open(tabName) {
+				this.tabState.set(tabName);
 			}
 		}, {
-			key: 'set',
-			value: function set(property, value) {
-				var set = {};
-				set = _lodash2.default.extend(set, this.component.state);
-				set[property] = value;
-				this.component.setState(set);
-			}
-		}, {
-			key: 'isCurrent',
-			value: function isCurrent(name) {
-				return this.current == name;
-			}
-		}, {
-			key: 'current',
-			get: function get() {
-				return this.get(this.stateName);
+			key: 'isOpen',
+			value: function isOpen(tabName) {
+				return this.tabState.isCurrent(tabName);
 			}
 		}]);
 
@@ -42227,13 +42211,9 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lodash = __webpack_require__(201);
+	var _componentStateModifier = __webpack_require__(213);
 
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	var _tools = __webpack_require__(204);
-
-	var _tools2 = _interopRequireDefault(_tools);
+	var _componentStateModifier2 = _interopRequireDefault(_componentStateModifier);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42243,57 +42223,39 @@
 		function DropDownBehaviour(component) {
 			_classCallCheck(this, DropDownBehaviour);
 
-			this.component = component;
-			this.dropdownName = 'shouldShow:ERGUSTOdropdownName' + this.component.name + ':' + _tools2.default.generateID();
+			var defaultState = false;
+			this.dropDownState = new _componentStateModifier2.default(component, defaultState);
 		}
 
 		_createClass(DropDownBehaviour, [{
 			key: 'init',
 			value: function init() {
-				this.set(false);
-			}
-		}, {
-			key: 'get',
-			value: function get() {
-				return this.component.state[this.dropdownName];
-			}
-		}, {
-			key: 'set',
-			value: function set(value) {
-				var set = {};
-				set = _lodash2.default.extend(set, this.component.state);
-				set[this.dropdownName] = value;
-				this.component.setState(set);
-			}
-		}, {
-			key: 'current',
-			value: function current() {
-				return this.component.state[this.dropdownName];
+				this.dropDownState.init();
 			}
 		}, {
 			key: 'open',
 			value: function open() {
-				this.set(true);
+				this.dropDownState.set(true);
 			}
 		}, {
 			key: 'close',
 			value: function close() {
-				this.set(false);
+				this.dropDownState.set(false);
 			}
 		}, {
 			key: 'toggle',
 			value: function toggle() {
-				this.set(!this.current());
+				this.dropDownState.set(!this.dropDownState.current);
 			}
 		}, {
 			key: 'isOpen',
 			value: function isOpen() {
-				return !!this.current();
+				return !!this.dropDownState.current;
 			}
 		}, {
 			key: 'isClosed',
 			value: function isClosed() {
-				return !this.current();
+				return !this.dropDownState.current;
 			}
 		}]);
 
@@ -42301,6 +42263,69 @@
 	}();
 
 	exports.default = DropDownBehaviour;
+
+/***/ },
+/* 213 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _tools = __webpack_require__(204);
+
+	var _tools2 = _interopRequireDefault(_tools);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ComponentSingleStateModifierBehaviour = function () {
+		function ComponentSingleStateModifierBehaviour(component, defaultState) {
+			_classCallCheck(this, ComponentSingleStateModifierBehaviour);
+
+			this.component = component;
+			this.stateName = 'ERGUSTO:state-modifier:' + this.component.name + ':' + _tools2.default.generateID();
+			this.defaultState = defaultState;
+		}
+
+		_createClass(ComponentSingleStateModifierBehaviour, [{
+			key: 'get',
+			value: function get(property) {
+				return this.component.state[property];
+			}
+		}, {
+			key: 'set',
+			value: function set(value) {
+				var set = {};
+				set[this.stateName] = value;
+				this.component.setState(set);
+			}
+		}, {
+			key: 'init',
+			value: function init() {
+				this.set(this.defaultState);
+			}
+		}, {
+			key: 'isCurrent',
+			value: function isCurrent(value) {
+				return this.current == value;
+			}
+		}, {
+			key: 'current',
+			get: function get() {
+				return this.get(this.stateName);
+			}
+		}]);
+
+		return ComponentSingleStateModifierBehaviour;
+	}();
+
+	exports.default = ComponentSingleStateModifierBehaviour;
 
 /***/ }
 /******/ ]);

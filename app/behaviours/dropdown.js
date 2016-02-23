@@ -1,51 +1,34 @@
-import _ from 'lodash';
-import Tools from '../lib/tools.js';
+import ComponentSingleStateModifierBehaviour from './component.state.modifier.js';
 
 export default class DropDownBehaviour {
 
 	constructor(component) {
-		this.component = component;
-		this.dropdownName = 'shouldShow:ERGUSTOdropdownName' + this.component.name + ':' + Tools.generateID();
+		const  defaultState = false;
+		this.dropDownState = new ComponentSingleStateModifierBehaviour(component, defaultState);
 	}
 
 	init() {
-		this.set(false);
-	}
-
-	get() {
-		return this.component.state[this.dropdownName];
-	}
-
-	set(value) {
-		let set = {};
-		set = _.extend(set, this.component.state);
-		set[this.dropdownName] = value;
-		this.component.setState(set);
-	}
-
-	current() {
-		return this.component.state[this.dropdownName];
+		this.dropDownState.init();
 	}
 
 	open() {
-		this.set(true);
+		this.dropDownState.set(true);
 	}
 
 	close() {
-		this.set(false);
+		this.dropDownState.set(false);
 	}
 
 	toggle() {
-		this.set(!this.current());
+		this.dropDownState.set(!this.dropDownState.current);
 	}
 
 	isOpen() {
-		return !!this.current();
+		return !!this.dropDownState.current;
 	}
 
 	isClosed() {
-		return !this.current();
+		return !this.dropDownState.current;
 	}
-
 
 }
