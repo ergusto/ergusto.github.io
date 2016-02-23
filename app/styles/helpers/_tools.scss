@@ -62,3 +62,15 @@
 .full-height {
 	min-height: 100vh;
 }
+
+.centred {
+	margin: 0 auto;
+}
+
+.centred.margin-top {
+	margin: 20px auto 0px;
+}
+
+.centred.margin-bottom {
+	margin: 0px auto 20px;
+}

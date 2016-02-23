@@ -1,0 +1,35 @@
+.bookmark-manager {
+	max-width: 1000px;
+	position: relative;
+}
+
+.bookmark-manager-header {
+	border-bottom: 0;
+	border-bottom: 1px solid #ccc;
+}
+
+.bookmark-manager-title {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+
+.bookmark-manager-control {
+	display: block;
+	line-height: 58px;
+}
+
+.bookmark-manager-control li:last-child .btn {
+	border-right: 1px solid #ccc;
+}
+
+.bookmark-manager-control .btn {
+	padding: 0px 14px;
+	border-top: 0px;
+	border-bottom: 0px;
+	border-right: 0px;
+}
+
+.bookmark-manager-control .btn:hover {
+	border-color: #ccc;
+}

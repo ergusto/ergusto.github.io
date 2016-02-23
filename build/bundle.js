@@ -64,23 +64,31 @@
 
 	var _index4 = _interopRequireDefault(_index3);
 
-	var _index5 = __webpack_require__(178);
+	var _index5 = __webpack_require__(176);
 
 	var _index6 = _interopRequireDefault(_index5);
 
-	var _index7 = __webpack_require__(188);
+	var _index7 = __webpack_require__(186);
 
 	var _index8 = _interopRequireDefault(_index7);
 
-	var _comments = __webpack_require__(191);
+	var _index9 = __webpack_require__(196);
+
+	var _index10 = _interopRequireDefault(_index9);
+
+	var _bookmarks = __webpack_require__(199);
+
+	var _bookmarks2 = _interopRequireDefault(_bookmarks);
+
+	var _comments = __webpack_require__(207);
 
 	var _comments2 = _interopRequireDefault(_comments);
 
-	var _tasks = __webpack_require__(199);
+	var _tasks = __webpack_require__(208);
 
 	var _tasks2 = _interopRequireDefault(_tasks);
 
-	var _user = __webpack_require__(200);
+	var _user = __webpack_require__(209);
 
 	var _user2 = _interopRequireDefault(_user);
 
@@ -93,13 +101,15 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import generic/site wide styles
-	__webpack_require__(201);
+	__webpack_require__(210);
 
 	// end of imports
 
 	var container = document.getElementById('container');
 
 	var user = new _user2.default();
+
+	var bookmarks = new _bookmarks2.default();
 	var comments = new _comments2.default();
 	var tasks = new _tasks2.default();
 
@@ -127,8 +137,8 @@
 					'div',
 					null,
 					_react2.default.createElement(_index2.default, { user: user }),
-					_react2.default.createElement(_index4.default, { user: user, comments: comments }),
-					_react2.default.createElement(_index6.default, { user: user, tasks: tasks })
+					_react2.default.createElement(_index6.default, { user: user, comments: comments }),
+					_react2.default.createElement(_index8.default, { user: user, tasks: tasks })
 				);
 			}
 		}]);
@@ -19885,7 +19895,7 @@
 				if (shouldShowAnimation) {
 					body.classList.add('hide-overflow');
 					body.addEventListener('touchmove', prevent);
-					panelClass = 'full-height panel introduction';
+					panelClass = 'introduction panel full-height';
 					settingsClass = 'hidden seethrough';
 
 					name = _react2.default.createElement(
@@ -19958,7 +19968,7 @@
 						)
 					);
 				} else {
-					panelClass = 'panel introduction introduction-no-animation';
+					panelClass = 'introduction introduction-no-animation panel';
 					settingsClass = 'settings-container';
 
 					name = _react2.default.createElement(
@@ -23905,6 +23915,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _dropdown = __webpack_require__(212);
+
+	var _dropdown2 = _interopRequireDefault(_dropdown);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23925,7 +23939,7 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SettingsComponent).call(this, props));
 
 			_this.state = {};
-			_this.state.shouldShowDropDown = false;
+			_this.dropdown = new _dropdown2.default(_this);
 
 			_this.props.user.onUpdate(function () {
 				_this.forceUpdate();
@@ -23938,9 +23952,11 @@
 			value: function componentDidMount() {
 				var _this2 = this;
 
+				this.dropdown.init();
+
 				var hideDropDownOnOutsideClickhandler = function hideDropDownOnOutsideClickhandler(event) {
 					var target = event.target;
-					if (!_this2.refs.dropdown.contains(target)) _this2.hideDropdown();
+					if (!_this2.refs.dropdown.contains(target)) _this2.dropdown.close();
 				};
 
 				document.body.addEventListener('click', hideDropDownOnOutsideClickhandler);
@@ -23950,26 +23966,7 @@
 			key: 'triggerClickHandler',
 			value: function triggerClickHandler(event) {
 				event.preventDefault();
-				this.toggleDropdown();
-			}
-		}, {
-			key: 'showDropDown',
-			value: function showDropDown() {
-				this.setState({
-					shouldShowDropDown: true
-				});
-			}
-		}, {
-			key: 'hideDropdown',
-			value: function hideDropdown() {
-				this.setState({
-					shouldShowDropDown: false
-				});
-			}
-		}, {
-			key: 'toggleDropdown',
-			value: function toggleDropdown() {
-				this.isShowing ? this.hideDropdown() : this.showDropDown();
+				this.dropdown.open();
 			}
 		}, {
 			key: 'setUserIntroAnimationSetting',
@@ -24008,7 +24005,7 @@
 				var animationSettingLabelText = undefined;
 				var username = this.props.user.getUsername();
 
-				if (this.state.shouldShowDropDown) {
+				if (this.dropdown.isOpen()) {
 					dropdownClass = 'dropdown box clearfix';
 					triggerClass = 'settings-trigger opaque';
 				} else {
@@ -24100,11 +24097,6 @@
 						)
 					)
 				);
-			}
-		}, {
-			key: 'isShowing',
-			get: function get() {
-				return this.state.shouldShowDropDown;
 			}
 		}]);
 
@@ -24519,7 +24511,409 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _comment = __webpack_require__(169);
+	var _list = __webpack_require__(169);
+
+	var _list2 = _interopRequireDefault(_list);
+
+	var _form = __webpack_require__(172);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	var _tabs = __webpack_require__(173);
+
+	var _tabs2 = _interopRequireDefault(_tabs);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import styles for this component
+	__webpack_require__(174);
+
+	var BookmarkManagerComponent = function (_React$Component) {
+		_inherits(BookmarkManagerComponent, _React$Component);
+
+		function BookmarkManagerComponent(props) {
+			_classCallCheck(this, BookmarkManagerComponent);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BookmarkManagerComponent).call(this, props));
+
+			_this.state = {};
+			_this.tabs = new _tabs2.default(_this, 'list');
+			return _this;
+		}
+
+		_createClass(BookmarkManagerComponent, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				// necessary to set state on this component from the behaviour definition
+				this.tabs.init();
+			}
+		}, {
+			key: 'showTab',
+			value: function showTab(tab) {
+				this.tabs.set(tab);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var content = undefined;
+				var bookmarks = this.props.bookmarks;
+
+				if (this.tabs.isCurrent('list')) {
+					content = _react2.default.createElement(_list2.default, { bookmarks: bookmarks });
+				}
+
+				if (this.tabs.isCurrent('add')) {
+					content = _react2.default.createElement(_form2.default, { bookmarks: bookmarks });
+				}
+
+				return _react2.default.createElement(
+					'section',
+					{ className: 'bookmarks-example full-height panel' },
+					_react2.default.createElement(
+						'div',
+						{ id: 'bookmarks-example', className: 'example' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'bookmark-manager box centred margin-top' },
+							_react2.default.createElement(
+								'header',
+								{ className: 'bookmark-manager-header clearfix' },
+								_react2.default.createElement(
+									'h3',
+									{ className: 'bookmark-manager-title pull-left muted padding' },
+									'bookmarks'
+								),
+								_react2.default.createElement(
+									'ul',
+									{ className: 'bookmark-manager-control horizontal-list-menu horizontal-list-menu--btns pull-right' },
+									_react2.default.createElement(
+										'li',
+										null,
+										_react2.default.createElement(
+											'a',
+											{ onClick: this.showTab.bind(this, 'list'), href: '#', className: 'btn' },
+											'list'
+										)
+									),
+									_react2.default.createElement(
+										'li',
+										null,
+										_react2.default.createElement(
+											'a',
+											{ onClick: this.showTab.bind(this, 'add'), href: '#', className: 'btn' },
+											'add'
+										)
+									)
+								)
+							),
+							content
+						)
+					)
+				);
+			}
+		}]);
+
+		return BookmarkManagerComponent;
+	}(_react2.default.Component);
+
+	exports.default = BookmarkManagerComponent;
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import styles for this component
+	__webpack_require__(170);
+
+	var BookmarkListComponent = function (_React$Component) {
+		_inherits(BookmarkListComponent, _React$Component);
+
+		function BookmarkListComponent() {
+			_classCallCheck(this, BookmarkListComponent);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(BookmarkListComponent).apply(this, arguments));
+		}
+
+		_createClass(BookmarkListComponent, [{
+			key: 'render',
+			value: function render() {
+				var bookmarks = this.props.bookmarks.get();
+				var content = undefined;
+
+				if (bookmarks.length) {
+					content = bookmarks.map(function (bookmark) {
+						return _react2.default.createElement(
+							'div',
+							{ key: bookmark.id, className: 'bookmark-item' },
+							_react2.default.createElement(
+								'p',
+								null,
+								bookmark.title
+							),
+							_react2.default.createElement(
+								'p',
+								null,
+								bookmark.url
+							)
+						);
+					});
+				} else {
+					content = _react2.default.createElement(
+						'li',
+						null,
+						'No bookmarks!'
+					);
+				}
+
+				return _react2.default.createElement(
+					'ul',
+					{ className: 'bookmark-list' },
+					content
+				);
+			}
+		}]);
+
+		return BookmarkListComponent;
+	}(_react2.default.Component);
+
+	exports.default = BookmarkListComponent;
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(171);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(165)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./list.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./list.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(164)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".bookmark-list {\n  margin: 0;\n  padding: 0; }\n\n.bookmark-list p {\n  margin: 0; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BookmarkFormComponent = function (_React$Component) {
+	    _inherits(BookmarkFormComponent, _React$Component);
+
+	    function BookmarkFormComponent(props) {
+	        _classCallCheck(this, BookmarkFormComponent);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(BookmarkFormComponent).call(this, props));
+	    }
+
+	    _createClass(BookmarkFormComponent, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement("div", { className: "bookmark-form padding" });
+	        }
+	    }]);
+
+	    return BookmarkFormComponent;
+	}(_react2.default.Component);
+
+	exports.default = BookmarkFormComponent;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _lodash = __webpack_require__(201);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _tools = __webpack_require__(204);
+
+	var _tools2 = _interopRequireDefault(_tools);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var TabbedStateBehaviour = function () {
+		function TabbedStateBehaviour(component, defaultTab) {
+			_classCallCheck(this, TabbedStateBehaviour);
+
+			this.component = component;
+			this.defaultTab = defaultTab;
+			this.stateName = 'ERGUSTOtabName' + this.component.name + ':' + _tools2.default.generateID();
+		}
+
+		_createClass(TabbedStateBehaviour, [{
+			key: 'init',
+			value: function init() {
+				this.set(this.stateName, this.defaultTab);
+			}
+		}, {
+			key: 'get',
+			value: function get(property) {
+				return this.component.state[property];
+			}
+		}, {
+			key: 'set',
+			value: function set(property, value) {
+				var set = {};
+				set = _lodash2.default.extend(set, this.component.state);
+				set[property] = value;
+				this.component.setState(set);
+			}
+		}, {
+			key: 'isCurrent',
+			value: function isCurrent(name) {
+				return this.current == name;
+			}
+		}, {
+			key: 'current',
+			get: function get() {
+				return this.get(this.stateName);
+			}
+		}]);
+
+		return TabbedStateBehaviour;
+	}();
+
+	exports.default = TabbedStateBehaviour;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(175);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(165)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./manager.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./manager.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(164)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".bookmark-manager {\n  max-width: 1000px;\n  position: relative; }\n\n.bookmark-manager-header {\n  border-bottom: 0;\n  border-bottom: 1px solid #ccc; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block;\n  line-height: 58px; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 14px;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _comment = __webpack_require__(177);
 
 	var _comment2 = _interopRequireDefault(_comment);
 
@@ -24532,7 +24926,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(176);
+	__webpack_require__(184);
 
 	var CommentListComponent = function (_React$Component) {
 		_inherits(CommentListComponent, _React$Component);
@@ -24553,8 +24947,8 @@
 			value: function render() {
 				var _this2 = this;
 
-				var comments = this.props.comments.getRootComments();
 				var content = undefined;
+				var comments = this.props.comments.getRootComments();
 
 				if (comments.length) {
 					content = comments.map(function (comment) {
@@ -24564,7 +24958,7 @@
 
 				return _react2.default.createElement(
 					'section',
-					{ className: 'full-height panel comments-example' },
+					{ className: 'comments-example full-height panel' },
 					_react2.default.createElement(
 						'div',
 						{ id: 'comment-example', className: 'example' },
@@ -24584,7 +24978,7 @@
 	exports.default = CommentListComponent;
 
 /***/ },
-/* 169 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24599,11 +24993,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactTimeago = __webpack_require__(170);
+	var _reactTimeago = __webpack_require__(178);
 
 	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 
-	var _form = __webpack_require__(171);
+	var _form = __webpack_require__(179);
 
 	var _form2 = _interopRequireDefault(_form);
 
@@ -24616,7 +25010,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(174);
+	__webpack_require__(182);
 
 	var CommentComponent = function (_React$Component) {
 		_inherits(CommentComponent, _React$Component);
@@ -24720,7 +25114,7 @@
 					null,
 					_react2.default.createElement(
 						'div',
-						{ className: 'comment-item box' },
+						{ className: 'comment-item box centred margin-top' },
 						_react2.default.createElement(
 							'header',
 							{ className: 'comment-item-header clearfix' },
@@ -24813,7 +25207,7 @@
 	exports.default = CommentComponent;
 
 /***/ },
-/* 170 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -24946,7 +25340,7 @@
 
 
 /***/ },
-/* 171 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24970,7 +25364,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(172);
+	__webpack_require__(180);
 
 	var CommentFormComponent = function (_React$Component) {
 		_inherits(CommentFormComponent, _React$Component);
@@ -25133,13 +25527,13 @@
 	exports.default = CommentFormComponent;
 
 /***/ },
-/* 172 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(173);
+	var content = __webpack_require__(181);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(165)(content, {});
@@ -25159,7 +25553,7 @@
 	}
 
 /***/ },
-/* 173 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(164)();
@@ -25173,13 +25567,13 @@
 
 
 /***/ },
-/* 174 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(175);
+	var content = __webpack_require__(183);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(165)(content, {});
@@ -25199,7 +25593,7 @@
 	}
 
 /***/ },
-/* 175 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(164)();
@@ -25207,19 +25601,19 @@
 
 
 	// module
-	exports.push([module.id, ".comment-item {\n  list-style-type: none;\n  list-style: none;\n  display: block;\n  max-width: 600px;\n  margin: 20px auto; }\n\n.comment-item-header {\n  padding: 10px 20px 0; }\n\n.comment-item-body {\n  padding: 10px 20px 15px; }\n\n.comment-item-footer {\n  background: #f8f8f8;\n  border-top: 1px solid #ddd;\n  font-size: 80%; }\n\n.comment-item-footer a {\n  text-decoration: none; }\n\n.comment-item p {\n  margin: 0;\n  padding: 0; }\n\n.comment-children {\n  padding-left: 20px; }\n", ""]);
+	exports.push([module.id, ".comment-item {\n  list-style-type: none;\n  list-style: none;\n  display: block;\n  max-width: 600px; }\n\n.comment-item-header {\n  padding: 10px 20px 0; }\n\n.comment-item-body {\n  padding: 10px 20px 15px; }\n\n.comment-item-footer {\n  background: #f8f8f8;\n  border-top: 1px solid #ddd;\n  font-size: 80%; }\n\n.comment-item-footer .horizontal-list-menu {\n  padding: 6px 20px 8px; }\n\n.comment-item-footer a {\n  text-decoration: none; }\n\n.comment-item p {\n  margin: 0;\n  padding: 0; }\n\n.comment-children {\n  padding-left: 20px; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 176 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(177);
+	var content = __webpack_require__(185);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(165)(content, {});
@@ -25239,7 +25633,7 @@
 	}
 
 /***/ },
-/* 177 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(164)();
@@ -25253,7 +25647,7 @@
 
 
 /***/ },
-/* 178 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25268,15 +25662,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _form = __webpack_require__(179);
+	var _form = __webpack_require__(187);
 
 	var _form2 = _interopRequireDefault(_form);
 
-	var _detail = __webpack_require__(182);
+	var _detail = __webpack_require__(190);
 
 	var _detail2 = _interopRequireDefault(_detail);
 
-	var _list = __webpack_require__(185);
+	var _list = __webpack_require__(193);
 
 	var _list2 = _interopRequireDefault(_list);
 
@@ -25313,6 +25707,20 @@
 				return this.state.activeTaskId;
 			}
 		}, {
+			key: 'clearActiveTask',
+			value: function clearActiveTask() {
+				this.setActiveTask(null);
+			}
+		}, {
+			key: 'hideAll',
+			value: function hideAll() {
+				this.setState({
+					editTaskId: null,
+					activeTaskId: null,
+					shouldShowNewTaskForm: false
+				});
+			}
+		}, {
 			key: 'setEditingTask',
 			value: function setEditingTask(id) {
 				this.hideAll();
@@ -25327,20 +25735,6 @@
 				this.setState({
 					activeTaskId: id
 				});
-			}
-		}, {
-			key: 'hideAll',
-			value: function hideAll() {
-				this.setState({
-					editTaskId: null,
-					activeTaskId: null,
-					shouldShowNewTaskForm: false
-				});
-			}
-		}, {
-			key: 'clearActiveTask',
-			value: function clearActiveTask() {
-				this.setActiveTask(null);
 			}
 		}, {
 			key: 'showNewTaskForm',
@@ -25372,10 +25766,6 @@
 				var content = undefined;
 				var task = undefined;
 
-				if (this.state.shouldShowNewTaskForm) {
-					content = _react2.default.createElement(_form2.default, { tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this) });
-				}
-
 				if (activeTaskId) {
 					task = this.props.tasks.get(activeTaskId);
 					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks });
@@ -25386,16 +25776,8 @@
 					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks });
 				}
 
-				if (!content) {
-					content = _react2.default.createElement(
-						'div',
-						null,
-						_react2.default.createElement(
-							'p',
-							null,
-							'No task selected'
-						)
-					);
+				if (this.state.shouldShowNewTaskForm || !content) {
+					content = _react2.default.createElement(_form2.default, { tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this) });
 				}
 
 				return _react2.default.createElement(
@@ -25452,7 +25834,7 @@
 	exports.default = TaskManagerComponent;
 
 /***/ },
-/* 179 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25476,7 +25858,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(180);
+	__webpack_require__(188);
 
 	var TaskFormComponent = function (_React$Component) {
 		_inherits(TaskFormComponent, _React$Component);
@@ -25568,13 +25950,13 @@
 	exports.default = TaskFormComponent;
 
 /***/ },
-/* 180 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(181);
+	var content = __webpack_require__(189);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(165)(content, {});
@@ -25594,7 +25976,7 @@
 	}
 
 /***/ },
-/* 181 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(164)();
@@ -25608,7 +25990,7 @@
 
 
 /***/ },
-/* 182 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25632,7 +26014,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(183);
+	__webpack_require__(191);
 
 	var TaskDetailComponent = function (_React$Component) {
 		_inherits(TaskDetailComponent, _React$Component);
@@ -25677,13 +26059,13 @@
 	exports.default = TaskDetailComponent;
 
 /***/ },
-/* 183 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(184);
+	var content = __webpack_require__(192);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(165)(content, {});
@@ -25703,7 +26085,7 @@
 	}
 
 /***/ },
-/* 184 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(164)();
@@ -25717,7 +26099,7 @@
 
 
 /***/ },
-/* 185 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25741,7 +26123,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(186);
+	__webpack_require__(194);
 
 	var TaskListComponent = function (_React$Component) {
 		_inherits(TaskListComponent, _React$Component);
@@ -25818,13 +26200,13 @@
 	exports.default = TaskListComponent;
 
 /***/ },
-/* 186 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(187);
+	var content = __webpack_require__(195);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(165)(content, {});
@@ -25844,7 +26226,7 @@
 	}
 
 /***/ },
-/* 187 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(164)();
@@ -25858,7 +26240,7 @@
 
 
 /***/ },
-/* 188 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25882,7 +26264,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(189);
+	__webpack_require__(197);
 
 	var current_date = new Date();
 
@@ -25975,7 +26357,7 @@
 
 				return _react2.default.createElement(
 					'section',
-					{ className: 'full-height panel calendar-example' },
+					{ className: 'calendar-example full-height panel' },
 					_react2.default.createElement(
 						'div',
 						{ id: 'calendar-example', className: 'example' },
@@ -26025,13 +26407,13 @@
 	exports.default = CalendarComponent;
 
 /***/ },
-/* 189 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(190);
+	var content = __webpack_require__(198);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(165)(content, {});
@@ -26051,7 +26433,7 @@
 	}
 
 /***/ },
-/* 190 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(164)();
@@ -26065,7 +26447,7 @@
 
 
 /***/ },
-/* 191 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26076,11 +26458,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lodash = __webpack_require__(192);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	var _localstorageCollection = __webpack_require__(194);
+	var _localstorageCollection = __webpack_require__(200);
 
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 
@@ -26092,64 +26470,186 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Comments = function (_LocalStorageCollecti) {
-		_inherits(Comments, _LocalStorageCollecti);
+	var Bookmarks = function (_LocalStorageCollecti) {
+		_inherits(Bookmarks, _LocalStorageCollecti);
 
-		function Comments() {
-			_classCallCheck(this, Comments);
+		function Bookmarks() {
+			_classCallCheck(this, Bookmarks);
 
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Comments).call(this));
-
-			_this.onRemove(function (model) {
-				var children = _this.getChildCommentsForComment(model);
-
-				children.forEach(function (child) {
-					_this.remove(child);
-				});
-			});
-			return _this;
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Bookmarks).apply(this, arguments));
 		}
 
-		_createClass(Comments, [{
+		_createClass(Bookmarks, [{
 			key: 'defaultModels',
 			value: function defaultModels() {
 				return [{
-					text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
-					username: 'ergusto',
-					date: new Date(),
-					parentId: false
+					title: 'The BBC',
+					url: 'http://bbc.co.uk',
+					text: 'News organisation.'
 				}, {
-					text: 'Almost everything uses the localStorage API, so changes you make will persist between visits, but only in the browser you are currently using.',
-					username: 'ergusto',
-					date: new Date(),
-					parentId: false
+					title: 'Wikipedia',
+					url: 'http://wikipedia.org',
+					text: 'An amazing resource where you can learn just about anything!'
 				}];
 			}
+		}]);
+
+		return Bookmarks;
+	}(_localstorageCollection2.default);
+
+	exports.default = Bookmarks;
+
+/***/ },
+/* 200 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _lodash = __webpack_require__(201);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _collection = __webpack_require__(203);
+
+	var _collection2 = _interopRequireDefault(_collection);
+
+	var _localstorage = __webpack_require__(206);
+
+	var _localstorage2 = _interopRequireDefault(_localstorage);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LocalStorageCollection = function (_Collection) {
+		_inherits(LocalStorageCollection, _Collection);
+
+		function LocalStorageCollection() {
+			_classCallCheck(this, LocalStorageCollection);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LocalStorageCollection).call(this));
+
+			if (window.localStorage) {
+				// always add bevhaiour in the constructor
+				_this.storeName = 'ERGUSTO:collection:' + _this.constructor.name;
+				_this.store = new _localstorage2.default(_this.storeName);
+				_this.setUpLocalStorage();
+			} else {
+				_this.usingLocalStorage = false;
+				_this.addDefaults();
+			}
+			return _this;
+		}
+
+		_createClass(LocalStorageCollection, [{
+			key: 'setUpLocalStorage',
+			value: function setUpLocalStorage() {
+				this.usingLocalStorage = true;
+				this.hasLocallyStoredModels = this.store.hasContents();
+				this.initialiseLocalStorageEvents();
+
+				if (this.hasLocallyStoredModels) {
+					var storeList = this.getListFromLocalStorage();
+					this.addMany(storeList);
+				} else {
+					this.addDefaults();
+				}
+			}
 		}, {
-			key: 'getRootComments',
-			value: function getRootComments() {
-				var comments = this.get();
-				return _lodash2.default.filter(comments, function (comment) {
-					return !comment.parentId;
+			key: 'initialiseLocalStorageEvents',
+			value: function initialiseLocalStorageEvents() {
+				var _this2 = this;
+
+				this.onCreate(function (model) {
+					if (!_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
+					if (model) {
+						var models = _lodash2.default.isArray(model) ? model : [model];
+						models.forEach(function (created) {
+							if (created && created.id) {
+								_this2.addOrUpdateModelToLocalStorage(created);
+							}
+						});
+					}
+				});
+
+				this.onUpdate(function (model) {
+					if (model) {
+						var models = _lodash2.default.isArray(model) ? model : [model];
+						models.forEach(function (updated) {
+							if (updated && updated.id) {
+								_this2.addOrUpdateModelToLocalStorage(updated);
+							}
+						});
+					}
+				});
+
+				this.onRemove(function (model) {
+					if (model) {
+						var models = _lodash2.default.isArray(model) ? model : [model];
+						models.forEach(function (removed) {
+							if (removed && removed.id) {
+								_this2.removeModelFromLocalStorage(removed);
+							}
+						});
+					}
 				});
 			}
 		}, {
-			key: 'getChildCommentsForComment',
-			value: function getChildCommentsForComment(parent) {
-				var comments = this.get();
-				return _lodash2.default.filter(comments, function (comment) {
-					return comment.parentId == parent.id;
+			key: 'addDefaults',
+			value: function addDefaults() {
+				if (this.defaultModels) {
+					var defaults = this.defaultModels();
+					this.createMany(defaults);
+				}
+			}
+		}, {
+			key: 'addOrUpdateModelToLocalStorage',
+			value: function addOrUpdateModelToLocalStorage(model) {
+				this.store.update(function (store) {
+					store[model.id] = model;
+					return store;
+				});
+			}
+		}, {
+			key: 'removeModelFromLocalStorageById',
+			value: function removeModelFromLocalStorageById(id) {
+				this.store.update(function (store) {
+					delete store[id];
+					return store;
+				});
+			}
+		}, {
+			key: 'removeModelFromLocalStorage',
+			value: function removeModelFromLocalStorage(model) {
+				this.removeModelFromLocalStorageById(model.id);
+			}
+		}, {
+			key: 'getListFromLocalStorage',
+			value: function getListFromLocalStorage() {
+				var store = this.store.get();
+				return _lodash2.default.keys(store).map(function (id) {
+					return store[id];
 				});
 			}
 		}]);
 
-		return Comments;
-	}(_localstorageCollection2.default);
+		return LocalStorageCollection;
+	}(_collection2.default);
 
-	exports.default = Comments;
+	exports.default = LocalStorageCollection;
 
 /***/ },
-/* 192 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -41086,10 +41586,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(193)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(202)(module), (function() { return this; }())))
 
 /***/ },
-/* 193 */
+/* 202 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -41105,7 +41605,7 @@
 
 
 /***/ },
-/* 194 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41116,164 +41616,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lodash = __webpack_require__(192);
+	var _lodash = __webpack_require__(201);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
-	var _collection = __webpack_require__(195);
-
-	var _collection2 = _interopRequireDefault(_collection);
-
-	var _localstorage = __webpack_require__(198);
-
-	var _localstorage2 = _interopRequireDefault(_localstorage);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var LocalStorageCollection = function (_Collection) {
-		_inherits(LocalStorageCollection, _Collection);
-
-		function LocalStorageCollection() {
-			_classCallCheck(this, LocalStorageCollection);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LocalStorageCollection).call(this));
-
-			if (window.localStorage) {
-				// always add bevhaiour in the constructor
-				_this.storeName = 'ERGUSTO:collection:' + _this.constructor.name;
-				_this.store = new _localstorage2.default(_this.storeName);
-				_this.setUpLocalStorage();
-			} else {
-				_this.usingLocalStorage = false;
-				_this.addDefaults();
-			}
-			return _this;
-		}
-
-		_createClass(LocalStorageCollection, [{
-			key: 'setUpLocalStorage',
-			value: function setUpLocalStorage() {
-				this.usingLocalStorage = true;
-				this.hasLocallyStoredModels = this.store.hasContents();
-				this.initialiseLocalStorageEvents();
-
-				if (this.hasLocallyStoredModels) {
-					var storeList = this.getListFromLocalStorage();
-					this.addMany(storeList);
-				} else {
-					this.addDefaults();
-				}
-			}
-		}, {
-			key: 'initialiseLocalStorageEvents',
-			value: function initialiseLocalStorageEvents() {
-				var _this2 = this;
-
-				this.onCreate(function (model) {
-					if (!_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
-					if (model) {
-						var models = _lodash2.default.isArray(model) ? model : [model];
-						models.forEach(function (created) {
-							if (created && created.id) {
-								_this2.addOrUpdateModelToLocalStorage(created);
-							}
-						});
-					}
-				});
-
-				this.onUpdate(function (model) {
-					if (model) {
-						var models = _lodash2.default.isArray(model) ? model : [model];
-						models.forEach(function (updated) {
-							if (updated && updated.id) {
-								_this2.addOrUpdateModelToLocalStorage(updated);
-							}
-						});
-					}
-				});
-
-				this.onRemove(function (model) {
-					if (model) {
-						var models = _lodash2.default.isArray(model) ? model : [model];
-						models.forEach(function (removed) {
-							if (removed && removed.id) {
-								_this2.removeModelFromLocalStorage(removed);
-							}
-						});
-					}
-				});
-			}
-		}, {
-			key: 'addDefaults',
-			value: function addDefaults() {
-				if (this.defaultModels) {
-					var defaults = this.defaultModels();
-					this.createMany(defaults);
-				}
-			}
-		}, {
-			key: 'addOrUpdateModelToLocalStorage',
-			value: function addOrUpdateModelToLocalStorage(model) {
-				this.store.update(function (store) {
-					store[model.id] = model;
-					return store;
-				});
-			}
-		}, {
-			key: 'removeModelFromLocalStorageById',
-			value: function removeModelFromLocalStorageById(id) {
-				this.store.update(function (store) {
-					delete store[id];
-					return store;
-				});
-			}
-		}, {
-			key: 'removeModelFromLocalStorage',
-			value: function removeModelFromLocalStorage(model) {
-				this.removeModelFromLocalStorageById(model.id);
-			}
-		}, {
-			key: 'getListFromLocalStorage',
-			value: function getListFromLocalStorage() {
-				var store = this.store.get();
-				return _lodash2.default.keys(store).map(function (id) {
-					return store[id];
-				});
-			}
-		}]);
-
-		return LocalStorageCollection;
-	}(_collection2.default);
-
-	exports.default = LocalStorageCollection;
-
-/***/ },
-/* 195 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _lodash = __webpack_require__(192);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	var _tools = __webpack_require__(196);
+	var _tools = __webpack_require__(204);
 
 	var _tools2 = _interopRequireDefault(_tools);
 
-	var _event = __webpack_require__(197);
+	var _event = __webpack_require__(205);
 
 	var _event2 = _interopRequireDefault(_event);
 
@@ -41291,20 +41642,24 @@
 			this.name = this.constructor.name;
 		}
 
-		// add models you don't want to instantiate with a new id
-		// e.g., models that already have an id, such as when
-		// retrieved from local storage
+		// change fires for all events
 
 		_createClass(Collection, [{
 			key: 'onChange',
 			value: function onChange(callback) {
 				this.events.register('change', callback);
 			}
+
+			// add models when you don't want to give them a new id
+
 		}, {
 			key: 'onAdd',
 			value: function onAdd(callback) {
 				this.events.register('add', callback);
 			}
+
+			// creating a model genereates a new id
+
 		}, {
 			key: 'onCreate',
 			value: function onCreate(callback) {
@@ -41320,9 +41675,6 @@
 			value: function onRemove(callback) {
 				this.events.register('remove', callback);
 			}
-
-			// triggering any event also triggers change event.
-
 		}, {
 			key: 'triggerChange',
 			value: function triggerChange() {
@@ -41438,7 +41790,7 @@
 	exports.default = Collection;
 
 /***/ },
-/* 196 */
+/* 204 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -41460,7 +41812,7 @@
 	exports.default = Tools;
 
 /***/ },
-/* 197 */
+/* 205 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -41514,7 +41866,7 @@
 	exports.default = EventBehaviour;
 
 /***/ },
-/* 198 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41525,7 +41877,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lodash = __webpack_require__(192);
+	var _lodash = __webpack_require__(201);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -41583,7 +41935,7 @@
 	exports.default = LocalStorageBehaviour;
 
 /***/ },
-/* 199 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41594,7 +41946,91 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _localstorageCollection = __webpack_require__(194);
+	var _lodash = __webpack_require__(201);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _localstorageCollection = __webpack_require__(200);
+
+	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Comments = function (_LocalStorageCollecti) {
+		_inherits(Comments, _LocalStorageCollecti);
+
+		function Comments() {
+			_classCallCheck(this, Comments);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Comments).call(this));
+
+			_this.onRemove(function (model) {
+				var children = _this.getChildCommentsForComment(model);
+
+				children.forEach(function (child) {
+					_this.remove(child);
+				});
+			});
+			return _this;
+		}
+
+		_createClass(Comments, [{
+			key: 'defaultModels',
+			value: function defaultModels() {
+				return [{
+					text: 'This site showcases some of the things I have created. Most examples are interactive. Try replying to or editing this comment.',
+					username: 'ergusto',
+					date: new Date(),
+					parentId: false
+				}, {
+					text: 'Almost everything uses the localStorage API, so changes you make will persist between visits, but only in the browser you are currently using.',
+					username: 'ergusto',
+					date: new Date(),
+					parentId: false
+				}];
+			}
+		}, {
+			key: 'getRootComments',
+			value: function getRootComments() {
+				var comments = this.get();
+				return _lodash2.default.filter(comments, function (comment) {
+					return !comment.parentId;
+				});
+			}
+		}, {
+			key: 'getChildCommentsForComment',
+			value: function getChildCommentsForComment(parent) {
+				var comments = this.get();
+				return _lodash2.default.filter(comments, function (comment) {
+					return comment.parentId == parent.id;
+				});
+			}
+		}]);
+
+		return Comments;
+	}(_localstorageCollection2.default);
+
+	exports.default = Comments;
+
+/***/ },
+/* 208 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _localstorageCollection = __webpack_require__(200);
 
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 
@@ -41628,7 +42064,7 @@
 	exports.default = Tasks;
 
 /***/ },
-/* 200 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41639,15 +42075,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lodash = __webpack_require__(192);
+	var _lodash = __webpack_require__(201);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
-	var _localstorage = __webpack_require__(198);
+	var _localstorage = __webpack_require__(206);
 
 	var _localstorage2 = _interopRequireDefault(_localstorage);
 
-	var _event = __webpack_require__(197);
+	var _event = __webpack_require__(205);
 
 	var _event2 = _interopRequireDefault(_event);
 
@@ -41740,13 +42176,13 @@
 	exports.default = User;
 
 /***/ },
-/* 201 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(202);
+	var content = __webpack_require__(211);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(165)(content, {});
@@ -41766,7 +42202,7 @@
 	}
 
 /***/ },
-/* 202 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(164)();
@@ -41774,10 +42210,97 @@
 
 
 	// module
-	exports.push([module.id, "/* vendor */\n/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */ }\n\n/**\n * Remove default margin.\n */\nbody {\n  margin: 0; }\n\n/* HTML5 display definitions\n   ========================================================================== */\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block; }\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n[hidden],\ntemplate {\n  display: none; }\n\n/* Links\n   ========================================================================== */\n/**\n * Remove the gray background color from active links in IE 10.\n */\na {\n  background-color: transparent; }\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\na:active,\na:hover {\n  outline: 0; }\n\n/* Text-level semantics\n   ========================================================================== */\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\nb,\nstrong {\n  font-weight: bold; }\n\n/**\n * Address styling not present in Safari and Chrome.\n */\ndfn {\n  font-style: italic; }\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0; }\n\n/**\n * Address styling not present in IE 8/9.\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\nsmall {\n  font-size: 80%; }\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\n   ========================================================================== */\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\nimg {\n  border: 0; }\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\n   ========================================================================== */\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\nfigure {\n  margin: 1em 40px; }\n\n/**\n * Address differences between Firefox and other browsers.\n */\nhr {\n  box-sizing: content-box;\n  height: 0; }\n\n/**\n * Contain overflow in all browsers.\n */\npre {\n  overflow: auto; }\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em; }\n\n/* Forms\n   ========================================================================== */\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\nbutton {\n  overflow: visible; }\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\nbutton,\nselect {\n  text-transform: none; }\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\nbutton,\nhtml input[type=\"button\"],\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\n * Re-set default cursor for disabled elements.\n */\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default; }\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\ninput {\n  line-height: normal; }\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  box-sizing: content-box;\n  /* 2 */ }\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\n * Define consistent border, margin, and padding.\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\ntextarea {\n  overflow: auto; }\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\n   ========================================================================== */\n/**\n * Remove most spacing between table cells.\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd,\nth {\n  padding: 0; }\n\n/* base */\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*:before,\n*:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\nbody {\n  background: #FCFCFC;\n  font-size: 14px;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; }\n\na {\n  color: inherit; }\n\n.btn {\n  display: inline-block;\n  border: 1px solid #ccc;\n  background: white;\n  padding: 4px 8px;\n  text-decoration: none;\n  font-size: 90%;\n  color: #777;\n  border-radius: 0px; }\n\n.btn:hover {\n  border-color: black;\n  color: black;\n  cursor: pointer; }\n\n.btn:active {\n  border-color: #ccc;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.btn-group .btn {\n  margin-right: 2px; }\n\n.btn-group .btn:last-child {\n  margin-right: 0px; }\n\nlabel {\n  display: block;\n  color: #777;\n  margin-bottom: 6px; }\n\nform .btn {\n  margin-right: 2px; }\n\nform.padding {\n  padding: 15px 20px 20px; }\n\n.field {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 6px 8px;\n  margin-bottom: 10px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 0px;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }\n\n.fieldCount {\n  color: #777;\n  font-size: 80%; }\n\n.field:focus {\n  outline: none;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);\n  border-color: black; }\n\n.form-error {\n  margin-bottom: 10px;\n  display: block; }\n\n/* helpers */\n/**\n * For modern browsers\n * 1. The space content is one way to avoid an Opera bug when the\n *    contenteditable attribute is included anywhere else in the document.\n *    Otherwise it causes space to appear at the top and bottom of elements\n *    that are clearfixed.\n * 2. The use of `table` rather than `block` is only necessary if using\n *    `:before` to contain the top-margins of child elements.\n */\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  /* 1 */\n  display: table;\n  /* 2 */ }\n\n.clearfix:after {\n  clear: both; }\n\n/**\n * For IE 6/7 only\n * Include this rule to trigger hasLayout and contain floats.\n */\n.clearfix {\n  *zoom: 1; }\n\n.flex-col-container, .flex-col {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex; }\n\n.flex-col-container {\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.flex-col-inner {\n  width: 100%;\n  display: block; }\n\n.hide-overflow {\n  height: 100%;\n  overflow: hidden; }\n\n.opaque {\n  opacity: 1; }\n\n.black {\n  color: black; }\n\n.hidden {\n  display: none; }\n\n.seethrough {\n  opacity: 0; }\n\n.invisible {\n  visibility: hidden; }\n\n.muted {\n  color: #777; }\n\n.margin {\n  margin: 20px; }\n\n.margin-left {\n  margin-left: 20px; }\n\n.margin-bottom {\n  margin-bottom: 20px; }\n\n.margin-right {\n  margin-right: 20px; }\n\n.margin-top {\n  margin-top: 20px; }\n\n.padding {\n  padding: 20px; }\n\n.muted {\n  color: #777; }\n\n.pull-right {\n  float: right; }\n\n.full-height {\n  min-height: 100vh; }\n\n/* objects */\n.box {\n  background: white;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.dropdown {\n  position: absolute;\n  z-index: 100;\n  display: block; }\n\n.dropdown.hidden {\n  display: none; }\n\n.horizontal-list-menu {\n  list-style: none;\n  list-style-type: none;\n  padding: 0 20px;\n  margin: 0;\n  line-height: 26px; }\n\n.horizontal-list-menu li {\n  display: inline-block;\n  padding-right: 10px; }\n\n.horizontal-list-menu li.pull-right {\n  padding-right: 0px; }\n\n.horizontal-list-menu a:hover {\n  color: black; }\n\n.panel {\n  padding: 20px;\n  -moz-align-items: center;\n  -webkit-align-items: center;\n  -ms-align-items: center;\n  align-items: center;\n  display: -moz-flex;\n  display: -webkit-flex;\n  display: -ms-flex;\n  display: flex;\n  -moz-justify-content: center;\n  -webkit-justify-content: center;\n  -ms-justify-content: center;\n  justify-content: center;\n  position: relative; }\n\n.example {\n  width: 100%; }\n\n.comments-example {\n  padding-top: 50px; }\n\n.tasklist-example {\n  background: #c2e59c;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to left, #c2e59c, #64b3f4);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to left, #c2e59c, #64b3f4);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n\n.calendar-example {\n  background: #699bc8;\n  background: -moz-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -webkit-gradient(radial, top left, 0px, top left, 100%, color-stop(0%, #699bc8), color-stop(57%, #b5c5d8));\n  background: -webkit-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -o-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -ms-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: radial-gradient(ellipse at top left, #699bc8 0%, #b5c5d8 57%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#699bc8', endColorstr='#b5c5d8',GradientType=1 ); }\n", ""]);
+	exports.push([module.id, "/* vendor */\n/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */ }\n\n/**\n * Remove default margin.\n */\nbody {\n  margin: 0; }\n\n/* HTML5 display definitions\n   ========================================================================== */\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block; }\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n[hidden],\ntemplate {\n  display: none; }\n\n/* Links\n   ========================================================================== */\n/**\n * Remove the gray background color from active links in IE 10.\n */\na {\n  background-color: transparent; }\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\na:active,\na:hover {\n  outline: 0; }\n\n/* Text-level semantics\n   ========================================================================== */\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\nb,\nstrong {\n  font-weight: bold; }\n\n/**\n * Address styling not present in Safari and Chrome.\n */\ndfn {\n  font-style: italic; }\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0; }\n\n/**\n * Address styling not present in IE 8/9.\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\nsmall {\n  font-size: 80%; }\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\n   ========================================================================== */\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\nimg {\n  border: 0; }\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\n   ========================================================================== */\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\nfigure {\n  margin: 1em 40px; }\n\n/**\n * Address differences between Firefox and other browsers.\n */\nhr {\n  box-sizing: content-box;\n  height: 0; }\n\n/**\n * Contain overflow in all browsers.\n */\npre {\n  overflow: auto; }\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em; }\n\n/* Forms\n   ========================================================================== */\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\nbutton {\n  overflow: visible; }\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\nbutton,\nselect {\n  text-transform: none; }\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\nbutton,\nhtml input[type=\"button\"],\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\n * Re-set default cursor for disabled elements.\n */\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default; }\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\ninput {\n  line-height: normal; }\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  box-sizing: content-box;\n  /* 2 */ }\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\n * Define consistent border, margin, and padding.\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\ntextarea {\n  overflow: auto; }\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\n   ========================================================================== */\n/**\n * Remove most spacing between table cells.\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd,\nth {\n  padding: 0; }\n\n/* base */\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*:before,\n*:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\nbody {\n  background: #FCFCFC;\n  font-size: 14px;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; }\n\na {\n  color: inherit; }\n\n.btn {\n  display: inline-block;\n  border: 1px solid #ccc;\n  background: white;\n  padding: 4px 8px;\n  text-decoration: none;\n  font-size: 90%;\n  color: #777;\n  border-radius: 0px; }\n\n.btn:hover {\n  border-color: black;\n  color: black;\n  cursor: pointer; }\n\n.btn:active {\n  border-color: #ccc;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.btn-group .btn {\n  margin-right: 2px; }\n\n.btn-group .btn:last-child {\n  margin-right: 0px; }\n\nlabel {\n  display: block;\n  color: #777;\n  margin-bottom: 6px; }\n\nform .btn {\n  margin-right: 2px; }\n\nform.padding {\n  padding: 15px 20px 20px; }\n\n.field {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 6px 8px;\n  margin-bottom: 10px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 0px;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }\n\n.fieldCount {\n  color: #777;\n  font-size: 80%; }\n\n.field:focus {\n  outline: none;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);\n  border-color: black; }\n\n.form-error {\n  margin-bottom: 10px;\n  display: block; }\n\n/* helpers */\n/**\n * For modern browsers\n * 1. The space content is one way to avoid an Opera bug when the\n *    contenteditable attribute is included anywhere else in the document.\n *    Otherwise it causes space to appear at the top and bottom of elements\n *    that are clearfixed.\n * 2. The use of `table` rather than `block` is only necessary if using\n *    `:before` to contain the top-margins of child elements.\n */\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  /* 1 */\n  display: table;\n  /* 2 */ }\n\n.clearfix:after {\n  clear: both; }\n\n/**\n * For IE 6/7 only\n * Include this rule to trigger hasLayout and contain floats.\n */\n.clearfix {\n  *zoom: 1; }\n\n.flex-col-container, .flex-col {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex; }\n\n.flex-col-container {\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.flex-col-inner {\n  width: 100%;\n  display: block; }\n\n.hide-overflow {\n  height: 100%;\n  overflow: hidden; }\n\n.opaque {\n  opacity: 1; }\n\n.black {\n  color: black; }\n\n.hidden {\n  display: none; }\n\n.seethrough {\n  opacity: 0; }\n\n.invisible {\n  visibility: hidden; }\n\n.muted {\n  color: #777; }\n\n.margin {\n  margin: 20px; }\n\n.margin-left {\n  margin-left: 20px; }\n\n.margin-bottom {\n  margin-bottom: 20px; }\n\n.margin-right {\n  margin-right: 20px; }\n\n.margin-top {\n  margin-top: 20px; }\n\n.padding {\n  padding: 20px; }\n\n.muted {\n  color: #777; }\n\n.pull-right {\n  float: right; }\n\n.full-height {\n  min-height: 100vh; }\n\n.centred {\n  margin: 0 auto; }\n\n.centred.margin-top {\n  margin: 20px auto 0px; }\n\n.centred.margin-bottom {\n  margin: 0px auto 20px; }\n\n/* objects */\n.box {\n  background: white;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.dropdown {\n  position: absolute;\n  z-index: 100;\n  display: block; }\n\n.dropdown.hidden {\n  display: none; }\n\n.horizontal-list-menu {\n  list-style: none;\n  list-style-type: none;\n  padding: 0 20px;\n  margin: 0; }\n\n.horizontal-list-menu li {\n  display: inline-block;\n  padding-right: 10px; }\n\n.horizontal-list-menu li.pull-right {\n  padding-right: 0px; }\n\n.horizontal-list-menu a {\n  margin-right: 0px; }\n\n.horizontal-list-menu a:hover {\n  color: black; }\n\n.horizontal-list-menu--btns li {\n  padding-right: 0px; }\n\n.panel {\n  padding: 20px;\n  -moz-align-items: center;\n  -webkit-align-items: center;\n  -ms-align-items: center;\n  align-items: center;\n  display: -moz-flex;\n  display: -webkit-flex;\n  display: -ms-flex;\n  display: flex;\n  -moz-justify-content: center;\n  -webkit-justify-content: center;\n  -ms-justify-content: center;\n  justify-content: center;\n  position: relative; }\n\n.example {\n  width: 100%; }\n\n.comments-example {\n  padding-top: 50px; }\n\n.tasklist-example {\n  background: #c2e59c;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to left, #c2e59c, #64b3f4);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to left, #c2e59c, #64b3f4);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n\n.calendar-example {\n  background: #699bc8;\n  background: -moz-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -webkit-gradient(radial, top left, 0px, top left, 100%, color-stop(0%, #699bc8), color-stop(57%, #b5c5d8));\n  background: -webkit-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -o-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: -ms-radial-gradient(top left, ellipse cover, #699bc8 0%, #b5c5d8 57%);\n  background: radial-gradient(ellipse at top left, #699bc8 0%, #b5c5d8 57%);\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#699bc8', endColorstr='#b5c5d8',GradientType=1 ); }\n", ""]);
 
 	// exports
 
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _lodash = __webpack_require__(201);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _tools = __webpack_require__(204);
+
+	var _tools2 = _interopRequireDefault(_tools);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var DropDownBehaviour = function () {
+		function DropDownBehaviour(component) {
+			_classCallCheck(this, DropDownBehaviour);
+
+			this.component = component;
+			this.dropdownName = 'shouldShow:ERGUSTOdropdownName' + this.component.name + ':' + _tools2.default.generateID();
+		}
+
+		_createClass(DropDownBehaviour, [{
+			key: 'init',
+			value: function init() {
+				this.set(false);
+			}
+		}, {
+			key: 'get',
+			value: function get() {
+				return this.component.state[this.dropdownName];
+			}
+		}, {
+			key: 'set',
+			value: function set(value) {
+				var set = {};
+				set = _lodash2.default.extend(set, this.component.state);
+				set[this.dropdownName] = value;
+				this.component.setState(set);
+			}
+		}, {
+			key: 'current',
+			value: function current() {
+				return this.component.state[this.dropdownName];
+			}
+		}, {
+			key: 'open',
+			value: function open() {
+				this.set(true);
+			}
+		}, {
+			key: 'close',
+			value: function close() {
+				this.set(false);
+			}
+		}, {
+			key: 'toggle',
+			value: function toggle() {
+				this.set(!this.current());
+			}
+		}, {
+			key: 'isOpen',
+			value: function isOpen() {
+				return !!this.current();
+			}
+		}, {
+			key: 'isClosed',
+			value: function isClosed() {
+				return !this.current();
+			}
+		}]);
+
+		return DropDownBehaviour;
+	}();
+
+	exports.default = DropDownBehaviour;
 
 /***/ }
 /******/ ]);

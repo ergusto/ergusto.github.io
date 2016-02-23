@@ -3,7 +3,6 @@
 	list-style: none;
 	display: block;
 	max-width: 600px;
-	margin: 20px auto;
 }
 
 .comment-item-header {
@@ -18,6 +17,10 @@
 	background: #f8f8f8;
 	border-top: 1px solid #ddd;
 	font-size: 80%;
+}
+
+.comment-item-footer .horizontal-list-menu {
+	padding: 6px 20px 8px;
 }
 
 .comment-item-footer a {

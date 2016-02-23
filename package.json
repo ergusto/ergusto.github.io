@@ -34,12 +34,15 @@
     "webpack": "^1.12.13"
   },
   "dependencies": {
+    "exports-loader": "^0.6.3",
+    "imports-loader": "^0.6.5",
     "lodash": "^4.5.1",
     "moment": "^2.11.2",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-timeago": "^2.2.1",
     "underscore": "^1.8.3",
-    "velocity-animate": "^1.2.3"
+    "velocity-animate": "^1.2.3",
+    "whatwg-fetch": "^0.11.0"
   }
 }

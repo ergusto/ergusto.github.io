@@ -22,6 +22,18 @@ export default class TaskManagerComponent extends React.Component {
 		return this.state.activeTaskId;
 	}
 
+	clearActiveTask() {
+		this.setActiveTask(null);
+	}
+
+	hideAll() {
+		this.setState({
+			editTaskId: null,
+			activeTaskId: null,
+			shouldShowNewTaskForm: false
+		});
+	}
+
 	setEditingTask(id) {
 		this.hideAll();
 		this.setState({
@@ -34,18 +46,6 @@ export default class TaskManagerComponent extends React.Component {
 		this.setState({
 			activeTaskId: id
 		});
-	}
-
-	hideAll() {
-		this.setState({
-			editTaskId: null,
-			activeTaskId: null,
-			shouldShowNewTaskForm: false
-		});
-	}
-
-	clearActiveTask() {
-		this.setActiveTask(null);
 	}
 
 	showNewTaskForm() {
@@ -73,10 +73,6 @@ export default class TaskManagerComponent extends React.Component {
 		let content;
 		let task;
 
-		if (this.state.shouldShowNewTaskForm) {
-			content = <TaskFormComponent tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} />
-		} 
-
 		if (activeTaskId) {
 			task = this.props.tasks.get(activeTaskId);
 			content = <TaskDetailComponent task={task} tasks={this.props.tasks} />
@@ -87,8 +83,8 @@ export default class TaskManagerComponent extends React.Component {
 			content = <TaskFormComponent task={task} tasks={this.props.tasks} />
 		}
 
-		if (!content) {
-			content = (<div><p>No task selected</p></div>);
+		if (this.state.shouldShowNewTaskForm || !content) {
+			content = <TaskFormComponent tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} />
 		}
 
 		return (

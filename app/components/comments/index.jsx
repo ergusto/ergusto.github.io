@@ -15,8 +15,8 @@ export default class CommentListComponent extends React.Component {
 	}
 
 	render() {
-		const comments = this.props.comments.getRootComments();
 		let content;
+		const comments = this.props.comments.getRootComments();
 
 		if (comments.length) {
 			content = comments.map((comment) => {
@@ -27,7 +27,7 @@ export default class CommentListComponent extends React.Component {
 		}
 
 		return (
-			 <section className="full-height panel comments-example">
+			 <section className="comments-example full-height panel">
 
 				<div id="comment-example" className="example">
 					

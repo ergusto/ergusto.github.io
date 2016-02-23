@@ -1,5 +1,7 @@
 import React from 'react';
 
+import DropDownBehaviour from '../../behaviours/dropdown.js';
+
 // import styles for this component
 require('!style!css!sass!./styles/settings.scss');
 
@@ -9,7 +11,7 @@ export default class SettingsComponent extends  React.Component {
 		super(props);
 
 		this.state = {};
-		this.state.shouldShowDropDown = false;
+		this.dropdown = new DropDownBehaviour(this);
 		
 		this.props.user.onUpdate(() => {
 			this.forceUpdate();
@@ -17,9 +19,12 @@ export default class SettingsComponent extends  React.Component {
 	}
 
 	componentDidMount() {
+		this.dropdown.init();
+
+
 		const hideDropDownOnOutsideClickhandler = (event) => {
 			const target = event.target;
-			if (!this.refs.dropdown.contains(target)) this.hideDropdown();
+			if (!this.refs.dropdown.contains(target)) this.dropdown.close();
 		}
 
 		document.body.addEventListener('click', hideDropDownOnOutsideClickhandler);
@@ -28,27 +33,7 @@ export default class SettingsComponent extends  React.Component {
 
 	triggerClickHandler(event) {
 		event.preventDefault();
-		this.toggleDropdown();
-	}
-
-	get isShowing() {
-		return this.state.shouldShowDropDown;
-	}
-
-	showDropDown() {
-		this.setState({
-			shouldShowDropDown: true
-		});
-	}
-
-	hideDropdown() {
-		this.setState({
-			shouldShowDropDown: false
-		});
-	}
-
-	toggleDropdown() {
-		this.isShowing ? this.hideDropdown() : this.showDropDown();
+		this.dropdown.open();
 	}
 
 	setUserIntroAnimationSetting(setting) {
@@ -81,7 +66,7 @@ export default class SettingsComponent extends  React.Component {
 		let animationSettingLabelText;
 		const username = this.props.user.getUsername();
 
-		if (this.state.shouldShowDropDown) {
+		if (this.dropdown.isOpen()) {
 			dropdownClass = 'dropdown box clearfix';
 			triggerClass = 'settings-trigger opaque';
 		} else {

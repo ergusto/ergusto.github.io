@@ -11,17 +11,19 @@ export default class Collection {
 		this.name = this.constructor.name;
 	}
 
-	// add models you don't want to instantiate with a new id
-	// e.g., models that already have an id, such as when 
-	// retrieved from local storage
+	// change fires for all events
 
 	onChange(callback) {
 		this.events.register('change', callback);
 	}
 
+	// add models when you don't want to give them a new id
+
 	onAdd(callback) {
 		this.events.register('add', callback);
 	}
+
+	// creating a model genereates a new id
 
 	onCreate(callback) {
 		this.events.register('create', callback);
@@ -34,8 +36,6 @@ export default class Collection {
 	onRemove(callback) {
 		this.events.register('remove', callback);
 	}
-
-	// triggering any event also triggers change event.
 
 	triggerChange() {
 		this.events.broadcast('change');

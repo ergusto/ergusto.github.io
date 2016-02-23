@@ -3,6 +3,12 @@ module.exports = {
 	output: {
 		filename: 'build/bundle.js'
 	},
+	// fetch polyfill
+	plugins: [
+		new webpack.ProvidePlugin({
+			'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+		})
+	],
 	module: {
 		preLoaders: [
 			{

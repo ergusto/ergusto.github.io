@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import IntroductionComponent from './components/introduction/index.jsx';
+import BookmarkManagerComponent from './components/bookmarks/index.jsx';
 import CommentListComponent from './components/comments/index.jsx';
 import TaskManagerComponent from './components/tasklist/index.jsx';
 import CalendarComponent from './components/calendar/index.jsx';
 
+import Bookmarks from './collections/bookmarks.js';
 import Comments from './collections/comments.js';
 import Tasks from './collections/tasks.js';
 
@@ -19,6 +21,8 @@ require('!style!css!sass!./styles/app.scss');
 const container = document.getElementById('container');
 
 const user = new User();
+
+const bookmarks = new Bookmarks();
 const comments = new Comments();
 const tasks = new Tasks();
 
@@ -34,6 +38,7 @@ class App extends React.Component {
 
 		return (
 			<div>
+				{/*<BookmarkManagerComponent user={user} bookmarks={bookmarks} />*/}
 				<IntroductionComponent user={user} />
 				<CommentListComponent user={user} comments={comments} />
 				<TaskManagerComponent user={user} tasks={tasks} />

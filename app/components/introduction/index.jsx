@@ -105,7 +105,7 @@ export default class IntroductionComponent extends React.Component {
 		if (shouldShowAnimation) {
 			body.classList.add('hide-overflow');
 			body.addEventListener('touchmove', prevent);
-			panelClass = 'full-height panel introduction';
+			panelClass = 'introduction panel full-height';
 			settingsClass = 'hidden seethrough';
 
 			name = (<span className="name">
@@ -115,7 +115,7 @@ export default class IntroductionComponent extends React.Component {
 					</span>);
 
 		} else {
-			panelClass = 'panel introduction introduction-no-animation';
+			panelClass = 'introduction introduction-no-animation panel';
 			settingsClass = 'settings-container';
 
 			name = (<span className="name">ergusto</span>);
