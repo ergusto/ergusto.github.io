@@ -25,8 +25,8 @@ export default class BookmarkListComponent extends React.Component {
 			content = bookmarks.map((bookmark) => {
 				return (
 					<div onClick={this.clickHandler.bind(this, bookmark.id)} key={bookmark.id} className="bookmark-item box margin-vertical padding">
-						<p>{bookmark.title}</p>
-						<p>{bookmark.url}</p>
+						<h3 className="bookmark-item-title muted">{bookmark.title}</h3>
+						<small className="bookmark-item-url margin-top-sm">{bookmark.url}</small>
 					</div>
 				);
 			});

@@ -1,3 +1,7 @@
+*[class^="margin-"], *[class*=" margin-"]{
+	display: block;
+}
+
 .margin {
 	margin: 20px;
 }
