@@ -25859,7 +25859,7 @@
 					content = tasks.map(function (task) {
 						return _react2.default.createElement(
 							'li',
-							{ key: task.id },
+							{ className: 'task-item', key: task.id },
 							_react2.default.createElement(
 								'a',
 								{ href: '#', onClick: _this2.clickHandler.bind(_this2, task.id) },
@@ -25929,7 +25929,7 @@
 
 
 	// module
-	exports.push([module.id, ".tasklist {\n  width: 100%;\n  max-width: 800px;\n  background: white;\n  padding: 0;\n  margin: 0 auto;\n  min-height: 600px;\n  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2); }\n\n.tasklist-sidebar {\n  width: 40%;\n  background: #373D40;\n  color: #b1b4b6;\n  padding: 20px; }\n\n.tasklist-sidebar h3 {\n  display: inline-block;\n  margin: 0; }\n\n.tasklist-content h3 {\n  margin: 0;\n  margin-bottom: 10px;\n  padding-bottom: 9px;\n  border-bottom: 1px solid black; }\n\n.tasklist-content {\n  width: 60%;\n  padding: 20px;\n  color: #373D40; }\n\n.tasklist-content p {\n  margin: 0; }\n\n.plus-btn {\n  display: block;\n  text-decoration: none;\n  font-size: 150%;\n  line-height: 14px; }\n\n.plus-btn:hover {\n  color: white; }\n\n.task-list {\n  padding: 0;\n  margin: 0;\n  padding-top: 10px;\n  list-style: none;\n  list-style-type: none; }\n\n.task-list li {\n  margin-top: 10px; }\n\n.task-list li:first-child {\n  margin-top: 0px; }\n\n.task-list a {\n  text-decoration: none; }\n\n.task-list a:hover {\n  color: white; }\n\n.remove-task {\n  line-height: 14px; }\n", ""]);
+	exports.push([module.id, ".tasklist {\n  width: 100%;\n  max-width: 800px;\n  background: white;\n  padding: 0;\n  margin: 0 auto;\n  min-height: 600px;\n  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2); }\n\n.tasklist-sidebar {\n  width: 40%;\n  background: #373D40;\n  color: #b1b4b6;\n  padding: 20px; }\n\n.tasklist-sidebar h3 {\n  display: inline-block;\n  margin: 0; }\n\n.tasklist-content h3 {\n  margin: 0;\n  margin-bottom: 10px;\n  padding-bottom: 9px;\n  border-bottom: 1px solid black; }\n\n.tasklist-content {\n  width: 60%;\n  padding: 20px;\n  color: #373D40; }\n\n.tasklist-content p {\n  margin: 0; }\n\n.plus-btn {\n  display: block;\n  text-decoration: none;\n  font-size: 150%;\n  line-height: 14px; }\n\n.plus-btn:hover {\n  color: white; }\n\n.task-list {\n  padding: 0;\n  margin: 0;\n  padding-top: 10px;\n  list-style: none;\n  list-style-type: none; }\n\n.task-list li {\n  position: relative;\n  margin-top: 10px;\n  padding-right: 20px; }\n\n.task-list li:first-child {\n  margin-top: 0px; }\n\n.task-list a {\n  text-decoration: none; }\n\n.task-list a:hover {\n  color: white; }\n\n.remove-task {\n  line-height: 14px;\n  position: absolute;\n  top: 0;\n  right: 0; }\n", ""]);
 
 	// exports
 

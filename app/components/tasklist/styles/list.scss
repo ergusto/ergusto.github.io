@@ -57,7 +57,9 @@
 }
 
 .task-list li {
+	position: relative;
 	margin-top: 10px;
+	padding-right: 20px;
 }
 
 .task-list li:first-child {
@@ -74,4 +76,7 @@
 
 .remove-task {
 	line-height: 14px;
+	position: absolute;
+	top: 0;
+	right: 0;
 }

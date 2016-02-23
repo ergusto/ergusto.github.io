@@ -30,7 +30,7 @@ export default class TaskListComponent extends React.Component {
 		if (tasks.length) {
 			content = tasks.map((task) => {
 				return (
-					<li key={task.id}><a href="#" onClick={this.clickHandler.bind(this, task.id)}>{task.title}</a> <a onClick={this.removeHandler.bind(this, task.id)} href="#" className="pull-right remove-task">x</a></li>
+					<li className="task-item" key={task.id}><a href="#" onClick={this.clickHandler.bind(this, task.id)}>{task.title}</a> <a onClick={this.removeHandler.bind(this, task.id)} href="#" className="pull-right remove-task">x</a></li>
 				);
 			});
 		} else {
