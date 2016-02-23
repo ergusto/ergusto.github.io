@@ -2,10 +2,13 @@ import Tools from '../lib/tools.js';
 
 export default class ComponentSingleStateModifierBehaviour {
 
+	// must be called from constructor of react component
+
 	constructor(component, defaultState) {
 		this.component = component;
 		this.stateName = 'ERGUSTO:state-modifier:' + this.component.name + ':' + Tools.generateID();
 		this.defaultState = defaultState;
+		this.component.state[this.stateName] = this.defaultState;
 	}
 
 	get(property) {

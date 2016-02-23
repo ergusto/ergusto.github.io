@@ -2,13 +2,10 @@ import ComponentSingleStateModifierBehaviour from './component.state.modifier.js
 
 export default class TabbedStateBehaviour {
 
-	constructor(component, defaultTab) {
-		console.log('TabbedStateBehaviour:', defaultTab);
-		this.tabState = new ComponentSingleStateModifierBehaviour(component, defaultTab);
-	}
+	// must be called from constructor of react component
 
-	init() {
-		this.tabState.init();
+	constructor(component, defaultTab) {
+		this.tabState = new ComponentSingleStateModifierBehaviour(component, defaultTab);
 	}
 
 	open(tabName) {

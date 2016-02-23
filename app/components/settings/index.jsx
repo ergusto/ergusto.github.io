@@ -19,9 +19,6 @@ export default class SettingsComponent extends  React.Component {
 	}
 
 	componentDidMount() {
-		this.dropdown.init();
-
-
 		const hideDropDownOnOutsideClickhandler = (event) => {
 			const target = event.target;
 			if (!this.refs.dropdown.contains(target)) this.dropdown.close();

@@ -17,12 +17,6 @@ export default class BookmarkManagerComponent extends React.Component {
 		this.tabs = new TabbedStateBehaviour(this, 'list');
 	}
 
-	componentDidMount() {
-		// necessary to set state on this component from the behaviour definition
-		// as it can't be done in the constructor
-		this.tabs.init();
-	}
-
 	showTab(tab, event) {
 		event.preventDefault();
 		this.tabs.open(tab);

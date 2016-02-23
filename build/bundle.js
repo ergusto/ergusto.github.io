@@ -136,6 +136,7 @@
 				return _react2.default.createElement(
 					'div',
 					null,
+					_react2.default.createElement(_index4.default, { user: user, bookmarks: bookmarks }),
 					_react2.default.createElement(_index2.default, { user: user }),
 					_react2.default.createElement(_index6.default, { user: user, comments: comments }),
 					_react2.default.createElement(_index8.default, { user: user, tasks: tasks })
@@ -23952,8 +23953,6 @@
 			value: function componentDidMount() {
 				var _this2 = this;
 
-				this.dropdown.init();
-
 				var hideDropDownOnOutsideClickhandler = function hideDropDownOnOutsideClickhandler(event) {
 					var target = event.target;
 					if (!_this2.refs.dropdown.contains(target)) _this2.dropdown.close();
@@ -24548,13 +24547,6 @@
 		}
 
 		_createClass(BookmarkManagerComponent, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				// necessary to set state on this component from the behaviour definition
-				// as it can't be done in the constructor
-				this.tabs.init();
-			}
-		}, {
 			key: 'showTab',
 			value: function showTab(tab, event) {
 				event.preventDefault();
@@ -24812,19 +24804,16 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var TabbedStateBehaviour = function () {
+
+		// must be called from constructor of react component
+
 		function TabbedStateBehaviour(component, defaultTab) {
 			_classCallCheck(this, TabbedStateBehaviour);
 
-			console.log('TabbedStateBehaviour:', defaultTab);
 			this.tabState = new _componentStateModifier2.default(component, defaultTab);
 		}
 
 		_createClass(TabbedStateBehaviour, [{
-			key: 'init',
-			value: function init() {
-				this.tabState.init();
-			}
-		}, {
 			key: 'open',
 			value: function open(tabName) {
 				this.tabState.set(tabName);
@@ -42220,6 +42209,9 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var DropDownBehaviour = function () {
+
+		// must be called from constructor of react component
+
 		function DropDownBehaviour(component) {
 			_classCallCheck(this, DropDownBehaviour);
 
@@ -42228,11 +42220,6 @@
 		}
 
 		_createClass(DropDownBehaviour, [{
-			key: 'init',
-			value: function init() {
-				this.dropDownState.init();
-			}
-		}, {
 			key: 'open',
 			value: function open() {
 				this.dropDownState.set(true);
@@ -42285,12 +42272,16 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var ComponentSingleStateModifierBehaviour = function () {
+
+		// must be called from constructor of react component
+
 		function ComponentSingleStateModifierBehaviour(component, defaultState) {
 			_classCallCheck(this, ComponentSingleStateModifierBehaviour);
 
 			this.component = component;
 			this.stateName = 'ERGUSTO:state-modifier:' + this.component.name + ':' + _tools2.default.generateID();
 			this.defaultState = defaultState;
+			this.component.state[this.stateName] = this.defaultState;
 		}
 
 		_createClass(ComponentSingleStateModifierBehaviour, [{

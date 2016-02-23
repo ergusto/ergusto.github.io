@@ -2,13 +2,11 @@ import ComponentSingleStateModifierBehaviour from './component.state.modifier.js
 
 export default class DropDownBehaviour {
 
+	// must be called from constructor of react component
+
 	constructor(component) {
 		const  defaultState = false;
 		this.dropDownState = new ComponentSingleStateModifierBehaviour(component, defaultState);
-	}
-
-	init() {
-		this.dropDownState.init();
 	}
 
 	open() {
