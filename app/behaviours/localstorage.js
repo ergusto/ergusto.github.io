@@ -6,6 +6,10 @@ export default class LocalStorageBehaviour {
 		this.storeName = storeName;
 	}
 
+	static resetBrowserLocalStorage() {
+		localStorage.clear();
+	}
+
 	get() {
 		const store = localStorage.getItem(this.storeName);
 		return _.isString(store) ? JSON.parse(store) : {};
@@ -29,10 +33,6 @@ export default class LocalStorageBehaviour {
 		const store = this.get();
 		const updated = callback(store);
 		this.set(updated);
-	}
-
-	resetBrowserLocalStorage() {
-		localStorage.clear();
 	}
 
 }

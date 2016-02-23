@@ -7,13 +7,11 @@ export default class Comments extends LocalStorageCollection {
 		super();
 
 		this.onRemove((model) => {
-
 			const children = this.getChildCommentsForComment(model);
 
 			children.forEach((child) => {
 				this.remove(child);
 			});
-
 		});
 	}
 
