@@ -38,7 +38,7 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<BookmarkManagerComponent user={user} bookmarks={bookmarks} />
+				{/*<BookmarkManagerComponent user={user} bookmarks={bookmarks} />*/}
 				<IntroductionComponent user={user} />
 				<CommentListComponent user={user} comments={comments} />
 				<TaskManagerComponent user={user} tasks={tasks} />

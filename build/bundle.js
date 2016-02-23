@@ -136,7 +136,6 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_index4.default, { user: user, bookmarks: bookmarks }),
 					_react2.default.createElement(_index2.default, { user: user }),
 					_react2.default.createElement(_index6.default, { user: user, comments: comments }),
 					_react2.default.createElement(_index8.default, { user: user, tasks: tasks })
