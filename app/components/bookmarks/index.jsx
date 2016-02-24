@@ -43,7 +43,7 @@ export default class BookmarkManagerComponent extends React.Component {
 	}
 
 	submitCallback(bookmark) {
-		this.tabs.open('list');
+		this.setActiveBookmark(bookmark.id);
 	}
 
 	render() {

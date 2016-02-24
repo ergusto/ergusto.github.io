@@ -19851,7 +19851,7 @@
 											setTimeout(function () {
 												(0, _velocityAnimate2.default)(container, { 'min-height': '' }, { duration: 800 });
 
-												(0, _velocityAnimate2.default)(refs.namef1, { width: 0 }, { display: 'none' });
+												(0, _velocityAnimate2.default)(refs.namef1, { width: 0 });
 												(0, _velocityAnimate2.default)(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 
 												setTimeout(function () {
@@ -19859,6 +19859,7 @@
 													body.removeEventListener('touchmove', prevent);
 
 													setTimeout(function () {
+														(0, _velocityAnimate2.default)(refs.namef1, { display: 'none' });
 														refs.settings.classList.remove('hidden');
 														(0, _velocityAnimate2.default)(refs.settings, { opacity: 1 }, { duration: 800 });
 														refs.panel.classList.remove('full-height');
@@ -39725,7 +39726,7 @@
 		}, {
 			key: 'submitCallback',
 			value: function submitCallback(bookmark) {
-				this.tabs.open('list');
+				this.setActiveBookmark(bookmark.id);
 			}
 		}, {
 			key: 'render',
@@ -39820,6 +39821,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _tools = __webpack_require__(164);
+
+	var _tools2 = _interopRequireDefault(_tools);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39848,9 +39853,42 @@
 				this.props.clearActiveBookmark();
 			}
 		}, {
+			key: 'isImageUrl',
+			value: function isImageUrl() {
+				return _tools2.default.isImageUrl(this.props.bookmark.url);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var imageHtml = undefined;
+				var notesHtml = undefined;
 				var bookmark = this.props.bookmark;
+				var isImageUrl = this.isImageUrl();
+
+				if (isImageUrl) {
+					imageHtml = _react2.default.createElement(
+						'div',
+						{ className: 'padding-horizontal padding-vertical-sm border-bottom box-shadow-inset' },
+						_react2.default.createElement('img', { className: 'bookmark-item-image', src: bookmark.url })
+					);
+				}
+
+				if (bookmark.notes.length) {
+					notesHtml = _react2.default.createElement(
+						'div',
+						{ className: 'padding border-top' },
+						_react2.default.createElement(
+							'small',
+							{ className: 'muted' },
+							'notes'
+						),
+						_react2.default.createElement(
+							'p',
+							null,
+							bookmark.notes
+						)
+					);
+				}
 
 				return _react2.default.createElement(
 					'div',
@@ -39864,25 +39902,17 @@
 							bookmark.title
 						)
 					),
+					imageHtml,
 					_react2.default.createElement(
 						'div',
-						{ className: 'padding' },
-						_react2.default.createElement(
-							'small',
-							{ className: 'muted' },
-							'notes'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							bookmark.notes
-						),
+						{ className: 'padding-horizontal padding-vertical-sm' },
 						_react2.default.createElement(
 							'a',
-							{ onClick: this.removeHandler.bind(this), href: '#', className: 'btn margin-top-sm' },
+							{ onClick: this.removeHandler.bind(this), href: '#', className: 'btn' },
 							'delete'
 						)
-					)
+					),
+					notesHtml
 				);
 			}
 		}]);
@@ -40064,67 +40094,41 @@
 				var isImageUrl = this.isImageUrl();
 
 				if (isImageUrl) {
-					return _react2.default.createElement(
-						'li',
-						{ className: 'bookmark-item box margin-vertical' },
-						_react2.default.createElement(
-							'header',
-							{ className: 'padding border-bottom' },
-							_react2.default.createElement(
-								'h3',
-								{ onClick: this.clickHandler.bind(this), className: 'bookmark-item-title hover-cursor--pointer muted' },
-								bookmark.title
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'padding-horizontal padding-vertical-sm border-bottom box-shadow-inset' },
-							_react2.default.createElement('img', { className: 'bookmark-item-image', src: bookmark.url })
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'padding-horizontal padding-vertical-sm' },
-							_react2.default.createElement(
-								'a',
-								{ onClick: this.clickHandler.bind(this), href: '', className: 'bookmark-item-url btn' },
-								'view'
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: bookmark.url, className: 'bookmark-item-url btn margin-left-sm' },
-								'go to'
-							)
-						)
-					);
-				} else {
-					return _react2.default.createElement(
-						'li',
-						{ className: 'bookmark-item box margin-vertical' },
-						_react2.default.createElement(
-							'header',
-							{ className: 'border-bottom padding' },
-							_react2.default.createElement(
-								'h3',
-								{ onClick: this.clickHandler.bind(this), className: 'bookmark-item-title hover-cursor--pointer muted' },
-								bookmark.title
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'padding-horizontal padding-vertical-sm' },
-							_react2.default.createElement(
-								'a',
-								{ onClick: this.clickHandler.bind(this), href: '#', className: 'bookmark-item-url btn' },
-								'view'
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: bookmark.url, className: 'bookmark-item-url btn margin-left-sm' },
-								'go to'
-							)
-						)
+					imageHtml = _react2.default.createElement(
+						'div',
+						{ className: 'padding-horizontal padding-vertical-sm border-bottom box-shadow-inset' },
+						_react2.default.createElement('img', { className: 'bookmark-item-image', src: bookmark.url })
 					);
 				}
+
+				return _react2.default.createElement(
+					'li',
+					{ className: 'bookmark-item box margin-vertical' },
+					_react2.default.createElement(
+						'header',
+						{ className: 'border-bottom padding' },
+						_react2.default.createElement(
+							'h3',
+							{ onClick: this.clickHandler.bind(this), className: 'bookmark-item-title hover-cursor--pointer muted' },
+							bookmark.title
+						)
+					),
+					imageHtml,
+					_react2.default.createElement(
+						'div',
+						{ className: 'padding-horizontal padding-vertical-sm' },
+						_react2.default.createElement(
+							'a',
+							{ onClick: this.clickHandler.bind(this), href: '#', className: 'bookmark-item-url btn' },
+							'view'
+						),
+						_react2.default.createElement(
+							'a',
+							{ href: bookmark.url, className: 'bookmark-item-url btn margin-left-sm' },
+							'go to'
+						)
+					)
+				);
 			}
 		}]);
 

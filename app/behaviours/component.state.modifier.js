@@ -3,10 +3,10 @@ import Tools from '../lib/tools.js';
 
 export default class ComponentStateModifierBehaviour {
 
-	constructor(component, defaultState) {
+	constructor(component, defaultState, identifier) {
 		this.component = component;
 		this.defaultState = defaultState;
-		this.stateName = 'ERGUSTO:state-modifier:' + Tools.generateID() + ':';
+		this.stateName = 'ERGUSTO:state-modifier:' + identifier + ':';
 		this.usedStateNames = [];
 
 		_.each(defaultState, (property, value) => {

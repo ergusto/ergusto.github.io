@@ -63,7 +63,7 @@ export default class IntroductionComponent extends React.Component {
 									setTimeout(() => {
 										Velocity(container, { 'min-height': '' }, { duration: 800 });
 
-										Velocity(refs.namef1, { width: 0 }, { display: 'none' });
+										Velocity(refs.namef1, { width: 0 });
 										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 
 										setTimeout(() => {
@@ -71,6 +71,7 @@ export default class IntroductionComponent extends React.Component {
 											body.removeEventListener('touchmove', prevent);
 
 											setTimeout(() => {
+												Velocity(refs.namef1, { display: 'none' });
 												refs.settings.classList.remove('hidden');
 												Velocity(refs.settings, { opacity: 1 }, { duration: 800 });
 												refs.panel.classList.remove('full-height');
