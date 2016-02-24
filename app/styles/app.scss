@@ -4,7 +4,6 @@
 /* base */
 @import 'base/resets';
 @import 'base/generic';
-@import 'base/buttons';
 @import 'base/forms';
 
 /* helpers */
@@ -15,6 +14,7 @@
 @import 'helpers/tools';
 
 /* objects */
+@import 'objects/buttons';
 @import 'objects/box';
 @import 'objects/dropdown';
 @import 'objects/horizontalmenu';

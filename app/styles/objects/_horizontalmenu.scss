@@ -22,8 +22,13 @@
 	color: black;
 }
 
+.horizontal-list-menu--btns {
+	@extend .horizontal-list-menu;
+}
+
 .horizontal-list-menu--btns li {
 	padding-right: 0px;
+	display: inline-block;
 }
 
 .horizontal-list-menu--btns .btn.active {
