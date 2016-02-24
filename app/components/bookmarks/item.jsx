@@ -17,17 +17,34 @@ export default class BookmarkItemComponent extends React.Component {
 	}
 
 	render() {
+		let imageHtml;
 		const bookmark = this.props.bookmark;
 		const isImageUrl = this.isImageUrl();
 
-		return (
-			<li className="bookmark-item box margin-vertical padding">
-				<header>
-					<h3 onClick={this.clickHandler.bind(this)} className="bookmark-item-title hover-cursor--pointer muted">{bookmark.title}</h3>
-				</header>
-				<a href={bookmark.url} className="bookmark-item-url margin-top-sm"><small>{bookmark.url}</small></a>
-			</li>
-		)
+		if (isImageUrl) {
+			return (
+				<li className="bookmark-item box margin-vertical">
+					<header className="padding border-bottom">
+						<h3 onClick={this.clickHandler.bind(this)} className="bookmark-item-title hover-cursor--pointer muted">{bookmark.title}</h3>
+					</header>
+					<div className="padding-sm border-bottom box-shadow-inset">
+						<img className="bookmark-item-image" src={bookmark.url} />
+					</div>
+					<div className="padding">
+						<a href={bookmark.url} className="bookmark-item-url"><small>{bookmark.url}</small></a>
+					</div>
+				</li>
+			)
+		} else {
+			return (
+				<li className="bookmark-item box margin-vertical padding">
+					<header>
+						<h3 onClick={this.clickHandler.bind(this)} className="bookmark-item-title hover-cursor--pointer muted">{bookmark.title}</h3>
+					</header>
+					<a href={bookmark.url} className="bookmark-item-url margin-top-sm"><small>{bookmark.url}</small></a>
+				</li>
+			)
+		}
 	}
 
 }
