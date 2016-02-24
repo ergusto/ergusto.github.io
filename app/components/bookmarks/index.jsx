@@ -29,6 +29,7 @@ export default class BookmarkManagerComponent extends React.Component {
 
 	clearActiveBookmark() {
 		this.activeBookmark.clear();
+		this.tabs.open('list');
 	}
 
 	setActiveBookmark(id) {
@@ -65,7 +66,7 @@ export default class BookmarkManagerComponent extends React.Component {
 
 		if (this.tabs.isOpen('detail')) {
 			const bookmark = bookmarks.get(this.getActiveBookmarkId());
-			content = <BookmarkDetailComponent bookmark={bookmark} />
+			content = <BookmarkDetailComponent bookmarks={bookmarks} bookmark={bookmark} clearActiveBookmark={this.clearActiveBookmark.bind(this)} />
 		}
 
 		return (

@@ -18,7 +18,7 @@ export default class BookmarkListComponent extends React.Component {
 			});
 		} else {
 			content = (
-				<li>No bookmarks!</li>
+				<li className="box padding margin-vertical">No bookmarks!</li>
 			);
 		}
 

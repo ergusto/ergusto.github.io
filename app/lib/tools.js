@@ -17,7 +17,7 @@ Tools.isURL = function(string) {
 
 Tools.isImageUrl = function(url) {
 	if (_.isString(url)) {
-		return Tools.isUrl(url) && ( url.match(/\.(jpeg|jpg|gif|png)$/) != null );
+		return Tools.isURL(url) && ( url.match(/\.(jpeg|jpg|gif|png)$/) != null );
 	}
 	return false;
 }
