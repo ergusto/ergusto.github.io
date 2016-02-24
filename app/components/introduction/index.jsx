@@ -63,8 +63,8 @@ export default class IntroductionComponent extends React.Component {
 									setTimeout(() => {
 										Velocity(container, { 'min-height': '' }, { duration: 800 });
 
-										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 										Velocity(refs.namef1, { width: 0 }, { display: 'none' });
+										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 
 										setTimeout(() => {
 											body.classList.remove('hide-overflow');
@@ -129,7 +129,7 @@ export default class IntroductionComponent extends React.Component {
 
 		return (
 
-			<section ref="panel" className={panelClass}>
+			<header ref="panel" className={panelClass}>
 
 				<div id="introduction" className="introduction-content">
 
@@ -145,7 +145,7 @@ export default class IntroductionComponent extends React.Component {
 
 				</div>
 
-			</section>
+			</header>
 			
 		)
 	}

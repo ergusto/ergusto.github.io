@@ -19851,8 +19851,8 @@
 											setTimeout(function () {
 												(0, _velocityAnimate2.default)(container, { 'min-height': '' }, { duration: 800 });
 
-												(0, _velocityAnimate2.default)(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 												(0, _velocityAnimate2.default)(refs.namef1, { width: 0 }, { display: 'none' });
+												(0, _velocityAnimate2.default)(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 
 												setTimeout(function () {
 													body.classList.remove('hide-overflow');
@@ -19988,7 +19988,7 @@
 				}
 
 				return _react2.default.createElement(
-					'section',
+					'header',
 					{ ref: 'panel', className: panelClass },
 					_react2.default.createElement(
 						'div',
@@ -39630,7 +39630,7 @@
 
 
 	// module
-	exports.push([module.id, "section.introduction {\n  background: #4696e5;\n  color: white;\n  padding: 10px 20px 10px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n\n.introduction a {\n  text-decoration: none; }\n\n.introduction-heading {\n  display: block;\n  max-width: 262px;\n  font-size: 2.2rem;\n  margin: 0px auto 4px; }\n\n.introduction-heading a {\n  color: white; }\n\n.introduction-heading a:hover {\n  color: white; }\n\n@media only screen and (min-width: 768px) {\n  .introduction-heading {\n    max-width: 357px;\n    font-size: 3rem; } }\n\n.introduction-no-animation .introduction-heading {\n  font-size: 20px;\n  margin: 0 0 4px; }\n\n.introduction-content {\n  width: 100%; }\n\n.name-tofadein {\n  display: none;\n  opacity: 0; }\n\n.name span {\n  display: inline-block; }\n", ""]);
+	exports.push([module.id, "header.introduction {\n  background: #4696e5;\n  color: white;\n  padding: 10px 20px 10px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n\n.introduction a {\n  text-decoration: none; }\n\n.introduction-heading {\n  display: block;\n  max-width: 262px;\n  font-size: 2.2rem;\n  margin: 0px auto 4px; }\n\n.introduction-heading a {\n  color: white; }\n\n.introduction-heading a:hover {\n  color: white; }\n\n@media only screen and (min-width: 768px) {\n  .introduction-heading {\n    max-width: 357px;\n    font-size: 3rem; } }\n\n.introduction-no-animation .introduction-heading {\n  font-size: 20px;\n  margin: 0 0 4px; }\n\n.introduction-content {\n  width: 100%; }\n\n.name-tofadein {\n  display: none;\n  opacity: 0; }\n\n.name span {\n  display: inline-block; }\n", ""]);
 
 	// exports
 
@@ -40078,30 +40078,31 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'padding-sm border-bottom box-shadow-inset' },
+							{ className: 'padding-horizontal padding-vertical-sm border-bottom box-shadow-inset' },
 							_react2.default.createElement('img', { className: 'bookmark-item-image', src: bookmark.url })
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'padding' },
+							{ className: 'padding-horizontal padding-vertical-sm' },
 							_react2.default.createElement(
 								'a',
-								{ href: bookmark.url, className: 'bookmark-item-url' },
-								_react2.default.createElement(
-									'small',
-									null,
-									bookmark.url
-								)
+								{ onClick: this.clickHandler.bind(this), href: '', className: 'bookmark-item-url btn' },
+								'view'
+							),
+							_react2.default.createElement(
+								'a',
+								{ href: bookmark.url, className: 'bookmark-item-url btn margin-left-sm' },
+								'go to'
 							)
 						)
 					);
 				} else {
 					return _react2.default.createElement(
 						'li',
-						{ className: 'bookmark-item box margin-vertical padding' },
+						{ className: 'bookmark-item box margin-vertical' },
 						_react2.default.createElement(
 							'header',
-							null,
+							{ className: 'border-bottom padding' },
 							_react2.default.createElement(
 								'h3',
 								{ onClick: this.clickHandler.bind(this), className: 'bookmark-item-title hover-cursor--pointer muted' },
@@ -40109,12 +40110,17 @@
 							)
 						),
 						_react2.default.createElement(
-							'a',
-							{ href: bookmark.url, className: 'bookmark-item-url margin-top-sm' },
+							'div',
+							{ className: 'padding-horizontal padding-vertical-sm' },
 							_react2.default.createElement(
-								'small',
-								null,
-								bookmark.url
+								'a',
+								{ onClick: this.clickHandler.bind(this), href: '#', className: 'bookmark-item-url btn' },
+								'view'
+							),
+							_react2.default.createElement(
+								'a',
+								{ href: bookmark.url, className: 'bookmark-item-url btn margin-left-sm' },
+								'go to'
 							)
 						)
 					);
@@ -40582,7 +40588,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-manager {\n  max-width: 800px;\n  position: relative;\n  min-height: 600px; }\n\n.bookmark-manager-header {\n  border-bottom: 0;\n  border-bottom: 1px solid #ccc; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block;\n  line-height: 58px; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 14px;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n", ""]);
+	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative;\n  min-height: 600px; }\n\n.bookmark-manager-header {\n  border-bottom: 0;\n  border-bottom: 1px solid #ccc; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block;\n  line-height: 58px; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 14px;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n", ""]);
 
 	// exports
 
