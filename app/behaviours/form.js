@@ -1,39 +1,34 @@
-import ComponentStateModifierBehaviour from './component.state.modifier.js';
-
-const formErrorName = 'formError';
-const enabledName = 'formEnabled';
+import ComponentSingleStateModifierBehaviour from './component.single.state.modifier.js';
 
 export default class FormBehaviour {
 
 	constructor(component) {
-		const defaultState = {};
-		defaultState[formErrorName] = '';
-		defaultState[enabledName] = true;
-		this.formState = new ComponentStateModifierBehaviour(component, defaultState);
+		this.formError = new ComponentSingleStateModifierBehaviour(component);
+		this.formState = new ComponentSingleStateModifierBehaviour(component, true);
+	}
+
+	get error() {
+		return this.formError.current;
+	}
+
+	addError(error) {
+		this.formError.set(error);
 	}
 
 	get enabled() {
-		return this.formState.get(enabledName);
+		return this.formState.current;
 	}
 
 	get disabled() {
 		return !this.enabled;
 	}
 
-	get error() {
-		return this.formState.get(formErrorName);
+	enable() {
+		this.formState.set(true);
 	}
 
 	disable() {
-		this.formState.set(enabledName, false);
-	}
-
-	enable() {
-		this.formState.set(enabledName, true);
-	}
-
-	addError(error) {
-		this.formState.set(formErrorName, error);
+		this.formState.set(false);
 	}
 
 }

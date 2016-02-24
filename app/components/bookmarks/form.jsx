@@ -16,44 +16,34 @@ export default class BookmarkFormComponent extends React.Component {
     submitHandler(event) {
         event.preventDefault();
 
-
-        console.log('initial enabled:', this.form.enabled);
-        this.form.enable();
-        console.log('afterEnable enabled:', this.form.enabled);
-
-        return;
-
         let saved;
-        if (this.form.enabled) {
-            this.form.disable();
-            const title = this.refs.bookmarkTitleInput.value;
-            const url = this.refs.bookmarkUrlInput.value;
-            const notes = this.refs.bookmarkNotesInput.value;
-            const bookmark = this.props.bookmark || this.props.bookmarks.shell();
-            
-            if (!title.trim().length) {
-                this.form.addError('Please enter a title');
-                return;
-            }
-            
-            if (!url.trim().length) {
-                this.form.addError('Please enter a URL');
-                return;
-            }
+        const title = this.refs.bookmarkTitleInput.value;
+        const url = this.refs.bookmarkUrlInput.value;
+        const notes = this.refs.bookmarkNotesInput.value;
+        const bookmark = this.props.bookmark || this.props.bookmarks.shell();
+        
+        if (!title.trim().length) {
+            this.form.addError('Please enter a title');
+            return;
+        }
+        
+        if (!url.trim().length) {
+            this.form.addError('Please enter a URL');
+            return;
+        }
 
-            bookmark.title = title;
-            bookmark.url = url;
-            bookmark.notes = notes;
+        bookmark.title = title;
+        bookmark.url = url;
+        bookmark.notes = notes;
 
-            if (bookmark.id) {
-                saved = this.props.bookmarks.update(bookmark);
-            } else {
-                saved = this.props.bookmarks.create(bookmark);
-            }
+        if (bookmark.id) {
+            saved = this.props.bookmarks.update(bookmark);
+        } else {
+            saved = this.props.bookmarks.create(bookmark);
+        }
 
-            if (this.props.submitCallback) {
-                this.props.submitCallback(saved);
-            }
+        if (this.props.submitCallback) {
+            this.props.submitCallback(saved);
         }
     }
 
@@ -61,11 +51,6 @@ export default class BookmarkFormComponent extends React.Component {
         const err = this.form.error;
         const bookmark = this.props.bookmark;
         let errContent;
-        let buttonAttributes = {};
-
-        if (this.form.disabled) {
-            buttonAttributes['disabled'] = 'disabled';
-        }
 
         if (err) {
             errContent = <span className="form-error">{err}</span>;
@@ -81,7 +66,7 @@ export default class BookmarkFormComponent extends React.Component {
 					<input ref="bookmarkUrlInput" name="url" placeholder="url" type="url" className="field" />
 					<textarea ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
                     {errContent}
-					<a {...buttonAttributes} onClick={this.submitHandler.bind(this)} className="btn" href="#">submit</a>
+					<a onClick={this.submitHandler.bind(this)} className="btn" href="#">submit</a>
 				</form>
         	</div>
         );

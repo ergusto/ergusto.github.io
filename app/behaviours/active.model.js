@@ -7,7 +7,6 @@ export default class ActiveModelBehaviour {
 	// must be called from constructor of react component
 
 	constructor(component, defaultState) {
-		defaultState = defaultState || null;
 		this.activeModelState = new ComponentSingleStateModifierBehaviour(component, defaultState);
 	}
 

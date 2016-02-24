@@ -6,19 +6,19 @@ export default class ComponentStateModifierBehaviour {
 	constructor(component, defaultState) {
 		this.component = component;
 		this.defaultState = defaultState;
-		this.stateName = 'ERGUSTO:state-modifier:' + this.component.name + ':' + Tools.generateID() + ':';
+		this.stateName = 'ERGUSTO:state-modifier:' + Tools.generateID() + ':';
 		this.usedStateNames = [];
 
 		_.each(defaultState, (property, value) => {
 			const state = {};
 			state.property = property;
 			state.value = value;
-			property = this.getStateForProperty(property);
+			property = this.getStateNameForProperty(property);
 			this.component.state[property] = state;
 		});
 	}
 
-	getStateForProperty(property) {
+	getStateNameForProperty(property) {
 		const stateName = this.stateName + property;
 		if (this.usedStateNames.indexOf(stateName) >= 0) {
 			this.usedStateNames.push(stateName);
@@ -42,7 +42,7 @@ export default class ComponentStateModifierBehaviour {
 
 	get(property) {
 		if (!!property && _.isString(property)) {
-			property = this.getStateForProperty(property);
+			property = this.getStateNameForProperty(property);
 			return this.component.state[property];
 		} else {
 			return this.usedStateNames.map((usedName) => {
@@ -59,11 +59,11 @@ export default class ComponentStateModifierBehaviour {
 				const _set = {};
 				_set.property = property;
 				_set.value = value;
-				property = this.getStateForProperty(property);
+				property = this.getStateNameForProperty(property);
 				set[property] = _set;
 			});
 		} else {
-			property = this.getStateForProperty(property);
+			property = this.getStateNameForProperty(property);
 			set[property] = value;
 		}
 		this.component.setState(set);

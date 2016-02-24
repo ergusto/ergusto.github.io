@@ -40159,8 +40159,6 @@
 	    value: true
 	});
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -40200,43 +40198,34 @@
 	        value: function submitHandler(event) {
 	            event.preventDefault();
 
-	            console.log('initial enabled:', this.form.enabled);
-	            this.form.enable();
-	            console.log('afterEnable enabled:', this.form.enabled);
-
-	            return;
-
 	            var saved = undefined;
-	            if (this.form.enabled) {
-	                this.form.disable();
-	                var title = this.refs.bookmarkTitleInput.value;
-	                var url = this.refs.bookmarkUrlInput.value;
-	                var notes = this.refs.bookmarkNotesInput.value;
-	                var bookmark = this.props.bookmark || this.props.bookmarks.shell();
+	            var title = this.refs.bookmarkTitleInput.value;
+	            var url = this.refs.bookmarkUrlInput.value;
+	            var notes = this.refs.bookmarkNotesInput.value;
+	            var bookmark = this.props.bookmark || this.props.bookmarks.shell();
 
-	                if (!title.trim().length) {
-	                    this.form.addError('Please enter a title');
-	                    return;
-	                }
+	            if (!title.trim().length) {
+	                this.form.addError('Please enter a title');
+	                return;
+	            }
 
-	                if (!url.trim().length) {
-	                    this.form.addError('Please enter a URL');
-	                    return;
-	                }
+	            if (!url.trim().length) {
+	                this.form.addError('Please enter a URL');
+	                return;
+	            }
 
-	                bookmark.title = title;
-	                bookmark.url = url;
-	                bookmark.notes = notes;
+	            bookmark.title = title;
+	            bookmark.url = url;
+	            bookmark.notes = notes;
 
-	                if (bookmark.id) {
-	                    saved = this.props.bookmarks.update(bookmark);
-	                } else {
-	                    saved = this.props.bookmarks.create(bookmark);
-	                }
+	            if (bookmark.id) {
+	                saved = this.props.bookmarks.update(bookmark);
+	            } else {
+	                saved = this.props.bookmarks.create(bookmark);
+	            }
 
-	                if (this.props.submitCallback) {
-	                    this.props.submitCallback(saved);
-	                }
+	            if (this.props.submitCallback) {
+	                this.props.submitCallback(saved);
 	            }
 	        }
 	    }, {
@@ -40245,11 +40234,6 @@
 	            var err = this.form.error;
 	            var bookmark = this.props.bookmark;
 	            var errContent = undefined;
-	            var buttonAttributes = {};
-
-	            if (this.form.disabled) {
-	                buttonAttributes['disabled'] = 'disabled';
-	            }
 
 	            if (err) {
 	                errContent = _react2.default.createElement(
@@ -40280,7 +40264,7 @@
 	                    errContent,
 	                    _react2.default.createElement(
 	                        'a',
-	                        _extends({}, buttonAttributes, { onClick: this.submitHandler.bind(this), className: 'btn', href: '#' }),
+	                        { onClick: this.submitHandler.bind(this), className: 'btn', href: '#' },
 	                        'submit'
 	                    )
 	                )
@@ -40305,56 +40289,51 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _componentStateModifier = __webpack_require__(185);
+	var _componentSingleStateModifier = __webpack_require__(163);
 
-	var _componentStateModifier2 = _interopRequireDefault(_componentStateModifier);
+	var _componentSingleStateModifier2 = _interopRequireDefault(_componentSingleStateModifier);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var formErrorName = 'formError';
-	var enabledName = 'formEnabled';
-
 	var FormBehaviour = function () {
 		function FormBehaviour(component) {
 			_classCallCheck(this, FormBehaviour);
 
-			var defaultState = {};
-			defaultState[formErrorName] = '';
-			defaultState[enabledName] = true;
-			this.formState = new _componentStateModifier2.default(component, defaultState);
+			this.formError = new _componentSingleStateModifier2.default(component);
+			this.formState = new _componentSingleStateModifier2.default(component, true);
 		}
 
 		_createClass(FormBehaviour, [{
-			key: 'disable',
-			value: function disable() {
-				this.formState.set(enabledName, false);
+			key: 'addError',
+			value: function addError(error) {
+				this.formError.set(error);
 			}
 		}, {
 			key: 'enable',
 			value: function enable() {
-				this.formState.set(enabledName, true);
+				this.formState.set(true);
 			}
 		}, {
-			key: 'addError',
-			value: function addError(error) {
-				this.formState.set(formErrorName, error);
+			key: 'disable',
+			value: function disable() {
+				this.formState.set(false);
+			}
+		}, {
+			key: 'error',
+			get: function get() {
+				return this.formError.current;
 			}
 		}, {
 			key: 'enabled',
 			get: function get() {
-				return this.formState.get(enabledName);
+				return this.formState.current;
 			}
 		}, {
 			key: 'disabled',
 			get: function get() {
 				return !this.enabled;
-			}
-		}, {
-			key: 'error',
-			get: function get() {
-				return this.formState.get(formErrorName);
 			}
 		}]);
 
@@ -40364,120 +40343,7 @@
 	exports.default = FormBehaviour;
 
 /***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _lodash = __webpack_require__(165);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	var _tools = __webpack_require__(164);
-
-	var _tools2 = _interopRequireDefault(_tools);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var ComponentStateModifierBehaviour = function () {
-		function ComponentStateModifierBehaviour(component, defaultState) {
-			var _this = this;
-
-			_classCallCheck(this, ComponentStateModifierBehaviour);
-
-			this.component = component;
-			this.defaultState = defaultState;
-			this.stateName = 'ERGUSTO:state-modifier:' + this.component.name + ':' + _tools2.default.generateID() + ':';
-			this.usedStateNames = [];
-
-			_lodash2.default.each(defaultState, function (property, value) {
-				var state = {};
-				state.property = property;
-				state.value = value;
-				property = _this.getStateForProperty(property);
-				_this.component.state[property] = state;
-			});
-		}
-
-		_createClass(ComponentStateModifierBehaviour, [{
-			key: 'getStateForProperty',
-			value: function getStateForProperty(property) {
-				var stateName = this.stateName + property;
-				if (this.usedStateNames.indexOf(stateName) >= 0) {
-					this.usedStateNames.push(stateName);
-				}
-				return stateName;
-			}
-		}, {
-			key: 'clear',
-			value: function clear(property) {
-				var _this2 = this;
-
-				if (property) {
-					var set = {};
-					set[property] = undefined;
-					this.setState(set);
-				} else {
-					(function () {
-						var set = {};
-						_this2.usedStateNames.forEach(function (usedName) {
-							set[usedName] = undefined;
-						});
-						_this2.setState(set);
-					})();
-				}
-			}
-		}, {
-			key: 'get',
-			value: function get(property) {
-				var _this3 = this;
-
-				if (!!property && _lodash2.default.isString(property)) {
-					property = this.getStateForProperty(property);
-					return this.component.state[property];
-				} else {
-					return this.usedStateNames.map(function (usedName) {
-						return _this3.component.state[usedName];
-					});
-				}
-			}
-		}, {
-			key: 'set',
-			value: function set(property, value) {
-				var _this4 = this;
-
-				var set = {};
-				if (_lodash2.default.isObject(property)) {
-					var state = property;
-					_lodash2.default.each(state, function (property, value) {
-						var _set = {};
-						_set.property = property;
-						_set.value = value;
-						property = _this4.getStateForProperty(property);
-						set[property] = _set;
-					});
-				} else {
-					property = this.getStateForProperty(property);
-					set[property] = value;
-				}
-				this.component.setState(set);
-			}
-		}]);
-
-		return ComponentStateModifierBehaviour;
-	}();
-
-	exports.default = ComponentStateModifierBehaviour;
-
-/***/ },
+/* 185 */,
 /* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -40593,7 +40459,6 @@
 		function ActiveModelBehaviour(component, defaultState) {
 			_classCallCheck(this, ActiveModelBehaviour);
 
-			defaultState = defaultState || null;
 			this.activeModelState = new _componentSingleStateModifier2.default(component, defaultState);
 		}
 
@@ -41353,7 +41218,7 @@
 
 
 	// module
-	exports.push([module.id, ".comment-item {\n  list-style-type: none;\n  list-style: none;\n  display: block;\n  max-width: 600px; }\n\n.comment-item-header {\n  padding: 10px 20px 0; }\n\n.comment-item-body {\n  padding: 10px 20px 15px; }\n\n.comment-item-footer {\n  background: #f8f8f8;\n  border-top: 1px solid #ddd;\n  font-size: 80%; }\n\n.comment-item-footer .horizontal-list-menu {\n  padding: 6px 20px 8px; }\n\n.comment-item-footer a {\n  text-decoration: none; }\n\n.comment-item p {\n  margin: 0;\n  padding: 0; }\n\n.comment-children {\n  padding-left: 20px; }\n", ""]);
+	exports.push([module.id, ".comment-item {\n  display: block;\n  max-width: 600px; }\n\n.comment-item-header {\n  padding: 10px 20px 0; }\n\n.comment-item-body {\n  padding: 10px 20px 15px; }\n\n.comment-item-footer {\n  background: #f8f8f8;\n  border-top: 1px solid #ddd;\n  font-size: 80%; }\n\n.comment-item-footer .horizontal-list-menu {\n  padding: 6px 20px 8px; }\n\n.comment-item-footer a {\n  text-decoration: none; }\n\n.comment-item p {\n  margin: 0;\n  padding: 0; }\n\n.comment-children {\n  padding-left: 20px; }\n", ""]);
 
 	// exports
 
@@ -41393,7 +41258,7 @@
 
 
 	// module
-	exports.push([module.id, ".comment-list {\n  padding: 0;\n  margin: 0; }\n", ""]);
+	exports.push([module.id, ".comment-list {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  list-style-type: none; }\n", ""]);
 
 	// exports
 
