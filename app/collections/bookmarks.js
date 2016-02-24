@@ -6,7 +6,7 @@ export default class Bookmarks extends LocalStorageCollection {
 		const bookmark = {};
 		bookmark.title = '';
 		bookmark.url = '';
-		bookmark.text = '';
+		bookmark.notes = '';
 		return bookmark;
 	}
 
@@ -15,12 +15,12 @@ export default class Bookmarks extends LocalStorageCollection {
 			{ 
 				title: 'The BBC',
 				url: 'http://bbc.co.uk',
-				text: 'News organisation.'
+				notes: 'News organisation.'
 			},
 			{
 				title: 'Wikipedia',
 				url: 'http://wikipedia.org', 
-				text: 'An amazing resource where you can learn just about anything!' 
+				notes: 'An amazing resource where you can learn just about anything!' 
 			}
 		]
 	}

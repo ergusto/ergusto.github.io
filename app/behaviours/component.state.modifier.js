@@ -1,32 +1,72 @@
+import _ from 'lodash';
 import Tools from '../lib/tools.js';
 
-export default class ComponentSingleStateModifierBehaviour {
-
-	// must be called from constructor of react component
+export default class ComponentStateModifierBehaviour {
 
 	constructor(component, defaultState) {
 		this.component = component;
-		this.stateName = 'ERGUSTO:state-modifier:' + this.component.name + ':' + Tools.generateID();
 		this.defaultState = defaultState;
-		this.component.state[this.stateName] = this.defaultState;
+		this.stateName = 'ERGUSTO:state-modifier:' + this.component.name + ':' + Tools.generateID() + ':';
+		this.usedStateNames = [];
+
+		_.each(defaultState, (property, value) => {
+			const state = {};
+			state.property = property;
+			state.value = value;
+			property = this.getStateForProperty(property);
+			this.component.state[property] = state;
+		});
+	}
+
+	getStateForProperty(property) {
+		const stateName = this.stateName + property;
+		if (this.usedStateNames.indexOf(stateName) >= 0) {
+			this.usedStateNames.push(stateName);
+		}
+		return stateName;
+	}
+
+	clear(property) {
+		if (property) {
+			const set = {};
+			set[property] = undefined;
+			this.setState(set);
+		} else {
+			const set = {};
+			this.usedStateNames.forEach((usedName) => {
+				set[usedName] = undefined;
+			});
+			this.setState(set);
+		}
 	}
 
 	get(property) {
-		return this.component.state[property];
+		if (!!property && _.isString(property)) {
+			property = this.getStateForProperty(property);
+			return this.component.state[property];
+		} else {
+			return this.usedStateNames.map((usedName) => {
+				return this.component.state[usedName];
+			});
+		}
 	}
 
-	set(value) {
-		const set = {};
-		set[this.stateName] = value;
+	set(property, value) {
+		let set = {};
+		if (_.isObject(property)) {
+			const state = property;
+			_.each(state, (property, value) => {
+				const _set = {};
+				_set.property = property;
+				_set.value = value;
+				property = this.getStateForProperty(property);
+				set[property] = _set;
+			});
+		} else {
+			property = this.getStateForProperty(property);
+			set[property] = value;
+		}
 		this.component.setState(set);
-	}
-
-	get current() {
-		return this.get(this.stateName);
-	}
-
-	isCurrent(value) {
-		return this.current == value;
 	}
 
 }

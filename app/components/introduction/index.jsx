@@ -77,6 +77,8 @@ export default class IntroductionComponent extends React.Component {
 												refs.panel.classList.remove('panel');
 												refs.panel.classList.remove('justify-centre');
 
+												setTimeout(() => refs.settings.classList.remove('seethrough'), 200);
+
 											}, 300);
 										}, 700);
 									}, 500);
@@ -119,7 +121,7 @@ export default class IntroductionComponent extends React.Component {
 					</span>);
 
 		} else {
-			panelClass = 'introduction introduction-no-animation panel';
+			panelClass = 'introduction introduction-no-animation';
 			settingsClass = 'settings-container';
 
 			name = (<span className="name">ergusto</span>);

@@ -26,4 +26,12 @@ Tools.containsSpaces = function(string) {
 	return /\s/g.test(string);
 }
 
+Tools.buildQueryString = function(obj) {
+
+	return _.map(obj, (value, key) => {
+		return key + '=' + value;
+	}).join('&');
+
+}
+
 export default Tools;

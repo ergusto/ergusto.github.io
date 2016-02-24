@@ -8,27 +8,33 @@ section.introduction {
 	z-index: 1;
 }
 
-.introduction h1 {
+.introduction a {
+	text-decoration: none;
+}
+
+.introduction-heading {
 	display: block;
 	max-width: 262px;
 	font-size: 2.2rem;
 	margin: 0px auto 4px;
 }
 
-.introduction a {
-	text-decoration: none;
+.introduction-heading a {
+	color: white;
+}
+
+.introduction-heading a:hover {
+	color: white;
 }
 
 @media only screen and (min-width: 768px) {
-	.introduction h1 {
+	.introduction-heading {
 		max-width: 357px;
-	}
-	.introduction h1 {
 		font-size: 3rem;        
 	}
 }
 
-.introduction-no-animation h1 {
+.introduction-no-animation .introduction-heading {
 	font-size: 20px;
 	margin: 0 0 4px;
 }

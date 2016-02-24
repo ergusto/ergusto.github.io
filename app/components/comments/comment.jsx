@@ -81,7 +81,7 @@ export default class CommentComponent extends React.Component {
 		}
 		return (
 
-			<div>
+			<li>
 				<div className="comment-item box centred margin-top">
 					<header className="comment-item-header clearfix">
 						<p className="muted"><small>{comment.username}</small></p>
@@ -121,7 +121,7 @@ export default class CommentComponent extends React.Component {
 
 				{childList}
 
-			</div>
+			</li>
 		);
 	}
 

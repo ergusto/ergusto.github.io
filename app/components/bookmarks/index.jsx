@@ -18,6 +18,13 @@ export default class BookmarkManagerComponent extends React.Component {
 		this.state = {};
 		this.tabs = new TabbedStateBehaviour(this, 'list');
 		this.activeBookmark = new ActiveModelBehaviour(this);
+		props.bookmarks.onUpdate(() => {
+			this.forceUpdate();
+		});
+	}
+
+	getActiveBookmarkId() {
+		return this.activeBookmark.current;
 	}
 
 	clearActiveBookmark() {
@@ -49,7 +56,6 @@ export default class BookmarkManagerComponent extends React.Component {
 		if (this.tabs.isOpen('list')) {
 			listTabClass += activeClass;
 			content = <BookmarkListComponent setActiveBookmark={this.setActiveBookmark.bind(this)} bookmarks={bookmarks} />;
-
 		}
 
 		if (this.tabs.isOpen('add')) {
@@ -58,7 +64,7 @@ export default class BookmarkManagerComponent extends React.Component {
 		}
 
 		if (this.tabs.isOpen('detail')) {
-			const bookmark = bookmarks.get(this.activeBookmark.current);
+			const bookmark = bookmarks.get(this.getActiveBookmarkId());
 			content = <BookmarkDetailComponent bookmark={bookmark} />
 		}
 
@@ -71,9 +77,9 @@ export default class BookmarkManagerComponent extends React.Component {
 
 						<header className="bookmark-manager-header box clearfix">
 
-							<h3 className="bookmark-manager-title pull-left muted padding">bookmarks</h3>
+							<h3 onClick={this.showTab.bind(this, 'list')} className="bookmark-manager-title hover-cursor--pointer pull-left muted padding-vertical padding-left">bookmarks</h3>
 
-							<ul className="bookmark-manager-control horizontal-list-menu horizontal-list-menu--btns pull-right">
+							<ul className="bookmark-manager-control horizontal-list-menu--btns pull-right">
 
 								<li><a onClick={this.showTab.bind(this, 'list')} href="#" className={listTabClass}>list</a></li>
 								<li><a onClick={this.showTab.bind(this, 'add')} href="#" className={addTabClass}>add</a></li>

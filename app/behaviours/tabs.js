@@ -1,4 +1,4 @@
-import ComponentSingleStateModifierBehaviour from './component.state.modifier.js';
+import ComponentSingleStateModifierBehaviour from './component.single.state.modifier.js';
 
 export default class TabbedStateBehaviour {
 

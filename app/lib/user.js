@@ -30,11 +30,11 @@ export default class User {
 	}
 
 	updateStorage() {
-		this.store.set(this.user);
+		if (this.usingLocalStorage) this.store.set(this.user);
 	}
 
 	resetAllLocalStorage() {
-		this.store.resetBrowserLocalStorage();
+		if (this.usingLocalStorage) this.store.resetBrowserLocalStorage();
 	}
 
 	getUsername() {

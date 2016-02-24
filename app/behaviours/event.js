@@ -17,6 +17,16 @@ export default class EventBehaviour {
 		event.push(callback);
 	}
 
+	remove(eventName, callback) {
+		let modified;
+		const event = this.get(eventName);
+		const index = event.indexOf(callback);
+		if (index > -1) {
+			modified = this.events.splice(index, 1);
+			this.events[eventName] = modified;
+		}
+	}
+
 	broadcast(eventName) {
 		const event = this.get(eventName);
 		const args = Array.prototype.slice.call(arguments, 1);

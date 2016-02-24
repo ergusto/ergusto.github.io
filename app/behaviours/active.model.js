@@ -1,4 +1,4 @@
-import ComponentSingleStateModifierBehaviour from './component.state.modifier.js';
+import ComponentSingleStateModifierBehaviour from './component.single.state.modifier.js';
 
 // for when you need to reactively keep track of a model id value
 

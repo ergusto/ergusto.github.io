@@ -21,7 +21,7 @@ export default class TaskDetailComponent extends React.Component {
 
 		return (
 			<div className="task-detail">
-				<h3 className="task-detail-padding padding-bottom-sm margin-bottom-sm">{task.title}</h3>
+				<h3 className="task-detail-title padding-bottom-sm margin-bottom-sm">{task.title}</h3>
 				{body}
 				<a onClick={this.setManagerEditingTask.bind(this)} href="#" className="btn margin-top-sm">edit</a>
 			</div>

@@ -10,11 +10,12 @@ export default class BookmarkDetailComponent extends React.Component {
 
 		return (
 			<div className="bookmark-detail box margin-vertical">
-				<header className="box-header">
+				<header className="box-header padding">
 					<h3 className="bookmark-title">{bookmark.title}</h3>
 				</header>
 				<div className="padding">
-					<p>{bookmark.text}</p>
+					<small className="muted">notes</small>
+					<p>{bookmark.notes}</p>
 				</div>
 			</div>
 		)
