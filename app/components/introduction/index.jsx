@@ -67,7 +67,6 @@ export default class IntroductionComponent extends React.Component {
 										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 
 										setTimeout(() => {
-											body.classList.remove('hide-overflow');
 											body.removeEventListener('touchmove', prevent);
 
 											setTimeout(() => {
@@ -110,7 +109,6 @@ export default class IntroductionComponent extends React.Component {
 		let settingsClass;
 
 		if (shouldShowAnimation) {
-			body.classList.add('hide-overflow');
 			body.addEventListener('touchmove', prevent);
 			panelClass = 'introduction panel justify-centre full-height';
 			settingsClass = 'hidden seethrough';
