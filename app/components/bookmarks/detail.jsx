@@ -17,6 +17,11 @@ export default class BookmarkDetailComponent extends React.Component {
 		return Tools.isImageUrl(this.props.bookmark.url);
 	}
 
+	editHandler(event) {
+		event.preventDefault();
+		this.props.showEditTab();
+	}
+
 	render() {
 		let imageHtml;
 		let notesHtml;
@@ -47,6 +52,7 @@ export default class BookmarkDetailComponent extends React.Component {
 				</header>
 				{imageHtml}
 				<div className="padding-horizontal padding-vertical-sm">
+					<a onClick={this.editHandler.bind(this)} href="#" className="btn margin-right-sm">edit</a>
 					<a onClick={this.removeHandler.bind(this)} href="#" className="btn">delete</a>
 				</div>
 				{notesHtml}

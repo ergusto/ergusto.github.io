@@ -50,6 +50,7 @@ export default class BookmarkFormComponent extends React.Component {
     render() {
         const err = this.form.error;
         const bookmark = this.props.bookmark;
+        const formTitle = this.props.formTitle || 'new bookmark';
         let errContent;
 
         if (err) {
@@ -59,12 +60,12 @@ export default class BookmarkFormComponent extends React.Component {
         return (
         	<div className="bookmark-form-container box margin-top">
                 <header className="box-header padding">
-				    <h3 className="bookmark-form-title muted">new bookmark</h3>
+				    <h3 className="bookmark-form-title muted">{formTitle}</h3>
                 </header>
 				<form onSubmit={this.submitHandler.bind(this)} className="bookmark-form padding">
-					<input ref="bookmarkTitleInput" name="title" placeholder="title" className="field" />
-					<input ref="bookmarkUrlInput" name="url" placeholder="url" type="url" className="field" />
-					<textarea ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
+					<input defaultValue={bookmark.title} ref="bookmarkTitleInput" name="title" placeholder="title" className="field" />
+					<input defaultValue={bookmark.url} ref="bookmarkUrlInput" name="url" placeholder="url" type="url" className="field" />
+					<textarea defaultValue={bookmark.notes} ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
                     {errContent}
 					<a onClick={this.submitHandler.bind(this)} className="btn" href="#">submit</a>
 				</form>

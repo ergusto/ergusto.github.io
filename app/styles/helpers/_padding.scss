@@ -6,8 +6,6 @@
 	padding: 10px;
 }
 
-
-
 .padding-left {
 	padding-left: 20px;
 }
@@ -24,8 +22,21 @@
 	padding-top: 20px;
 }
 
+.padding-left-sm {
+	padding-left: 10px;
+}
 
+.padding-bottom-sm {
+	padding-bottom: 10px;
+}
 
+.padding-right-sm {
+	padding-right: 10px;
+}
+
+.padding-top-sm {
+	padding-top: 10px;
+}
 
 .padding-vertical {
 	padding: 20px 0;
@@ -51,8 +62,6 @@
 	padding: 10px 0 10px 10px;
 }
 
-
-
 .padding-vertical.padding-right {
 	padding: 20px 20px 20px 0;
 }
@@ -69,8 +78,6 @@
 	padding: 10px 0 10px 10px;
 }
 
-
-
 .padding-horizontal {
 	padding: 0 20px;
 }
@@ -78,7 +85,6 @@
 .padding-horizontal-sm {
 	padding: 0 10px;
 }
-
 
 .padding-horizontal.padding-top {
 	padding: 20px 20px 0;
@@ -96,10 +102,6 @@
 	padding: 10px 10px 0;
 }
 
-
-
-
-
 .padding-horizontal.padding-bottom {
 	padding: 0 20px 20px;
 }
@@ -116,30 +118,10 @@
 	padding: 0 10px 10px;
 }
 
-
-
 .padding-vertical.padding-horizontal-sm {
 	padding: 20px 10px;
 }
 
 .padding-horizontal.padding-vertical-sm {
 	padding: 10px 20px;
-}
-
-
-
-.padding-left-sm {
-	padding-left: 10px;
-}
-
-.padding-bottom-sm {
-	padding-bottom: 10px;
-}
-
-.padding-right-sm {
-	padding-right: 10px;
-}
-
-.padding-top-sm {
-	padding-top: 10px;
 }
