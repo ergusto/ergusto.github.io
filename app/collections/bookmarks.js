@@ -15,17 +15,17 @@ export default class Bookmarks extends LocalStorageCollection {
 			{ 
 				title: 'Some of my photography',
 				url: 'https://www.flickr.com/photos/fergusruston/',
-				notes: ''
+				notes: 'Go see it on Flickr!'
 			},
 			{
 				title: 'Github profile',
 				url: 'http://github.com/ergusto', 
-				notes: '' 
+				notes: 'You can see this project on Github.' 
 			},
 			{
 				title: 'Twitter profile',
 				url: 'http://twitter.com/ergusto', 
-				notes: '' 
+				notes: 'Tweet terwoo' 
 			},
 		]
 	}

@@ -39948,6 +39948,11 @@
 							'a',
 							{ onClick: this.removeHandler.bind(this), href: '#', className: 'btn' },
 							'delete'
+						),
+						_react2.default.createElement(
+							'a',
+							{ href: bookmark.url, className: 'btn margin-left-sm' },
+							'visit'
 						)
 					),
 					notesHtml
@@ -40157,12 +40162,8 @@
 						),
 						_react2.default.createElement(
 							'a',
-							{ className: 'margin-left-sm', href: bookmark.url },
-							_react2.default.createElement(
-								'small',
-								{ className: 'muted' },
-								bookmark.url
-							)
+							{ href: bookmark.url, className: 'btn margin-left-sm' },
+							'visit'
 						)
 					)
 				);
@@ -42272,15 +42273,15 @@
 				return [{
 					title: 'Some of my photography',
 					url: 'https://www.flickr.com/photos/fergusruston/',
-					notes: ''
+					notes: 'Go see it on Flickr!'
 				}, {
 					title: 'Github profile',
 					url: 'http://github.com/ergusto',
-					notes: ''
+					notes: 'You can see this project on Github.'
 				}, {
 					title: 'Twitter profile',
 					url: 'http://twitter.com/ergusto',
-					notes: ''
+					notes: 'Tweet terwoo'
 				}];
 			}
 		}]);
