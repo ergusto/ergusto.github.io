@@ -7,7 +7,7 @@ export default class TaskDetailComponent extends React.Component {
 
 	setManagerEditingTask(event) {
 		event.preventDefault();
-		this.props.setEditingTask(this.props.task.id);
+		this.props.setEditingTask(this.props.task);
 	}
 
 	render() {

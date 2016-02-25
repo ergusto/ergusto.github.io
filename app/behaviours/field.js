@@ -3,15 +3,15 @@ import ComponentSingleStateModifierBehaviour from './component.single.state.modi
 export default class FieldStateBehaviour {
 
 	constructor(component) {
-		this.fieldLength = new ComponentSingleStateModifierBehaviour(component, 0);
+		this.fieldLengthState = new ComponentSingleStateModifierBehaviour(component, 0);
 	}
 
 	get length() {
-		return this.fieldLength.current;
+		return this.fieldLengthState.current;
 	}
 
 	setLength(value) {
-		this.fieldLength.set(value);
+		this.fieldLengthState.set(value);
 	}
 
 }

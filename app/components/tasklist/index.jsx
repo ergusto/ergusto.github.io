@@ -15,7 +15,6 @@ export default class TaskManagerComponent extends React.Component {
 		});
 
 		this.state = {};
-		//dont forget about this
 		this.activeTaskDetail = new ActiveModelStateBehaviour(this);
 		this.activeEditTask = new ActiveModelStateBehaviour(this);
 		this.state.shouldShowNewTaskForm = true;
@@ -65,7 +64,7 @@ export default class TaskManagerComponent extends React.Component {
 		this.showNewTaskForm();
 	}
 
-	submitHandler(task) {
+	activateTask(task) {
 		this.setActiveTask(task.id);
 	}
 
@@ -78,16 +77,16 @@ export default class TaskManagerComponent extends React.Component {
 
 		if (activeTaskId) {
 			task = this.props.tasks.get(activeTaskId);
-			content = <TaskDetailComponent task={task} tasks={this.props.tasks} submitCallback={this.submitHandler.bind(this)} />
+			content = <TaskDetailComponent task={task} tasks={this.props.tasks} setEditingTask={this.activateTask.bind(this)} />
 		}
 
 		if (editTaskId) {
 			task = this.props.tasks.get(editTaskId);
-			content = <TaskFormComponent task={task} tasks={this.props.tasks} submitCallback={this.submitHandler.bind(this)} />
+			content = <TaskFormComponent task={task} tasks={this.props.tasks} submitCallback={this.activateTask.bind(this)} />
 		}
 
 		if (this.state.shouldShowNewTaskForm || !content) {
-			content = <TaskFormComponent tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} />
+			content = <TaskFormComponent tasks={this.props.tasks} submitCallback={this.activateTask.bind(this)} />
 		}
 
 		return (

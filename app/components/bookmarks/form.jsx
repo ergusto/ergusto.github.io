@@ -76,7 +76,7 @@ export default class BookmarkFormComponent extends React.Component {
 					<input defaultValue={urlValue} ref="bookmarkUrlInput" name="url" placeholder="url" type="url" className="field" />
 					<textarea defaultValue={notesValue} ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
                     {errContent}
-					<a onClick={this.submitHandler.bind(this)} className="btn" href="#">submit</a>
+                    <input type="submit" value="submit" className="btn"></input>
 				</form>
         	</div>
         );

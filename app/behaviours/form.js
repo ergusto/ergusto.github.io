@@ -5,16 +5,26 @@ export default class FormStateBehaviour {
 
 	constructor(component) {
 		this.component = component;
-		this.formError = new ComponentSingleStateModifierBehaviour(component);
+		this.formErrorState = new ComponentSingleStateModifierBehaviour(component);
 		this.formState = new ComponentSingleStateModifierBehaviour(component, true);
 	}
 
+	makeField(name) {
+		this[name] = new FieldStateBehaviour(this.component);
+	}
+
+	makeFields(names) {
+		names.forEach((name) => {
+			this.makeField(name);
+		});
+	}
+
 	get error() {
-		return this.formError.current;
+		return this.formErrorState.current;
 	}
 
 	addError(error) {
-		this.formError.set(error);
+		this.formErrorState.set(error);
 	}
 
 	get enabled() {
@@ -31,16 +41,6 @@ export default class FormStateBehaviour {
 
 	disable() {
 		this.formState.set(false);
-	}
-
-	makeField(name) {
-		this[name] = new FieldStateBehaviour(this.component);
-	}
-
-	makeFields(names) {
-		names.forEach((name) => {
-			this.makeField(name);
-		});
 	}
 
 }

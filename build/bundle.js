@@ -24214,6 +24214,9 @@
 			this.component = component;
 			this.stateName = 'ERGUSTO:state-modifier:' + this.component.name + ':' + _tools2.default.generateID();
 			this.defaultState = defaultState;
+			if (!component.state) {
+				component.state = {};
+			}
 			this.component.state[this.stateName] = this.defaultState;
 		}
 
@@ -40378,11 +40381,7 @@
 	                    _react2.default.createElement('input', { defaultValue: urlValue, ref: 'bookmarkUrlInput', name: 'url', placeholder: 'url', type: 'url', className: 'field' }),
 	                    _react2.default.createElement('textarea', { defaultValue: notesValue, ref: 'bookmarkNotesInput', name: 'notes', placeholder: 'notes', className: 'field' }),
 	                    errContent,
-	                    _react2.default.createElement(
-	                        'a',
-	                        { onClick: this.submitHandler.bind(this), className: 'btn', href: '#' },
-	                        'submit'
-	                    )
+	                    _react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' })
 	                )
 	            );
 	        }
@@ -40422,26 +40421,11 @@
 			_classCallCheck(this, FormStateBehaviour);
 
 			this.component = component;
-			this.formError = new _componentSingleStateModifier2.default(component);
+			this.formErrorState = new _componentSingleStateModifier2.default(component);
 			this.formState = new _componentSingleStateModifier2.default(component, true);
 		}
 
 		_createClass(FormStateBehaviour, [{
-			key: 'addError',
-			value: function addError(error) {
-				this.formError.set(error);
-			}
-		}, {
-			key: 'enable',
-			value: function enable() {
-				this.formState.set(true);
-			}
-		}, {
-			key: 'disable',
-			value: function disable() {
-				this.formState.set(false);
-			}
-		}, {
 			key: 'makeField',
 			value: function makeField(name) {
 				this[name] = new _field2.default(this.component);
@@ -40456,9 +40440,24 @@
 				});
 			}
 		}, {
+			key: 'addError',
+			value: function addError(error) {
+				this.formErrorState.set(error);
+			}
+		}, {
+			key: 'enable',
+			value: function enable() {
+				this.formState.set(true);
+			}
+		}, {
+			key: 'disable',
+			value: function disable() {
+				this.formState.set(false);
+			}
+		}, {
 			key: 'error',
 			get: function get() {
-				return this.formError.current;
+				return this.formErrorState.current;
 			}
 		}, {
 			key: 'enabled',
@@ -40658,7 +40657,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative;\n  min-height: 600px; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block;\n  line-height: 58px; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 1rem;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n", ""]);
+	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block;\n  line-height: 58px; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 1rem;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n", ""]);
 
 	// exports
 
@@ -41144,7 +41143,6 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentFormComponent).call(this, props));
 
-			_this.state = {};
 			_this.form = new _form2.default(_this);
 			_this.form.makeField('text');
 			return _this;
@@ -41221,7 +41219,7 @@
 					defaultValue = comment.text;
 				}
 
-				if (!shouldShowForm) return false;
+				if (!shouldShowForm) return;
 
 				return _react2.default.createElement(
 					'form',
@@ -41434,7 +41432,6 @@
 			});
 
 			_this.state = {};
-			//dont forget about this
 			_this.activeTaskDetail = new _activeModel2.default(_this);
 			_this.activeEditTask = new _activeModel2.default(_this);
 			_this.state.shouldShowNewTaskForm = true;
@@ -41494,8 +41491,8 @@
 				this.showNewTaskForm();
 			}
 		}, {
-			key: 'submitHandler',
-			value: function submitHandler(task) {
+			key: 'activateTask',
+			value: function activateTask(task) {
 				this.setActiveTask(task.id);
 			}
 		}, {
@@ -41509,16 +41506,16 @@
 
 				if (activeTaskId) {
 					task = this.props.tasks.get(activeTaskId);
-					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks, submitCallback: this.submitHandler.bind(this) });
+					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks, setEditingTask: this.activateTask.bind(this) });
 				}
 
 				if (editTaskId) {
 					task = this.props.tasks.get(editTaskId);
-					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks, submitCallback: this.submitHandler.bind(this) });
+					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks, submitCallback: this.activateTask.bind(this) });
 				}
 
 				if (this.state.shouldShowNewTaskForm || !content) {
-					content = _react2.default.createElement(_form2.default, { tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this) });
+					content = _react2.default.createElement(_form2.default, { tasks: this.props.tasks, submitCallback: this.activateTask.bind(this) });
 				}
 
 				return _react2.default.createElement(
@@ -41616,7 +41613,6 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskFormComponent).call(this, props));
 
-			_this.state = {};
 			_this.form = new _form2.default(_this);
 			return _this;
 		}
@@ -41628,7 +41624,7 @@
 				var saved = undefined;
 				var title = this.refs.taskTitleInput.value;
 				var text = this.refs.taskTextInput.value;
-				var task = this.props.task || this.newTask();
+				var task = this.props.task || this.props.tasks.shell();
 
 				if (!title.trim().length) {
 					this.form.addError('please enter a title');
@@ -41687,11 +41683,7 @@
 						_react2.default.createElement('input', { defaultValue: titleDefaultValue, ref: 'taskTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
 						errContent,
 						_react2.default.createElement('textarea', { defaultValue: textDefaultValue, ref: 'taskTextInput', placeholder: 'text', className: 'field', name: 'text' }),
-						_react2.default.createElement(
-							'a',
-							{ onClick: this.submitHandler.bind(this), className: 'btn', href: '#' },
-							'submit'
-						)
+						_react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' })
 					)
 				);
 			}
@@ -41782,7 +41774,7 @@
 			key: 'setManagerEditingTask',
 			value: function setManagerEditingTask(event) {
 				event.preventDefault();
-				this.props.setEditingTask(this.props.task.id);
+				this.props.setEditingTask(this.props.task);
 			}
 		}, {
 			key: 'render',
@@ -42462,9 +42454,15 @@
 			this.name = this.constructor.name;
 		}
 
-		// change fires for all events
-
 		_createClass(Collection, [{
+			key: 'shell',
+			value: function shell() {
+				return new Object();
+			}
+
+			// change fires for all events
+
+		}, {
 			key: 'onChange',
 			value: function onChange(callback) {
 				this.events.register('change', callback);
@@ -43068,18 +43066,18 @@
 		function FieldStateBehaviour(component) {
 			_classCallCheck(this, FieldStateBehaviour);
 
-			this.fieldLength = new _componentSingleStateModifier2.default(component, 0);
+			this.fieldLengthState = new _componentSingleStateModifier2.default(component, 0);
 		}
 
 		_createClass(FieldStateBehaviour, [{
 			key: 'setLength',
 			value: function setLength(value) {
-				this.fieldLength.set(value);
+				this.fieldLengthState.set(value);
 			}
 		}, {
 			key: 'length',
 			get: function get() {
-				return this.fieldLength.current;
+				return this.fieldLengthState.current;
 			}
 		}]);
 

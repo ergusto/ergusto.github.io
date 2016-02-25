@@ -8,7 +8,6 @@ export default class TaskFormComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {};
 		this.form = new FormStateBehaviour(this);
 	}
 
@@ -17,7 +16,7 @@ export default class TaskFormComponent extends React.Component {
 		let saved;
 		const title = this.refs.taskTitleInput.value;
 		const text = this.refs.taskTextInput.value;
-		const task = this.props.task || this.newTask();
+		const task = this.props.task || this.props.tasks.shell();
 
 		if (!title.trim().length) {
 			this.form.addError('please enter a title');
@@ -64,7 +63,7 @@ export default class TaskFormComponent extends React.Component {
 					<input defaultValue={titleDefaultValue} ref="taskTitleInput" placeholder="title" className="field" name="title" />
 					{errContent}
 					<textarea defaultValue={textDefaultValue} ref="taskTextInput" placeholder="text" className="field" name="text"></textarea>
-					<a onClick={this.submitHandler.bind(this)} className="btn" href="#">submit</a>
+					<input type="submit" value="submit" className="btn"></input>
 				</form>
 			</div>
 		)

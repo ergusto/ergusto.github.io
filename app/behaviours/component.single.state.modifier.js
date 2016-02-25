@@ -8,6 +8,9 @@ export default class ComponentSingleStateModifierBehaviour {
 		this.component = component;
 		this.stateName = 'ERGUSTO:state-modifier:' + this.component.name + ':' + Tools.generateID();
 		this.defaultState = defaultState;
+		if (!component.state) {
+			component.state = {};
+		}
 		this.component.state[this.stateName] = this.defaultState;
 	}
 

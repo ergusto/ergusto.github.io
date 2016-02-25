@@ -8,7 +8,6 @@ export default class CommentFormComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {};
 		this.form = new FormStateBehaviour(this);
 		this.form.makeField('text');
 	}
@@ -74,7 +73,7 @@ export default class CommentFormComponent extends React.Component {
 			defaultValue = comment.text;
 		}
 
-		if (!shouldShowForm) return false;
+		if (!shouldShowForm) return;
 
 		return (
 			<form refs="commentform" onSubmit={this.submitHandler.bind(this)} className="comment-form box padding margin-top">

@@ -10,6 +10,10 @@ export default class Collection {
 		this.name = this.constructor.name;
 	}
 
+	shell() {
+		return new Object;
+	}
+
 	// change fires for all events
 
 	onChange(callback) {
