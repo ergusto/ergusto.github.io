@@ -73,7 +73,7 @@ export default class CommentFormComponent extends React.Component {
 			defaultValue = comment.text;
 		}
 
-		if (!shouldShowForm) return;
+		if (!shouldShowForm) return false;
 
 		return (
 			<form refs="commentform" onSubmit={this.submitHandler.bind(this)} className="comment-form box padding margin-top">

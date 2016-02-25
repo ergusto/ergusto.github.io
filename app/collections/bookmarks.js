@@ -26,7 +26,7 @@ export default class Bookmarks extends LocalStorageCollection {
 				title: 'Twitter profile',
 				url: 'http://twitter.com/ergusto', 
 				notes: 'Tweet terwoo' 
-			},
+			}
 		]
 	}
 	
