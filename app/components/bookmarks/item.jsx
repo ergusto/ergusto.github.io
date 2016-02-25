@@ -12,14 +12,10 @@ export default class BookmarkItemComponent extends React.Component {
 		this.props.setActiveBookmark(this.props.bookmark.id);
 	}
 
-	isImageUrl() {
-		return Tools.isImageUrl(this.props.bookmark.url);
-	}
-
 	render() {
 		let imageHtml;
 		const bookmark = this.props.bookmark;
-		const isImageUrl = this.isImageUrl();
+		const isImageUrl = Tools.isImageUrl(bookmark.url);
 
 		if (isImageUrl) {
 			imageHtml = (
@@ -37,7 +33,7 @@ export default class BookmarkItemComponent extends React.Component {
 				{imageHtml}
 				<div className="padding-horizontal padding-vertical-sm">
 					<a onClick={this.clickHandler.bind(this)} href="#" className="bookmark-item-url btn">view</a>
-					<a href={bookmark.url} className="bookmark-item-url btn margin-left-sm">go to</a>
+					<a className="margin-left-sm" href={bookmark.url}><small className="muted">{bookmark.url}</small></a>
 				</div>
 			</li>
 		)

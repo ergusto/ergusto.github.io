@@ -26,7 +26,10 @@ export default class LocalStorageBehaviour {
 
 	hasContents() {
 		const store = this.get();
-		return store && !!_.keys(store).length;
+		if (_.isObject(store)) {
+			return store && !!_.keys(store).length;
+		}
+		return store && store.length;
 	}
 
 	update(callback) {

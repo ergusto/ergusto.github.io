@@ -24083,13 +24083,13 @@
 									_react2.default.createElement(
 										'small',
 										null,
-										'view on github'
+										'reset all data'
 									)
 								),
 								_react2.default.createElement(
 									'a',
-									{ href: 'http://github.com/ergusto/ergusto.github.io', className: 'btn' },
-									'view'
+									{ href: '#', onClick: this.resetHandler.bind(this), className: 'btn' },
+									'reset'
 								)
 							),
 							_react2.default.createElement(
@@ -24101,13 +24101,13 @@
 									_react2.default.createElement(
 										'small',
 										null,
-										'reset all data'
+										'view on github'
 									)
 								),
 								_react2.default.createElement(
 									'a',
-									{ href: '#', onClick: this.resetHandler.bind(this), className: 'btn' },
-									'reset'
+									{ href: 'http://github.com/ergusto/ergusto.github.io', className: 'btn' },
+									'view'
 								)
 							)
 						)
@@ -40120,16 +40120,11 @@
 				this.props.setActiveBookmark(this.props.bookmark.id);
 			}
 		}, {
-			key: 'isImageUrl',
-			value: function isImageUrl() {
-				return _tools2.default.isImageUrl(this.props.bookmark.url);
-			}
-		}, {
 			key: 'render',
 			value: function render() {
 				var imageHtml = undefined;
 				var bookmark = this.props.bookmark;
-				var isImageUrl = this.isImageUrl();
+				var isImageUrl = _tools2.default.isImageUrl(bookmark.url);
 
 				if (isImageUrl) {
 					imageHtml = _react2.default.createElement(
@@ -40162,8 +40157,12 @@
 						),
 						_react2.default.createElement(
 							'a',
-							{ href: bookmark.url, className: 'bookmark-item-url btn margin-left-sm' },
-							'go to'
+							{ className: 'margin-left-sm', href: bookmark.url },
+							_react2.default.createElement(
+								'small',
+								{ className: 'muted' },
+								bookmark.url
+							)
 						)
 					)
 				);
@@ -40639,7 +40638,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative;\n  min-height: 600px; }\n\n.bookmark-manager-header {\n  border-bottom: 0;\n  border-bottom: 1px solid #ccc; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block;\n  line-height: 58px; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 14px;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n", ""]);
+	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative;\n  min-height: 600px; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block;\n  line-height: 58px; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 1rem;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n", ""]);
 
 	// exports
 
@@ -41333,7 +41332,7 @@
 
 
 	// module
-	exports.push([module.id, ".comment-item {\n  display: block;\n  max-width: 600px; }\n\n.comment-item-header {\n  padding: 10px 20px 0; }\n\n.comment-item-body {\n  padding: 10px 20px 15px; }\n\n.comment-item-footer {\n  background: #f8f8f8;\n  border-top: 1px solid #ddd;\n  font-size: 80%; }\n\n.comment-item-footer .horizontal-list-menu {\n  padding: 6px 20px 8px; }\n\n.comment-item-footer a {\n  text-decoration: none; }\n\n.comment-item p {\n  margin: 0;\n  padding: 0; }\n\n.comment-children {\n  padding-left: 20px;\n  list-style: none;\n  list-style-type: none; }\n", ""]);
+	exports.push([module.id, ".comment-item {\n  display: block;\n  max-width: 600px;\n  margin-top: 0px; }\n\n.comment-item-header {\n  padding: 10px 20px 0; }\n\n.comment-item-body {\n  padding: 10px 20px 15px; }\n\n.comment-item-footer {\n  background: #f8f8f8;\n  border-top: 1px solid #ddd;\n  font-size: 80%; }\n\n.comment-item-footer .horizontal-list-menu {\n  padding: 6px 20px 8px; }\n\n.comment-item-footer a {\n  text-decoration: none; }\n\n.comment-item p {\n  margin: 0;\n  padding: 0; }\n\n.comment-children {\n  padding-left: 20px;\n  list-style: none;\n  list-style-type: none; }\n", ""]);
 
 	// exports
 
@@ -42272,15 +42271,15 @@
 			value: function defaultModels() {
 				return [{
 					title: 'Some of my photography',
-					url: 'https://c1.staticflickr.com/1/773/22353007131_8cf5803bc8_k.jpg',
-					notes: 'Check out my other photography at https://www.flickr.com/photos/fergusruston/'
+					url: 'https://www.flickr.com/photos/fergusruston/',
+					notes: ''
 				}, {
-					title: 'Wikipedia',
-					url: 'http://wikipedia.org',
-					notes: 'An amazing resource where you can learn just about anything!'
+					title: 'Github profile',
+					url: 'http://github.com/ergusto',
+					notes: ''
 				}, {
-					title: 'Some more photography',
-					url: 'https://c1.staticflickr.com/1/89/223652261_ecce83afdd_b.jpg',
+					title: 'Twitter profile',
+					url: 'http://twitter.com/ergusto',
 					notes: ''
 				}];
 			}
@@ -42667,7 +42666,7 @@
 				var event = this.get(eventName);
 				var index = event.indexOf(callback);
 				if (index > -1) {
-					modified = this.events.splice(index, 1);
+					modified = event.splice(index, 1);
 					this.events[eventName] = modified;
 				}
 			}
@@ -42742,7 +42741,10 @@
 			key: 'hasContents',
 			value: function hasContents() {
 				var store = this.get();
-				return store && !!_lodash2.default.keys(store).length;
+				if (_lodash2.default.isObject(store)) {
+					return store && !!_lodash2.default.keys(store).length;
+				}
+				return store && store.length;
 			}
 		}, {
 			key: 'update',

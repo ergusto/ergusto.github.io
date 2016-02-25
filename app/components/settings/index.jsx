@@ -94,12 +94,12 @@ export default class SettingsComponent extends  React.Component {
 					</div>
 					<div className="inline-field-row">
 						<div className="settings-field inline-field">
-							<label className="settings-label"><small>view on github</small></label>
-							<a href="http://github.com/ergusto/ergusto.github.io" className="btn">view</a>
-						</div>
-						<div className="settings-field inline-field">
 							<label className="settings-label"><small>reset all data</small></label>
 							<a href="#" onClick={this.resetHandler.bind(this)} className="btn">reset</a>
+						</div>
+						<div className="settings-field inline-field">
+							<label className="settings-label"><small>view on github</small></label>
+							<a href="http://github.com/ergusto/ergusto.github.io" className="btn">view</a>
 						</div>
 					</div>
 				</div>

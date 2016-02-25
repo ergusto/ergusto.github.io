@@ -22,7 +22,7 @@ export default class EventBehaviour {
 		const event = this.get(eventName);
 		const index = event.indexOf(callback);
 		if (index > -1) {
-			modified = this.events.splice(index, 1);
+			modified = event.splice(index, 1);
 			this.events[eventName] = modified;
 		}
 	}
