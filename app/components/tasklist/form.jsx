@@ -1,4 +1,5 @@
 import React from 'react';
+import FormStateBehaviour from '../../behaviours/form.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/form.scss');
@@ -8,31 +9,7 @@ export default class TaskFormComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
-		this.state.formError = '';
-	}
-
-	newTask() {
-		const task = {};
-		task.title = '';
-		task.text = '';
-		task.date = new Date;
-		return task;
-	}
-
-	addError(error) {
-		this.setState({
-			formError: error
-		});
-	}
-
-	clearError() {
-		this.setState({
-			formError: null
-		});
-	}
-
-	componentWillUnmount() {
-		this.clearError();
+		this.form = new FormStateBehaviour(this);
 	}
 
 	submitHandler(event) {
@@ -43,7 +20,7 @@ export default class TaskFormComponent extends React.Component {
 		const task = this.props.task || this.newTask();
 
 		if (!title.trim().length) {
-			this.addError('please enter a title');
+			this.form.addError('please enter a title');
 			return;
 		}
 
@@ -60,8 +37,9 @@ export default class TaskFormComponent extends React.Component {
 	}
 
 	render() {
-		const err = this.state.formError;
+		const err = this.form.error;
 		const task = this.props.task;
+		
 		let errContent;
 		let formTitleContent;
 		let titleDefaultValue;

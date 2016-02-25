@@ -1,8 +1,10 @@
 import ComponentSingleStateModifierBehaviour from './component.single.state.modifier.js';
+import FieldLengthStateBehaviour from './field.js';
 
 export default class FormStateBehaviour {
 
 	constructor(component) {
+		this.component = component;
 		this.formError = new ComponentSingleStateModifierBehaviour(component);
 		this.formState = new ComponentSingleStateModifierBehaviour(component, true);
 	}
@@ -29,6 +31,16 @@ export default class FormStateBehaviour {
 
 	disable() {
 		this.formState.set(false);
+	}
+
+	makeField(name) {
+		this[name] = new FieldLengthStateBehaviour(this.component);
+	}
+
+	makeFields(names) {
+		names.forEach((name) => {
+			this.makeField(name);
+		});
 	}
 
 }

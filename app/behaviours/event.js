@@ -18,11 +18,10 @@ export default class EventBehaviour {
 	}
 
 	remove(eventName, callback) {
-		let modified;
 		const event = this.get(eventName);
 		const index = event.indexOf(callback);
 		if (index > -1) {
-			modified = event.splice(index, 1);
+			const modified = event.splice(index, 1);
 			this.events[eventName] = modified;
 		}
 	}

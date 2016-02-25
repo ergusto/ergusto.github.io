@@ -1,4 +1,5 @@
 import React from 'react';
+import FormStateBehaviour from '../../behaviours/form.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/form.scss');
@@ -7,27 +8,16 @@ export default class CommentFormComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
-		const comment = this.props.comment;
 		this.state = {};
-		this.state.formError = '';
-		this.state.isSubmitting = false;
-		this.state.commentLength = comment ? comment.text.length : 0;
+		this.form = new FormStateBehaviour(this);
+		this.form.makeField('text');
 	}
 
-	componentWillUnmount() {
-		this.clearError();
-	}
-
-	addError(error) {
-		this.setState({
-			formError: error
-		});
-	}
-
-	clearError() {
-		this.setState({
-			formError: null
-		});
+	componentDidMount() {
+		const comment = this.props.comment;
+		if (comment) {
+			this.form.text.setLength(comment.text.length);
+		}
 	}
 
 	cancelHandler(event) {
@@ -43,18 +33,18 @@ export default class CommentFormComponent extends React.Component {
 		const comment = this.props.comment || this.props.comments.shell();
 
 		if (!text.trim().length) {
-			this.addError('Please enter a comment');
+			this.form.addError('Please enter a comment');
 			return;
 		}
 
 		comment.text = text;
-		comment.date = new Date;
-		comment.parentId = parent && parent.id || '';
-		comment.username = this.props.user.getUsername();
 
 		if (comment.id) {
 			saved = this.props.comments.update(comment);
 		} else {
+			comment.date = new Date;
+			comment.username = this.props.user.getUsername();
+			comment.parentId = parent && parent.id || '';
 			saved = this.props.comments.create(comment);
 		}
 
@@ -63,22 +53,16 @@ export default class CommentFormComponent extends React.Component {
 		}
 	}
 
-	setCommentLength(length) {
-		length = length || this.refs.commentInput.value.length;
-		this.setState({
-			commentLength: length
-		});
-	}
-
 	changeHandler() {
-		this.setCommentLength();
+		const length = this.refs.commentInput.value.length;
+		this.form.text.setLength(length);
 	}
 
 	render() {
+		const err = this.form.error;
 		const shouldShowForm = this.props.shouldShowForm;
 		const formTitle = this.props.formTitle || 'comment';
 		const comment = this.props.comment;
-		const err = this.state.formError;
 		let errContent;
 		let defaultValue;
 
@@ -94,7 +78,7 @@ export default class CommentFormComponent extends React.Component {
 
 		return (
 			<form refs="commentform" onSubmit={this.submitHandler.bind(this)} className="comment-form box padding margin-top">
-				<span className="fieldCount pull-right">{this.state.commentLength}</span>
+				<span className="fieldCount pull-right">{this.form.text.length}</span>
 				<label httmlFor="comment"><small>{formTitle}</small></label>
 				<textarea onChange={this.changeHandler.bind(this)} ref="commentInput" className="field" name="comment" defaultValue={defaultValue}></textarea>
 				{errContent}

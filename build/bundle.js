@@ -39941,18 +39941,18 @@
 						{ className: 'padding-horizontal padding-vertical-sm' },
 						_react2.default.createElement(
 							'a',
-							{ onClick: this.editHandler.bind(this), href: '#', className: 'btn margin-right-sm' },
+							{ href: bookmark.url, className: 'btn' },
+							'visit'
+						),
+						_react2.default.createElement(
+							'a',
+							{ onClick: this.editHandler.bind(this), href: '#', className: 'btn margin-left-sm' },
 							'edit'
 						),
 						_react2.default.createElement(
 							'a',
-							{ onClick: this.removeHandler.bind(this), href: '#', className: 'btn' },
+							{ onClick: this.removeHandler.bind(this), href: '#', className: 'btn margin-left-sm' },
 							'delete'
-						),
-						_react2.default.createElement(
-							'a',
-							{ href: bookmark.url, className: 'btn margin-left-sm' },
-							'visit'
 						)
 					),
 					notesHtml
@@ -40157,13 +40157,13 @@
 						{ className: 'padding-horizontal padding-vertical-sm' },
 						_react2.default.createElement(
 							'a',
-							{ onClick: this.clickHandler.bind(this), href: '#', className: 'bookmark-item-url btn' },
-							'view'
+							{ href: bookmark.url, className: 'btn' },
+							'visit'
 						),
 						_react2.default.createElement(
 							'a',
-							{ href: bookmark.url, className: 'btn margin-left-sm' },
-							'visit'
+							{ onClick: this.clickHandler.bind(this), href: '#', className: 'bookmark-item-url btn margin-left-sm' },
+							'view'
 						)
 					)
 				);
@@ -40409,6 +40409,10 @@
 
 	var _componentSingleStateModifier2 = _interopRequireDefault(_componentSingleStateModifier);
 
+	var _field = __webpack_require__(224);
+
+	var _field2 = _interopRequireDefault(_field);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40417,6 +40421,7 @@
 		function FormStateBehaviour(component) {
 			_classCallCheck(this, FormStateBehaviour);
 
+			this.component = component;
 			this.formError = new _componentSingleStateModifier2.default(component);
 			this.formState = new _componentSingleStateModifier2.default(component, true);
 		}
@@ -40435,6 +40440,20 @@
 			key: 'disable',
 			value: function disable() {
 				this.formState.set(false);
+			}
+		}, {
+			key: 'makeField',
+			value: function makeField(name) {
+				this[name] = new _field2.default(this.component);
+			}
+		}, {
+			key: 'makeFields',
+			value: function makeFields(names) {
+				var _this = this;
+
+				names.forEach(function (name) {
+					_this.makeField(name);
+				});
 			}
 		}, {
 			key: 'error',
@@ -41102,6 +41121,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _form = __webpack_require__(184);
+
+	var _form2 = _interopRequireDefault(_form);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41121,32 +41144,19 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentFormComponent).call(this, props));
 
-			var comment = _this.props.comment;
 			_this.state = {};
-			_this.state.formError = '';
-			_this.state.isSubmitting = false;
-			_this.state.commentLength = comment ? comment.text.length : 0;
+			_this.form = new _form2.default(_this);
+			_this.form.makeField('text');
 			return _this;
 		}
 
 		_createClass(CommentFormComponent, [{
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				this.clearError();
-			}
-		}, {
-			key: 'addError',
-			value: function addError(error) {
-				this.setState({
-					formError: error
-				});
-			}
-		}, {
-			key: 'clearError',
-			value: function clearError() {
-				this.setState({
-					formError: null
-				});
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var comment = this.props.comment;
+				if (comment) {
+					this.form.text.setLength(comment.text.length);
+				}
 			}
 		}, {
 			key: 'cancelHandler',
@@ -41164,18 +41174,18 @@
 				var comment = this.props.comment || this.props.comments.shell();
 
 				if (!text.trim().length) {
-					this.addError('Please enter a comment');
+					this.form.addError('Please enter a comment');
 					return;
 				}
 
 				comment.text = text;
-				comment.date = new Date();
-				comment.parentId = parent && parent.id || '';
-				comment.username = this.props.user.getUsername();
 
 				if (comment.id) {
 					saved = this.props.comments.update(comment);
 				} else {
+					comment.date = new Date();
+					comment.username = this.props.user.getUsername();
+					comment.parentId = parent && parent.id || '';
 					saved = this.props.comments.create(comment);
 				}
 
@@ -41184,25 +41194,18 @@
 				}
 			}
 		}, {
-			key: 'setCommentLength',
-			value: function setCommentLength(length) {
-				length = length || this.refs.commentInput.value.length;
-				this.setState({
-					commentLength: length
-				});
-			}
-		}, {
 			key: 'changeHandler',
 			value: function changeHandler() {
-				this.setCommentLength();
+				var length = this.refs.commentInput.value.length;
+				this.form.text.setLength(length);
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var err = this.form.error;
 				var shouldShowForm = this.props.shouldShowForm;
 				var formTitle = this.props.formTitle || 'comment';
 				var comment = this.props.comment;
-				var err = this.state.formError;
 				var errContent = undefined;
 				var defaultValue = undefined;
 
@@ -41226,7 +41229,7 @@
 					_react2.default.createElement(
 						'span',
 						{ className: 'fieldCount pull-right' },
-						this.state.commentLength
+						this.form.text.length
 					),
 					_react2.default.createElement(
 						'label',
@@ -41585,6 +41588,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _form = __webpack_require__(184);
+
+	var _form2 = _interopRequireDefault(_form);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41605,39 +41612,11 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskFormComponent).call(this, props));
 
 			_this.state = {};
-			_this.state.formError = '';
+			_this.form = new _form2.default(_this);
 			return _this;
 		}
 
 		_createClass(TaskFormComponent, [{
-			key: 'newTask',
-			value: function newTask() {
-				var task = {};
-				task.title = '';
-				task.text = '';
-				task.date = new Date();
-				return task;
-			}
-		}, {
-			key: 'addError',
-			value: function addError(error) {
-				this.setState({
-					formError: error
-				});
-			}
-		}, {
-			key: 'clearError',
-			value: function clearError() {
-				this.setState({
-					formError: null
-				});
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				this.clearError();
-			}
-		}, {
 			key: 'submitHandler',
 			value: function submitHandler(event) {
 				event.preventDefault();
@@ -41647,7 +41626,7 @@
 				var task = this.props.task || this.newTask();
 
 				if (!title.trim().length) {
-					this.addError('please enter a title');
+					this.form.addError('please enter a title');
 					return;
 				}
 
@@ -41665,8 +41644,9 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var err = this.state.formError;
+				var err = this.form.error;
 				var task = this.props.task;
+
 				var errContent = undefined;
 				var formTitleContent = undefined;
 				var titleDefaultValue = undefined;
@@ -42663,11 +42643,10 @@
 		}, {
 			key: "remove",
 			value: function remove(eventName, callback) {
-				var modified = undefined;
 				var event = this.get(eventName);
 				var index = event.indexOf(callback);
 				if (index > -1) {
-					modified = event.splice(index, 1);
+					var modified = event.splice(index, 1);
 					this.events[eventName] = modified;
 				}
 			}
@@ -42889,6 +42868,14 @@
 		}
 
 		_createClass(Tasks, [{
+			key: 'shell',
+			value: function shell() {
+				var task = {};
+				task.title = '';
+				task.text = '';
+				return task;
+			}
+		}, {
 			key: 'defaultModels',
 			value: function defaultModels() {
 				return [{ title: 'Get the groceries', text: 'Some peas, some toothpaste, and 7 courgettes.' }, { title: 'Clean the bathroom', text: 'It\'s dirty!' }];
@@ -43051,6 +43038,50 @@
 
 	// exports
 
+
+/***/ },
+/* 224 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _componentSingleStateModifier = __webpack_require__(163);
+
+	var _componentSingleStateModifier2 = _interopRequireDefault(_componentSingleStateModifier);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var FieldLengthStateBehaviour = function () {
+		function FieldLengthStateBehaviour(component) {
+			_classCallCheck(this, FieldLengthStateBehaviour);
+
+			this.fieldLength = new _componentSingleStateModifier2.default(component, 0);
+		}
+
+		_createClass(FieldLengthStateBehaviour, [{
+			key: 'setLength',
+			value: function setLength(value) {
+				this.fieldLength.set(value);
+			}
+		}, {
+			key: 'length',
+			get: function get() {
+				return this.fieldLength.current;
+			}
+		}]);
+
+		return FieldLengthStateBehaviour;
+	}();
+
+	exports.default = FieldLengthStateBehaviour;
 
 /***/ }
 /******/ ]);
