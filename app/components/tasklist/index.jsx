@@ -18,6 +18,7 @@ export default class TaskManagerComponent extends React.Component {
 		this.state = {};
 		this.tabs = new TabbedStateBehaviour(this, 'new');
 		this.activeTask = new ActiveModelStateBehaviour(this);
+		console.log(this);
 	}
 
 	newTaskHandler(event) {
@@ -38,20 +39,21 @@ export default class TaskManagerComponent extends React.Component {
 	render() {
 		let task;
 		let content;
+		const tabs = this.tabs;
 		const activeTaskId = this.activeTask.current;
 		if (activeTaskId) {
 			task = this.props.tasks.get(activeTaskId);
 		}
 
-		if (this.tabs.isOpen('new')) {
+		if (tabs.isOpen('new')) {
 			content = <TaskFormComponent tasks={this.props.tasks} submitCallback={this.activateTask.bind(this)} />
 		}
 
-		if (this.tabs.isOpen('detail')) {
+		if (tabs.isOpen('detail')) {
 			content = <TaskDetailComponent task={task} tasks={this.props.tasks} setEditingTask={this.editTask.bind(this)} />
 		}
 
-		if (this.tabs.isOpen('edit')) {
+		if (tabs.isOpen('edit')) {
 			content = <TaskFormComponent task={task} tasks={this.props.tasks} submitCallback={this.activateTask.bind(this)} />
 		}
 

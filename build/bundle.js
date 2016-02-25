@@ -40166,7 +40166,7 @@
 						_react2.default.createElement(
 							'a',
 							{ onClick: this.clickHandler.bind(this), href: '#', className: 'bookmark-item-url btn margin-left-sm' },
-							'view'
+							'notes'
 						)
 					)
 				);
@@ -41482,6 +41482,7 @@
 			_this.state = {};
 			_this.tabs = new _tabs2.default(_this, 'new');
 			_this.activeTask = new _activeModel2.default(_this);
+			console.log(_this);
 			return _this;
 		}
 
@@ -41508,20 +41509,21 @@
 			value: function render() {
 				var task = undefined;
 				var content = undefined;
+				var tabs = this.tabs;
 				var activeTaskId = this.activeTask.current;
 				if (activeTaskId) {
 					task = this.props.tasks.get(activeTaskId);
 				}
 
-				if (this.tabs.isOpen('new')) {
+				if (tabs.isOpen('new')) {
 					content = _react2.default.createElement(_form2.default, { tasks: this.props.tasks, submitCallback: this.activateTask.bind(this) });
 				}
 
-				if (this.tabs.isOpen('detail')) {
+				if (tabs.isOpen('detail')) {
 					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks, setEditingTask: this.editTask.bind(this) });
 				}
 
-				if (this.tabs.isOpen('edit')) {
+				if (tabs.isOpen('edit')) {
 					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks, submitCallback: this.activateTask.bind(this) });
 				}
 
