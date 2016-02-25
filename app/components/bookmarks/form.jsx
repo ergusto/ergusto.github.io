@@ -51,7 +51,16 @@ export default class BookmarkFormComponent extends React.Component {
         const err = this.form.error;
         const bookmark = this.props.bookmark;
         const formTitle = this.props.formTitle || 'new bookmark';
+        let titleValue;
+        let urlValue;
+        let notesValue;
         let errContent;
+
+        if (bookmark) {
+            titleValue = bookmark.title;
+            urlValue = bookmark.url;
+            notesValue = bookmark.notes
+        }
 
         if (err) {
             errContent = <span className="form-error">{err}</span>;
@@ -63,9 +72,9 @@ export default class BookmarkFormComponent extends React.Component {
 				    <h3 className="bookmark-form-title muted">{formTitle}</h3>
                 </header>
 				<form onSubmit={this.submitHandler.bind(this)} className="bookmark-form padding">
-					<input defaultValue={bookmark.title} ref="bookmarkTitleInput" name="title" placeholder="title" className="field" />
-					<input defaultValue={bookmark.url} ref="bookmarkUrlInput" name="url" placeholder="url" type="url" className="field" />
-					<textarea defaultValue={bookmark.notes} ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
+					<input defaultValue={titleValue} ref="bookmarkTitleInput" name="title" placeholder="title" className="field" />
+					<input defaultValue={urlValue} ref="bookmarkUrlInput" name="url" placeholder="url" type="url" className="field" />
+					<textarea defaultValue={notesValue} ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
                     {errContent}
 					<a onClick={this.submitHandler.bind(this)} className="btn" href="#">submit</a>
 				</form>

@@ -40332,7 +40332,16 @@
 	            var err = this.form.error;
 	            var bookmark = this.props.bookmark;
 	            var formTitle = this.props.formTitle || 'new bookmark';
+	            var titleValue = undefined;
+	            var urlValue = undefined;
+	            var notesValue = undefined;
 	            var errContent = undefined;
+
+	            if (bookmark) {
+	                titleValue = bookmark.title;
+	                urlValue = bookmark.url;
+	                notesValue = bookmark.notes;
+	            }
 
 	            if (err) {
 	                errContent = _react2.default.createElement(
@@ -40357,9 +40366,9 @@
 	                _react2.default.createElement(
 	                    'form',
 	                    { onSubmit: this.submitHandler.bind(this), className: 'bookmark-form padding' },
-	                    _react2.default.createElement('input', { defaultValue: bookmark.title, ref: 'bookmarkTitleInput', name: 'title', placeholder: 'title', className: 'field' }),
-	                    _react2.default.createElement('input', { defaultValue: bookmark.url, ref: 'bookmarkUrlInput', name: 'url', placeholder: 'url', type: 'url', className: 'field' }),
-	                    _react2.default.createElement('textarea', { defaultValue: bookmark.notes, ref: 'bookmarkNotesInput', name: 'notes', placeholder: 'notes', className: 'field' }),
+	                    _react2.default.createElement('input', { defaultValue: titleValue, ref: 'bookmarkTitleInput', name: 'title', placeholder: 'title', className: 'field' }),
+	                    _react2.default.createElement('input', { defaultValue: urlValue, ref: 'bookmarkUrlInput', name: 'url', placeholder: 'url', type: 'url', className: 'field' }),
+	                    _react2.default.createElement('textarea', { defaultValue: notesValue, ref: 'bookmarkNotesInput', name: 'notes', placeholder: 'notes', className: 'field' }),
 	                    errContent,
 	                    _react2.default.createElement(
 	                        'a',
