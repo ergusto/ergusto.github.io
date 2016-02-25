@@ -24212,7 +24212,7 @@
 			_classCallCheck(this, ComponentSingleStateModifierBehaviour);
 
 			this.component = component;
-			this.stateName = 'ERGUSTO:state-modifier:' + this.component.name + ':' + _tools2.default.generateID();
+			this.stateName = 'ERGUSTO:state-modifier:' + _tools2.default.generateID();
 			this.defaultState = defaultState;
 			if (!component.state) {
 				component.state = {};
@@ -39797,7 +39797,7 @@
 								{ className: 'bookmark-manager-header box clearfix' },
 								_react2.default.createElement(
 									'h3',
-									{ onClick: this.showTab.bind(this, 'list'), className: 'bookmark-manager-title hover-cursor--pointer pull-left muted padding-vertical padding-left' },
+									{ onClick: this.showTab.bind(this, 'list'), className: 'bookmark-manager-title hover-cursor--pointer pull-left muted padding-left' },
 									'bookmarks'
 								),
 								_react2.default.createElement(
@@ -40701,7 +40701,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block;\n  line-height: 58px; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 1rem;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n", ""]);
+	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block; }\n\n.bookmark-manager-control li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.bookmark-manager-control .btn {\n  padding: 0px 1rem;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.bookmark-manager-control .btn:hover {\n  border-color: #ccc; }\n\n.bookmark-manager-header {\n  line-height: 4rem; }\n", ""]);
 
 	// exports
 
@@ -41187,6 +41187,7 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentFormComponent).call(this, props));
 
+			_this.state = {};
 			_this.form = new _form2.default(_this);
 			_this.form.makeField('text');
 			return _this;
@@ -41482,7 +41483,6 @@
 			_this.state = {};
 			_this.tabs = new _tabs2.default(_this, 'new');
 			_this.activeTask = new _activeModel2.default(_this);
-			console.log(_this);
 			return _this;
 		}
 
@@ -41510,21 +41510,22 @@
 				var task = undefined;
 				var content = undefined;
 				var tabs = this.tabs;
+				var tasks = this.props.tasks;
 				var activeTaskId = this.activeTask.current;
 				if (activeTaskId) {
-					task = this.props.tasks.get(activeTaskId);
+					task = tasks.get(activeTaskId);
 				}
 
 				if (tabs.isOpen('new')) {
-					content = _react2.default.createElement(_form2.default, { tasks: this.props.tasks, submitCallback: this.activateTask.bind(this) });
+					content = _react2.default.createElement(_form2.default, { tasks: tasks, submitCallback: this.activateTask.bind(this) });
 				}
 
 				if (tabs.isOpen('detail')) {
-					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks, setEditingTask: this.editTask.bind(this) });
+					content = _react2.default.createElement(_detail2.default, { task: task, tasks: tasks, setEditingTask: this.editTask.bind(this) });
 				}
 
 				if (tabs.isOpen('edit')) {
-					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks, submitCallback: this.activateTask.bind(this) });
+					content = _react2.default.createElement(_form2.default, { task: task, tasks: tasks, submitCallback: this.activateTask.bind(this) });
 				}
 
 				return _react2.default.createElement(
@@ -41557,7 +41558,7 @@
 										)
 									),
 									_react2.default.createElement(_list2.default, {
-										tasks: this.props.tasks,
+										tasks: tasks,
 										setActiveTask: this.activateTask.bind(this)
 									})
 								)

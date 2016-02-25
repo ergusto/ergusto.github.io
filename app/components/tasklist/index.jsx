@@ -18,7 +18,6 @@ export default class TaskManagerComponent extends React.Component {
 		this.state = {};
 		this.tabs = new TabbedStateBehaviour(this, 'new');
 		this.activeTask = new ActiveModelStateBehaviour(this);
-		console.log(this);
 	}
 
 	newTaskHandler(event) {
@@ -40,21 +39,22 @@ export default class TaskManagerComponent extends React.Component {
 		let task;
 		let content;
 		const tabs = this.tabs;
+		const tasks = this.props.tasks;
 		const activeTaskId = this.activeTask.current;
 		if (activeTaskId) {
-			task = this.props.tasks.get(activeTaskId);
+			task = tasks.get(activeTaskId);
 		}
 
 		if (tabs.isOpen('new')) {
-			content = <TaskFormComponent tasks={this.props.tasks} submitCallback={this.activateTask.bind(this)} />
+			content = <TaskFormComponent tasks={tasks} submitCallback={this.activateTask.bind(this)} />
 		}
 
 		if (tabs.isOpen('detail')) {
-			content = <TaskDetailComponent task={task} tasks={this.props.tasks} setEditingTask={this.editTask.bind(this)} />
+			content = <TaskDetailComponent task={task} tasks={tasks} setEditingTask={this.editTask.bind(this)} />
 		}
 
 		if (tabs.isOpen('edit')) {
-			content = <TaskFormComponent task={task} tasks={this.props.tasks} submitCallback={this.activateTask.bind(this)} />
+			content = <TaskFormComponent task={task} tasks={tasks} submitCallback={this.activateTask.bind(this)} />
 		}
 
 		return (
@@ -70,7 +70,7 @@ export default class TaskManagerComponent extends React.Component {
 									<h3 className="tasklist-sidebar-title">tasks</h3>
 								</header>
 								<TaskListComponent
-									tasks={this.props.tasks} 
+									tasks={tasks} 
 									setActiveTask={this.activateTask.bind(this)} 
 								/>
 							</div>

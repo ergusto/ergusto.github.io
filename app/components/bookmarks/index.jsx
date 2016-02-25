@@ -97,7 +97,7 @@ export default class BookmarkManagerComponent extends React.Component {
 
 						<header className="bookmark-manager-header box clearfix">
 
-							<h3 onClick={this.showTab.bind(this, 'list')} className="bookmark-manager-title hover-cursor--pointer pull-left muted padding-vertical padding-left">bookmarks</h3>
+							<h3 onClick={this.showTab.bind(this, 'list')} className="bookmark-manager-title hover-cursor--pointer pull-left muted padding-left">bookmarks</h3>
 
 							<ul className="bookmark-manager-control horizontal-list-menu--btns pull-right">
 
