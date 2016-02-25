@@ -4,6 +4,7 @@ import TaskFormComponent from './form.jsx';
 import TaskDetailComponent from './detail.jsx';
 import TaskListComponent from './list.jsx';
 
+import TabbedStateBehaviour from '../../behaviours/tabs.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
 
 export default class TaskManagerComponent extends React.Component {
@@ -15,78 +16,43 @@ export default class TaskManagerComponent extends React.Component {
 		});
 
 		this.state = {};
-		this.activeTaskDetail = new ActiveModelStateBehaviour(this);
-		this.activeEditTask = new ActiveModelStateBehaviour(this);
-		this.state.shouldShowNewTaskForm = true;
-	}
-
-	clearActiveTaskDetail() {
-		this.activeTaskDetail.clear();
-	}
-
-	clearActiveEditTask() {
-		this.activeEditTask.clear();
-	}
-
-	hideAll() {
-		this.clearActiveTaskDetail();
-		this.clearActiveEditTask();
-		this.setState({
-			shouldShowNewTaskForm: false
-		});
-	}
-
-	setEditingTask(id) {
-		this.hideAll();
-		this.activeEditTask.set(id);
-	}
-
-	setActiveTask(id) {
-		this.hideAll();
-		this.activeTaskDetail.set(id);
-	}
-
-	showNewTaskForm() {
-		this.hideAll();
-		this.setState({
-			shouldShowNewTaskForm: true
-		})
-	}
-
-	hideNewTaskForm() {
-		this.setState({
-			shouldShowNewTaskForm: false
-		})
+		this.tabs = new TabbedStateBehaviour(this, 'new');
+		this.activeTask = new ActiveModelStateBehaviour(this);
 	}
 
 	newTaskHandler(event) {
 		event.preventDefault();
-		this.showNewTaskForm();
+		this.tabs.open('new');
 	}
 
 	activateTask(task) {
-		this.setActiveTask(task.id);
+		this.activeTask.set(task.id);
+		this.tabs.open('detail');
+	}
+
+	editTask(task) {
+		this.activeTask.set(task.id);
+		this.tabs.open('edit');
 	}
 
 	render() {
-		const editTaskId = this.activeEditTask.current;
-		const activeTaskId = this.activeTaskDetail.current;
-
-		let content;
 		let task;
-
+		let content;
+		const activeTaskId = this.activeTask.current;
 		if (activeTaskId) {
 			task = this.props.tasks.get(activeTaskId);
-			content = <TaskDetailComponent task={task} tasks={this.props.tasks} setEditingTask={this.activateTask.bind(this)} />
 		}
 
-		if (editTaskId) {
-			task = this.props.tasks.get(editTaskId);
-			content = <TaskFormComponent task={task} tasks={this.props.tasks} submitCallback={this.activateTask.bind(this)} />
-		}
-
-		if (this.state.shouldShowNewTaskForm || !content) {
+		if (this.tabs.isOpen('new')) {
 			content = <TaskFormComponent tasks={this.props.tasks} submitCallback={this.activateTask.bind(this)} />
+		}
+
+		if (this.tabs.isOpen('detail')) {
+			content = <TaskDetailComponent task={task} tasks={this.props.tasks} setEditingTask={this.editTask.bind(this)} />
+		}
+
+		if (this.tabs.isOpen('edit')) {
+			content = <TaskFormComponent task={task} tasks={this.props.tasks} submitCallback={this.activateTask.bind(this)} />
 		}
 
 		return (
@@ -103,8 +69,7 @@ export default class TaskManagerComponent extends React.Component {
 								</header>
 								<TaskListComponent
 									tasks={this.props.tasks} 
-									setActiveTask={this.setActiveTask.bind(this)} 
-									clearActiveTask={this.clearActiveTaskDetail.bind(this)} 
+									setActiveTask={this.activateTask.bind(this)} 
 								/>
 							</div>
 						</div>

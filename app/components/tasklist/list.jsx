@@ -12,15 +12,14 @@ export default class TaskListComponent extends React.Component {
 		});
 	}
 
-	clickHandler(id, event) {
+	clickHandler(task, event) {
 		event.preventDefault();
-		this.props.setActiveTask(id);
+		this.props.setActiveTask(task);
 	} 
 
 	removeHandler(id, event) {
 		event.preventDefault();
 		this.props.tasks.remove(id);
-		this.props.clearActiveTask();
 	}
 
 	render() {
@@ -30,7 +29,7 @@ export default class TaskListComponent extends React.Component {
 		if (tasks.length) {
 			content = tasks.map((task) => {
 				return (
-					<li className="task-item" key={task.id}><a href="#" onClick={this.clickHandler.bind(this, task.id)}>{task.title}</a> <a onClick={this.removeHandler.bind(this, task.id)} href="#" className="pull-right remove-task">x</a></li>
+					<li className="task-item" key={task.id}><a href="#" onClick={this.clickHandler.bind(this, task)}>{task.title}</a> <a onClick={this.removeHandler.bind(this, task.id)} href="#" className="pull-right remove-task">x</a></li>
 				);
 			});
 		} else {

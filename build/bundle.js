@@ -41451,6 +41451,10 @@
 
 	var _list2 = _interopRequireDefault(_list);
 
+	var _tabs = __webpack_require__(188);
+
+	var _tabs2 = _interopRequireDefault(_tabs);
+
 	var _activeModel = __webpack_require__(189);
 
 	var _activeModel2 = _interopRequireDefault(_activeModel);
@@ -41476,90 +41480,49 @@
 			});
 
 			_this.state = {};
-			_this.activeTaskDetail = new _activeModel2.default(_this);
-			_this.activeEditTask = new _activeModel2.default(_this);
-			_this.state.shouldShowNewTaskForm = true;
+			_this.tabs = new _tabs2.default(_this, 'new');
+			_this.activeTask = new _activeModel2.default(_this);
 			return _this;
 		}
 
 		_createClass(TaskManagerComponent, [{
-			key: 'clearActiveTaskDetail',
-			value: function clearActiveTaskDetail() {
-				this.activeTaskDetail.clear();
-			}
-		}, {
-			key: 'clearActiveEditTask',
-			value: function clearActiveEditTask() {
-				this.activeEditTask.clear();
-			}
-		}, {
-			key: 'hideAll',
-			value: function hideAll() {
-				this.clearActiveTaskDetail();
-				this.clearActiveEditTask();
-				this.setState({
-					shouldShowNewTaskForm: false
-				});
-			}
-		}, {
-			key: 'setEditingTask',
-			value: function setEditingTask(id) {
-				this.hideAll();
-				this.activeEditTask.set(id);
-			}
-		}, {
-			key: 'setActiveTask',
-			value: function setActiveTask(id) {
-				this.hideAll();
-				this.activeTaskDetail.set(id);
-			}
-		}, {
-			key: 'showNewTaskForm',
-			value: function showNewTaskForm() {
-				this.hideAll();
-				this.setState({
-					shouldShowNewTaskForm: true
-				});
-			}
-		}, {
-			key: 'hideNewTaskForm',
-			value: function hideNewTaskForm() {
-				this.setState({
-					shouldShowNewTaskForm: false
-				});
-			}
-		}, {
 			key: 'newTaskHandler',
 			value: function newTaskHandler(event) {
 				event.preventDefault();
-				this.showNewTaskForm();
+				this.tabs.open('new');
 			}
 		}, {
 			key: 'activateTask',
 			value: function activateTask(task) {
-				this.setActiveTask(task.id);
+				this.activeTask.set(task.id);
+				this.tabs.open('detail');
+			}
+		}, {
+			key: 'editTask',
+			value: function editTask(task) {
+				this.activeTask.set(task.id);
+				this.tabs.open('edit');
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				var editTaskId = this.activeEditTask.current;
-				var activeTaskId = this.activeTaskDetail.current;
-
-				var content = undefined;
 				var task = undefined;
-
+				var content = undefined;
+				var activeTaskId = this.activeTask.current;
 				if (activeTaskId) {
 					task = this.props.tasks.get(activeTaskId);
-					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks, setEditingTask: this.activateTask.bind(this) });
 				}
 
-				if (editTaskId) {
-					task = this.props.tasks.get(editTaskId);
-					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks, submitCallback: this.activateTask.bind(this) });
-				}
-
-				if (this.state.shouldShowNewTaskForm || !content) {
+				if (this.tabs.isOpen('new')) {
 					content = _react2.default.createElement(_form2.default, { tasks: this.props.tasks, submitCallback: this.activateTask.bind(this) });
+				}
+
+				if (this.tabs.isOpen('detail')) {
+					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks, setEditingTask: this.editTask.bind(this) });
+				}
+
+				if (this.tabs.isOpen('edit')) {
+					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks, submitCallback: this.activateTask.bind(this) });
 				}
 
 				return _react2.default.createElement(
@@ -41593,8 +41556,7 @@
 									),
 									_react2.default.createElement(_list2.default, {
 										tasks: this.props.tasks,
-										setActiveTask: this.setActiveTask.bind(this),
-										clearActiveTask: this.clearActiveTaskDetail.bind(this)
+										setActiveTask: this.activateTask.bind(this)
 									})
 								)
 							),
@@ -41684,7 +41646,7 @@
 					saved = this.props.tasks.create(task);
 				}
 
-				if (this.props.submitCallback) this.props.submitCallback(saved.id);
+				if (this.props.submitCallback) this.props.submitCallback(saved);
 			}
 		}, {
 			key: 'render',
@@ -41941,16 +41903,15 @@
 
 		_createClass(TaskListComponent, [{
 			key: 'clickHandler',
-			value: function clickHandler(id, event) {
+			value: function clickHandler(task, event) {
 				event.preventDefault();
-				this.props.setActiveTask(id);
+				this.props.setActiveTask(task);
 			}
 		}, {
 			key: 'removeHandler',
 			value: function removeHandler(id, event) {
 				event.preventDefault();
 				this.props.tasks.remove(id);
-				this.props.clearActiveTask();
 			}
 		}, {
 			key: 'render',
@@ -41967,7 +41928,7 @@
 							{ className: 'task-item', key: task.id },
 							_react2.default.createElement(
 								'a',
-								{ href: '#', onClick: _this2.clickHandler.bind(_this2, task.id) },
+								{ href: '#', onClick: _this2.clickHandler.bind(_this2, task) },
 								task.title
 							),
 							' ',
