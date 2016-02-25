@@ -89,10 +89,8 @@ export default class SettingsComponent extends  React.Component {
 					</div>
 					<div className="settings-field">
 						<label className="settings-label"><small>{animationSettingLabelText}</small></label>
-						<div className="btn-group">
-							<a href="#" onClick={this.showIntroHandler.bind(this)} className="btn">show animation</a>
-							<a href="#" onClick={this.hideIntroHandler.bind(this)} className="btn">hide animation</a>
-						</div>
+						<a href="#" onClick={this.showIntroHandler.bind(this)} className="btn margin-right-sm">show animation</a>
+						<a href="#" onClick={this.hideIntroHandler.bind(this)} className="btn">hide animation</a>
 					</div>
 					<div className="inline-field-row">
 						<div className="settings-field inline-field">

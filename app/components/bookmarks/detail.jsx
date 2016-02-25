@@ -30,7 +30,7 @@ export default class BookmarkDetailComponent extends React.Component {
 
 		if (isImageUrl) {
 			imageHtml = (
-				<div className="padding-horizontal padding-vertical-sm border-bottom box-shadow-inset">
+				<div className="padding border-bottom box-shadow-inset">
 					<img className="bookmark-item-image" src={bookmark.url} />
 				</div>
 			);
