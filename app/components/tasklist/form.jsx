@@ -33,7 +33,7 @@ export default class TaskFormComponent extends React.Component {
 			saved = this.props.tasks.create(task);
 		}
 		
-		this.props.setActiveTask(saved.id);
+		if (this.props.submitCallback) this.props.submitCallback(saved.id);
 	}
 
 	render() {

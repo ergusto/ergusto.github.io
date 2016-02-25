@@ -1,5 +1,5 @@
 import ComponentSingleStateModifierBehaviour from './component.single.state.modifier.js';
-import FieldLengthStateBehaviour from './field.js';
+import FieldStateBehaviour from './field.js';
 
 export default class FormStateBehaviour {
 
@@ -34,7 +34,7 @@ export default class FormStateBehaviour {
 	}
 
 	makeField(name) {
-		this[name] = new FieldLengthStateBehaviour(this.component);
+		this[name] = new FieldStateBehaviour(this.component);
 	}
 
 	makeFields(names) {

@@ -1,6 +1,6 @@
 import ComponentSingleStateModifierBehaviour from './component.single.state.modifier.js';
 
-export default class FieldLengthStateBehaviour {
+export default class FieldStateBehaviour {
 
 	constructor(component) {
 		this.fieldLength = new ComponentSingleStateModifierBehaviour(component, 0);

@@ -41494,6 +41494,11 @@
 				this.showNewTaskForm();
 			}
 		}, {
+			key: 'submitHandler',
+			value: function submitHandler(task) {
+				this.setActiveTask(task.id);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var editTaskId = this.activeEditTask.current;
@@ -41504,12 +41509,12 @@
 
 				if (activeTaskId) {
 					task = this.props.tasks.get(activeTaskId);
-					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks, setEditingTask: this.setEditingTask.bind(this) });
+					content = _react2.default.createElement(_detail2.default, { task: task, tasks: this.props.tasks, submitCallback: this.submitHandler.bind(this) });
 				}
 
 				if (editTaskId) {
 					task = this.props.tasks.get(editTaskId);
-					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks, setActiveTask: this.setActiveTask.bind(this) });
+					content = _react2.default.createElement(_form2.default, { task: task, tasks: this.props.tasks, submitCallback: this.submitHandler.bind(this) });
 				}
 
 				if (this.state.shouldShowNewTaskForm || !content) {
@@ -41639,7 +41644,7 @@
 					saved = this.props.tasks.create(task);
 				}
 
-				this.props.setActiveTask(saved.id);
+				if (this.props.submitCallback) this.props.submitCallback(saved.id);
 			}
 		}, {
 			key: 'render',
@@ -43059,14 +43064,14 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var FieldLengthStateBehaviour = function () {
-		function FieldLengthStateBehaviour(component) {
-			_classCallCheck(this, FieldLengthStateBehaviour);
+	var FieldStateBehaviour = function () {
+		function FieldStateBehaviour(component) {
+			_classCallCheck(this, FieldStateBehaviour);
 
 			this.fieldLength = new _componentSingleStateModifier2.default(component, 0);
 		}
 
-		_createClass(FieldLengthStateBehaviour, [{
+		_createClass(FieldStateBehaviour, [{
 			key: 'setLength',
 			value: function setLength(value) {
 				this.fieldLength.set(value);
@@ -43078,10 +43083,10 @@
 			}
 		}]);
 
-		return FieldLengthStateBehaviour;
+		return FieldStateBehaviour;
 	}();
 
-	exports.default = FieldLengthStateBehaviour;
+	exports.default = FieldStateBehaviour;
 
 /***/ }
 /******/ ]);

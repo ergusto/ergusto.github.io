@@ -65,6 +65,10 @@ export default class TaskManagerComponent extends React.Component {
 		this.showNewTaskForm();
 	}
 
+	submitHandler(task) {
+		this.setActiveTask(task.id);
+	}
+
 	render() {
 		const editTaskId = this.activeEditTask.current;
 		const activeTaskId = this.activeTaskDetail.current;
@@ -74,12 +78,12 @@ export default class TaskManagerComponent extends React.Component {
 
 		if (activeTaskId) {
 			task = this.props.tasks.get(activeTaskId);
-			content = <TaskDetailComponent task={task} tasks={this.props.tasks} setEditingTask={this.setEditingTask.bind(this)} />
+			content = <TaskDetailComponent task={task} tasks={this.props.tasks} submitCallback={this.submitHandler.bind(this)} />
 		}
 
 		if (editTaskId) {
 			task = this.props.tasks.get(editTaskId);
-			content = <TaskFormComponent task={task} tasks={this.props.tasks} setActiveTask={this.setActiveTask.bind(this)} />
+			content = <TaskFormComponent task={task} tasks={this.props.tasks} submitCallback={this.submitHandler.bind(this)} />
 		}
 
 		if (this.state.shouldShowNewTaskForm || !content) {
