@@ -39928,7 +39928,7 @@
 					imageHtml,
 					_react2.default.createElement(
 						'div',
-						{ className: 'padding-horizontal padding-vertical-sm bg-gray' },
+						{ className: 'padding-horizontal padding-vertical-sm' },
 						_react2.default.createElement(
 							'a',
 							{ onClick: this.editHandler.bind(this), href: '#', className: 'btn margin-right-sm' },
