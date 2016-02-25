@@ -24087,13 +24087,13 @@
 									_react2.default.createElement(
 										'small',
 										null,
-										'reset all data'
+										'view on github'
 									)
 								),
 								_react2.default.createElement(
 									'a',
-									{ href: '#', onClick: this.resetHandler.bind(this), className: 'btn' },
-									'reset'
+									{ href: 'http://github.com/ergusto/ergusto.github.io', className: 'btn' },
+									'view'
 								)
 							),
 							_react2.default.createElement(
@@ -24105,13 +24105,13 @@
 									_react2.default.createElement(
 										'small',
 										null,
-										'view on github'
+										'reset all data'
 									)
 								),
 								_react2.default.createElement(
 									'a',
-									{ href: 'http://github.com/ergusto/ergusto.github.io', className: 'btn' },
-									'visit'
+									{ href: '#', onClick: this.resetHandler.bind(this), className: 'btn' },
+									'reset'
 								)
 							)
 						)
