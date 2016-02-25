@@ -1,6 +1,6 @@
 import ComponentSingleStateModifierBehaviour from './component.single.state.modifier.js';
 
-export default class DropdownBehaviour {
+export default class DropdownStateBehaviour {
 
 	// must be called from constructor of react component
 

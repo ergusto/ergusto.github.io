@@ -5,7 +5,7 @@ import BookmarkListComponent from './list.jsx';
 import BookmarkFormComponent from './form.jsx';
 
 import TabbedStateBehaviour from '../../behaviours/tabs.js';
-import ActiveModelBehaviour from '../../behaviours/active.model.js';
+import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/manager.scss');
@@ -17,7 +17,7 @@ export default class BookmarkManagerComponent extends React.Component {
 
 		this.state = {};
 		this.tabs = new TabbedStateBehaviour(this, 'list');
-		this.activeBookmark = new ActiveModelBehaviour(this);
+		this.activeBookmark = new ActiveModelStateBehaviour(this);
 		props.bookmarks.onUpdate(() => {
 			this.forceUpdate();
 		});

@@ -2,7 +2,7 @@ import ComponentSingleStateModifierBehaviour from './component.single.state.modi
 
 // for when you need to reactively keep track of a model id value
 
-export default class ActiveModelBehaviour {
+export default class ActiveModelStateBehaviour {
 
 	// must be called from constructor of react component
 

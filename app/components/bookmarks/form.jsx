@@ -1,5 +1,5 @@
 import React from 'react';
-import FormBehaviour from '../../behaviours/form.js';
+import FormStateBehaviour from '../../behaviours/form.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/form.scss');
@@ -10,7 +10,7 @@ export default class BookmarkFormComponent extends React.Component {
         super(props);
 
         this.state = {};
-        this.form = new FormBehaviour(this);
+        this.form = new FormStateBehaviour(this);
     }
 
     submitHandler(event) {

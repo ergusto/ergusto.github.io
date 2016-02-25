@@ -4,7 +4,7 @@ import TaskFormComponent from './form.jsx';
 import TaskDetailComponent from './detail.jsx';
 import TaskListComponent from './list.jsx';
 
-import ActiveModelBehaviour from '../../behaviours/active.model.js';
+import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
 
 export default class TaskManagerComponent extends React.Component {
 
@@ -16,8 +16,8 @@ export default class TaskManagerComponent extends React.Component {
 
 		this.state = {};
 		//dont forget about this
-		this.activeTaskDetail = new ActiveModelBehaviour(this);
-		this.activeEditTask = new ActiveModelBehaviour(this);
+		this.activeTaskDetail = new ActiveModelStateBehaviour(this);
+		this.activeEditTask = new ActiveModelStateBehaviour(this);
 		this.state.shouldShowNewTaskForm = true;
 	}
 

@@ -24141,18 +24141,18 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var DropdownBehaviour = function () {
+	var DropdownStateBehaviour = function () {
 
 		// must be called from constructor of react component
 
-		function DropdownBehaviour(component) {
-			_classCallCheck(this, DropdownBehaviour);
+		function DropdownStateBehaviour(component) {
+			_classCallCheck(this, DropdownStateBehaviour);
 
 			var defaultState = false;
 			this.dropdownState = new _componentSingleStateModifier2.default(component, defaultState);
 		}
 
-		_createClass(DropdownBehaviour, [{
+		_createClass(DropdownStateBehaviour, [{
 			key: 'open',
 			value: function open() {
 				this.dropdownState.set(true);
@@ -24179,10 +24179,10 @@
 			}
 		}]);
 
-		return DropdownBehaviour;
+		return DropdownStateBehaviour;
 	}();
 
-	exports.default = DropdownBehaviour;
+	exports.default = DropdownStateBehaviour;
 
 /***/ },
 /* 163 */
@@ -40412,15 +40412,15 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var FormBehaviour = function () {
-		function FormBehaviour(component) {
-			_classCallCheck(this, FormBehaviour);
+	var FormStateBehaviour = function () {
+		function FormStateBehaviour(component) {
+			_classCallCheck(this, FormStateBehaviour);
 
 			this.formError = new _componentSingleStateModifier2.default(component);
 			this.formState = new _componentSingleStateModifier2.default(component, true);
 		}
 
-		_createClass(FormBehaviour, [{
+		_createClass(FormStateBehaviour, [{
 			key: 'addError',
 			value: function addError(error) {
 				this.formError.set(error);
@@ -40452,10 +40452,10 @@
 			}
 		}]);
 
-		return FormBehaviour;
+		return FormStateBehaviour;
 	}();
 
-	exports.default = FormBehaviour;
+	exports.default = FormStateBehaviour;
 
 /***/ },
 /* 185 */
@@ -40566,17 +40566,17 @@
 
 	// for when you need to reactively keep track of a model id value
 
-	var ActiveModelBehaviour = function () {
+	var ActiveModelStateBehaviour = function () {
 
 		// must be called from constructor of react component
 
-		function ActiveModelBehaviour(component, defaultState) {
-			_classCallCheck(this, ActiveModelBehaviour);
+		function ActiveModelStateBehaviour(component, defaultState) {
+			_classCallCheck(this, ActiveModelStateBehaviour);
 
 			this.activeModelState = new _componentSingleStateModifier2.default(component, defaultState);
 		}
 
-		_createClass(ActiveModelBehaviour, [{
+		_createClass(ActiveModelStateBehaviour, [{
 			key: 'set',
 			value: function set(id) {
 				this.activeModelState.set(id);
@@ -40598,10 +40598,10 @@
 			}
 		}]);
 
-		return ActiveModelBehaviour;
+		return ActiveModelStateBehaviour;
 	}();
 
-	exports.default = ActiveModelBehaviour;
+	exports.default = ActiveModelStateBehaviour;
 
 /***/ },
 /* 189 */

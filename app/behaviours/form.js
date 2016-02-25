@@ -1,6 +1,6 @@
 import ComponentSingleStateModifierBehaviour from './component.single.state.modifier.js';
 
-export default class FormBehaviour {
+export default class FormStateBehaviour {
 
 	constructor(component) {
 		this.formError = new ComponentSingleStateModifierBehaviour(component);
