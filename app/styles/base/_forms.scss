@@ -44,6 +44,19 @@ form .btn {
 	border-color: black;
 }
 
+.inline-field-row {
+
+}
+
+.inline-field {
+	display: inline-block;
+	padding: 0 10px;
+}
+
+.inline-field:first-child {
+	padding-left: 0px;
+}
+
 .form-error {
 	margin-bottom: 10px;
 	display: block;

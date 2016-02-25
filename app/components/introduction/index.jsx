@@ -5,12 +5,6 @@ import SettingsComponent from '../settings/index.jsx';
 // import styles for this component
 require('!style!css!sass!./styles/introduction.scss');
 
-const body = document.body;
-
-const prevent = function(event) {
-	event.preventDefault();
-};
-
 export default class IntroductionComponent extends React.Component {
 
 	constructor(props) {
@@ -67,7 +61,6 @@ export default class IntroductionComponent extends React.Component {
 										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 
 										setTimeout(() => {
-											body.removeEventListener('touchmove', prevent);
 
 											setTimeout(() => {
 												Velocity(refs.namef1, { display: 'none' });
@@ -109,7 +102,6 @@ export default class IntroductionComponent extends React.Component {
 		let settingsClass;
 
 		if (shouldShowAnimation) {
-			body.addEventListener('touchmove', prevent);
 			panelClass = 'introduction panel justify-centre full-height';
 			settingsClass = 'hidden seethrough';
 
