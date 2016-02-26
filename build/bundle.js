@@ -41618,6 +41618,7 @@
 
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TaskFormComponent).call(this, props));
 
+			_this.state = {};
 			_this.form = new _form2.default(_this);
 			return _this;
 		}

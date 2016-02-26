@@ -8,6 +8,7 @@ export default class TaskFormComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {};
 		this.form = new FormStateBehaviour(this);
 	}
 
