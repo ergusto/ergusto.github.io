@@ -8,7 +8,7 @@ export default class CommentFormComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
-        this.state = {};
+		this.state = {};
 		this.form = new FormStateBehaviour(this);
 		this.form.makeField('text');
 	}

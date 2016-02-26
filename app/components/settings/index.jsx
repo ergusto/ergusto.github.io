@@ -22,18 +22,14 @@ export default class SettingsComponent extends  React.Component {
 		this.dropdown.domReady();
 	}
 
-	setUserIntroAnimationSetting(setting) {
-		this.props.user.setShouldShowIntro(setting);
-	}
-
 	showIntroHandler(event) {
 		event.preventDefault();
-		this.setUserIntroAnimationSetting(true);
+		this.props.user.setShouldShowIntro(true);
 	}
 
 	hideIntroHandler(event) {
 		event.preventDefault();
-		this.setUserIntroAnimationSetting(false);
+		this.props.user.setShouldShowIntro(false);
 	}
 
 	usernameChangeHandler(event) {

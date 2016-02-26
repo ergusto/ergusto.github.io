@@ -13,10 +13,6 @@ export default class BookmarkDetailComponent extends React.Component {
 		this.props.clearActiveBookmark();
 	}
 
-	isImageUrl() {
-		return Tools.isImageUrl(this.props.bookmark.url);
-	}
-
 	editHandler(event) {
 		event.preventDefault();
 		this.props.showEditTab();
@@ -26,7 +22,7 @@ export default class BookmarkDetailComponent extends React.Component {
 		let imageHtml;
 		let notesHtml;
 		const bookmark = this.props.bookmark;
-		const isImageUrl = this.isImageUrl();
+		const isImageUrl = Tools.isImageUrl(bookmark.url);
 
 		if (isImageUrl) {
 			imageHtml = (
