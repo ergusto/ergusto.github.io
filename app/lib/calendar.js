@@ -59,8 +59,9 @@ export default class Calendar  {
 		info.month = date.getMonth();
 		info.year = date.getFullYear();
 		info.dateNumber = date.getDate();
-		this.dayNumber = date.getDay();
-		this.firstDayOfMonth = new Date(this.year, this.month, 1);
+		info.dayNumber = date.getDay();
+		info.firstDayOfMonth = new Date(this.year, this.month, 1);
+		info.firstDayOfMonthDay
 	}
 
 	getMonthForDate() {
