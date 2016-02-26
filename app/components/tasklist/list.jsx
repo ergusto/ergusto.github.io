@@ -20,6 +20,7 @@ export default class TaskListComponent extends React.Component {
 	removeHandler(id, event) {
 		event.preventDefault();
 		this.props.tasks.remove(id);
+		this.props.showTaskForm();
 	}
 
 	render() {

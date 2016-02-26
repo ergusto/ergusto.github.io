@@ -21,7 +21,7 @@ export default class TaskManagerComponent extends React.Component {
 	}
 
 	newTaskHandler(event) {
-		event.preventDefault();
+		if (event) event.preventDefault();
 		this.tabs.open('new');
 	}
 
@@ -71,7 +71,8 @@ export default class TaskManagerComponent extends React.Component {
 								</header>
 								<TaskListComponent
 									tasks={tasks} 
-									setActiveTask={this.activateTask.bind(this)} 
+									setActiveTask={this.activateTask.bind(this)}
+									showTaskForm={this.newTaskHandler.bind(this)} 
 								/>
 							</div>
 						</div>

@@ -19,18 +19,7 @@ export default class SettingsComponent extends  React.Component {
 	}
 
 	componentDidMount() {
-		const hideDropDownOnOutsideClickhandler = (event) => {
-			const target = event.target;
-			if (!this.refs.dropdown.contains(target)) this.dropdown.close();
-		}
-
-		document.body.addEventListener('click', hideDropDownOnOutsideClickhandler);
-		document.body.addEventListener('touchend', hideDropDownOnOutsideClickhandler);
-	}
-
-	triggerClickHandler(event) {
-		event.preventDefault();
-		this.dropdown.open();
+		this.dropdown.domReady();
 	}
 
 	setUserIntroAnimationSetting(setting) {
@@ -79,7 +68,7 @@ export default class SettingsComponent extends  React.Component {
 
 		return (
 			<div className="settings pull-right">
-				<a onClick={this.triggerClickHandler.bind(this)} href="#" ref="dropdowntrigger" className={triggerClass}>&#x221e;</a>
+				<a onClick={this.dropdown.openHandler.bind(this.dropdown)} href="#" ref="dropdowntrigger" className={triggerClass}>&#x221e;</a>
 
 				<div ref="dropdown" className={dropdownClass}>
 					<h5 className="settings-title">settings</h5>

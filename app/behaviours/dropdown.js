@@ -6,6 +6,7 @@ export default class DropdownStateBehaviour {
 
 	constructor(component) {
 		const  defaultState = false;
+		this.component = component;
 		this.dropdownState = new ComponentSingleStateModifierBehaviour(component, defaultState);
 	}
 
@@ -27,6 +28,23 @@ export default class DropdownStateBehaviour {
 
 	isClosed() {
 		return !this.dropdownState.current;
+	}
+
+	domReady() {
+		const refs = this.component.refs;
+		
+		const hideDropDownOnOutsideClickhandler = (event) => {
+			const target = event.target;
+			if (!refs.dropdown.contains(target)) this.close();
+		}
+
+		document.body.addEventListener('click', hideDropDownOnOutsideClickhandler);
+		document.body.addEventListener('touchend', hideDropDownOnOutsideClickhandler);
+	}
+
+	openHandler(event) {
+		event.preventDefault();
+		this.open();
 	}
 
 }
