@@ -2,7 +2,7 @@ import React from 'react';
 import Calendar from '../../lib/calendar.js';
 
 import CalendarComponent from './calendar.jsx';
-import CalendarDetailComponent from './day.jsx';
+import CalendarDetailComponent from './detail.jsx';
 
 import TabbedStateBehaviour from '../../behaviours/tabs.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';

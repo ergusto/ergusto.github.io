@@ -42045,9 +42045,9 @@
 
 	var _calendar4 = _interopRequireDefault(_calendar3);
 
-	var _day = __webpack_require__(229);
+	var _detail = __webpack_require__(235);
 
-	var _day2 = _interopRequireDefault(_day);
+	var _detail2 = _interopRequireDefault(_detail);
 
 	var _tabs = __webpack_require__(188);
 
@@ -42140,7 +42140,7 @@
 				if (this.tabs.isOpen('detail')) {
 					day = this.activeDay.current;
 					var entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
-					content = _react2.default.createElement(_day2.default, {
+					content = _react2.default.createElement(_detail2.default, {
 						diary: this.props.diary,
 						day: day,
 						entry: entry,
@@ -43393,7 +43393,195 @@
 	exports.default = CalendarComponent;
 
 /***/ },
-/* 229 */
+/* 229 */,
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _tools = __webpack_require__(164);
+
+	var _tools2 = _interopRequireDefault(_tools);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import styles for this component
+	__webpack_require__(233);
+
+	var CalendarItemComponent = function (_React$Component) {
+		_inherits(CalendarItemComponent, _React$Component);
+
+		function CalendarItemComponent() {
+			_classCallCheck(this, CalendarItemComponent);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(CalendarItemComponent).call(this));
+		}
+
+		_createClass(CalendarItemComponent, [{
+			key: 'setActiveDay',
+			value: function setActiveDay(day, event) {
+				event.preventDefault();
+				this.props.setActiveDay(day);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var entryTextHtml = undefined;
+				var entrylist = undefined;
+				var classes = 'calendar-day padding-sm';
+				var day = this.props.day;
+				var entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
+
+				if (day.isToday) {
+					classes = classes + ' isToday';
+				}
+
+				if (entry && entry.identifier) {
+
+					entryTextHtml = entry.entries.map(function (entry, index) {
+						if (index <= 2) {
+							return _react2.default.createElement(
+								'li',
+								{ className: 'calendar-item-entry', key: 'calendar-item-' + entry.time },
+								_react2.default.createElement(
+									'small',
+									null,
+									_tools2.default.truncate(entry.title, 17)
+								)
+							);
+						}
+						if (index == 3) {
+							return _react2.default.createElement(
+								'li',
+								{ className: 'calendar-item-entry' },
+								'...'
+							);
+						}
+					});
+
+					entrylist = _react2.default.createElement(
+						'ul',
+						{ className: 'calendar-item-entry-list' },
+						entryTextHtml
+					);
+				}
+
+				return _react2.default.createElement(
+					'li',
+					{ onClick: this.setActiveDay.bind(this, day), className: classes },
+					_react2.default.createElement(
+						'span',
+						{ className: 'calendar-item-date' },
+						day.date
+					),
+					entrylist
+				);
+			}
+		}]);
+
+		return CalendarItemComponent;
+	}(_react2.default.Component);
+
+	exports.default = CalendarItemComponent;
+
+/***/ },
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(232);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./detail.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./detail.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".calendar-entry-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n\n.calendar-entry-list li:last-child {\n  margin-bottom: 0px; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(234);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./item.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./item.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".calendar-item-entry-list {\n  padding: 0;\n  list-style: none;\n  list-style-type: none; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43497,7 +43685,7 @@
 						entryList = sortedEntries.map(function (entry) {
 							return _react2.default.createElement(
 								'li',
-								{ key: entry.title },
+								{ key: entry.title, className: 'margin-bottom-sm' },
 								entry.time,
 								' - ',
 								entry.title
@@ -43603,193 +43791,6 @@
 	}(_react2.default.Component);
 
 	exports.default = CalendarDetailComponent;
-
-/***/ },
-/* 230 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _tools = __webpack_require__(164);
-
-	var _tools2 = _interopRequireDefault(_tools);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import styles for this component
-	__webpack_require__(233);
-
-	var CalendarItemComponent = function (_React$Component) {
-		_inherits(CalendarItemComponent, _React$Component);
-
-		function CalendarItemComponent() {
-			_classCallCheck(this, CalendarItemComponent);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(CalendarItemComponent).call(this));
-		}
-
-		_createClass(CalendarItemComponent, [{
-			key: 'setActiveDay',
-			value: function setActiveDay(day, event) {
-				event.preventDefault();
-				this.props.setActiveDay(day);
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var entryTextHtml = undefined;
-				var entrylist = undefined;
-				var classes = 'calendar-day padding-sm';
-				var day = this.props.day;
-				var entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
-
-				if (day.isToday) {
-					classes = classes + ' isToday';
-				}
-
-				if (entry && entry.identifier) {
-
-					entryTextHtml = entry.entries.map(function (entry, index) {
-						if (index <= 2) {
-							return _react2.default.createElement(
-								'li',
-								{ className: 'calendar-item-entry' },
-								_react2.default.createElement(
-									'small',
-									null,
-									_tools2.default.truncate(entry.title, 17)
-								)
-							);
-						}
-						if (index == 3) {
-							return _react2.default.createElement(
-								'li',
-								{ className: 'calendar-item-entry' },
-								'...'
-							);
-						}
-					});
-
-					entrylist = _react2.default.createElement(
-						'ul',
-						{ className: 'calendar-item-entry-list' },
-						entryTextHtml
-					);
-				}
-
-				return _react2.default.createElement(
-					'li',
-					{ onClick: this.setActiveDay.bind(this, day), className: classes },
-					_react2.default.createElement(
-						'span',
-						{ className: 'calendar-item-date' },
-						day.date
-					),
-					entrylist
-				);
-			}
-		}]);
-
-		return CalendarItemComponent;
-	}(_react2.default.Component);
-
-	exports.default = CalendarItemComponent;
-
-/***/ },
-/* 231 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(232);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(170)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./detail.scss", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./detail.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 232 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(169)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".calendar-entry-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 233 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(234);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(170)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./item.scss", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./item.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 234 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(169)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".calendar-item-entry-list {\n  padding: 0;\n  list-style: none;\n  list-style-type: none; }\n", ""]);
-
-	// exports
-
 
 /***/ }
 /******/ ]);

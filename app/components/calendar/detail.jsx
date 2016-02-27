@@ -66,7 +66,7 @@ export default class CalendarDetailComponent extends React.Component {
 				const sortedEntries = _.sortBy(entries, 'time');
 				entryList = sortedEntries.map((entry) => {
 					return (
-						<li key={entry.title}>{entry.time} - {entry.title}</li>
+						<li key={entry.title} className="margin-bottom-sm">{entry.time} - {entry.title}</li>
 					);
 				});
 			} else {
