@@ -3,10 +3,6 @@ import LocalStorageCollection from './base/localstorage.collection.js';
 
 export default class Diary extends LocalStorageCollection {
 
-	constructor() {
-		super();
-	}
-
 	shell() {
 		const entry = {};
 		entry.identifier = '';

@@ -43223,7 +43223,7 @@
 		function Diary() {
 			_classCallCheck(this, Diary);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Diary).call(this));
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Diary).apply(this, arguments));
 		}
 
 		_createClass(Diary, [{
