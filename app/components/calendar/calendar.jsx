@@ -42,20 +42,20 @@ export default class CalendarComponent extends React.Component {
 
 		return (
 
-			<div className="calendar">
+			<div className="calendar box">
 
-				<header className="calendar-header box padding">
+				<header className="calendar-header padding">
 
 					<h2>{month.name} {month.year}</h2>
 
 				</header>
 
-				<ul className="calendar-buttons calendar-subheader horizontal-list-menu--btns box">
+				<ul className="calendar-buttons calendar-subheader horizontal-list-menu--btns border-vertical">
 					<li className="pull-right"><a href="#" onClick={this.nextMonthHandler.bind(this)} className="btn btn-large pull-right">next</a></li>
 					<li><a href="#" onClick={this.previousMonthHandler.bind(this)} className="btn btn-large">previous</a></li>
 				</ul>
 
-				<ul className="calendar-subheader box horizontal-list-menu">
+				<ul className="calendar-subheader horizontal-list-menu border-bottom">
 
 					{subheaderHTML}
 

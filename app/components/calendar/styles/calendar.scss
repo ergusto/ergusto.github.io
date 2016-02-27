@@ -7,21 +7,8 @@
 	position: relative;
 }
 
-.box.calendar-body {
-	border-top: 0px;
-}
-
-.calendar .calendar-header {
-	border-right: 0px;
-}
-
-.calendar .calendar-subheader {
-	border-right: 0px;
-}
-
-.calendar-subheader.box {
+.calendar-subheader {
 	padding: 0;
-	border-top: 0px;
 
 	li {
 		width: 14%;
@@ -30,8 +17,8 @@
 }
 
 .calendar-buttons {
-	border-left: 0px;
 	line-height: 2rem;
+	padding: 0px;
 }
 
 .calendar-buttons li:last-child .btn {
@@ -44,7 +31,6 @@
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	border-left: 1px solid #ccc;
 }
 
 .calendar-day, .calendar-day-empty {
@@ -75,4 +61,4 @@
 
 .calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {
 	border-bottom: 0px;
-} 
+}
