@@ -1,6 +1,7 @@
 import React from 'react';
 import TimeAgo from 'react-timeago';
-import CommentFormComponent from './form.jsx';
+import CommentEditFormComponent from './form.edit.jsx';
+import CommentCreateFormComponent from './form.create.jsx';
 
 // import styles for this component
 require('!style!css!sass!./styles/comment.scss');
@@ -99,7 +100,7 @@ export default class CommentComponent extends React.Component {
 					</footer>
 				</div>
 
-				<CommentFormComponent 
+				<CommentCreateFormComponent 
 					user={this.props.user} 
 					formTitle="reply" 
 					parent={comment}
@@ -109,7 +110,7 @@ export default class CommentComponent extends React.Component {
 					cancelCallback={this.hideReplyForm.bind(this)} 
 				/>
 				
-				<CommentFormComponent 
+				<CommentEditFormComponent 
 					user={this.props.user} 
 					formTitle="edit" 
 					comment={comment} 

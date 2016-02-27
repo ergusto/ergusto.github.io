@@ -61,7 +61,7 @@ export default class CalendarComponent extends React.Component {
 
 				</ul>
 
-				<div className="clearfix">
+				<div className="clearfix bg-gray">
 
 					{calendarHTML}
 

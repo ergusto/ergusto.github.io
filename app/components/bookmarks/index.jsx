@@ -2,7 +2,8 @@ import React from 'react';
 
 import BookmarkDetailComponent from './detail.jsx';
 import BookmarkListComponent from './list.jsx';
-import BookmarkFormComponent from './form.jsx';
+import BookmarkEditFormComponent from './form.edit.jsx';
+import BookmarkCreateFormComponent from './form.create.jsx';
 
 import TabbedStateBehaviour from '../../behaviours/tabs.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
@@ -70,7 +71,7 @@ export default class BookmarkManagerComponent extends React.Component {
 
 		if (this.tabs.isOpen('add')) {
 			addTabClass += activeClass;
-			content = <BookmarkFormComponent bookmarks={bookmarks} submitCallback={this.submitCallback.bind(this)} />;
+			content = <BookmarkCreateFormComponent bookmarks={bookmarks} submitCallback={this.submitCallback.bind(this)} />;
 		}
 
 		if (this.tabs.isOpen('detail')) {
@@ -85,7 +86,7 @@ export default class BookmarkManagerComponent extends React.Component {
 		}
 
 		if (this.tabs.isOpen('edit')) {
-			content = <BookmarkFormComponent formTitle='edit' bookmark={bookmark} bookmarks={bookmarks} submitCallback={this.editSubmitCallback.bind(this)} />;
+			content = <BookmarkEditFormComponent formTitle='edit' bookmark={bookmark} bookmarks={bookmarks} submitCallback={this.editSubmitCallback.bind(this)} />;
 		}
 
 		return (

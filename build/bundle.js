@@ -39686,9 +39686,13 @@
 
 	var _list2 = _interopRequireDefault(_list);
 
-	var _form = __webpack_require__(183);
+	var _formEdit = __webpack_require__(236);
 
-	var _form2 = _interopRequireDefault(_form);
+	var _formEdit2 = _interopRequireDefault(_formEdit);
+
+	var _formCreate = __webpack_require__(237);
+
+	var _formCreate2 = _interopRequireDefault(_formCreate);
 
 	var _tabs = __webpack_require__(188);
 
@@ -39782,7 +39786,7 @@
 
 				if (this.tabs.isOpen('add')) {
 					addTabClass += activeClass;
-					content = _react2.default.createElement(_form2.default, { bookmarks: bookmarks, submitCallback: this.submitCallback.bind(this) });
+					content = _react2.default.createElement(_formCreate2.default, { bookmarks: bookmarks, submitCallback: this.submitCallback.bind(this) });
 				}
 
 				if (this.tabs.isOpen('detail')) {
@@ -39795,7 +39799,7 @@
 				}
 
 				if (this.tabs.isOpen('edit')) {
-					content = _react2.default.createElement(_form2.default, { formTitle: 'edit', bookmark: bookmark, bookmarks: bookmarks, submitCallback: this.editSubmitCallback.bind(this) });
+					content = _react2.default.createElement(_formEdit2.default, { formTitle: 'edit', bookmark: bookmark, bookmarks: bookmarks, submitCallback: this.editSubmitCallback.bind(this) });
 				}
 
 				return _react2.default.createElement(
@@ -40821,9 +40825,13 @@
 
 	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 
-	var _form = __webpack_require__(195);
+	var _formEdit = __webpack_require__(238);
 
-	var _form2 = _interopRequireDefault(_form);
+	var _formEdit2 = _interopRequireDefault(_formEdit);
+
+	var _formCreate = __webpack_require__(239);
+
+	var _formCreate2 = _interopRequireDefault(_formCreate);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41002,7 +41010,7 @@
 							)
 						)
 					),
-					_react2.default.createElement(_form2.default, {
+					_react2.default.createElement(_formCreate2.default, {
 						user: this.props.user,
 						formTitle: 'reply',
 						parent: comment,
@@ -41011,7 +41019,7 @@
 						submitCallback: this.replyCallback.bind(this),
 						cancelCallback: this.hideReplyForm.bind(this)
 					}),
-					_react2.default.createElement(_form2.default, {
+					_react2.default.createElement(_formEdit2.default, {
 						user: this.props.user,
 						formTitle: 'edit',
 						comment: comment,
@@ -43381,7 +43389,7 @@
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'clearfix' },
+						{ className: 'clearfix bg-gray' },
 						calendarHTML
 					)
 				);
@@ -43792,6 +43800,150 @@
 	}(_react2.default.Component);
 
 	exports.default = CalendarDetailComponent;
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _form = __webpack_require__(183);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BookmarkEditFormComponent = function (_BookmarkFormComponen) {
+	  _inherits(BookmarkEditFormComponent, _BookmarkFormComponen);
+
+	  function BookmarkEditFormComponent() {
+	    _classCallCheck(this, BookmarkEditFormComponent);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(BookmarkEditFormComponent).apply(this, arguments));
+	  }
+
+	  return BookmarkEditFormComponent;
+	}(_form2.default);
+
+	exports.default = BookmarkEditFormComponent;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _form = __webpack_require__(183);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BookmarkCreateFormComponent = function (_BookmarkFormComponen) {
+	  _inherits(BookmarkCreateFormComponent, _BookmarkFormComponen);
+
+	  function BookmarkCreateFormComponent() {
+	    _classCallCheck(this, BookmarkCreateFormComponent);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(BookmarkCreateFormComponent).apply(this, arguments));
+	  }
+
+	  return BookmarkCreateFormComponent;
+	}(_form2.default);
+
+	exports.default = BookmarkCreateFormComponent;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _form = __webpack_require__(195);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CommentEditFormComponent = function (_CommentFormComponent) {
+	  _inherits(CommentEditFormComponent, _CommentFormComponent);
+
+	  function CommentEditFormComponent() {
+	    _classCallCheck(this, CommentEditFormComponent);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(CommentEditFormComponent).apply(this, arguments));
+	  }
+
+	  return CommentEditFormComponent;
+	}(_form2.default);
+
+	exports.default = CommentEditFormComponent;
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _form = __webpack_require__(195);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CommentCreateFormComponent = function (_CommentFormComponent) {
+		_inherits(CommentCreateFormComponent, _CommentFormComponent);
+
+		function CommentCreateFormComponent() {
+			_classCallCheck(this, CommentCreateFormComponent);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(CommentCreateFormComponent).apply(this, arguments));
+		}
+
+		return CommentCreateFormComponent;
+	}(_form2.default);
+
+	exports.default = CommentCreateFormComponent;
 
 /***/ }
 /******/ ]);
