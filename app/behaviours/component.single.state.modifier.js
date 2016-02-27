@@ -29,4 +29,8 @@ export default class ComponentSingleStateModifierBehaviour {
 		return this.current == value;
 	}
 
+	clear() {
+		this.set(null);
+	}
+
 }

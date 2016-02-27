@@ -67,7 +67,6 @@ export default class IntroductionComponent extends React.Component {
 												refs.settings.classList.remove('hidden');
 												Velocity(refs.settings, { opacity: 1 }, { duration: 800 });
 												refs.panel.classList.remove('full-height');
-												refs.panel.classList.remove('panel');
 												refs.panel.classList.remove('justify-centre');
 
 												setTimeout(() => refs.settings.classList.remove('seethrough'), 200);
@@ -102,7 +101,7 @@ export default class IntroductionComponent extends React.Component {
 		let settingsClass;
 
 		if (shouldShowAnimation) {
-			panelClass = 'introduction panel justify-centre full-height';
+			panelClass = 'introduction justify-centre full-height';
 			settingsClass = 'hidden seethrough';
 
 			name = (<span className="name">
@@ -115,7 +114,7 @@ export default class IntroductionComponent extends React.Component {
 			panelClass = 'introduction introduction-no-animation';
 			settingsClass = 'settings-container';
 
-			name = (<span className="name">ergusto</span>);
+			name = <span className="name">ergusto</span>;
 		}
 
 		return (

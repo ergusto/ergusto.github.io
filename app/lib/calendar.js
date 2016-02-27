@@ -1,75 +1,115 @@
-const weeks = [0,1,2,3,4,5,6,7,8];
-const weekdays = [0,1,2,3,4,5,6,7,8];
+const calendarDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const calendarDayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const calendarMonthLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const calendarDaysInEachMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+export default class Calendar {
 
-const months = [
-	{name: 'January', days: 31}, 
-	{name: 'February', days: 28}, 
-	{name: 'March', days: 31}, 
-	{name: 'April', days: 30},
-	{name: 'May', days: 31},
-	{name: 'June', days: 30},
-	{name: 'July', days: 31},
-	{name: 'August', days: 31},
-	{name:'September', days: 30},
-	{name:'October', days: 31},
-	{name:'November', days: 30},
-	{name:'December', days: 31}
-];
+	get weekdays() {
+		return calendarDays;
+	}
 
-const DateShell = {
-	day: 'Monday',
-	dayNumber: '0'
-};
+	get weekdaysAbbr() {
+		return calendarDayLabels;
+	}
 
-const MonthShell = {
-	name: 'January',
-	days: 31
-};
+	get months() {
+		return calendarMonthLabels;
+	}
 
-export default class Calendar  {
+	getMonth(date){
+		const today = new Date();
+		const todayDate = today.getDate();
+		const todayMonthNo = today.getMonth();
+		const todayYear = today.getFullYear();
 
-	constructor() {
-		this.currentDate = new Date;		
-		this.days = days;
-		this.months = months;
-		this.month = this.currentDate.getMonth();
-		this.year = this.currentDate.getFullYear();
-
-		this.date = this.currentDate.getDate();
-		this.currentDayNumber = this.currentDate.getDay();
-		this.firstDayOfMonth = new Date(this.year, this.month, 1);
-		this.startingDay = this.firstDayOfMonth.getDay();
-		
-		this.day = this.days[this.startingDay];
-		this.currentDay = this.days[this.currentDayNumber];
-		this.currentMonth = this.months[this.month];
-		
-		this.currentMonthLength = this.currentMonth.days;
-
-		if (this.month == 1) {
-			// feb only
-			this.currentMonthLength = 29;
+		if (!date) {
+			date = new Date();
 		}
-	}
 
-	getInfoForDate(date) {
-		const info = {};
-		info.month = date.getMonth();
-		info.year = date.getFullYear();
-		info.dateNumber = date.getDate();
-		info.dayNumber = date.getDay();
-		info.firstDayOfMonth = new Date(this.year, this.month, 1);
-		info.firstDayOfMonthDay
-	}
+		const month = date.getMonth();
+		const year = date.getFullYear();
+		const firstDayOfMonth = new Date(year, month, 1);
+		const startingDay = firstDayOfMonth.getDay();
+		let nextMonth = month + 1;
+		let nextMonthYear = year;
+		let prevMonth = month - 1;
+		let prevMonthYear = year;
 
-	getMonthForDate() {
+		if (month >= 11) {
+			nextMonth = 1;
+			nextMonthYear = nextMonthYear + 1;
+		}
 
-	}
+		if (month == 0) {
+			prevMonth = 11;
+			prevMonthYear = prevMonthYear - 1;
+		}
 
-	today() {
+		const firstDayOfNextMonth = new Date(nextMonthYear, nextMonth, 1);
+		const firstDayOfPrevMonth = new Date(prevMonthYear, prevMonth, 1);
 
+		let monthLength = calendarDaysInEachMonth[month];
+
+		if (month == 1) {
+			if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+				monthLength = 29;
+			}
+		}
+
+		const monthInfo = {};
+		monthInfo.name = calendarMonthLabels[month];
+		monthInfo.length = monthLength;
+		monthInfo.year = year;
+		monthInfo.days = [];
+		monthInfo.weeks = [];
+		monthInfo.getNextMonth = this.getMonth.bind(this, firstDayOfNextMonth);
+		monthInfo.getPrevMonth = this.getMonth.bind(this, firstDayOfPrevMonth);
+
+		let day;
+		let week;
+
+		let dateNo = 1;
+		for (var i = 0; i < 9; i++) {
+			week = [];
+			for (var j = 0; j <= 6; j++) { 
+				day = {};
+				if (dateNo <= monthLength && (i > 0 || j >= startingDay)) {
+					
+					day.date = dateNo;
+					day.day = calendarDays[j];
+					day.dayLabel = calendarDayLabels[j];
+					day.dayNo = j;
+					day.month = calendarMonthLabels[month];
+					day.monthNo = month;
+					day.year = year;
+					day.identifier = day.date + day.month + day.year;
+					day.dateObj = new Date(day.year, day.monthNo, day.date);
+
+					if (day.date == todayDate) {
+						if (day.monthNo == todayMonthNo) {
+							if (day.year == todayYear) {
+								day.isToday = true;
+							}
+						}
+					} else{
+						day.isToday = false;
+					}
+
+					monthInfo.days.push(day);
+					week.push(day);
+					dateNo++;
+				} else {
+					day.date = null;
+					week.push(day);
+				}
+			}
+			monthInfo.weeks.push(week);
+			if (dateNo > monthLength) {
+				break;
+			}
+		}
+		return monthInfo;
 	}
 
 }

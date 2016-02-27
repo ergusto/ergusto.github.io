@@ -5,11 +5,12 @@ import IntroductionComponent from './components/introduction/index.jsx';
 import BookmarkManagerComponent from './components/bookmarks/index.jsx';
 import CommentListComponent from './components/comments/index.jsx';
 import TaskManagerComponent from './components/tasklist/index.jsx';
-import CalendarComponent from './components/calendar/index.jsx';
+import CalendarManagerComponent from './components/calendar/index.jsx';
 
 import Bookmarks from './collections/bookmarks.js';
 import Comments from './collections/comments.js';
 import Tasks from './collections/tasks.js';
+import Diary from './collections/diary.js';
 
 import User from './lib/user.js';
 
@@ -25,6 +26,7 @@ const user = new User();
 const bookmarks = new Bookmarks();
 const comments = new Comments();
 const tasks = new Tasks();
+const diary = new Diary();
 
 class App extends React.Component {
 
@@ -42,7 +44,7 @@ class App extends React.Component {
 				<CommentListComponent user={user} comments={comments} />
 				<TaskManagerComponent user={user} tasks={tasks} />
 				<BookmarkManagerComponent user={user} bookmarks={bookmarks} />
-				{/*<CalendarComponent user={user} />*/} 
+				{/*<CalendarManagerComponent user={user} diary={diary} />*/}
 			</div>
 		)
 

@@ -27,6 +27,10 @@ export default class FormStateBehaviour {
 		this.formErrorState.set(error);
 	}
 
+	clearError() {
+		this.formErrorState.clear();
+	}
+
 	get enabled() {
 		return this.formState.current;
 	}

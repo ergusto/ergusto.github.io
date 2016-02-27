@@ -89,7 +89,7 @@ export default class BookmarkManagerComponent extends React.Component {
 		}
 
 		return (
-			 <section className="bookmarks-example full-height panel">
+			 <section className="bookmarks-example full-height padding">
 
 				<div id="bookmarks-example" className="example">
 
@@ -99,7 +99,7 @@ export default class BookmarkManagerComponent extends React.Component {
 
 							<h3 onClick={this.showTab.bind(this, 'list')} className="bookmark-manager-title hover-cursor--pointer pull-left muted padding-left">bookmarks</h3>
 
-							<ul className="bookmark-manager-control horizontal-list-menu--btns pull-right">
+							<ul className="bookmark-manager-control horizontal-list-menu--btns padding-horizontal pull-right">
 
 								<li><a onClick={this.showTab.bind(this, 'list')} href="#" className={listTabClass}>list</a></li>
 								<li><a onClick={this.showTab.bind(this, 'add')} href="#" className={addTabClass}>add</a></li>

@@ -1,23 +1,47 @@
+.calendar-header, .calendar-subheader, .calendar-body {
+	max-width: 98%;
+}
+
+#calendar-example {
+	position: relative;
+}
+
 .calendar {
-
 }
 
-.calendar-header {
+.calendar-subheader {
+	padding: 0;
 
-}
-
-.calendar-body {
-
+	li {
+		width: 14%;
+	}
 }
 
 .calendar-week {
 	display: block;
+	list-style: none;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }
 
-.calendar-day {
-	height: 40px;
-	width: 40px;
+.calendar-day, .calendar-day-empty {
 	float: left;
+	width: 14%;
+	min-height: 7rem;
 	border: 1px solid #ccc;
-	background: purple;
+	background: white;
+}
+
+.calendar-day.isToday {
+	background: #777;
+}
+
+.calendar-day-empty {
+	background: black;
+}
+
+.calendar-day:hover {
+	background: #777;
+	cursor: pointer;
 }
