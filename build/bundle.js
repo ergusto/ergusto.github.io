@@ -43729,10 +43729,10 @@
 
 				return _react2.default.createElement(
 					'div',
-					{ className: 'calendar-detail' },
+					{ className: 'calendar-detail box' },
 					_react2.default.createElement(
 						'header',
-						{ className: 'calendar-detail-header padding box' },
+						{ className: 'calendar-detail-header padding' },
 						_react2.default.createElement(
 							'h2',
 							null,
@@ -43745,7 +43745,7 @@
 					),
 					_react2.default.createElement(
 						'ul',
-						{ className: 'calendar-buttons calendar-subheader horizontal-list-menu--btns box' },
+						{ className: 'calendar-buttons calendar-subheader horizontal-list-menu--btns border-vertical' },
 						_react2.default.createElement(
 							'li',
 							null,
@@ -43758,7 +43758,7 @@
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'calendar-body box' },
+						{ className: 'calendar-body' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'padding padding-bottom-sm' },

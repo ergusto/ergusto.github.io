@@ -89,16 +89,16 @@ export default class CalendarDetailComponent extends React.Component {
 		}
 
 		return (
-			<div className="calendar-detail">
-				<header className="calendar-detail-header padding box">
+			<div className="calendar-detail box">
+				<header className="calendar-detail-header padding">
 					<h2>{day.date} {day.month} {day.year}</h2>
 				</header>
 
-				<ul className="calendar-buttons calendar-subheader horizontal-list-menu--btns box">
+				<ul className="calendar-buttons calendar-subheader horizontal-list-menu--btns border-vertical">
 					<li><a className="btn btn-large" href="#" onClick={this.showCalendarHandler.bind(this)}>back</a></li>
 				</ul>
 
-				<div className="calendar-body box">
+				<div className="calendar-body">
 					<div className="padding padding-bottom-sm">
 						<h3>events:</h3>
 					</div>
