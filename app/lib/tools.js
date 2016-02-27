@@ -9,7 +9,7 @@ Tools.validate24HourTime = function(time) {
 };
 
 Tools.truncate = function(string, limit) {
-	return (string.length > limit) ? string.substr(0, limit-1) +'...' : string;
+	return (string.length > limit) ? string.substr(0, limit-1) + '...' : string;
 };
 
 Tools.generateID = function () {

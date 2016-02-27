@@ -89,7 +89,7 @@ export default class BookmarkManagerComponent extends React.Component {
 		}
 
 		return (
-			 <section className="bookmarks-example full-height padding">
+			 <section className="bookmarks-example full-height justify-centre padding">
 
 				<div id="bookmarks-example" className="example">
 

@@ -39800,7 +39800,7 @@
 
 				return _react2.default.createElement(
 					'section',
-					{ className: 'bookmarks-example full-height padding' },
+					{ className: 'bookmarks-example full-height justify-centre padding' },
 					_react2.default.createElement(
 						'div',
 						{ id: 'bookmarks-example', className: 'example' },
