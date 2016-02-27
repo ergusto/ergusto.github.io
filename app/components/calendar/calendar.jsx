@@ -28,16 +28,16 @@ export default class CalendarComponent extends React.Component {
 			return <li key={Math.random()} className="padding-sm">{day}</li>;
 		});
 
-		const weeksHTML = month.weeks.map((week) => {
+		const calendarHTML = month.weeks.map((week) => {
 			const weekHTML = week.map((day) => {
 				if (day.date) {
-					return <CalendarItemComponent key={Math.random()} day={day} setActiveDay={this.props.setActiveDay} />
+					return <CalendarItemComponent key={Math.random()} day={day} diary={this.props.diary} setActiveDay={this.props.setActiveDay} />
 				} else {
 					return <li key={Math.random()} className="calendar-day-empty padding-sm"></li>;
 				}
 			});
 
-			return <ul key={Math.random()} className="calendar-week">{weekHTML}</ul>;
+			return <ul key={Math.random()} className="calendar-list calendar-week clearfix">{weekHTML}</ul>;
 		})
 
 		return (
@@ -50,10 +50,10 @@ export default class CalendarComponent extends React.Component {
 
 				</header>
 
-				<div className="calendar-subheader box">
-					<a href="#" onClick={this.nextMonthHandler.bind(this)} className="btn btn-large pull-right">next</a>
-					<a href="#" onClick={this.previousMonthHandler.bind(this)} className="btn btn-large">previous</a>
-				</div>
+				<ul className="calendar-buttons calendar-subheader horizontal-list-menu--btns box">
+					<li className="pull-right"><a href="#" onClick={this.nextMonthHandler.bind(this)} className="btn btn-large pull-right">next</a></li>
+					<li><a href="#" onClick={this.previousMonthHandler.bind(this)} className="btn btn-large">previous</a></li>
+				</ul>
 
 				<ul className="calendar-subheader box horizontal-list-menu">
 
@@ -63,7 +63,7 @@ export default class CalendarComponent extends React.Component {
 
 				<div className="clearfix">
 
-					{weeksHTML}
+					{calendarHTML}
 
 				</div>
 

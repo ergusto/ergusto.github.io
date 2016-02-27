@@ -61,14 +61,17 @@ export default class CalendarManagerComponent extends React.Component {
 						month={this.state.month}
 						setMonth={this.setMonth.bind(this)}
 						setActiveDay={this.setActiveDay.bind(this)}
+						diary={this.props.diary}
 					/>
 		}
 
 		if (this.tabs.isOpen('detail')) {
 			day = this.activeDay.current;
+			const entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
 			content = <CalendarDetailComponent
 						diary={this.props.diary}
 						day={day} 
+						entry={entry}
 						showCalendar={this.showCalendar.bind(this)}
 					/>
 		}

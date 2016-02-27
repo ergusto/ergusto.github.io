@@ -1,6 +1,10 @@
 import _ from 'lodash';
 
-const Tools = {}
+const Tools = {};
+
+Tools.truncate = function(string, limit) {
+	return (string.length > limit) ? string.substr(0, limit-1) +'...' : string;
+};
 
 Tools.generateID = function () {
 	// Math.random should be unique because of its seeding algorithm.

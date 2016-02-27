@@ -3,6 +3,10 @@ import LocalStorageCollection from './base/localstorage.collection.js';
 
 export default class Diary extends LocalStorageCollection {
 
+	constructor() {
+		super();
+	}
+
 	shell() {
 		const entry = {};
 		entry.identifier = '';
@@ -13,7 +17,7 @@ export default class Diary extends LocalStorageCollection {
 	getItemFromDateIdentifier(identifier) {
 		const entries = this.get();
 		return _.find(entries, (entry) => {
-			entry.identifier == identifier;
+			return entry.identifier == identifier;
 		});
 	}
 	
