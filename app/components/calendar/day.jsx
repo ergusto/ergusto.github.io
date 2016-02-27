@@ -57,7 +57,7 @@ export default class CalendarDetailComponent extends React.Component {
 			if (entries.length) {
 				entryList = entry.entries.map((entry) => {
 					return (
-						<li key={entry.title}>{entry.title}</li>
+						<li key={entry.title}>{entry.time} - {entry.title}</li>
 					);
 				});
 			} else {
@@ -66,7 +66,7 @@ export default class CalendarDetailComponent extends React.Component {
 		} else {
 			entryList = <li>No entries!</li>;
 		}
-		return  <ul className="calendar-entry-list margin-bottom">{entryList}</ul>;
+		return  <ul className="calendar-entry-list padding padding-top-sm">{entryList}</ul>;
 	}
 
 	render() {
@@ -89,12 +89,12 @@ export default class CalendarDetailComponent extends React.Component {
 					<li><a className="btn btn-large" href="#" onClick={this.showCalendarHandler.bind(this)}>back</a></li>
 				</ul>
 
-				<div className="calendar-body box padding">
-					<div className="margin-bottom">
+				<div className="calendar-body box">
+					<div className="padding padding-bottom-sm">
 						<h3>events:</h3>
 					</div>
 					{entryHTML}
-					<form onSubmit={this.submitHandler.bind(this)}>
+					<form onSubmit={this.submitHandler.bind(this)} className="padding border-top">
 
 						<input ref="calendarTitleInput" placeholder="title" className="field" name="title" />
 						<input ref="calendarTimeInput" placeholder="time" className="field" name="time" />

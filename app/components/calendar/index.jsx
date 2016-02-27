@@ -79,9 +79,9 @@ export default class CalendarManagerComponent extends React.Component {
 
 		return (
 
-			<section className="calendar-example full-height padding">
+			<section className="calendar-example full-height padding justify-centre">
 
-				<div id="calendar-example" className="example centred">
+				<div id="calendar-example" className="example">
 
 					{content}
 
