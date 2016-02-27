@@ -29,58 +29,53 @@ export default class IntroductionComponent extends React.Component {
 		Velocity(refs.namef1, { color: '#000' });
 
 		setTimeout(() => {
-			Velocity(refs.nameu1, { color: '#000' });
+			Velocity(refs.names1, { color: '#000' });
 
 			setTimeout(() => {
-				Velocity(refs.names1, { color: '#000' });
+				Velocity(refs.namer2, { color: '#000' });
 
 				setTimeout(() => {
-					Velocity(refs.namer2, { color: '#000' });
+					Velocity(refs.namen1, { color: '#000' });
 
 					setTimeout(() => {
-						Velocity(refs.namen1, { color: '#000' });
+						Velocity(refs.namef1, { opacity: 0 });
+						Velocity(refs.names1, { opacity: 0 });
+						Velocity(refs.namer2, { opacity: 0 });
+						Velocity(refs.namen1, { opacity: 0 }, () => {
 
-						setTimeout(() => {
-							Velocity(refs.namef1, { opacity: 0 });
-							Velocity(refs.nameu1, { opacity: 0 });
-							Velocity(refs.names1, { opacity: 0 });
-							Velocity(refs.namer2, { opacity: 0 });
-							Velocity(refs.namen1, { opacity: 0 }, () => {
+							setTimeout(() => {
+								Velocity(refs.nameu1, { width: 0 }, { display: 'none' });
+								Velocity(refs.names1, { width: 0 }, { display: 'none' });
+								Velocity(refs.wordspacer, { width: 0 }, { display: 'none' });
+								Velocity(refs.namer2, { width: 0 }, { display: 'none' });
+								Velocity(refs.namen1, { width: 0 }, { display: 'none' });
 
 								setTimeout(() => {
-									Velocity(refs.nameu1, { width: 0 }, { display: 'none' });
-									Velocity(refs.names1, { width: 0 }, { display: 'none' });
-									Velocity(refs.wordspacer, { width: 0 }, { display: 'none' });
-									Velocity(refs.namer2, { width: 0 }, { display: 'none' });
-									Velocity(refs.namen1, { width: 0 }, { display: 'none' });
+									Velocity(container, { 'min-height': '' }, { duration: 800 });
+
+									Velocity(refs.namef1, { width: 0 });
+									Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 
 									setTimeout(() => {
-										Velocity(container, { 'min-height': '' }, { duration: 800 });
-
-										Velocity(refs.namef1, { width: 0 });
-										Velocity(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 
 										setTimeout(() => {
+											Velocity(refs.namef1, { display: 'none' });
+											refs.settings.classList.remove('hidden');
+											Velocity(refs.settings, { opacity: 1 }, { duration: 800 });
+											refs.panel.classList.remove('full-height');
+											refs.panel.classList.remove('justify-centre');
 
-											setTimeout(() => {
-												Velocity(refs.namef1, { display: 'none' });
-												refs.settings.classList.remove('hidden');
-												Velocity(refs.settings, { opacity: 1 }, { duration: 800 });
-												refs.panel.classList.remove('full-height');
-												refs.panel.classList.remove('justify-centre');
+											setTimeout(() => refs.settings.classList.remove('seethrough'), 200);
 
-												setTimeout(() => refs.settings.classList.remove('seethrough'), 200);
-
-											}, 300);
-										}, 700);
-									}, 500);
-								});
+										}, 300);
+									}, 700);
+								}, 500);
 							});
-						}, 300);
+						});
 					}, 300);
 				}, 300);
 			}, 300);
-		}, 300);
+		});
 	}
 
 	componentDidMount() {

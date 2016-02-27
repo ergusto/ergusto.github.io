@@ -19822,59 +19822,54 @@
 				(0, _velocityAnimate2.default)(refs.namef1, { color: '#000' });
 
 				setTimeout(function () {
-					(0, _velocityAnimate2.default)(refs.nameu1, { color: '#000' });
+					(0, _velocityAnimate2.default)(refs.names1, { color: '#000' });
 
 					setTimeout(function () {
-						(0, _velocityAnimate2.default)(refs.names1, { color: '#000' });
+						(0, _velocityAnimate2.default)(refs.namer2, { color: '#000' });
 
 						setTimeout(function () {
-							(0, _velocityAnimate2.default)(refs.namer2, { color: '#000' });
+							(0, _velocityAnimate2.default)(refs.namen1, { color: '#000' });
 
 							setTimeout(function () {
-								(0, _velocityAnimate2.default)(refs.namen1, { color: '#000' });
+								(0, _velocityAnimate2.default)(refs.namef1, { opacity: 0 });
+								(0, _velocityAnimate2.default)(refs.names1, { opacity: 0 });
+								(0, _velocityAnimate2.default)(refs.namer2, { opacity: 0 });
+								(0, _velocityAnimate2.default)(refs.namen1, { opacity: 0 }, function () {
 
-								setTimeout(function () {
-									(0, _velocityAnimate2.default)(refs.namef1, { opacity: 0 });
-									(0, _velocityAnimate2.default)(refs.nameu1, { opacity: 0 });
-									(0, _velocityAnimate2.default)(refs.names1, { opacity: 0 });
-									(0, _velocityAnimate2.default)(refs.namer2, { opacity: 0 });
-									(0, _velocityAnimate2.default)(refs.namen1, { opacity: 0 }, function () {
+									setTimeout(function () {
+										(0, _velocityAnimate2.default)(refs.nameu1, { width: 0 }, { display: 'none' });
+										(0, _velocityAnimate2.default)(refs.names1, { width: 0 }, { display: 'none' });
+										(0, _velocityAnimate2.default)(refs.wordspacer, { width: 0 }, { display: 'none' });
+										(0, _velocityAnimate2.default)(refs.namer2, { width: 0 }, { display: 'none' });
+										(0, _velocityAnimate2.default)(refs.namen1, { width: 0 }, { display: 'none' });
 
 										setTimeout(function () {
-											(0, _velocityAnimate2.default)(refs.nameu1, { width: 0 }, { display: 'none' });
-											(0, _velocityAnimate2.default)(refs.names1, { width: 0 }, { display: 'none' });
-											(0, _velocityAnimate2.default)(refs.wordspacer, { width: 0 }, { display: 'none' });
-											(0, _velocityAnimate2.default)(refs.namer2, { width: 0 }, { display: 'none' });
-											(0, _velocityAnimate2.default)(refs.namen1, { width: 0 }, { display: 'none' });
+											(0, _velocityAnimate2.default)(container, { 'min-height': '' }, { duration: 800 });
+
+											(0, _velocityAnimate2.default)(refs.namef1, { width: 0 });
+											(0, _velocityAnimate2.default)(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 
 											setTimeout(function () {
-												(0, _velocityAnimate2.default)(container, { 'min-height': '' }, { duration: 800 });
-
-												(0, _velocityAnimate2.default)(refs.namef1, { width: 0 });
-												(0, _velocityAnimate2.default)(refs.heading, { 'margin-left': 0, 'font-size': '20px' }, { duration: 800, display: 'inline-block' });
 
 												setTimeout(function () {
+													(0, _velocityAnimate2.default)(refs.namef1, { display: 'none' });
+													refs.settings.classList.remove('hidden');
+													(0, _velocityAnimate2.default)(refs.settings, { opacity: 1 }, { duration: 800 });
+													refs.panel.classList.remove('full-height');
+													refs.panel.classList.remove('justify-centre');
 
 													setTimeout(function () {
-														(0, _velocityAnimate2.default)(refs.namef1, { display: 'none' });
-														refs.settings.classList.remove('hidden');
-														(0, _velocityAnimate2.default)(refs.settings, { opacity: 1 }, { duration: 800 });
-														refs.panel.classList.remove('full-height');
-														refs.panel.classList.remove('justify-centre');
-
-														setTimeout(function () {
-															return refs.settings.classList.remove('seethrough');
-														}, 200);
-													}, 300);
-												}, 700);
-											}, 500);
-										});
+														return refs.settings.classList.remove('seethrough');
+													}, 200);
+												}, 300);
+											}, 700);
+										}, 500);
 									});
-								}, 300);
+								});
 							}, 300);
 						}, 300);
 					}, 300);
-				}, 300);
+				});
 			}
 		}, {
 			key: 'componentDidMount',
