@@ -75,7 +75,7 @@ export default class IntroductionComponent extends React.Component {
 					}, 300);
 				}, 300);
 			}, 300);
-		});
+		}, 300);
 	}
 
 	componentDidMount() {
