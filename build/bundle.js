@@ -42092,6 +42092,7 @@
 			key: 'clearActiveDay',
 			value: function clearActiveDay() {
 				this.activeDay.clear();
+				this.showCalendar();
 			}
 		}, {
 			key: 'componentWillMount',
@@ -42193,7 +42194,7 @@
 
 
 	// module
-	exports.push([module.id, ".calendar-header, .calendar-subheader, .calendar-body {\n  max-width: 98%; }\n\n#calendar-example {\n  position: relative; }\n\n.box.calendar-body {\n  border-top: 0px; }\n\n.calendar-subheader.box {\n  padding: 0;\n  border-top: 0px; }\n  .calendar-subheader.box li {\n    width: 14%; }\n\n.calendar-buttons {\n  border-left: 0px;\n  line-height: 2rem; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n  border-left: 1px solid #ccc; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 7rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.1); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.05);\n  cursor: pointer; }\n", ""]);
+	exports.push([module.id, ".calendar {\n  border-right: 1px solid #ccc;\n  border-bottom: 1px solid #ccc; }\n\n#calendar-example {\n  position: relative; }\n\n.box.calendar-body {\n  border-top: 0px; }\n\n.calendar .calendar-header {\n  border-right: 0px; }\n\n.calendar .calendar-subheader {\n  border-right: 0px; }\n\n.calendar-subheader.box {\n  padding: 0;\n  border-top: 0px; }\n  .calendar-subheader.box li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  border-left: 0px;\n  line-height: 2rem; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n  border-left: 1px solid #ccc; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 7rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.08);\n  cursor: pointer; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n", ""]);
 
 	// exports
 
@@ -43465,6 +43466,7 @@
 
 				this.form.clearError();
 				this.refs.calendarTitleInput.value = '';
+				this.refs.calendarTimeInput = '';
 				this.refs.calendarDescriptionInput.value = '';
 			}
 		}, {
@@ -43636,10 +43638,12 @@
 				var entrylist = undefined;
 				var classes = 'calendar-day padding-sm';
 				var day = this.props.day;
+				var entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
+
 				if (day.isToday) {
 					classes = classes + ' isToday';
 				}
-				var entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
+
 				if (entry && entry.identifier) {
 
 					entryTextHtml = entry.entries.map(function (entry, index) {
@@ -43669,6 +43673,7 @@
 						entryTextHtml
 					);
 				}
+
 				return _react2.default.createElement(
 					'li',
 					{ onClick: this.setActiveDay.bind(this, day), className: classes },

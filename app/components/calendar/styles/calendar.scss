@@ -1,5 +1,6 @@
-.calendar-header, .calendar-subheader, .calendar-body {
-	max-width: 98%;
+.calendar {
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
 
 #calendar-example {
@@ -10,12 +11,21 @@
 	border-top: 0px;
 }
 
+.calendar .calendar-header {
+	border-right: 0px;
+}
+
+.calendar .calendar-subheader {
+	border-right: 0px;
+}
+
 .calendar-subheader.box {
 	padding: 0;
 	border-top: 0px;
 
 	li {
 		width: 14%;
+		border-left: 1px solid transparent;
 	}
 }
 
@@ -55,10 +65,14 @@
 }
 
 .calendar-day-empty {
-	background: rgba(0, 0, 0, 0.1);
+	background: rgba(0, 0, 0, 0.03);
 }
 
 .calendar-day:hover {
-	background: rgba(0, 0, 0, 0.05);
+	background: rgba(0, 0, 0, 0.08);
 	cursor: pointer;
 }
+
+.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {
+	border-bottom: 0px;
+} 

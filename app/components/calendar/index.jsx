@@ -32,6 +32,7 @@ export default class CalendarManagerComponent extends React.Component {
 
 	clearActiveDay() {
 		this.activeDay.clear();
+		this.showCalendar();
 	}
 
 	componentWillMount() {

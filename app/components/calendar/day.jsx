@@ -45,6 +45,7 @@ export default class CalendarDetailComponent extends React.Component {
 
 		this.form.clearError();
 		this.refs.calendarTitleInput.value = '';
+		this.refs.calendarTimeInput = '';
 		this.refs.calendarDescriptionInput.value = '';
 	}
 

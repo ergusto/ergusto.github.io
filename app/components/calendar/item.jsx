@@ -21,10 +21,12 @@ export default class CalendarItemComponent extends React.Component {
 		let entrylist;
 		let classes = 'calendar-day padding-sm';
 		const day = this.props.day;
+		const entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
+
 		if (day.isToday) {
 			classes = classes + ' isToday';
 		}
-		const entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
+		
 		if (entry && entry.identifier) {
 
 			entryTextHtml = entry.entries.map((entry, index) => {
@@ -38,6 +40,7 @@ export default class CalendarItemComponent extends React.Component {
 
 			entrylist = <ul className="calendar-item-entry-list">{entryTextHtml}</ul>;
 		}
+
 		return (
 			<li onClick={this.setActiveDay.bind(this, day)} className={classes}>
 				<span className="calendar-item-date">{day.date}</span>
