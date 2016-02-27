@@ -1,6 +1,8 @@
 import React from 'react';
 import FormStateBehaviour from '../../behaviours/form.js';
 
+import Tools from '../../lib/tools.js';
+
 // import styles for this component
 require('!style!css!sass!./styles/detail.scss');
 
@@ -24,9 +26,15 @@ export default class CalendarDetailComponent extends React.Component {
 		const descriptionValue = this.refs.calendarDescriptionInput.value;
 		const entry = this.props.entry || this.props.diary.shell();
 		const entryEvent = {};
+		const timeIsFormattedCorrectly = Tools.validate24HourTime(timeValue);
 
 		if (!titleValue) {
 			this.form.addError('please enter a title');
+			return;
+		}
+
+		if (!timeIsFormattedCorrectly) {
+			this.form.addError('please enter a time in the format: 12:00');
 			return;
 		}
 
@@ -45,7 +53,7 @@ export default class CalendarDetailComponent extends React.Component {
 
 		this.form.clearError();
 		this.refs.calendarTitleInput.value = '';
-		this.refs.calendarTimeInput = '';
+		this.refs.calendarTimeInput.value = '';
 		this.refs.calendarDescriptionInput.value = '';
 	}
 
@@ -55,7 +63,8 @@ export default class CalendarDetailComponent extends React.Component {
 		if (entry) {
 			const entries = entry.entries;
 			if (entries.length) {
-				entryList = entry.entries.map((entry) => {
+				const sortedEntries = _.sortBy(entries, 'time');
+				entryList = sortedEntries.map((entry) => {
 					return (
 						<li key={entry.title}>{entry.time} - {entry.title}</li>
 					);
@@ -97,7 +106,7 @@ export default class CalendarDetailComponent extends React.Component {
 					<form onSubmit={this.submitHandler.bind(this)} className="padding border-top">
 
 						<input ref="calendarTitleInput" placeholder="title" className="field" name="title" />
-						<input ref="calendarTimeInput" placeholder="time" className="field" name="time" />
+						<input ref="calendarTimeInput" placeholder="time (hh:mm)" className="field" name="time" />
 						<textarea ref="calendarDescriptionInput" placeholder="description" className="field" name="text"></textarea>
 						{errContent}
 						<div className="btn-group">

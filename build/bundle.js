@@ -24271,6 +24271,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Tools = {};
+	var twentyFourHourTimeValidator = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+
+	Tools.validate24HourTime = function (time) {
+
+		return time && twentyFourHourTimeValidator.test(time);
+	};
 
 	Tools.truncate = function (string, limit) {
 		return string.length > limit ? string.substr(0, limit - 1) + '...' : string;
@@ -43406,6 +43412,10 @@
 
 	var _form2 = _interopRequireDefault(_form);
 
+	var _tools = __webpack_require__(164);
+
+	var _tools2 = _interopRequireDefault(_tools);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43445,9 +43455,15 @@
 				var descriptionValue = this.refs.calendarDescriptionInput.value;
 				var entry = this.props.entry || this.props.diary.shell();
 				var entryEvent = {};
+				var timeIsFormattedCorrectly = _tools2.default.validate24HourTime(timeValue);
 
 				if (!titleValue) {
 					this.form.addError('please enter a title');
+					return;
+				}
+
+				if (!timeIsFormattedCorrectly) {
+					this.form.addError('please enter a time in the format: 12:00');
 					return;
 				}
 
@@ -43466,7 +43482,7 @@
 
 				this.form.clearError();
 				this.refs.calendarTitleInput.value = '';
-				this.refs.calendarTimeInput = '';
+				this.refs.calendarTimeInput.value = '';
 				this.refs.calendarDescriptionInput.value = '';
 			}
 		}, {
@@ -43477,7 +43493,8 @@
 				if (entry) {
 					var entries = entry.entries;
 					if (entries.length) {
-						entryList = entry.entries.map(function (entry) {
+						var sortedEntries = _.sortBy(entries, 'time');
+						entryList = sortedEntries.map(function (entry) {
 							return _react2.default.createElement(
 								'li',
 								{ key: entry.title },
@@ -43568,7 +43585,7 @@
 							'form',
 							{ onSubmit: this.submitHandler.bind(this), className: 'padding border-top' },
 							_react2.default.createElement('input', { ref: 'calendarTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
-							_react2.default.createElement('input', { ref: 'calendarTimeInput', placeholder: 'time', className: 'field', name: 'time' }),
+							_react2.default.createElement('input', { ref: 'calendarTimeInput', placeholder: 'time (hh:mm)', className: 'field', name: 'time' }),
 							_react2.default.createElement('textarea', { ref: 'calendarDescriptionInput', placeholder: 'description', className: 'field', name: 'text' }),
 							errContent,
 							_react2.default.createElement(

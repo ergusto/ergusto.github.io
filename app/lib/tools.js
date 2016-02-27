@@ -1,6 +1,12 @@
 import _ from 'lodash';
 
 const Tools = {};
+const twentyFourHourTimeValidator = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/
+
+Tools.validate24HourTime = function(time) {
+
+	return time && twentyFourHourTimeValidator.test(time);
+};
 
 Tools.truncate = function(string, limit) {
 	return (string.length > limit) ? string.substr(0, limit-1) +'...' : string;
