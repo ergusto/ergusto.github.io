@@ -19,6 +19,7 @@ export default class CalendarManagerComponent extends React.Component {
 		this.state = {};
 		this.tabs = new TabbedStateBehaviour(this, 'calendar');
 		this.activeDay = new ActiveModelStateBehaviour(this);
+		this.activeMonth = new ActiveModelStateBehaviour(this);
 
 		props.diary.onChange(() => {
 			this.forceUpdate()
@@ -36,7 +37,7 @@ export default class CalendarManagerComponent extends React.Component {
 	}
 
 	componentWillMount() {
-		this.setState({month: this.month});
+		this.activeMonth.set(this.month);
 	}
 
 	renderForDate(date) {
@@ -49,7 +50,7 @@ export default class CalendarManagerComponent extends React.Component {
 	}
 
 	setMonth(month) {
-		this.setState({month: month});
+		this.activeMonth.set(month);
 	}
 
 	render() {
@@ -59,7 +60,7 @@ export default class CalendarManagerComponent extends React.Component {
 		if (this.tabs.isOpen('calendar')) {
 			content = <CalendarComponent 
 						calendar={this.calendar}
-						month={this.state.month}
+						month={this.activeMonth.current}
 						setMonth={this.setMonth.bind(this)}
 						setActiveDay={this.setActiveDay.bind(this)}
 						diary={this.props.diary}

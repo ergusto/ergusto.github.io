@@ -42081,6 +42081,7 @@
 			_this.state = {};
 			_this.tabs = new _tabs2.default(_this, 'calendar');
 			_this.activeDay = new _activeModel2.default(_this);
+			_this.activeMonth = new _activeModel2.default(_this);
 
 			props.diary.onChange(function () {
 				_this.forceUpdate();
@@ -42103,7 +42104,7 @@
 		}, {
 			key: 'componentWillMount',
 			value: function componentWillMount() {
-				this.setState({ month: this.month });
+				this.activeMonth.set(this.month);
 			}
 		}, {
 			key: 'renderForDate',
@@ -42119,7 +42120,7 @@
 		}, {
 			key: 'setMonth',
 			value: function setMonth(month) {
-				this.setState({ month: month });
+				this.activeMonth.set(month);
 			}
 		}, {
 			key: 'render',
@@ -42130,7 +42131,7 @@
 				if (this.tabs.isOpen('calendar')) {
 					content = _react2.default.createElement(_calendar4.default, {
 						calendar: this.calendar,
-						month: this.state.month,
+						month: this.activeMonth.current,
 						setMonth: this.setMonth.bind(this),
 						setActiveDay: this.setActiveDay.bind(this),
 						diary: this.props.diary
@@ -42200,7 +42201,7 @@
 
 
 	// module
-	exports.push([module.id, ".calendar {\n  border-right: 1px solid #ccc;\n  border-bottom: 1px solid #ccc; }\n\n#calendar-example {\n  position: relative; }\n\n.calendar-subheader {\n  padding: 0; }\n  .calendar-subheader li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  line-height: 2rem;\n  padding: 0px; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 7rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.06);\n  cursor: pointer; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n", ""]);
+	exports.push([module.id, "#calendar-example {\n  position: relative; }\n\n.calendar-subheader {\n  padding: 0; }\n  .calendar-subheader li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  line-height: 2rem;\n  padding: 0px; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 7rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.06);\n  cursor: pointer; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n", ""]);
 
 	// exports
 
