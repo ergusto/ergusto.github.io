@@ -24215,17 +24215,12 @@
 			_classCallCheck(this, ComponentSingleStateModifierBehaviour);
 
 			this.component = component;
-			this.stateName = 'ERGUSTO:state-modifier:' + _tools2.default.generateID();
+			this.stateName = 'ergusto:state-modifier:' + _tools2.default.generateID();
 			this.defaultState = defaultState;
 			this.component.state[this.stateName] = this.defaultState;
 		}
 
 		_createClass(ComponentSingleStateModifierBehaviour, [{
-			key: 'get',
-			value: function get(property) {
-				return this.component.state[property];
-			}
-		}, {
 			key: 'set',
 			value: function set(value) {
 				var set = {};
@@ -24245,7 +24240,7 @@
 		}, {
 			key: 'current',
 			get: function get() {
-				return this.get(this.stateName);
+				return this.component.state[this.stateName];
 			}
 		}]);
 
@@ -40519,6 +40514,7 @@
 		function FieldStateBehaviour(component) {
 			_classCallCheck(this, FieldStateBehaviour);
 
+			this.fieldErrorState = new _componentSingleStateModifier2.default(component);
 			this.fieldLengthState = new _componentSingleStateModifier2.default(component, 0);
 		}
 
@@ -40528,9 +40524,24 @@
 				this.fieldLengthState.set(value);
 			}
 		}, {
+			key: 'addError',
+			value: function addError(error) {
+				this.fieldErrorState.set(error);
+			}
+		}, {
+			key: 'clearError',
+			value: function clearError() {
+				this.fieldErrorState.clear();
+			}
+		}, {
 			key: 'length',
 			get: function get() {
 				return this.fieldLengthState.current;
+			}
+		}, {
+			key: 'error',
+			get: function get() {
+				return this.fieldErrorState.current;
 			}
 		}]);
 
@@ -41237,7 +41248,8 @@
 				var saved = undefined;
 				var parent = this.props.parent;
 				var text = this.refs.commentInput.value;
-				var comment = this.props.comment || this.props.comments.shell();
+				var comments = this.props.comments;
+				var comment = this.props.comment || comments.shell();
 
 				if (!text.trim().length) {
 					this.form.addError('Please enter a comment');
@@ -41247,12 +41259,12 @@
 				comment.text = text;
 
 				if (comment.id) {
-					saved = this.props.comments.update(comment);
+					saved = comments.update(comment);
 				} else {
 					comment.date = new Date();
 					comment.username = this.props.user.getUsername();
 					comment.parentId = parent && parent.id || '';
-					saved = this.props.comments.create(comment);
+					saved = comments.create(comment);
 				}
 
 				if (this.props.submitCallback) {
@@ -41463,10 +41475,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _form = __webpack_require__(203);
-
-	var _form2 = _interopRequireDefault(_form);
-
 	var _detail = __webpack_require__(206);
 
 	var _detail2 = _interopRequireDefault(_detail);
@@ -41474,6 +41482,14 @@
 	var _list = __webpack_require__(209);
 
 	var _list2 = _interopRequireDefault(_list);
+
+	var _formEdit = __webpack_require__(240);
+
+	var _formEdit2 = _interopRequireDefault(_formEdit);
+
+	var _formCreate = __webpack_require__(241);
+
+	var _formCreate2 = _interopRequireDefault(_formCreate);
 
 	var _tabs = __webpack_require__(188);
 
@@ -41535,12 +41551,13 @@
 				var tabs = this.tabs;
 				var tasks = this.props.tasks;
 				var activeTaskId = this.activeTask.current;
+
 				if (activeTaskId) {
 					task = tasks.get(activeTaskId);
 				}
 
 				if (tabs.isOpen('new')) {
-					content = _react2.default.createElement(_form2.default, { tasks: tasks, submitCallback: this.activateTask.bind(this) });
+					content = _react2.default.createElement(_formCreate2.default, { tasks: tasks, submitCallback: this.activateTask.bind(this) });
 				}
 
 				if (tabs.isOpen('detail')) {
@@ -41548,7 +41565,7 @@
 				}
 
 				if (tabs.isOpen('edit')) {
-					content = _react2.default.createElement(_form2.default, { task: task, tasks: tasks, submitCallback: this.activateTask.bind(this) });
+					content = _react2.default.createElement(_formEdit2.default, { task: task, tasks: tasks, submitCallback: this.activateTask.bind(this) });
 				}
 
 				return _react2.default.createElement(
@@ -42209,7 +42226,7 @@
 
 
 	// module
-	exports.push([module.id, "#calendar-example {\n  position: relative; }\n\n.calendar-subheader {\n  padding: 0; }\n  .calendar-subheader li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  line-height: 2rem;\n  padding: 0px; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 7rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.06);\n  cursor: pointer; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n", ""]);
+	exports.push([module.id, "#calendar-example {\n  position: relative; }\n\n.calendar-subheader {\n  padding: 0; }\n  .calendar-subheader li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  line-height: 2rem;\n  padding: 0px; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 7rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.06);\n  cursor: pointer;\n  color: black; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n", ""]);
 
 	// exports
 
@@ -43351,7 +43368,7 @@
 					{ className: 'calendar box' },
 					_react2.default.createElement(
 						'header',
-						{ className: 'calendar-header padding' },
+						{ className: 'calendar-header padding muted' },
 						_react2.default.createElement(
 							'h2',
 							null,
@@ -43384,7 +43401,7 @@
 					),
 					_react2.default.createElement(
 						'ul',
-						{ className: 'calendar-subheader horizontal-list-menu border-bottom' },
+						{ className: 'calendar-subheader horizontal-list-menu muted border-bottom' },
 						subheaderHTML
 					),
 					_react2.default.createElement(
@@ -43453,7 +43470,7 @@
 			value: function render() {
 				var entryTextHtml = undefined;
 				var entrylist = undefined;
-				var classes = 'calendar-day padding-sm';
+				var classes = 'calendar-day muted padding-sm';
 				var day = this.props.day;
 				var entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
 
@@ -43647,11 +43664,13 @@
 			key: 'submitHandler',
 			value: function submitHandler(event) {
 				event.preventDefault();
+				var entryEvent = {};
+				var day = this.props.day;
+				var diary = this.props.diary;
+				var entry = this.props.entry || diary.shell();
 				var titleValue = this.refs.calendarTitleInput.value;
 				var timeValue = this.refs.calendarTimeInput.value;
 				var descriptionValue = this.refs.calendarDescriptionInput.value;
-				var entry = this.props.entry || this.props.diary.shell();
-				var entryEvent = {};
 				var timeIsFormattedCorrectly = _tools2.default.validate24HourTime(timeValue);
 
 				if (!titleValue) {
@@ -43671,22 +43690,24 @@
 				entry.entries.push(entryEvent);
 
 				if (entry.id) {
-					this.props.diary.update(entry);
+					diary.update(entry);
 				} else {
-					entry.identifier = this.props.day.identifier;
-					this.props.diary.create(entry);
+					entry.identifier = day.identifier;
+					diary.create(entry);
 				}
 
 				this.form.clearError();
-				this.refs.calendarTitleInput.value = '';
 				this.refs.calendarTimeInput.value = '';
+				this.refs.calendarTitleInput.value = '';
 				this.refs.calendarDescriptionInput.value = '';
 			}
 		}, {
 			key: 'generateEntryHTML',
 			value: function generateEntryHTML() {
+
 				var entryList = undefined;
 				var entry = this.props.entry;
+
 				if (entry) {
 					var entries = entry.entries;
 					if (entries.length) {
@@ -43700,20 +43721,17 @@
 								entry.title
 							);
 						});
-					} else {
-						entryList = _react2.default.createElement(
-							'li',
-							null,
-							'No entries!'
-						);
 					}
-				} else {
+				}
+
+				if (!entryList) {
 					entryList = _react2.default.createElement(
 						'li',
 						null,
 						'No entries!'
 					);
 				}
+
 				return _react2.default.createElement(
 					'ul',
 					{ className: 'calendar-entry-list padding padding-top-sm' },
@@ -43738,7 +43756,7 @@
 
 				return _react2.default.createElement(
 					'div',
-					{ className: 'calendar-detail box' },
+					{ className: 'calendar-detail box muted' },
 					_react2.default.createElement(
 						'header',
 						{ className: 'calendar-detail-header padding' },
@@ -43944,6 +43962,78 @@
 	}(_form2.default);
 
 	exports.default = CommentCreateFormComponent;
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _form = __webpack_require__(203);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TaskEditFormComponent = function (_TaskFormComponent) {
+	  _inherits(TaskEditFormComponent, _TaskFormComponent);
+
+	  function TaskEditFormComponent() {
+	    _classCallCheck(this, TaskEditFormComponent);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TaskEditFormComponent).apply(this, arguments));
+	  }
+
+	  return TaskEditFormComponent;
+	}(_form2.default);
+
+	exports.default = TaskEditFormComponent;
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _form = __webpack_require__(203);
+
+	var _form2 = _interopRequireDefault(_form);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TaskCreateFormComponent = function (_TaskFormComponent) {
+	  _inherits(TaskCreateFormComponent, _TaskFormComponent);
+
+	  function TaskCreateFormComponent() {
+	    _classCallCheck(this, TaskCreateFormComponent);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TaskCreateFormComponent).apply(this, arguments));
+	  }
+
+	  return TaskCreateFormComponent;
+	}(_form2.default);
+
+	exports.default = TaskCreateFormComponent;
 
 /***/ }
 /******/ ]);

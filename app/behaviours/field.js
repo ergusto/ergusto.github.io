@@ -3,6 +3,7 @@ import ComponentSingleStateModifierBehaviour from './component.single.state.modi
 export default class FieldStateBehaviour {
 
 	constructor(component) {
+		this.fieldErrorState = new ComponentSingleStateModifierBehaviour(component);
 		this.fieldLengthState = new ComponentSingleStateModifierBehaviour(component, 0);
 	}
 
@@ -12,6 +13,18 @@ export default class FieldStateBehaviour {
 
 	setLength(value) {
 		this.fieldLengthState.set(value);
+	}
+
+	get error() {
+		return this.fieldErrorState.current;
+	}
+
+	addError(error) {
+		this.fieldErrorState.set(error);
+	}
+
+	clearError() {
+		this.fieldErrorState.clear();
 	}
 
 }

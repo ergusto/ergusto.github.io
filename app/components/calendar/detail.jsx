@@ -21,11 +21,13 @@ export default class CalendarDetailComponent extends React.Component {
 
 	submitHandler(event) {
 		event.preventDefault();
+		const entryEvent = {};
+		const day = this.props.day;
+		const diary = this.props.diary;
+		const entry = this.props.entry || diary.shell();
 		const titleValue = this.refs.calendarTitleInput.value;
 		const timeValue = this.refs.calendarTimeInput.value;
 		const descriptionValue = this.refs.calendarDescriptionInput.value;
-		const entry = this.props.entry || this.props.diary.shell();
-		const entryEvent = {};
 		const timeIsFormattedCorrectly = Tools.validate24HourTime(timeValue);
 
 		if (!titleValue) {
@@ -45,21 +47,23 @@ export default class CalendarDetailComponent extends React.Component {
 		entry.entries.push(entryEvent);
 
 		if (entry.id) {
-			this.props.diary.update(entry);
+			diary.update(entry);
 		} else {
-			entry.identifier = this.props.day.identifier;
-			this.props.diary.create(entry);
+			entry.identifier = day.identifier;
+			diary.create(entry);
 		}
 
 		this.form.clearError();
-		this.refs.calendarTitleInput.value = '';
 		this.refs.calendarTimeInput.value = '';
+		this.refs.calendarTitleInput.value = '';
 		this.refs.calendarDescriptionInput.value = '';
 	}
 
 	generateEntryHTML() {
+		
 		let entryList;
 		const entry = this.props.entry;
+
 		if (entry) {
 			const entries = entry.entries;
 			if (entries.length) {
@@ -69,13 +73,15 @@ export default class CalendarDetailComponent extends React.Component {
 						<li key={entry.title} className="margin-bottom-sm">{entry.time} - {entry.title}</li>
 					);
 				});
-			} else {
-				entryList = <li>No entries!</li>;
 			}
-		} else {
+		}
+
+		if (!entryList) {
 			entryList = <li>No entries!</li>;
 		}
+
 		return  <ul className="calendar-entry-list padding padding-top-sm">{entryList}</ul>;
+
 	}
 
 	render() {
@@ -85,11 +91,11 @@ export default class CalendarDetailComponent extends React.Component {
 		const entryHTML = this.generateEntryHTML();
 
 		if (err) {
-			errContent = (<span className="form-error">{err}</span>);
+			errContent = <span className="form-error">{err}</span>;
 		}
 
 		return (
-			<div className="calendar-detail box">
+			<div className="calendar-detail box muted">
 				<header className="calendar-detail-header padding">
 					<h2>{day.date} {day.month} {day.year}</h2>
 				</header>

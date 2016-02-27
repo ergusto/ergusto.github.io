@@ -30,7 +30,8 @@ export default class CommentFormComponent extends React.Component {
 		let saved;
 		const parent = this.props.parent;
 		const text = this.refs.commentInput.value;
-		const comment = this.props.comment || this.props.comments.shell();
+		const comments = this.props.comments;
+		const comment = this.props.comment || comments.shell();
 
 		if (!text.trim().length) {
 			this.form.addError('Please enter a comment');
@@ -40,12 +41,12 @@ export default class CommentFormComponent extends React.Component {
 		comment.text = text;
 
 		if (comment.id) {
-			saved = this.props.comments.update(comment);
+			saved = comments.update(comment);
 		} else {
 			comment.date = new Date;
 			comment.username = this.props.user.getUsername();
 			comment.parentId = parent && parent.id || '';
-			saved = this.props.comments.create(comment);
+			saved = comments.create(comment);
 		}
 
 		if (this.props.submitCallback) {

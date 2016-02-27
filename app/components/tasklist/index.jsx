@@ -1,8 +1,9 @@
 import React from 'react';
 
-import TaskFormComponent from './form.jsx';
 import TaskDetailComponent from './detail.jsx';
 import TaskListComponent from './list.jsx';
+import TaskEditFormComponent from './form.edit.jsx';
+import TaskCreateFormComponent from './form.create.jsx';
 
 import TabbedStateBehaviour from '../../behaviours/tabs.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
@@ -41,12 +42,13 @@ export default class TaskManagerComponent extends React.Component {
 		const tabs = this.tabs;
 		const tasks = this.props.tasks;
 		const activeTaskId = this.activeTask.current;
+		
 		if (activeTaskId) {
 			task = tasks.get(activeTaskId);
 		}
 
 		if (tabs.isOpen('new')) {
-			content = <TaskFormComponent tasks={tasks} submitCallback={this.activateTask.bind(this)} />
+			content = <TaskCreateFormComponent tasks={tasks} submitCallback={this.activateTask.bind(this)} />
 		}
 
 		if (tabs.isOpen('detail')) {
@@ -54,7 +56,7 @@ export default class TaskManagerComponent extends React.Component {
 		}
 
 		if (tabs.isOpen('edit')) {
-			content = <TaskFormComponent task={task} tasks={tasks} submitCallback={this.activateTask.bind(this)} />
+			content = <TaskEditFormComponent task={task} tasks={tasks} submitCallback={this.activateTask.bind(this)} />
 		}
 
 		return (

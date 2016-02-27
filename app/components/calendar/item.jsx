@@ -19,7 +19,7 @@ export default class CalendarItemComponent extends React.Component {
 	render() {
 		let entryTextHtml;
 		let entrylist;
-		let classes = 'calendar-day padding-sm';
+		let classes = 'calendar-day muted padding-sm';
 		const day = this.props.day;
 		const entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
 

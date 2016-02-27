@@ -6,13 +6,9 @@ export default class ComponentSingleStateModifierBehaviour {
 
 	constructor(component, defaultState) {
 		this.component = component;
-		this.stateName = 'ERGUSTO:state-modifier:' + Tools.generateID();
+		this.stateName = 'ergusto:state-modifier:' + Tools.generateID();
 		this.defaultState = defaultState;
 		this.component.state[this.stateName] = this.defaultState;
-	}
-
-	get(property) {
-		return this.component.state[property];
 	}
 
 	set(value) {
@@ -22,7 +18,7 @@ export default class ComponentSingleStateModifierBehaviour {
 	}
 
 	get current() {
-		return this.get(this.stateName);
+		return this.component.state[this.stateName];
 	}
 
 	isCurrent(value) {

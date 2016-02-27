@@ -44,7 +44,7 @@ export default class CalendarComponent extends React.Component {
 
 			<div className="calendar box">
 
-				<header className="calendar-header padding">
+				<header className="calendar-header padding muted">
 
 					<h2>{month.name} {month.year}</h2>
 
@@ -55,7 +55,7 @@ export default class CalendarComponent extends React.Component {
 					<li><a href="#" onClick={this.previousMonthHandler.bind(this)} className="btn btn-large">previous</a></li>
 				</ul>
 
-				<ul className="calendar-subheader horizontal-list-menu border-bottom">
+				<ul className="calendar-subheader horizontal-list-menu muted border-bottom">
 
 					{subheaderHTML}
 
