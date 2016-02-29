@@ -51,8 +51,8 @@ export default class CalendarComponent extends React.Component {
 				</header>
 
 				<ul className="calendar-buttons calendar-subheader horizontal-list-menu--btns border-vertical">
-					<li className="pull-right"><a href="#" onClick={this.nextMonthHandler.bind(this)} className="btn btn-large pull-right">next</a></li>
-					<li><a href="#" onClick={this.previousMonthHandler.bind(this)} className="btn btn-large">previous</a></li>
+					<li className="pull-right"><a href="#" onClick={this.nextMonthHandler.bind(this)} className="btn pull-right">next</a></li>
+					<li><a href="#" onClick={this.previousMonthHandler.bind(this)} className="btn">previous</a></li>
 				</ul>
 
 				<ul className="calendar-subheader horizontal-list-menu muted border-bottom">

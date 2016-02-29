@@ -1,7 +1,7 @@
 import React from 'react';
 
-import BookmarkDetailComponent from './detail.jsx';
 import BookmarkListComponent from './list.jsx';
+import BookmarkDetailComponent from './detail.jsx';
 import BookmarkEditFormComponent from './form.edit.jsx';
 import BookmarkCreateFormComponent from './form.create.jsx';
 
@@ -57,6 +57,7 @@ export default class BookmarkManagerComponent extends React.Component {
 
 	render() {
 		let content;
+		const tabs = this.tabs;
 		const bookmarks = this.props.bookmarks;
 		const bookmark = bookmarks.get(this.getActiveBookmarkId());; 
 		const tabClass = 'btn';
@@ -64,17 +65,17 @@ export default class BookmarkManagerComponent extends React.Component {
 		let listTabClass = tabClass;
 		let addTabClass = tabClass;
 
-		if (this.tabs.isOpen('list')) {
+		if (tabs.isOpen('list')) {
 			listTabClass += activeClass;
 			content = <BookmarkListComponent setActiveBookmark={this.setActiveBookmark.bind(this)} bookmarks={bookmarks} />;
 		}
 
-		if (this.tabs.isOpen('add')) {
+		if (tabs.isOpen('add')) {
 			addTabClass += activeClass;
 			content = <BookmarkCreateFormComponent bookmarks={bookmarks} submitCallback={this.submitCallback.bind(this)} />;
 		}
 
-		if (this.tabs.isOpen('detail')) {
+		if (tabs.isOpen('detail')) {
 			content = (
 					<BookmarkDetailComponent 
 						bookmarks={bookmarks} 
@@ -85,7 +86,7 @@ export default class BookmarkManagerComponent extends React.Component {
 					);
 		}
 
-		if (this.tabs.isOpen('edit')) {
+		if (tabs.isOpen('edit')) {
 			content = <BookmarkEditFormComponent formTitle='edit' bookmark={bookmark} bookmarks={bookmarks} submitCallback={this.editSubmitCallback.bind(this)} />;
 		}
 

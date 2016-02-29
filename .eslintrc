@@ -3,6 +3,7 @@
   "parserOptions": {
     "ecmaVersion": 6,
     "ecmaFeatures": {
+      "classes": true,
       "jsx": true
     },
     "sourceType": "module"
@@ -11,6 +12,7 @@
     "browser": true,
     "node": true
   },
+  "parser": "babel-eslint",
   "plugins": [
     "react"
   ],

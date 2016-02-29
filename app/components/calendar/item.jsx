@@ -7,17 +7,12 @@ require('!style!css!sass!./styles/item.scss');
 
 export default class CalendarItemComponent extends React.Component {
 
-	constructor() {
-		super();
-	}
-
 	setActiveDay(day, event) {
 		event.preventDefault();
 		this.props.setActiveDay(day);
 	}
 
 	render() {
-		let entryTextHtml;
 		let entrylist;
 		let classes = 'calendar-day muted padding-sm';
 		const day = this.props.day;
@@ -29,7 +24,7 @@ export default class CalendarItemComponent extends React.Component {
 		
 		if (entry && entry.identifier) {
 			const sortedEntries = _.sortBy(entry.entries, 'time');
-			entryTextHtml = sortedEntries.map((entry, index) => {
+			const entryTextHtml = sortedEntries.map((entry, index) => {
 				if (index <= 2) {
 					return <li className="calendar-item-entry" key={'calendar-item-' + entry.time}><small>{Tools.truncate(entry.title, 17)}</small></li>;
 				}

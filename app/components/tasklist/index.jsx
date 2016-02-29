@@ -64,8 +64,8 @@ export default class TaskManagerComponent extends React.Component {
 
 				<div id="tasklist-example" className="example">
 
-					<div className="tasklist flex-col-container">
-						<div className="tasklist-sidebar flex-col">
+					<div className="tasklist box flex-col-container">
+						<div className="tasklist-sidebar bg-gray border-right flex-col">
 							<div className="flex-col-inner">
 								<header className="tasklist-sidebar-header padding-bottom-sm margin-bottom-sm">
 									<a onClick={this.newTaskHandler.bind(this)} href="#" className="plus-btn pull-right">+</a>

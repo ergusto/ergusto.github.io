@@ -14,9 +14,9 @@ export default class CalendarManagerComponent extends React.Component {
 	
 	constructor(props) {
 		super(props);
+		this.state = {};
 		this.calendar = new Calendar();
 		this.month = this.calendar.getMonth();
-		this.state = {};
 		this.tabs = new TabbedStateBehaviour(this, 'calendar');
 		this.activeDay = new ActiveModelStateBehaviour(this);
 		this.activeMonth = new ActiveModelStateBehaviour(this);
@@ -79,8 +79,7 @@ export default class CalendarManagerComponent extends React.Component {
 		}
 
 		return (
-
-			<section className="calendar-example full-height padding justify-centre">
+			<section className="calendar-example full-height justify-centre padding">
 
 				<div id="calendar-example" className="example">
 

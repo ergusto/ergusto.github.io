@@ -105,7 +105,7 @@ export default class CalendarDetailComponent extends React.Component {
 				</ul>
 
 				<div className="calendar-body">
-					<div className="padding padding-bottom-sm">
+					<div className="padding-except-bottom">
 						<h3>events:</h3>
 					</div>
 					{entryHTML}

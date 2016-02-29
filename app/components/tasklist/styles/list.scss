@@ -1,17 +1,12 @@
 .tasklist {
-	width: 100%;
 	max-width: 800px;
-	background: white;
 	padding: 0;
 	margin: 0 auto;
 	min-height: 600px;
-	box-shadow: 0 4px 4px rgba( 0, 0, 0, .2 );
 }
 
 .tasklist-sidebar {
 	width: 40%;
-	background: #373D40;
-	color: rgb(177, 180, 182);
 	padding: 20px;
 }
 
@@ -41,10 +36,6 @@
 	line-height: 14px;
 }
 
-.plus-btn:hover {
-	color: white;
-}
-
 .task-list {
 	padding: 0;
 	margin: 0;
@@ -64,10 +55,6 @@
 
 .task-list a {
 	text-decoration: none;
-}
-
-.task-list a:hover {
-	color: white;
 }
 
 .remove-task {
