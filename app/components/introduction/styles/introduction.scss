@@ -14,9 +14,9 @@ header.introduction {
 
 .introduction-heading {
 	display: block;
-	max-width: 262px;
 	font-size: 2.2rem;
 	margin: 0px auto 4px;
+	max-width: 30rem;
 }
 
 .introduction-heading a {
@@ -29,7 +29,6 @@ header.introduction {
 
 @media only screen and (min-width: 768px) {
 	.introduction-heading {
-		max-width: 357px;
 		font-size: 3rem;        
 	}
 }
@@ -41,11 +40,6 @@ header.introduction {
 
 .introduction-content {
 	width: 100%;
-}
-
-.name-tofadein {
-	display: none;
-	opacity: 0;
 }
 
 .name span {

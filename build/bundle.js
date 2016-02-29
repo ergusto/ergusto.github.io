@@ -39652,7 +39652,7 @@
 
 
 	// module
-	exports.push([module.id, "header.introduction {\n  background: #4696e5;\n  color: white;\n  padding: 10px 20px 10px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n\n.introduction a {\n  text-decoration: none; }\n\n.introduction-heading {\n  display: block;\n  max-width: 262px;\n  font-size: 2.2rem;\n  margin: 0px auto 4px; }\n\n.introduction-heading a {\n  color: white; }\n\n.introduction-heading a:hover {\n  color: white; }\n\n@media only screen and (min-width: 768px) {\n  .introduction-heading {\n    max-width: 357px;\n    font-size: 3rem; } }\n\n.introduction-no-animation .introduction-heading {\n  font-size: 20px;\n  margin: 0 0 4px; }\n\n.introduction-content {\n  width: 100%; }\n\n.name-tofadein {\n  display: none;\n  opacity: 0; }\n\n.name span {\n  display: inline-block; }\n", ""]);
+	exports.push([module.id, "header.introduction {\n  background: #4696e5;\n  color: white;\n  padding: 10px 20px 10px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n\n.introduction a {\n  text-decoration: none; }\n\n.introduction-heading {\n  display: block;\n  font-size: 2.2rem;\n  margin: 0px auto 4px;\n  max-width: 30rem; }\n\n.introduction-heading a {\n  color: white; }\n\n.introduction-heading a:hover {\n  color: white; }\n\n@media only screen and (min-width: 768px) {\n  .introduction-heading {\n    font-size: 3rem; } }\n\n.introduction-no-animation .introduction-heading {\n  font-size: 20px;\n  margin: 0 0 4px; }\n\n.introduction-content {\n  width: 100%; }\n\n.name span {\n  display: inline-block; }\n", ""]);
 
 	// exports
 
