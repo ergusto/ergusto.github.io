@@ -42,9 +42,9 @@ class App extends React.Component {
 			<div>
 				<IntroductionComponent user={user} />
 				<CommentListComponent user={user} comments={comments} />
-				<TaskManagerComponent user={user} tasks={tasks} />
-				<BookmarkManagerComponent user={user} bookmarks={bookmarks} />
 				<CalendarManagerComponent user={user} diary={diary} />
+				<BookmarkManagerComponent user={user} bookmarks={bookmarks} />
+				<TaskManagerComponent user={user} tasks={tasks} />
 			</div>
 		)
 

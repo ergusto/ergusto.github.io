@@ -84,7 +84,7 @@ export default class IntroductionComponent extends React.Component {
 		if (shouldShowAnimation) {
 			setTimeout(() => {
 				this.fergusToErgusto();
-			}, 1000);
+			}, 500);
 		}
 	}
 

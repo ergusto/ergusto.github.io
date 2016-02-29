@@ -143,9 +143,9 @@
 					null,
 					_react2.default.createElement(_index2.default, { user: user }),
 					_react2.default.createElement(_index6.default, { user: user, comments: comments }),
-					_react2.default.createElement(_index8.default, { user: user, tasks: tasks }),
+					_react2.default.createElement(_index10.default, { user: user, diary: diary }),
 					_react2.default.createElement(_index4.default, { user: user, bookmarks: bookmarks }),
-					_react2.default.createElement(_index10.default, { user: user, diary: diary })
+					_react2.default.createElement(_index8.default, { user: user, tasks: tasks })
 				);
 			}
 		}]);
@@ -19882,7 +19882,7 @@
 				if (shouldShowAnimation) {
 					setTimeout(function () {
 						_this2.fergusToErgusto();
-					}, 1000);
+					}, 500);
 				}
 			}
 		}, {
