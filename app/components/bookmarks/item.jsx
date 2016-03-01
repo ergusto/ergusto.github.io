@@ -31,9 +31,9 @@ export default class BookmarkItemComponent extends React.Component {
 					<h3 onClick={this.clickHandler.bind(this)} className="bookmark-item-title hover-cursor--pointer muted">{bookmark.title}</h3>
 				</header>
 				{imageHtml}
-				<div className="padding-horizontal padding-vertical-sm">
-					<a href={bookmark.url} className="btn btn-wide">visit</a>
-					<a onClick={this.clickHandler.bind(this)} href="#" className="bookmark-item-url btn btn-wide margin-left-sm">notes</a>
+				<div className="bookmark-item-footer padding-horizontal">
+					<a href={bookmark.url} className=""><small>visit</small></a>
+					<a onClick={this.clickHandler.bind(this)} href="#" className="bookmark-item-url margin-left-sm"><small>notes</small></a>
 				</div>
 			</li>
 		)
