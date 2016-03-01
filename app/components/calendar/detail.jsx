@@ -27,7 +27,6 @@ export default class CalendarDetailComponent extends React.Component {
 		const entry = this.props.entry || diary.shell();
 		const titleValue = this.refs.calendarTitleInput.value;
 		const timeValue = this.refs.calendarTimeInput.value;
-		const descriptionValue = this.refs.calendarDescriptionInput.value;
 		const timeIsFormattedCorrectly = Tools.validate24HourTime(timeValue);
 
 		if (!titleValue) {
@@ -42,7 +41,6 @@ export default class CalendarDetailComponent extends React.Component {
 
 		entryEvent.title = titleValue;
 		entryEvent.time = timeValue;
-		entryEvent.description = descriptionValue;
 
 		entry.entries.push(entryEvent);
 
@@ -56,7 +54,6 @@ export default class CalendarDetailComponent extends React.Component {
 		this.form.clearError();
 		this.refs.calendarTimeInput.value = '';
 		this.refs.calendarTitleInput.value = '';
-		this.refs.calendarDescriptionInput.value = '';
 	}
 
 	generateEntryHTML() {
@@ -113,7 +110,6 @@ export default class CalendarDetailComponent extends React.Component {
 
 						<input ref="calendarTitleInput" placeholder="title" className="field" name="title" />
 						<input ref="calendarTimeInput" placeholder="time (hh:mm)" className="field" name="time" />
-						<textarea ref="calendarDescriptionInput" placeholder="description" className="field" name="text"></textarea>
 						{errContent}
 						<div className="btn-group">
 							<input type="submit" value="submit" className="btn"></input>

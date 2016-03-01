@@ -42949,7 +42949,6 @@
 				var entry = this.props.entry || diary.shell();
 				var titleValue = this.refs.calendarTitleInput.value;
 				var timeValue = this.refs.calendarTimeInput.value;
-				var descriptionValue = this.refs.calendarDescriptionInput.value;
 				var timeIsFormattedCorrectly = _tools2.default.validate24HourTime(timeValue);
 
 				if (!titleValue) {
@@ -42964,7 +42963,6 @@
 
 				entryEvent.title = titleValue;
 				entryEvent.time = timeValue;
-				entryEvent.description = descriptionValue;
 
 				entry.entries.push(entryEvent);
 
@@ -42978,7 +42976,6 @@
 				this.form.clearError();
 				this.refs.calendarTimeInput.value = '';
 				this.refs.calendarTitleInput.value = '';
-				this.refs.calendarDescriptionInput.value = '';
 			}
 		}, {
 			key: 'generateEntryHTML',
@@ -43080,7 +43077,6 @@
 							{ onSubmit: this.submitHandler.bind(this), className: 'padding border-top' },
 							_react2.default.createElement('input', { ref: 'calendarTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
 							_react2.default.createElement('input', { ref: 'calendarTimeInput', placeholder: 'time (hh:mm)', className: 'field', name: 'time' }),
-							_react2.default.createElement('textarea', { ref: 'calendarDescriptionInput', placeholder: 'description', className: 'field', name: 'text' }),
 							errContent,
 							_react2.default.createElement(
 								'div',
