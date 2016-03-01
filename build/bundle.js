@@ -19880,6 +19880,10 @@
 				var user = this.props.user;
 				var shouldShowAnimation = user.shouldSeeIntroAnimation();
 				if (shouldShowAnimation) {
+					var heading = this.refs.heading;
+					var name = this.refs.name;
+					var nameWidth = name.offsetWidth;
+					heading.style.maxWidth = nameWidth;
 					setTimeout(function () {
 						_this2.fergusToErgusto();
 					}, 500);
@@ -19900,7 +19904,7 @@
 
 					name = _react2.default.createElement(
 						'span',
-						{ className: 'name' },
+						{ ref: 'name', className: 'name' },
 						_react2.default.createElement(
 							'span',
 							{ ref: 'namef1' },
@@ -39652,7 +39656,7 @@
 
 
 	// module
-	exports.push([module.id, "header.introduction {\n  background: #4696e5;\n  color: white;\n  padding: 10px 20px 10px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n\n.introduction a {\n  text-decoration: none; }\n\n.introduction-heading {\n  display: block;\n  font-size: 2.2rem;\n  margin: 0px auto 4px;\n  max-width: 30rem; }\n\n.introduction-heading a {\n  color: white; }\n\n.introduction-heading a:hover {\n  color: white; }\n\n@media only screen and (min-width: 768px) {\n  .introduction-heading {\n    font-size: 3rem; } }\n\n.introduction-no-animation .introduction-heading {\n  font-size: 20px;\n  margin: 0 0 4px; }\n\n.introduction-content {\n  width: 100%; }\n\n.name span {\n  display: inline-block; }\n", ""]);
+	exports.push([module.id, ".introduction {\n  background: #4696e5;\n  color: white;\n  padding: 10px 20px 10px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n\n.introduction a {\n  text-decoration: none; }\n\n.introduction-heading {\n  display: block;\n  font-size: 2.2rem;\n  margin: 0px auto 4px;\n  max-width: 30rem; }\n\n.introduction-heading a {\n  color: white; }\n\n.introduction-heading a:hover {\n  color: white; }\n\n@media only screen and (min-width: 768px) {\n  .introduction-heading {\n    font-size: 3rem; } }\n\n.introduction-no-animation .introduction-heading {\n  font-size: 20px;\n  margin: 0 0 4px; }\n\n.introduction-content {\n  width: 100%; }\n\n.name span {\n  display: inline-block; }\n", ""]);
 
 	// exports
 
@@ -42450,8 +42454,8 @@
 				var startingDay = firstDayOfMonth.getDay();
 				var nextMonth = month + 1;
 				var nextMonthYear = year;
-				var prevMonth = month - 1;
-				var prevMonthYear = year;
+				var previousMonth = month - 1;
+				var previousMonthYear = year;
 
 				if (month >= 11) {
 					nextMonth = 1;
@@ -42459,12 +42463,12 @@
 				}
 
 				if (month == 0) {
-					prevMonth = 11;
-					prevMonthYear = prevMonthYear - 1;
+					previousMonth = 11;
+					previousMonthYear = previousMonthYear - 1;
 				}
 
 				var firstDayOfNextMonth = new Date(nextMonthYear, nextMonth, 1);
-				var firstDayOfPrevMonth = new Date(prevMonthYear, prevMonth, 1);
+				var firstDayOfPrevMonth = new Date(previousMonthYear, previousMonth, 1);
 
 				var monthLength = calendarDaysInEachMonth[month];
 
@@ -42526,6 +42530,7 @@
 						break;
 					}
 				}
+
 				return monthInfo;
 			}
 		}, {

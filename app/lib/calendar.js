@@ -17,7 +17,7 @@ export default class Calendar {
 		return calendarMonthLabels;
 	}
 
-	getMonth(date){
+	getMonth(date) {
 		const today = new Date();
 		const todayDate = today.getDate();
 		const todayMonthNo = today.getMonth();
@@ -33,8 +33,8 @@ export default class Calendar {
 		const startingDay = firstDayOfMonth.getDay();
 		let nextMonth = month + 1;
 		let nextMonthYear = year;
-		let prevMonth = month - 1;
-		let prevMonthYear = year;
+		let previousMonth = month - 1;
+		let previousMonthYear = year;
 
 		if (month >= 11) {
 			nextMonth = 1;
@@ -42,12 +42,12 @@ export default class Calendar {
 		}
 
 		if (month == 0) {
-			prevMonth = 11;
-			prevMonthYear = prevMonthYear - 1;
+			previousMonth = 11;
+			previousMonthYear = previousMonthYear - 1;
 		}
 
 		const firstDayOfNextMonth = new Date(nextMonthYear, nextMonth, 1);
-		const firstDayOfPrevMonth = new Date(prevMonthYear, prevMonth, 1);
+		const firstDayOfPrevMonth = new Date(previousMonthYear, previousMonth, 1);
 
 		let monthLength = calendarDaysInEachMonth[month];
 
@@ -109,6 +109,7 @@ export default class Calendar {
 				break;
 			}
 		}
+
 		return monthInfo;
 	}
 
