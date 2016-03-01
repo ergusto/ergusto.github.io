@@ -47,10 +47,10 @@ export default class BookmarkDetailComponent extends React.Component {
 					<h3 className="bookmark-title">{bookmark.title}</h3>
 				</header>
 				{imageHtml}
-				<div className="padding-horizontal padding-vertical-sm">
-					<a href={bookmark.url} className="btn">visit</a>
-					<a onClick={this.editHandler.bind(this)} href="#" className="btn margin-left-sm">edit</a>
-					<a onClick={this.removeHandler.bind(this)} href="#" className="btn margin-left-sm">delete</a>
+				<div className="bookmark-buttons padding-horizontal padding-vertical-sm bg-gray">
+					<a href={bookmark.url}><small>visit</small></a>
+					<a onClick={this.editHandler.bind(this)} href="#" className="margin-left-sm"><small>edit</small></a>
+					<a onClick={this.removeHandler.bind(this)} href="#" className="margin-left-sm"><small>delete</small></a>
 				</div>
 				{notesHtml}
 			</div>

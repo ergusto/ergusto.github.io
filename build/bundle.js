@@ -40003,7 +40003,7 @@
 					imageHtml,
 					_react2.default.createElement(
 						'div',
-						{ className: 'bookmark-item-footer padding-horizontal' },
+						{ className: 'bookmark-buttons padding-horizontal bg-gray' },
 						_react2.default.createElement(
 							'a',
 							{ href: bookmark.url, className: '' },
@@ -40067,7 +40067,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-item-title {\n  display: inline-block; }\n\n.bookmark-item-url {\n  display: inline-block; }\n\n.bookmark-item-image {\n  max-width: 100%; }\n\n.bookmark-item-footer {\n  padding-top: 8px;\n  padding-bottom: 8px; }\n\n.bookmark-item-footer a {\n  text-decoration: none; }\n", ""]);
+	exports.push([module.id, ".bookmark-item-title {\n  display: inline-block; }\n\n.bookmark-item-url {\n  display: inline-block; }\n\n.bookmark-item-image {\n  max-width: 100%; }\n", ""]);
 
 	// exports
 
@@ -40213,21 +40213,33 @@
 					imageHtml,
 					_react2.default.createElement(
 						'div',
-						{ className: 'padding-horizontal padding-vertical-sm' },
+						{ className: 'bookmark-buttons padding-horizontal padding-vertical-sm bg-gray' },
 						_react2.default.createElement(
 							'a',
-							{ href: bookmark.url, className: 'btn' },
-							'visit'
+							{ href: bookmark.url },
+							_react2.default.createElement(
+								'small',
+								null,
+								'visit'
+							)
 						),
 						_react2.default.createElement(
 							'a',
-							{ onClick: this.editHandler.bind(this), href: '#', className: 'btn margin-left-sm' },
-							'edit'
+							{ onClick: this.editHandler.bind(this), href: '#', className: 'margin-left-sm' },
+							_react2.default.createElement(
+								'small',
+								null,
+								'edit'
+							)
 						),
 						_react2.default.createElement(
 							'a',
-							{ onClick: this.removeHandler.bind(this), href: '#', className: 'btn margin-left-sm' },
-							'delete'
+							{ onClick: this.removeHandler.bind(this), href: '#', className: 'margin-left-sm' },
+							_react2.default.createElement(
+								'small',
+								null,
+								'delete'
+							)
 						)
 					),
 					notesHtml
@@ -40816,7 +40828,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block; }\n\n.bookmark-manager-header {\n  line-height: 4rem; }\n", ""]);
+	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block; }\n\n.bookmark-manager-header {\n  line-height: 4rem; }\n\n.bookmark-buttons {\n  padding-top: 8px;\n  padding-bottom: 8px; }\n\n.bookmark-buttons a {\n  text-decoration: none; }\n", ""]);
 
 	// exports
 
