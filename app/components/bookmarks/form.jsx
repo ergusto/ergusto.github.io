@@ -68,7 +68,7 @@ export default class BookmarkFormComponent extends React.Component {
 
         return (
         	<div className="bookmark-form-container box margin-top">
-                <header className="box-header padding">
+                <header className="box-header padding bg-gray">
 				    <h3 className="bookmark-form-title muted">{formTitle}</h3> 
                 </header>
 				<form onSubmit={this.submitHandler.bind(this)} className="bookmark-form padding">

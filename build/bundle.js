@@ -40437,7 +40437,7 @@
 	                { className: 'bookmark-form-container box margin-top' },
 	                _react2.default.createElement(
 	                    'header',
-	                    { className: 'box-header padding' },
+	                    { className: 'box-header padding bg-gray' },
 	                    _react2.default.createElement(
 	                        'h3',
 	                        { className: 'bookmark-form-title muted' },
@@ -43755,7 +43755,7 @@
 			key: 'defaultModels',
 			value: function defaultModels() {
 				return [{
-					text: 'This site showcases some of the things I have created with React. Most examples are interactive. Try replying to or editing this comment.',
+					text: 'This site showcases some of the things I have created while learning React. Most examples are interactive. Try replying to or editing this comment.',
 					username: 'ergusto',
 					date: new Date(),
 					parentId: false
