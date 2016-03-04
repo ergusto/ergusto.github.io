@@ -24,10 +24,7 @@ export default class User {
 				this.user = user;
 			}
 
-			this.onUpdate(() => {
-				this.updateStorage();
-			});
-
+			this.onUpdate(() => this.updateStorage());
 		} else {
 			this.usingLocalStorage = false;
 		}
