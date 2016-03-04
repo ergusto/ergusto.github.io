@@ -56,7 +56,7 @@ export default class SettingsComponent extends  React.Component {
 			triggerClass = 'settings-trigger';
 		}
 
-		if (this.props.user.shouldSeeIntroAnimation()) {
+		if (this.props.user.shouldSeeIntroAnimation) {
 			animationSettingLabelText = 'show intro animation';
 		} else {
 			animationSettingLabelText = 'do not show intro animation';

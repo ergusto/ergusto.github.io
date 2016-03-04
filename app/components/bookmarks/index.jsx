@@ -1,4 +1,5 @@
 import React from 'react';
+const PropTypes = React.PropTypes;
 
 import BookmarkListComponent from './list.jsx';
 import BookmarkDetailComponent from './detail.jsx';
@@ -121,3 +122,8 @@ export default class BookmarkManagerComponent extends React.Component {
 	}
 
 }
+
+BookmarkManagerComponent.propTypes = {
+	user: PropTypes.object.isRequired,
+	bookmarks: PropTypes.object.isRequired
+};

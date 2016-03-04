@@ -24,17 +24,21 @@ export default class User {
 				this.user = user;
 			}
 
+			this.onUpdate(() => {
+				this.updateStorage();
+			});
+
 		} else {
 			this.usingLocalStorage = false;
 		}
 	}
 
 	updateStorage() {
-		if (this.usingLocalStorage) this.store.set(this.user);
+		this.store.set(this.user);
 	}
 
 	resetAllLocalStorage() {
-		if (this.usingLocalStorage) this.store.resetBrowserLocalStorage();
+		this.store.resetBrowserLocalStorage();
 	}
 
 	getUsername() {
@@ -48,13 +52,11 @@ export default class User {
 
 	set(property, value) {
 		this.user[property] = value;
-		this.updateStorage();
 		this.events.broadcast('update');
 	}
 
 	setSetting(property, value) {
 		this.user.settings[property] = value;
-		this.updateStorage();
 		this.events.broadcast('update');
 	}
 
@@ -66,7 +68,7 @@ export default class User {
 		this.setSetting('showIntroAnimation', boolean);
 	}
 
-	shouldSeeIntroAnimation() {
+	get shouldSeeIntroAnimation() {
 		return this.user.settings.showIntroAnimation;
 	}
 

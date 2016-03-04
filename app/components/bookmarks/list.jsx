@@ -1,4 +1,6 @@
 import React from 'react';
+const PropTypes = React.PropTypes;
+
 import BookmarkItemComponent from './item.jsx';
 
 // import styles for this component
@@ -28,3 +30,8 @@ export default class BookmarkListComponent extends React.Component {
 	}
 
 }
+
+BookmarkListComponent.propTypes = {
+	bookmarks: PropTypes.object.isRequired,
+	setActiveBookmark: PropTypes.func.isRequired
+};

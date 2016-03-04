@@ -1,4 +1,5 @@
 import React from 'react';
+const PropTypes = React.PropTypes;
 
 import Tools from '../../lib/tools.js';
 
@@ -40,3 +41,8 @@ export default class BookmarkItemComponent extends React.Component {
 	}
 
 }
+
+BookmarkItemComponent.propTypes = {
+	bookmark: PropTypes.object.isRequired,
+	setActiveBookmark: PropTypes.func.isRequired
+};

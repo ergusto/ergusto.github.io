@@ -31,7 +31,7 @@ const diary = new Diary();
 class App extends React.Component {
 
 	componentDidMount() {
-		const shouldShowAnimation = this.props.user.shouldSeeIntroAnimation();
+		const shouldShowAnimation = this.props.user.shouldSeeIntroAnimation;
 		if (shouldShowAnimation) window.scrollTo(0,0);  
 	}
 

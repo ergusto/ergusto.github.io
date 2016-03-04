@@ -2,6 +2,8 @@ import React from 'react';
 
 import Tools from '../../lib/tools.js';
 
+const PropTypes = React.PropTypes;
+
 // import styles for this component
 require('!style!css!sass!./styles/detail.scss');
 
@@ -58,3 +60,10 @@ export default class BookmarkDetailComponent extends React.Component {
 	}
 
 }
+
+BookmarkDetailComponent.propTypes = {
+	bookmark: PropTypes.object.isRequired,
+	bookmarks: PropTypes.object.isRequired,
+	submitCallback: PropTypes.func.isRequired,
+	clearActiveBookmark: PropTypes.func.isRequired
+};
