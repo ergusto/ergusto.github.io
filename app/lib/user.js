@@ -13,7 +13,7 @@ export default class User {
 		this.user.settings = {};
 		this.user.settings.showIntroAnimation = true;
 
-		this.storeName = 'ERGUSTO:user';
+		this.storeName = 'ergusto:user';
 
 		if (window.localStorage) {
 			this.usingLocalStorage = true;
