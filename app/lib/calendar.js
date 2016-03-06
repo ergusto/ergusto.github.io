@@ -85,6 +85,7 @@ export default class Calendar {
 					day.year = year;
 					day.identifier = day.date + day.month + day.year;
 					day.dateObj = new Date(day.year, day.monthNo, day.date);
+					day.isToday = false;
 
 					if (day.date == todayDate) {
 						if (day.monthNo == todayMonthNo) {
@@ -92,8 +93,6 @@ export default class Calendar {
 								day.isToday = true;
 							}
 						}
-					} else{
-						day.isToday = false;
 					}
 
 					monthInfo.days.push(day);
