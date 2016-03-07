@@ -33,8 +33,8 @@ export default class LocalStorageCollection extends Collection {
 	initialiseLocalStorageEvents() {
 		
 		this.onCreate((model) => {
-			if (model && !this.hasLocallyStoredModels) this.hasLocallyStoredModels = true;
 			if (model) {
+				if (!this.hasLocallyStoredModels) this.hasLocallyStoredModels = true;
 				const models = _.isArray(model) ? model : [model];
 				models.forEach((created) => {
 					if (created && created.id) {

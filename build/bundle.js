@@ -42586,6 +42586,7 @@
 							day.year = year;
 							day.identifier = day.date + day.month + day.year;
 							day.dateObj = new Date(day.year, day.monthNo, day.date);
+							day.isToday = false;
 
 							if (day.date == todayDate) {
 								if (day.monthNo == todayMonthNo) {
@@ -42593,8 +42594,6 @@
 										day.isToday = true;
 									}
 								}
-							} else {
-								day.isToday = false;
 							}
 
 							monthInfo.days.push(day);
@@ -43322,7 +43321,7 @@
 
 			if (window && window.localStorage) {
 				// always add bevhaiour in the constructor
-				_this.storeName = 'ERGUSTO:collection:' + _this.name;
+				_this.storeName = 'ergusto:collection:' + _this.name;
 				_this.store = new _localstorage2.default(_this.storeName);
 				_this.setUpLocalStorage();
 			} else {
@@ -43352,8 +43351,8 @@
 				var _this2 = this;
 
 				this.onCreate(function (model) {
-					if (model && !_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
 					if (model) {
+						if (!_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
 						var models = _lodash2.default.isArray(model) ? model : [model];
 						models.forEach(function (created) {
 							if (created && created.id) {
