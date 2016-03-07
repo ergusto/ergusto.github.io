@@ -16,12 +16,13 @@ export default class CommentListComponent extends React.Component {
 
 	render() {
 		let content;
-		const comments = this.props.comments.getRootComments();
+		const { user, comments } = this.props;
+		const commentList = comments.getRootComments();
 
-		if (comments.length) {
-			content = comments.map((comment) => {
+		if (commentList.length) {
+			content = commentList.map((comment) => {
 				return (
-					<CommentComponent key={comment.id} user={this.props.user} comment={comment} comments={this.props.comments} />
+					<CommentComponent key={comment.id} user={user} comment={comment} comments={comments} />
 				);
 			});
 		}

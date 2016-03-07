@@ -23,7 +23,7 @@ export default class BookmarkDetailComponent extends React.Component {
 	render() {
 		let imageHtml;
 		let notesHtml;
-		const bookmark = this.props.bookmark;
+		const { bookmark } = this.props;
 		const isImageUrl = Tools.isImageUrl(bookmark.url);
 
 		if (isImageUrl) {

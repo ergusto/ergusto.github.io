@@ -10,28 +10,28 @@ export default class CalendarComponent extends React.Component {
 
 	previousMonthHandler(event) {
 		event.preventDefault();
-		const month = this.props.month;
+		const { month } = this.props;
 		this.props.setMonth(month.getPrevMonth());
 	}
 
 	nextMonthHandler(event) {
 		event.preventDefault();
-		const month = this.props.month;
+		const { month } = this.props;
 		this.props.setMonth(month.getNextMonth());
 	}
 
 	render() {
 
-		const month = this.props.month;
+		const { month, calendar, diary, setActiveDay } = this.props;
 
-		const subheaderHTML = this.props.calendar.weekdaysAbbr.map((day) => {
+		const subheaderHTML = calendar.weekdaysAbbr.map((day) => {
 			return <li key={Math.random()} className="padding-sm">{day}</li>;
 		});
 
 		const calendarHTML = month.weeks.map((week) => {
 			const weekHTML = week.map((day) => {
 				if (day.date) {
-					return <CalendarItemComponent key={Math.random()} day={day} diary={this.props.diary} setActiveDay={this.props.setActiveDay} />
+					return <CalendarItemComponent key={Math.random()} day={day} diary={diary} setActiveDay={setActiveDay} />
 				} else {
 					return <li key={Math.random()} className="calendar-day-empty padding-sm"></li>;
 				}

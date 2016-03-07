@@ -22,9 +22,9 @@ export default class CalendarDetailComponent extends React.Component {
 	submitHandler(event) {
 		event.preventDefault();
 		const entryEvent = {};
-		const day = this.props.day;
-		const diary = this.props.diary;
-		const entry = this.props.entry || diary.shell();
+		let { day, diary, entry } = this.props;
+		if (!entry) entry = diary.shell();
+
 		const titleValue = this.refs.calendarTitleInput.value;
 		const timeValue = this.refs.calendarTimeInput.value;
 		const timeIsFormattedCorrectly = Tools.validate24HourTime(timeValue);
@@ -59,10 +59,10 @@ export default class CalendarDetailComponent extends React.Component {
 	generateEntryHTML() {
 		
 		let entryList;
-		const entry = this.props.entry;
+		const { entry } = this.props;
 
 		if (entry) {
-			const entries = entry.entries;
+			const { entries } = entry;
 			if (entries.length) {
 				const sortedEntries = _.sortBy(entries, 'time');
 				entryList = sortedEntries.map((entry) => {
@@ -82,13 +82,13 @@ export default class CalendarDetailComponent extends React.Component {
 	}
 
 	render() {
-		const err = this.form.error;
-		const day = this.props.day;
-		let errContent;
+		const { error } = this.form;
+		const { day } = this.props;
+		let errorContent;
 		const entryHTML = this.generateEntryHTML();
 
-		if (err) {
-			errContent = <span className="form-error">{err}</span>;
+		if (error) {
+			errorContent = <span className="form-error">{error}</span>;
 		}
 
 		return (
@@ -110,7 +110,7 @@ export default class CalendarDetailComponent extends React.Component {
 
 						<input ref="calendarTitleInput" placeholder="title" className="field" name="title" />
 						<input ref="calendarTimeInput" placeholder="time (hh:mm)" className="field" name="time" />
-						{errContent}
+						{errorContent}
 						<div className="btn-group">
 							<input type="submit" value="submit" className="btn"></input>
 						</div>

@@ -15,7 +15,7 @@ export default class BookmarkItemComponent extends React.Component {
 
 	render() {
 		let imageHtml;
-		const bookmark = this.props.bookmark;
+		const { bookmark } = this.props;
 		const isImageUrl = Tools.isImageUrl(bookmark.url);
 
 		if (isImageUrl) {

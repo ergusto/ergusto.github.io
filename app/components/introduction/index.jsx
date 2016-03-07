@@ -13,7 +13,7 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	setBeforeUnload() {
-		const user = this.props.user;
+		const { user } = this.props;
 		const shouldShowAnimation = user.shouldSeeIntroAnimation;
 		if (shouldShowAnimation) {
 			window.onbeforeunload = function(){
@@ -79,7 +79,7 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		const user = this.props.user;
+		const { user } = this.props;
 		const shouldShowAnimation = user.shouldSeeIntroAnimation;
 		if (shouldShowAnimation) {
 			const heading = this.refs.heading;
@@ -93,7 +93,7 @@ export default class IntroductionComponent extends React.Component {
 	}
 
 	render() {
-		const user = this.props.user;
+		const { user } = this.props;
 		const shouldShowAnimation = user.shouldSeeIntroAnimation;
 		let panelClass;
 		let name;

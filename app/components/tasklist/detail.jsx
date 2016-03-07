@@ -11,7 +11,7 @@ export default class TaskDetailComponent extends React.Component {
 	}
 
 	render() {
-		const task = this.props.task;
+		const { task } = this.props;
 
 		var body;
 

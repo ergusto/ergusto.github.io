@@ -40,7 +40,7 @@ export default class TaskManagerComponent extends React.Component {
 		let task;
 		let content;
 		const tabs = this.tabs;
-		const tasks = this.props.tasks;
+		const { tasks } = this.props;
 		const activeTaskId = this.activeTask.current;
 		
 		if (activeTaskId) {

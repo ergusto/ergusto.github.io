@@ -14,7 +14,7 @@ export default class CommentFormComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		const comment = this.props.comment;
+		const { comment } = this.props;
 		if (comment) {
 			this.form.text.setLength(comment.text.length);
 		}
@@ -28,10 +28,9 @@ export default class CommentFormComponent extends React.Component {
 	submitHandler(event) {
 		event.preventDefault();
 		let saved;
-		const parent = this.props.parent;
+		let { parent, comments, comment, user, submitCallback } = this.props;
 		const text = this.refs.commentInput.value;
-		const comments = this.props.comments;
-		const comment = this.props.comment || comments.shell();
+		if (!comment) comment = comments.shell();
 
 		if (!text.trim().length) {
 			this.form.addError('Please enter a comment');
@@ -44,13 +43,13 @@ export default class CommentFormComponent extends React.Component {
 			saved = comments.update(comment);
 		} else {
 			comment.date = new Date;
-			comment.username = this.props.user.getUsername();
+			comment.username = user.getUsername();
 			comment.parentId = parent && parent.id || '';
 			saved = comments.create(comment);
 		}
 
-		if (this.props.submitCallback) {
-			this.props.submitCallback(saved);
+		if (submitCallback) {
+			submitCallback(saved);
 		}
 	}
 
@@ -61,9 +60,8 @@ export default class CommentFormComponent extends React.Component {
 
 	render() {
 		const err = this.form.error;
-		const shouldShowForm = this.props.shouldShowForm;
-		const formTitle = this.props.formTitle || 'comment';
-		const comment = this.props.comment;
+		let { shouldShowForm, formTitle, comment } = this.props;
+		if (!formTitle) formTitle = 'comment';
 		let errContent;
 		let defaultValue;
 

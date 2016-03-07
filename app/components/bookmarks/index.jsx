@@ -59,7 +59,7 @@ export default class BookmarkManagerComponent extends React.Component {
 	render() {
 		let content;
 		const tabs = this.tabs;
-		const bookmarks = this.props.bookmarks;
+		const { bookmarks } = this.props;
 		const bookmark = bookmarks.get(this.getActiveBookmarkId());; 
 		const tabClass = 'btn';
 		const activeClass = ' active';

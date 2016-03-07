@@ -49,8 +49,9 @@ export default class BookmarkFormComponent extends React.Component {
 
     render() {
         const err = this.form.error;
-        const bookmark = this.props.bookmark;
-        const formTitle = this.props.formTitle || 'new bookmark';
+        let { bookmark, formTitle } = this.props;
+        if (!formTitle) formTitle = 'new bookmark';
+        
         let titleValue;
         let urlValue;
         let notesValue;

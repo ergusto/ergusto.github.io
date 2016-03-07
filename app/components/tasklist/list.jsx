@@ -19,8 +19,9 @@ export default class TaskListComponent extends React.Component {
 
 	removeHandler(id, event) {
 		event.preventDefault();
-		this.props.tasks.remove(id);
-		this.props.showTaskForm();
+		const { tasks, showTaskForm } = this.props;
+		tasks.remove(id);
+		showTaskForm();
 	}
 
 	render() {

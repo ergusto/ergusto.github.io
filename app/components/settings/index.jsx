@@ -46,7 +46,8 @@ export default class SettingsComponent extends  React.Component {
 		let dropdownClass;
 		let triggerClass;
 		let animationSettingLabelText;
-		const username = this.props.user.getUsername();
+		const { user } = this.props;
+		const username = user.getUsername();
 
 		if (this.dropdown.isOpen()) {
 			dropdownClass = 'dropdown box clearfix';
@@ -56,7 +57,7 @@ export default class SettingsComponent extends  React.Component {
 			triggerClass = 'settings-trigger';
 		}
 
-		if (this.props.user.shouldSeeIntroAnimation) {
+		if (user.shouldSeeIntroAnimation) {
 			animationSettingLabelText = 'show intro animation';
 		} else {
 			animationSettingLabelText = 'do not show intro animation';

@@ -19807,6 +19807,7 @@
 			key: 'setBeforeUnload',
 			value: function setBeforeUnload() {
 				var user = this.props.user;
+
 				var shouldShowAnimation = user.shouldSeeIntroAnimation;
 				if (shouldShowAnimation) {
 					window.onbeforeunload = function () {
@@ -19878,6 +19879,7 @@
 				var _this2 = this;
 
 				var user = this.props.user;
+
 				var shouldShowAnimation = user.shouldSeeIntroAnimation;
 				if (shouldShowAnimation) {
 					var heading = this.refs.heading;
@@ -19893,6 +19895,7 @@
 			key: 'render',
 			value: function render() {
 				var user = this.props.user;
+
 				var shouldShowAnimation = user.shouldSeeIntroAnimation;
 				var panelClass = undefined;
 				var name = undefined;
@@ -23986,7 +23989,9 @@
 				var dropdownClass = undefined;
 				var triggerClass = undefined;
 				var animationSettingLabelText = undefined;
-				var username = this.props.user.getUsername();
+				var user = this.props.user;
+
+				var username = user.getUsername();
 
 				if (this.dropdown.isOpen()) {
 					dropdownClass = 'dropdown box clearfix';
@@ -23996,7 +24001,7 @@
 					triggerClass = 'settings-trigger';
 				}
 
-				if (this.props.user.shouldSeeIntroAnimation) {
+				if (user.shouldSeeIntroAnimation) {
 					animationSettingLabelText = 'show intro animation';
 				} else {
 					animationSettingLabelText = 'do not show intro animation';
@@ -39775,6 +39780,7 @@
 				var content = undefined;
 				var tabs = this.tabs;
 				var bookmarks = this.props.bookmarks;
+
 				var bookmark = bookmarks.get(this.getActiveBookmarkId());;
 				var tabClass = 'btn';
 				var activeClass = ' active';
@@ -39996,6 +40002,7 @@
 			value: function render() {
 				var imageHtml = undefined;
 				var bookmark = this.props.bookmark;
+
 				var isImageUrl = _tools2.default.isImageUrl(bookmark.url);
 
 				if (isImageUrl) {
@@ -40197,6 +40204,7 @@
 				var imageHtml = undefined;
 				var notesHtml = undefined;
 				var bookmark = this.props.bookmark;
+
 				var isImageUrl = _tools2.default.isImageUrl(bookmark.url);
 
 				if (isImageUrl) {
@@ -40459,8 +40467,12 @@
 	        key: 'render',
 	        value: function render() {
 	            var err = this.form.error;
-	            var bookmark = this.props.bookmark;
-	            var formTitle = this.props.formTitle || 'new bookmark';
+	            var _props = this.props;
+	            var bookmark = _props.bookmark;
+	            var formTitle = _props.formTitle;
+
+	            if (!formTitle) formTitle = 'new bookmark';
+
 	            var titleValue = undefined;
 	            var urlValue = undefined;
 	            var notesValue = undefined;
@@ -40941,14 +40953,16 @@
 		_createClass(CommentListComponent, [{
 			key: 'render',
 			value: function render() {
-				var _this2 = this;
-
 				var content = undefined;
-				var comments = this.props.comments.getRootComments();
+				var _props = this.props;
+				var user = _props.user;
+				var comments = _props.comments;
 
-				if (comments.length) {
-					content = comments.map(function (comment) {
-						return _react2.default.createElement(_comment2.default, { key: comment.id, user: _this2.props.user, comment: comment, comments: _this2.props.comments });
+				var commentList = comments.getRootComments();
+
+				if (commentList.length) {
+					content = commentList.map(function (comment) {
+						return _react2.default.createElement(_comment2.default, { key: comment.id, user: user, comment: comment, comments: comments });
 					});
 				}
 
@@ -41092,14 +41106,16 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var _this2 = this;
+				var _props = this.props;
+				var user = _props.user;
+				var comment = _props.comment;
+				var comments = _props.comments;
 
-				var comment = this.props.comment;
 				var children = this.getChildren();
 				var childList = undefined;
 
 				var childrenHTML = children.map(function (child) {
-					return _react2.default.createElement(CommentComponent, { key: child.id, user: _this2.props.user, comment: child, comments: _this2.props.comments });
+					return _react2.default.createElement(CommentComponent, { key: child.id, user: user, comment: child, comments: comments });
 				});
 
 				if (childrenHTML) {
@@ -41179,19 +41195,19 @@
 						)
 					),
 					_react2.default.createElement(_formCreate2.default, {
-						user: this.props.user,
+						user: user,
 						formTitle: 'reply',
 						parent: comment,
-						comments: this.props.comments,
+						comments: comments,
 						shouldShowForm: this.state.shouldShowReplyForm,
 						submitCallback: this.replyCallback.bind(this),
 						cancelCallback: this.hideReplyForm.bind(this)
 					}),
 					_react2.default.createElement(_formEdit2.default, {
-						user: this.props.user,
+						user: user,
 						formTitle: 'edit',
 						comment: comment,
-						comments: this.props.comments,
+						comments: comments,
 						shouldShowForm: this.state.shouldShowEditForm,
 						submitCallback: this.editCallback.bind(this),
 						cancelCallback: this.hideEditForm.bind(this)
@@ -41424,6 +41440,7 @@
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				var comment = this.props.comment;
+
 				if (comment) {
 					this.form.text.setLength(comment.text.length);
 				}
@@ -41439,10 +41456,15 @@
 			value: function submitHandler(event) {
 				event.preventDefault();
 				var saved = undefined;
-				var parent = this.props.parent;
+				var _props = this.props;
+				var parent = _props.parent;
+				var comments = _props.comments;
+				var comment = _props.comment;
+				var user = _props.user;
+				var submitCallback = _props.submitCallback;
+
 				var text = this.refs.commentInput.value;
-				var comments = this.props.comments;
-				var comment = this.props.comment || comments.shell();
+				if (!comment) comment = comments.shell();
 
 				if (!text.trim().length) {
 					this.form.addError('Please enter a comment');
@@ -41455,13 +41477,13 @@
 					saved = comments.update(comment);
 				} else {
 					comment.date = new Date();
-					comment.username = this.props.user.getUsername();
+					comment.username = user.getUsername();
 					comment.parentId = parent && parent.id || '';
 					saved = comments.create(comment);
 				}
 
-				if (this.props.submitCallback) {
-					this.props.submitCallback(saved);
+				if (submitCallback) {
+					submitCallback(saved);
 				}
 			}
 		}, {
@@ -41474,9 +41496,12 @@
 			key: 'render',
 			value: function render() {
 				var err = this.form.error;
-				var shouldShowForm = this.props.shouldShowForm;
-				var formTitle = this.props.formTitle || 'comment';
-				var comment = this.props.comment;
+				var _props2 = this.props;
+				var shouldShowForm = _props2.shouldShowForm;
+				var formTitle = _props2.formTitle;
+				var comment = _props2.comment;
+
+				if (!formTitle) formTitle = 'comment';
 				var errContent = undefined;
 				var defaultValue = undefined;
 
@@ -41779,6 +41804,7 @@
 				var content = undefined;
 				var tabs = this.tabs;
 				var tasks = this.props.tasks;
+
 				var activeTaskId = this.activeTask.current;
 
 				if (activeTaskId) {
@@ -41899,6 +41925,7 @@
 			key: 'render',
 			value: function render() {
 				var task = this.props.task;
+
 
 				var body;
 
@@ -42024,8 +42051,12 @@
 			key: 'removeHandler',
 			value: function removeHandler(id, event) {
 				event.preventDefault();
-				this.props.tasks.remove(id);
-				this.props.showTaskForm();
+				var _props = this.props;
+				var tasks = _props.tasks;
+				var showTaskForm = _props.showTaskForm;
+
+				tasks.remove(id);
+				showTaskForm();
 			}
 		}, {
 			key: 'render',
@@ -42199,9 +42230,14 @@
 			value: function submitHandler(event) {
 				event.preventDefault();
 				var saved = undefined;
+				var _props = this.props;
+				var task = _props.task;
+				var tasks = _props.tasks;
+				var submitCallback = _props.submitCallback;
+
 				var title = this.refs.taskTitleInput.value;
 				var text = this.refs.taskTextInput.value;
-				var task = this.props.task || this.props.tasks.shell();
+				if (!task) task = tasks.shell();
 
 				if (!title.trim().length) {
 					this.form.addError('please enter a title');
@@ -42212,18 +42248,19 @@
 				task.text = text;
 
 				if (task.id) {
-					saved = this.props.tasks.update(task);
+					saved = tasks.update(task);
 				} else {
-					saved = this.props.tasks.create(task);
+					saved = tasks.create(task);
 				}
 
-				if (this.props.submitCallback) this.props.submitCallback(saved);
+				if (submitCallback) submitCallback(saved);
 			}
 		}, {
 			key: 'render',
 			value: function render() {
 				var err = this.form.error;
 				var task = this.props.task;
+
 
 				var errContent = undefined;
 				var formTitleContent = undefined;
@@ -42683,6 +42720,7 @@
 			value: function previousMonthHandler(event) {
 				event.preventDefault();
 				var month = this.props.month;
+
 				this.props.setMonth(month.getPrevMonth());
 			}
 		}, {
@@ -42690,16 +42728,20 @@
 			value: function nextMonthHandler(event) {
 				event.preventDefault();
 				var month = this.props.month;
+
 				this.props.setMonth(month.getNextMonth());
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				var _this2 = this;
+				var _props = this.props;
+				var month = _props.month;
+				var calendar = _props.calendar;
+				var diary = _props.diary;
+				var setActiveDay = _props.setActiveDay;
 
-				var month = this.props.month;
 
-				var subheaderHTML = this.props.calendar.weekdaysAbbr.map(function (day) {
+				var subheaderHTML = calendar.weekdaysAbbr.map(function (day) {
 					return _react2.default.createElement(
 						'li',
 						{ key: Math.random(), className: 'padding-sm' },
@@ -42710,7 +42752,7 @@
 				var calendarHTML = month.weeks.map(function (week) {
 					var weekHTML = week.map(function (day) {
 						if (day.date) {
-							return _react2.default.createElement(_item2.default, { key: Math.random(), day: day, diary: _this2.props.diary, setActiveDay: _this2.props.setActiveDay });
+							return _react2.default.createElement(_item2.default, { key: Math.random(), day: day, diary: diary, setActiveDay: setActiveDay });
 						} else {
 							return _react2.default.createElement('li', { key: Math.random(), className: 'calendar-day-empty padding-sm' });
 						}
@@ -42829,8 +42871,11 @@
 			value: function render() {
 				var entrylist = undefined;
 				var classes = 'calendar-day muted padding-sm';
-				var day = this.props.day;
-				var entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
+				var _props = this.props;
+				var day = _props.day;
+				var diary = _props.diary;
+
+				var entry = diary.getItemFromDateIdentifier(day.identifier);
 
 				if (day.isToday) {
 					classes = classes + ' isToday';
@@ -43023,9 +43068,13 @@
 			value: function submitHandler(event) {
 				event.preventDefault();
 				var entryEvent = {};
-				var day = this.props.day;
-				var diary = this.props.diary;
-				var entry = this.props.entry || diary.shell();
+				var _props = this.props;
+				var day = _props.day;
+				var diary = _props.diary;
+				var entry = _props.entry;
+
+				if (!entry) entry = diary.shell();
+
 				var titleValue = this.refs.calendarTitleInput.value;
 				var timeValue = this.refs.calendarTimeInput.value;
 				var timeIsFormattedCorrectly = _tools2.default.validate24HourTime(timeValue);
@@ -43063,8 +43112,10 @@
 				var entryList = undefined;
 				var entry = this.props.entry;
 
+
 				if (entry) {
 					var entries = entry.entries;
+
 					if (entries.length) {
 						var sortedEntries = _.sortBy(entries, 'time');
 						entryList = sortedEntries.map(function (entry) {
@@ -43096,16 +43147,17 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var err = this.form.error;
+				var error = this.form.error;
 				var day = this.props.day;
-				var errContent = undefined;
+
+				var errorContent = undefined;
 				var entryHTML = this.generateEntryHTML();
 
-				if (err) {
-					errContent = _react2.default.createElement(
+				if (error) {
+					errorContent = _react2.default.createElement(
 						'span',
 						{ className: 'form-error' },
-						err
+						error
 					);
 				}
 
@@ -43156,7 +43208,7 @@
 							{ onSubmit: this.submitHandler.bind(this), className: 'padding border-top' },
 							_react2.default.createElement('input', { ref: 'calendarTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
 							_react2.default.createElement('input', { ref: 'calendarTimeInput', placeholder: 'time (hh:mm)', className: 'field', name: 'time' }),
-							errContent,
+							errorContent,
 							_react2.default.createElement(
 								'div',
 								{ className: 'btn-group' },

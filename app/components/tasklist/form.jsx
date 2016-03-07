@@ -15,9 +15,10 @@ export default class TaskFormComponent extends React.Component {
 	submitHandler(event) {
 		event.preventDefault();
 		let saved;
+		let { task, tasks, submitCallback } = this.props;
 		const title = this.refs.taskTitleInput.value;
 		const text = this.refs.taskTextInput.value;
-		const task = this.props.task || this.props.tasks.shell();
+		if (!task) task = tasks.shell();
 
 		if (!title.trim().length) {
 			this.form.addError('please enter a title');
@@ -28,17 +29,17 @@ export default class TaskFormComponent extends React.Component {
 		task.text = text;
 
 		if (task.id) {
-			saved = this.props.tasks.update(task);
+			saved = tasks.update(task);
 		} else {
-			saved = this.props.tasks.create(task);
+			saved = tasks.create(task);
 		}
 		
-		if (this.props.submitCallback) this.props.submitCallback(saved);
+		if (submitCallback) submitCallback(saved);
 	}
 
 	render() {
 		const err = this.form.error;
-		const task = this.props.task;
+		const { task } = this.props;
 		
 		let errContent;
 		let formTitleContent;

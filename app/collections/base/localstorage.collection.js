@@ -5,7 +5,7 @@ import LocalStorageBehaviour from '../../behaviours/localstorage.js';
 export default class LocalStorageCollection extends Collection {
 
 	constructor() {
-		super()
+		super();
 		if (window && window.localStorage) {
 			// always add bevhaiour in the constructor
 			this.storeName = 'ergusto:collection:' + this.name;

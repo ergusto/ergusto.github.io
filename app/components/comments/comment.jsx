@@ -69,12 +69,12 @@ export default class CommentComponent extends React.Component {
 	}
 	
 	render() {
-		const comment = this.props.comment;
+		const { user, comment, comments } = this.props;
 		const children = this.getChildren();
 		let childList;
 
 		const childrenHTML = children.map((child) => {
-			return <CommentComponent key={child.id} user={this.props.user} comment={child} comments={this.props.comments} />
+			return <CommentComponent key={child.id} user={user} comment={child} comments={comments} />
 		});
 
 		if (childrenHTML) {
@@ -101,20 +101,20 @@ export default class CommentComponent extends React.Component {
 				</div>
 
 				<CommentCreateFormComponent 
-					user={this.props.user} 
+					user={user} 
 					formTitle="reply" 
 					parent={comment}
-					comments={this.props.comments}
+					comments={comments}
 					shouldShowForm={this.state.shouldShowReplyForm} 
 					submitCallback={this.replyCallback.bind(this)} 
 					cancelCallback={this.hideReplyForm.bind(this)} 
 				/>
 				
 				<CommentEditFormComponent 
-					user={this.props.user} 
+					user={user} 
 					formTitle="edit" 
 					comment={comment} 
-					comments={this.props.comments}
+					comments={comments}
 					shouldShowForm={this.state.shouldShowEditForm} 
 					submitCallback={this.editCallback.bind(this)}
 					cancelCallback={this.hideEditForm.bind(this)} 
