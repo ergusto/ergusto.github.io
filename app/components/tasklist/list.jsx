@@ -1,5 +1,7 @@
 import React from 'react';
 
+import TaskItemComponent from './item.jsx';
+
 // import styles for this component
 require('!style!css!sass!./styles/list.scss');
 
@@ -31,9 +33,7 @@ export default class TaskListComponent extends React.Component {
 
 		if (taskList.length) {
 			content = taskList.map((task) => {
-				return (
-					<li className="task-item" key={task.id}><a href="#" onClick={this.clickHandler.bind(this, task)}>{task.title}</a> <a onClick={this.removeHandler.bind(this, task.id)} href="#" className="pull-right remove-task">x</a></li>
-				);
+				return <TaskItemComponent key={task.id} task={task} clickHandler={this.clickHandler.bind(this, task)} removeHandler={this.removeHandler.bind(this, task)} />;
 			});
 		} else {
 			content = (

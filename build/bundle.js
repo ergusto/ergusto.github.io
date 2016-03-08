@@ -41960,10 +41960,24 @@
 				setEditingTask(task);
 			}
 		}, {
+			key: 'toggleCompleted',
+			value: function toggleCompleted(event) {
+				event.preventDefault();
+				var _props2 = this.props;
+				var task = _props2.task;
+				var tasks = _props2.tasks;
+
+				task.completed = !task.completed;
+				tasks.update(task);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				var task = this.props.task;
 
+				var completeBtnText = 'mark as complete';
+
+				if (task.completed) completeBtnText = 'mark as active';
 
 				var body;
 
@@ -41988,6 +42002,11 @@
 						'a',
 						{ onClick: this.setManagerEditingTask.bind(this), href: '#', className: 'btn margin-top-sm' },
 						'edit'
+					),
+					_react2.default.createElement(
+						'a',
+						{ onClick: this.toggleCompleted.bind(this), href: '#', className: 'btn margin-top-sm margin-left-sm' },
+						completeBtnText
 					)
 				);
 			}
@@ -42054,6 +42073,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _item = __webpack_require__(246);
+
+	var _item2 = _interopRequireDefault(_item);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42108,21 +42131,7 @@
 
 				if (taskList.length) {
 					content = taskList.map(function (task) {
-						return _react2.default.createElement(
-							'li',
-							{ className: 'task-item', key: task.id },
-							_react2.default.createElement(
-								'a',
-								{ href: '#', onClick: _this2.clickHandler.bind(_this2, task) },
-								task.title
-							),
-							' ',
-							_react2.default.createElement(
-								'a',
-								{ onClick: _this2.removeHandler.bind(_this2, task.id), href: '#', className: 'pull-right remove-task' },
-								'x'
-							)
-						);
+						return _react2.default.createElement(_item2.default, { key: task.id, task: task, clickHandler: _this2.clickHandler.bind(_this2, task), removeHandler: _this2.removeHandler.bind(_this2, task) });
 					});
 				} else {
 					content = _react2.default.createElement(
@@ -43990,12 +43999,13 @@
 				var task = {};
 				task.title = '';
 				task.text = '';
+				task.completed = false;
 				return task;
 			}
 		}, {
 			key: 'defaultModels',
 			value: function defaultModels() {
-				return [{ title: 'Get the groceries', text: 'Some peas, some toothpaste, and 7 courgettes.' }, { title: 'Clean the bathroom', text: 'It\'s dirty!' }];
+				return [{ title: 'Get the groceries', text: 'Some peas, some toothpaste, and 7 courgettes.', completed: false }, { title: 'Clean the bathroom', text: 'It\'s dirty!', completed: false }];
 			}
 		}]);
 
@@ -44819,6 +44829,76 @@
 
 	  return randomColor;
 	}));
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TaskItemComponent = function (_React$Component) {
+		_inherits(TaskItemComponent, _React$Component);
+
+		function TaskItemComponent() {
+			_classCallCheck(this, TaskItemComponent);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(TaskItemComponent).apply(this, arguments));
+		}
+
+		_createClass(TaskItemComponent, [{
+			key: "render",
+			value: function render() {
+				var _props = this.props;
+				var task = _props.task;
+				var clickHandler = _props.clickHandler;
+				var removeHandler = _props.removeHandler;
+
+				var taskTitleHtml = task.title;
+				if (task.completed) taskTitleHtml = _react2.default.createElement(
+					"strike",
+					null,
+					task.title
+				);
+
+				return _react2.default.createElement(
+					"li",
+					{ className: "task-item", key: task.id },
+					_react2.default.createElement(
+						"a",
+						{ href: "#", onClick: clickHandler },
+						taskTitleHtml
+					),
+					_react2.default.createElement(
+						"a",
+						{ onClick: removeHandler, href: "#", className: "pull-right remove-task" },
+						"x"
+					)
+				);
+			}
+		}]);
+
+		return TaskItemComponent;
+	}(_react2.default.Component);
+
+	exports.default = TaskItemComponent;
 
 /***/ }
 /******/ ]);
