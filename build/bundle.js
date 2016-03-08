@@ -76,6 +76,10 @@
 
 	var _index10 = _interopRequireDefault(_index9);
 
+	var _index11 = __webpack_require__(240);
+
+	var _index12 = _interopRequireDefault(_index11);
+
 	var _bookmarks = __webpack_require__(229);
 
 	var _bookmarks2 = _interopRequireDefault(_bookmarks);
@@ -41864,7 +41868,7 @@
 							{ className: 'tasklist box flex-col-container' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'tasklist-sidebar bg-gray border-right flex-col' },
+								{ className: 'tasklist-sidebar border-right flex-col' },
 								_react2.default.createElement(
 									'div',
 									{ className: 'flex-col-inner' },
@@ -42176,7 +42180,7 @@
 
 
 	// module
-	exports.push([module.id, ".tasklist {\n  max-width: 800px;\n  padding: 0;\n  margin: 0 auto;\n  min-height: 600px; }\n\n.tasklist-sidebar {\n  width: 40%;\n  padding: 20px; }\n\n.tasklist-sidebar-header {\n  border-bottom: 1px solid #777; }\n\n.tasklist-sidebar-title {\n  display: inline-block;\n  margin: 0; }\n\n.tasklist-content {\n  width: 60%;\n  padding: 20px;\n  color: #373D40; }\n\n.tasklist-content p {\n  margin: 0; }\n\n.plus-btn {\n  display: block;\n  text-decoration: none;\n  font-size: 150%;\n  line-height: 14px; }\n\n.task-list {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  list-style-type: none; }\n\n.task-list li {\n  position: relative;\n  margin-top: 10px;\n  padding-right: 20px; }\n\n.task-list li:first-child {\n  margin-top: 0px; }\n\n.task-list a {\n  text-decoration: none; }\n\n.remove-task {\n  line-height: 14px;\n  position: absolute;\n  top: 0;\n  right: 0; }\n", ""]);
+	exports.push([module.id, ".tasklist {\n  max-width: 800px;\n  padding: 0;\n  margin: 0 auto;\n  min-height: 600px; }\n\n.tasklist-sidebar {\n  width: 40%;\n  padding: 20px;\n  background: #373d40;\n  color: rgba(255, 255, 255, 0.5); }\n\n.tasklist-sidebar-header {\n  border-bottom: 1px solid #777; }\n\n.tasklist-sidebar-title {\n  display: inline-block;\n  margin: 0; }\n\n.tasklist-content {\n  width: 60%;\n  padding: 20px; }\n\n.tasklist-content p {\n  margin: 0; }\n\n.plus-btn {\n  display: block;\n  text-decoration: none;\n  font-size: 150%;\n  line-height: 14px; }\n\n.plus-btn:hover {\n  color: white; }\n\n.task-list {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  list-style-type: none; }\n\n.task-list li {\n  position: relative;\n  margin-top: 10px;\n  padding-right: 20px; }\n\n.task-list li:first-child {\n  margin-top: 0px; }\n\n.task-list a {\n  text-decoration: none;\n  color: rgba(255, 255, 255, 0.5); }\n\n.task-list a:hover {\n  color: white; }\n\n.remove-task {\n  line-height: 14px;\n  position: absolute;\n  top: 0;\n  right: 0; }\n", ""]);
 
 	// exports
 
@@ -44215,6 +44219,606 @@
 
 	// exports
 
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _activeModel = __webpack_require__(191);
+
+	var _activeModel2 = _interopRequireDefault(_activeModel);
+
+	var _item = __webpack_require__(244);
+
+	var _item2 = _interopRequireDefault(_item);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import styles for this component
+	__webpack_require__(242);
+
+	var WordLearner = function (_React$Component) {
+		_inherits(WordLearner, _React$Component);
+
+		function WordLearner(props) {
+			_classCallCheck(this, WordLearner);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(WordLearner).call(this, props));
+
+			_this.state = {};
+			_this.activeWord = new _activeModel2.default(_this);
+			return _this;
+		}
+
+		_createClass(WordLearner, [{
+			key: 'render',
+			value: function render() {
+				var wordHTML = undefined;
+				var words = this.props.words;
+
+				var wordList = words.get();
+
+				if (wordList.length) {
+					wordHTML = wordList.map(function (word) {
+						return _react2.default.createElement(_item2.default, { key: Math.random(), word: word });
+					});
+				}
+
+				return _react2.default.createElement(
+					'section',
+					{ className: 'words-example full-height padding justify-centre' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'words' },
+						wordHTML
+					)
+				);
+			}
+		}]);
+
+		return WordLearner;
+	}(_react2.default.Component);
+
+	exports.default = WordLearner;
+
+/***/ },
+/* 241 */,
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(243);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./words.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./words.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".words-example {\n  position: relative; }\n\n.word {\n  display: inline-block; }\n\n.word:hover {\n  font-size: 200%; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _randomcolor = __webpack_require__(245);
+
+	var _randomcolor2 = _interopRequireDefault(_randomcolor);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var WordItemComponent = function (_React$Component) {
+	    _inherits(WordItemComponent, _React$Component);
+
+	    function WordItemComponent() {
+	        _classCallCheck(this, WordItemComponent);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(WordItemComponent).apply(this, arguments));
+	    }
+
+	    _createClass(WordItemComponent, [{
+	        key: 'render',
+	        value: function render() {
+	            var word = this.props.word;
+
+	            var style = {
+	                color: (0, _randomcolor2.default)({ hue: 'blue' }),
+	                fontSize: Math.floor(Math.random() * 4.5 + 1) + 'rem'
+	            };
+
+	            return _react2.default.createElement(
+	                'p',
+	                { className: 'word', style: style },
+	                word.word
+	            );
+	        }
+	    }]);
+
+	    return WordItemComponent;
+	}(_react2.default.Component);
+
+	exports.default = WordItemComponent;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// randomColor by David Merfield under the MIT license
+	// https://github.com/davidmerfield/randomColor/
+	;(function(root, factory) {
+
+	  // Support AMD
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+	  // Support CommonJS
+	  } else if (typeof exports === 'object') {
+	    var randomColor = factory();
+
+	    // Support NodeJS & Component, which allow module.exports to be a function
+	    if (typeof module === 'object' && module && module.exports) {
+	      exports = module.exports = randomColor;
+	    }
+
+	    // Support CommonJS 1.1.1 spec
+	    exports.randomColor = randomColor;
+
+	  // Support vanilla script loading
+	  } else {
+	    root.randomColor = factory();
+	  }
+
+	}(this, function() {
+
+	  // Seed to get repeatable colors
+	  var seed = null;
+
+	  // Shared color dictionary
+	  var colorDictionary = {};
+
+	  // Populate the color dictionary
+	  loadColorBounds();
+
+	  var randomColor = function (options) {
+
+	    options = options || {};
+
+	    // Check if there is a seed and ensure it's an
+	    // integer. Otherwise, reset the seed value.
+	    if (options.seed && options.seed === parseInt(options.seed, 10)) {
+	      seed = options.seed;
+
+	    // Something was passed as a seed but it wasn't an integer
+	    } else if (options.seed !== undefined && options.seed !== null) {
+	      throw new TypeError('The seed value must be an integer');
+
+	    // No seed, reset the value outside.
+	    } else {
+	      seed = null;
+	    }
+
+	    var H,S,B;
+
+	    // Check if we need to generate multiple colors
+	    if (options.count !== null && options.count !== undefined) {
+
+	      var totalColors = options.count,
+	          colors = [];
+
+	      options.count = null;
+
+	      while (totalColors > colors.length) {
+
+	        // Since we're generating multiple colors,
+	        // incremement the seed. Otherwise we'd just
+	        // generate the same color each time...
+	        if (seed && options.seed) options.seed += 1;
+
+	        colors.push(randomColor(options));
+	      }
+
+	      options.count = totalColors;
+
+	      return colors;
+	    }
+
+	    // First we pick a hue (H)
+	    H = pickHue(options);
+
+	    // Then use H to determine saturation (S)
+	    S = pickSaturation(H, options);
+
+	    // Then use S and H to determine brightness (B).
+	    B = pickBrightness(H, S, options);
+
+	    // Then we return the HSB color in the desired format
+	    return setFormat([H,S,B], options);
+	  };
+
+	  function pickHue (options) {
+
+	    var hueRange = getHueRange(options.hue),
+	        hue = randomWithin(hueRange);
+
+	    // Instead of storing red as two seperate ranges,
+	    // we group them, using negative numbers
+	    if (hue < 0) {hue = 360 + hue;}
+
+	    return hue;
+
+	  }
+
+	  function pickSaturation (hue, options) {
+
+	    if (options.luminosity === 'random') {
+	      return randomWithin([0,100]);
+	    }
+
+	    if (options.hue === 'monochrome') {
+	      return 0;
+	    }
+
+	    var saturationRange = getSaturationRange(hue);
+
+	    var sMin = saturationRange[0],
+	        sMax = saturationRange[1];
+
+	    switch (options.luminosity) {
+
+	      case 'bright':
+	        sMin = 55;
+	        break;
+
+	      case 'dark':
+	        sMin = sMax - 10;
+	        break;
+
+	      case 'light':
+	        sMax = 55;
+	        break;
+	   }
+
+	    return randomWithin([sMin, sMax]);
+
+	  }
+
+	  function pickBrightness (H, S, options) {
+
+	    var bMin = getMinimumBrightness(H, S),
+	        bMax = 100;
+
+	    switch (options.luminosity) {
+
+	      case 'dark':
+	        bMax = bMin + 20;
+	        break;
+
+	      case 'light':
+	        bMin = (bMax + bMin)/2;
+	        break;
+
+	      case 'random':
+	        bMin = 0;
+	        bMax = 100;
+	        break;
+	    }
+
+	    return randomWithin([bMin, bMax]);
+	  }
+
+	  function setFormat (hsv, options) {
+
+	    switch (options.format) {
+
+	      case 'hsvArray':
+	        return hsv;
+
+	      case 'hslArray':
+	        return HSVtoHSL(hsv);
+
+	      case 'hsl':
+	        var hsl = HSVtoHSL(hsv);
+	        return 'hsl('+hsl[0]+', '+hsl[1]+'%, '+hsl[2]+'%)';
+
+	      case 'hsla':
+	        var hslColor = HSVtoHSL(hsv);
+	        return 'hsla('+hslColor[0]+', '+hslColor[1]+'%, '+hslColor[2]+'%, ' + Math.random() + ')';
+
+	      case 'rgbArray':
+	        return HSVtoRGB(hsv);
+
+	      case 'rgb':
+	        var rgb = HSVtoRGB(hsv);
+	        return 'rgb(' + rgb.join(', ') + ')';
+
+	      case 'rgba':
+	        var rgbColor = HSVtoRGB(hsv);
+	        return 'rgba(' + rgbColor.join(', ') + ', ' + Math.random() + ')';
+
+	      default:
+	        return HSVtoHex(hsv);
+	    }
+
+	  }
+
+	  function getMinimumBrightness(H, S) {
+
+	    var lowerBounds = getColorInfo(H).lowerBounds;
+
+	    for (var i = 0; i < lowerBounds.length - 1; i++) {
+
+	      var s1 = lowerBounds[i][0],
+	          v1 = lowerBounds[i][1];
+
+	      var s2 = lowerBounds[i+1][0],
+	          v2 = lowerBounds[i+1][1];
+
+	      if (S >= s1 && S <= s2) {
+
+	         var m = (v2 - v1)/(s2 - s1),
+	             b = v1 - m*s1;
+
+	         return m*S + b;
+	      }
+
+	    }
+
+	    return 0;
+	  }
+
+	  function getHueRange (colorInput) {
+
+	    if (typeof parseInt(colorInput) === 'number') {
+
+	      var number = parseInt(colorInput);
+
+	      if (number < 360 && number > 0) {
+	        return [number, number];
+	      }
+
+	    }
+
+	    if (typeof colorInput === 'string') {
+
+	      if (colorDictionary[colorInput]) {
+	        var color = colorDictionary[colorInput];
+	        if (color.hueRange) {return color.hueRange;}
+	      }
+	    }
+
+	    return [0,360];
+
+	  }
+
+	  function getSaturationRange (hue) {
+	    return getColorInfo(hue).saturationRange;
+	  }
+
+	  function getColorInfo (hue) {
+
+	    // Maps red colors to make picking hue easier
+	    if (hue >= 334 && hue <= 360) {
+	      hue-= 360;
+	    }
+
+	    for (var colorName in colorDictionary) {
+	       var color = colorDictionary[colorName];
+	       if (color.hueRange &&
+	           hue >= color.hueRange[0] &&
+	           hue <= color.hueRange[1]) {
+	          return colorDictionary[colorName];
+	       }
+	    } return 'Color not found';
+	  }
+
+	  function randomWithin (range) {
+	    if (seed === null) {
+	      return Math.floor(range[0] + Math.random()*(range[1] + 1 - range[0]));
+	    } else {
+	      //Seeded random algorithm from http://indiegamr.com/generate-repeatable-random-numbers-in-js/
+	      var max = range[1] || 1;
+	      var min = range[0] || 0;
+	      seed = (seed * 9301 + 49297) % 233280;
+	      var rnd = seed / 233280.0;
+	      return Math.floor(min + rnd * (max - min));
+	    }
+	  }
+
+	  function HSVtoHex (hsv){
+
+	    var rgb = HSVtoRGB(hsv);
+
+	    function componentToHex(c) {
+	        var hex = c.toString(16);
+	        return hex.length == 1 ? '0' + hex : hex;
+	    }
+
+	    var hex = '#' + componentToHex(rgb[0]) + componentToHex(rgb[1]) + componentToHex(rgb[2]);
+
+	    return hex;
+
+	  }
+
+	  function defineColor (name, hueRange, lowerBounds) {
+
+	    var sMin = lowerBounds[0][0],
+	        sMax = lowerBounds[lowerBounds.length - 1][0],
+
+	        bMin = lowerBounds[lowerBounds.length - 1][1],
+	        bMax = lowerBounds[0][1];
+
+	    colorDictionary[name] = {
+	      hueRange: hueRange,
+	      lowerBounds: lowerBounds,
+	      saturationRange: [sMin, sMax],
+	      brightnessRange: [bMin, bMax]
+	    };
+
+	  }
+
+	  function loadColorBounds () {
+
+	    defineColor(
+	      'monochrome',
+	      null,
+	      [[0,0],[100,0]]
+	    );
+
+	    defineColor(
+	      'red',
+	      [-26,18],
+	      [[20,100],[30,92],[40,89],[50,85],[60,78],[70,70],[80,60],[90,55],[100,50]]
+	    );
+
+	    defineColor(
+	      'orange',
+	      [19,46],
+	      [[20,100],[30,93],[40,88],[50,86],[60,85],[70,70],[100,70]]
+	    );
+
+	    defineColor(
+	      'yellow',
+	      [47,62],
+	      [[25,100],[40,94],[50,89],[60,86],[70,84],[80,82],[90,80],[100,75]]
+	    );
+
+	    defineColor(
+	      'green',
+	      [63,178],
+	      [[30,100],[40,90],[50,85],[60,81],[70,74],[80,64],[90,50],[100,40]]
+	    );
+
+	    defineColor(
+	      'blue',
+	      [179, 257],
+	      [[20,100],[30,86],[40,80],[50,74],[60,60],[70,52],[80,44],[90,39],[100,35]]
+	    );
+
+	    defineColor(
+	      'purple',
+	      [258, 282],
+	      [[20,100],[30,87],[40,79],[50,70],[60,65],[70,59],[80,52],[90,45],[100,42]]
+	    );
+
+	    defineColor(
+	      'pink',
+	      [283, 334],
+	      [[20,100],[30,90],[40,86],[60,84],[80,80],[90,75],[100,73]]
+	    );
+
+	  }
+
+	  function HSVtoRGB (hsv) {
+
+	    // this doesn't work for the values of 0 and 360
+	    // here's the hacky fix
+	    var h = hsv[0];
+	    if (h === 0) {h = 1;}
+	    if (h === 360) {h = 359;}
+
+	    // Rebase the h,s,v values
+	    h = h/360;
+	    var s = hsv[1]/100,
+	        v = hsv[2]/100;
+
+	    var h_i = Math.floor(h*6),
+	      f = h * 6 - h_i,
+	      p = v * (1 - s),
+	      q = v * (1 - f*s),
+	      t = v * (1 - (1 - f)*s),
+	      r = 256,
+	      g = 256,
+	      b = 256;
+
+	    switch(h_i) {
+	      case 0: r = v; g = t; b = p;  break;
+	      case 1: r = q; g = v; b = p;  break;
+	      case 2: r = p; g = v; b = t;  break;
+	      case 3: r = p; g = q; b = v;  break;
+	      case 4: r = t; g = p; b = v;  break;
+	      case 5: r = v; g = p; b = q;  break;
+	    }
+
+	    var result = [Math.floor(r*255), Math.floor(g*255), Math.floor(b*255)];
+	    return result;
+	  }
+
+	  function HSVtoHSL (hsv) {
+	    var h = hsv[0],
+	      s = hsv[1]/100,
+	      v = hsv[2]/100,
+	      k = (2-s)*v;
+
+	    return [
+	      h,
+	      Math.round(s*v / (k<1 ? k : 2-k) * 10000) / 100,
+	      k/2 * 100
+	    ];
+	  }
+
+	  return randomColor;
+	}));
 
 /***/ }
 /******/ ]);
