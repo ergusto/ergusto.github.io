@@ -9,13 +9,14 @@ require('!style!css!sass!./styles/list.scss');
 export default class BookmarkListComponent extends React.Component {
 
 	render() {
-		const bookmarks = this.props.bookmarks.get();
+		const { bookmarks, setActiveBookmark } = this.props;
+		const bookmarkList = bookmarks.get();
 		let content;
 
-		if (bookmarks.length) {
-			content = bookmarks.map((bookmark) => {
+		if (bookmarkList.length) {
+			content = bookmarkList.map((bookmark) => {
 				return (
-					<BookmarkItemComponent key={bookmark.id} setActiveBookmark={this.props.setActiveBookmark} bookmark={bookmark} />
+					<BookmarkItemComponent key={bookmark.id} setActiveBookmark={setActiveBookmark} bookmark={bookmark} />
 				);
 			});
 		} else {

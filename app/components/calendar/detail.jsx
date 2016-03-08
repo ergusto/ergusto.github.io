@@ -21,21 +21,24 @@ export default class CalendarDetailComponent extends React.Component {
 
 	submitHandler(event) {
 		event.preventDefault();
+		const form = this.form;
 		const entryEvent = {};
 		let { day, diary, entry } = this.props;
+		const { calendarTitleInput, calendarTimeInput } = this.refs;
+		
 		if (!entry) entry = diary.shell();
 
-		const titleValue = this.refs.calendarTitleInput.value;
-		const timeValue = this.refs.calendarTimeInput.value;
+		const titleValue = calendarTitleInput.value;
+		const timeValue = calendarTimeInput.value;
 		const timeIsFormattedCorrectly = Tools.validate24HourTime(timeValue);
 
 		if (!titleValue) {
-			this.form.addError('please enter a title');
+			form.addError('please enter a title');
 			return;
 		}
 
 		if (!timeIsFormattedCorrectly) {
-			this.form.addError('please enter a time in the format: 12:00');
+			form.addError('please enter a time in the format: HH:MM (e.g. 06:00)');
 			return;
 		}
 
@@ -51,9 +54,9 @@ export default class CalendarDetailComponent extends React.Component {
 			diary.create(entry);
 		}
 
-		this.form.clearError();
-		this.refs.calendarTimeInput.value = '';
-		this.refs.calendarTitleInput.value = '';
+		form.clearError();
+		calendarTimeInput.value = '';
+		calendarTitleInput.value = '';
 	}
 
 	generateEntryHTML() {

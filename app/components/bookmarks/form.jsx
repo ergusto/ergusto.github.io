@@ -15,20 +15,24 @@ export default class BookmarkFormComponent extends React.Component {
 
     submitHandler(event) {
         event.preventDefault();
-
+        const form = this.form;
         let saved;
-        const title = this.refs.bookmarkTitleInput.value;
-        const url = this.refs.bookmarkUrlInput.value;
-        const notes = this.refs.bookmarkNotesInput.value;
-        const bookmark = this.props.bookmark || this.props.bookmarks.shell();
+        let { bookmark, bookmarks, submitCallback } = this.props;
+        const { bookmarkTitleInput, bookmarkUrlInput, bookmarkNotesInput } = this.refs;
+        
+        if (!bookmark) bookmark = bookmarks.shell();
+
+        const title = bookmarkTitleInput.value;
+        const url = bookmarkUrlInput.value;
+        const notes = bookmarkNotesInput.value;
         
         if (!title.trim().length) {
-            this.form.addError('Please enter a title');
+            form.addError('Please enter a title');
             return;
         }
         
         if (!url.trim().length) {
-            this.form.addError('Please enter a URL');
+            form.addError('Please enter a URL');
             return;
         }
 
@@ -37,13 +41,13 @@ export default class BookmarkFormComponent extends React.Component {
         bookmark.notes = notes;
 
         if (bookmark.id) {
-            saved = this.props.bookmarks.update(bookmark);
+            saved = bookmarks.update(bookmark);
         } else {
-            saved = this.props.bookmarks.create(bookmark);
+            saved = bookmarks.create(bookmark);
         }
 
-        if (this.props.submitCallback) {
-            this.props.submitCallback(saved);
+        if (submitCallback) {
+            submitCallback(saved);
         }
     }
 

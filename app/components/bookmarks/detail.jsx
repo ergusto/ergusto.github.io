@@ -11,8 +11,9 @@ export default class BookmarkDetailComponent extends React.Component {
 
 	removeHandler(event) {
 		event.preventDefault();
-		this.props.bookmarks.remove(this.props.bookmark.id);
-		this.props.clearActiveBookmark();
+		const { bookmark, bookmarks, clearActiveBookmark } = this.props;
+		bookmarks.remove(bookmark.id);
+		clearActiveBookmark();
 	}
 
 	editHandler(event) {

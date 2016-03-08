@@ -25,11 +25,12 @@ export default class TaskListComponent extends React.Component {
 	}
 
 	render() {
-		const tasks = this.props.tasks.get();
+		const { tasks } = this.props;
+		const taskList = tasks.get();
 		let content;
 
-		if (tasks.length) {
-			content = tasks.map((task) => {
+		if (taskList.length) {
+			content = taskList.map((task) => {
 				return (
 					<li className="task-item" key={task.id}><a href="#" onClick={this.clickHandler.bind(this, task)}>{task.title}</a> <a onClick={this.removeHandler.bind(this, task.id)} href="#" className="pull-right remove-task">x</a></li>
 				);

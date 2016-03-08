@@ -130,13 +130,15 @@
 		_createClass(App, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				var shouldShowAnimation = this.props.user.shouldSeeIntroAnimation;
-				if (shouldShowAnimation) window.scrollTo(0, 0);
+				var user = this.props.user;
+
+				if (user.shouldShowAnimation) window.scrollTo(0, 0);
 			}
 		}, {
 			key: 'render',
 			value: function render() {
 				var user = this.props.user;
+
 
 				return _react2.default.createElement(
 					'div',
@@ -39913,14 +39915,16 @@
 		_createClass(BookmarkListComponent, [{
 			key: 'render',
 			value: function render() {
-				var _this2 = this;
+				var _props = this.props;
+				var bookmarks = _props.bookmarks;
+				var setActiveBookmark = _props.setActiveBookmark;
 
-				var bookmarks = this.props.bookmarks.get();
+				var bookmarkList = bookmarks.get();
 				var content = undefined;
 
-				if (bookmarks.length) {
-					content = bookmarks.map(function (bookmark) {
-						return _react2.default.createElement(_item2.default, { key: bookmark.id, setActiveBookmark: _this2.props.setActiveBookmark, bookmark: bookmark });
+				if (bookmarkList.length) {
+					content = bookmarkList.map(function (bookmark) {
+						return _react2.default.createElement(_item2.default, { key: bookmark.id, setActiveBookmark: setActiveBookmark, bookmark: bookmark });
 					});
 				} else {
 					content = _react2.default.createElement(
@@ -39995,7 +39999,11 @@
 			key: 'clickHandler',
 			value: function clickHandler(event) {
 				event.preventDefault();
-				this.props.setActiveBookmark(this.props.bookmark.id);
+				var _props = this.props;
+				var bookmark = _props.bookmark;
+				var setActiveBookmark = _props.setActiveBookmark;
+
+				setActiveBookmark(bookmark.id);
 			}
 		}, {
 			key: 'render',
@@ -40189,8 +40197,13 @@
 			key: 'removeHandler',
 			value: function removeHandler(event) {
 				event.preventDefault();
-				this.props.bookmarks.remove(this.props.bookmark.id);
-				this.props.clearActiveBookmark();
+				var _props = this.props;
+				var bookmark = _props.bookmark;
+				var bookmarks = _props.bookmarks;
+				var clearActiveBookmark = _props.clearActiveBookmark;
+
+				bookmarks.remove(bookmark.id);
+				clearActiveBookmark();
 			}
 		}, {
 			key: 'editHandler',
@@ -40432,20 +40445,31 @@
 	        key: 'submitHandler',
 	        value: function submitHandler(event) {
 	            event.preventDefault();
-
+	            var form = this.form;
 	            var saved = undefined;
-	            var title = this.refs.bookmarkTitleInput.value;
-	            var url = this.refs.bookmarkUrlInput.value;
-	            var notes = this.refs.bookmarkNotesInput.value;
-	            var bookmark = this.props.bookmark || this.props.bookmarks.shell();
+	            var _props = this.props;
+	            var bookmark = _props.bookmark;
+	            var bookmarks = _props.bookmarks;
+	            var submitCallback = _props.submitCallback;
+	            var _refs = this.refs;
+	            var bookmarkTitleInput = _refs.bookmarkTitleInput;
+	            var bookmarkUrlInput = _refs.bookmarkUrlInput;
+	            var bookmarkNotesInput = _refs.bookmarkNotesInput;
+
+
+	            if (!bookmark) bookmark = bookmarks.shell();
+
+	            var title = bookmarkTitleInput.value;
+	            var url = bookmarkUrlInput.value;
+	            var notes = bookmarkNotesInput.value;
 
 	            if (!title.trim().length) {
-	                this.form.addError('Please enter a title');
+	                form.addError('Please enter a title');
 	                return;
 	            }
 
 	            if (!url.trim().length) {
-	                this.form.addError('Please enter a URL');
+	                form.addError('Please enter a URL');
 	                return;
 	            }
 
@@ -40454,22 +40478,22 @@
 	            bookmark.notes = notes;
 
 	            if (bookmark.id) {
-	                saved = this.props.bookmarks.update(bookmark);
+	                saved = bookmarks.update(bookmark);
 	            } else {
-	                saved = this.props.bookmarks.create(bookmark);
+	                saved = bookmarks.create(bookmark);
 	            }
 
-	            if (this.props.submitCallback) {
-	                this.props.submitCallback(saved);
+	            if (submitCallback) {
+	                submitCallback(saved);
 	            }
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var err = this.form.error;
-	            var _props = this.props;
-	            var bookmark = _props.bookmark;
-	            var formTitle = _props.formTitle;
+	            var _props2 = this.props;
+	            var bookmark = _props2.bookmark;
+	            var formTitle = _props2.formTitle;
 
 	            if (!formTitle) formTitle = 'new bookmark';
 
@@ -41095,21 +41119,27 @@
 		}, {
 			key: 'getChildren',
 			value: function getChildren() {
-				return this.props.comments.getChildCommentsForComment(this.props.comment);
+				var _props = this.props;
+				var comments = _props.comments;
+				var comment = _props.comment;
+
+				return comments.getChildCommentsForComment(comment);
 			}
 		}, {
 			key: 'removeHandler',
 			value: function removeHandler(comment, event) {
 				event.preventDefault();
-				this.props.comments.remove(comment.id);
+				var comments = this.props.comments;
+
+				comments.remove(comment.id);
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				var _props = this.props;
-				var user = _props.user;
-				var comment = _props.comment;
-				var comments = _props.comments;
+				var _props2 = this.props;
+				var user = _props2.user;
+				var comment = _props2.comment;
+				var comments = _props2.comments;
 
 				var children = this.getChildren();
 				var childList = undefined;
@@ -41919,7 +41949,11 @@
 			key: 'setManagerEditingTask',
 			value: function setManagerEditingTask(event) {
 				event.preventDefault();
-				this.props.setEditingTask(this.props.task);
+				var _props = this.props;
+				var task = _props.task;
+				var setEditingTask = _props.setEditingTask;
+
+				setEditingTask(task);
 			}
 		}, {
 			key: 'render',
@@ -42063,11 +42097,13 @@
 			value: function render() {
 				var _this2 = this;
 
-				var tasks = this.props.tasks.get();
+				var tasks = this.props.tasks;
+
+				var taskList = tasks.get();
 				var content = undefined;
 
-				if (tasks.length) {
-					content = tasks.map(function (task) {
+				if (taskList.length) {
+					content = taskList.map(function (task) {
 						return _react2.default.createElement(
 							'li',
 							{ className: 'task-item', key: task.id },
@@ -42490,6 +42526,8 @@
 			value: function render() {
 				var content = undefined;
 				var day = undefined;
+				var diary = this.props.diary;
+
 
 				if (this.tabs.isOpen('calendar')) {
 					content = _react2.default.createElement(_calendar4.default, {
@@ -42497,15 +42535,15 @@
 						month: this.activeMonth.current,
 						setMonth: this.setMonth.bind(this),
 						setActiveDay: this.setActiveDay.bind(this),
-						diary: this.props.diary
+						diary: diary
 					});
 				}
 
 				if (this.tabs.isOpen('detail')) {
 					day = this.activeDay.current;
-					var entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
+					var entry = diary.getItemFromDateIdentifier(day.identifier);
 					content = _react2.default.createElement(_detail2.default, {
-						diary: this.props.diary,
+						diary: diary,
 						day: day,
 						entry: entry,
 						showCalendar: this.showCalendar.bind(this)
@@ -42719,26 +42757,30 @@
 			key: 'previousMonthHandler',
 			value: function previousMonthHandler(event) {
 				event.preventDefault();
-				var month = this.props.month;
+				var _props = this.props;
+				var month = _props.month;
+				var setMonth = _props.setMonth;
 
-				this.props.setMonth(month.getPrevMonth());
+				setMonth(month.getPrevMonth());
 			}
 		}, {
 			key: 'nextMonthHandler',
 			value: function nextMonthHandler(event) {
 				event.preventDefault();
-				var month = this.props.month;
+				var _props2 = this.props;
+				var month = _props2.month;
+				var setMonth = _props2.setMonth;
 
-				this.props.setMonth(month.getNextMonth());
+				setMonth(month.getNextMonth());
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				var _props = this.props;
-				var month = _props.month;
-				var calendar = _props.calendar;
-				var diary = _props.diary;
-				var setActiveDay = _props.setActiveDay;
+				var _props3 = this.props;
+				var month = _props3.month;
+				var calendar = _props3.calendar;
+				var diary = _props3.diary;
+				var setActiveDay = _props3.setActiveDay;
 
 
 				var subheaderHTML = calendar.weekdaysAbbr.map(function (day) {
@@ -43067,25 +43109,30 @@
 			key: 'submitHandler',
 			value: function submitHandler(event) {
 				event.preventDefault();
+				var form = this.form;
 				var entryEvent = {};
 				var _props = this.props;
 				var day = _props.day;
 				var diary = _props.diary;
 				var entry = _props.entry;
+				var _refs = this.refs;
+				var calendarTitleInput = _refs.calendarTitleInput;
+				var calendarTimeInput = _refs.calendarTimeInput;
+
 
 				if (!entry) entry = diary.shell();
 
-				var titleValue = this.refs.calendarTitleInput.value;
-				var timeValue = this.refs.calendarTimeInput.value;
+				var titleValue = calendarTitleInput.value;
+				var timeValue = calendarTimeInput.value;
 				var timeIsFormattedCorrectly = _tools2.default.validate24HourTime(timeValue);
 
 				if (!titleValue) {
-					this.form.addError('please enter a title');
+					form.addError('please enter a title');
 					return;
 				}
 
 				if (!timeIsFormattedCorrectly) {
-					this.form.addError('please enter a time in the format: 12:00');
+					form.addError('please enter a time in the format: HH:MM (e.g. 06:00)');
 					return;
 				}
 
@@ -43101,9 +43148,9 @@
 					diary.create(entry);
 				}
 
-				this.form.clearError();
-				this.refs.calendarTimeInput.value = '';
-				this.refs.calendarTitleInput.value = '';
+				form.clearError();
+				calendarTimeInput.value = '';
+				calendarTitleInput.value = '';
 			}
 		}, {
 			key: 'generateEntryHTML',

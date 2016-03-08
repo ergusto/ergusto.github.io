@@ -60,12 +60,14 @@ export default class CommentComponent extends React.Component {
 	}
 
 	getChildren() {
-		return this.props.comments.getChildCommentsForComment(this.props.comment);
+		const { comments, comment } = this.props;
+		return comments.getChildCommentsForComment(comment);
 	}
 
 	removeHandler(comment, event) {
 		event.preventDefault();
-		this.props.comments.remove(comment.id);
+		const { comments } = this.props;
+		comments.remove(comment.id);
 	}
 	
 	render() {

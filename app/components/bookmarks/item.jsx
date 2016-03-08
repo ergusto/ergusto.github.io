@@ -10,7 +10,8 @@ export default class BookmarkItemComponent extends React.Component {
 
 	clickHandler(event) {
 		event.preventDefault();
-		this.props.setActiveBookmark(this.props.bookmark.id);
+		const { bookmark, setActiveBookmark } = this.props;
+		setActiveBookmark(bookmark.id);
 	}
 
 	render() {

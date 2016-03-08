@@ -10,14 +10,14 @@ export default class CalendarComponent extends React.Component {
 
 	previousMonthHandler(event) {
 		event.preventDefault();
-		const { month } = this.props;
-		this.props.setMonth(month.getPrevMonth());
+		const { month, setMonth } = this.props;
+		setMonth(month.getPrevMonth());
 	}
 
 	nextMonthHandler(event) {
 		event.preventDefault();
-		const { month } = this.props;
-		this.props.setMonth(month.getNextMonth());
+		const { month, setMonth } = this.props;
+		setMonth(month.getNextMonth());
 	}
 
 	render() {

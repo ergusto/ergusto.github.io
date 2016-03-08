@@ -56,6 +56,7 @@ export default class CalendarManagerComponent extends React.Component {
 	render() {
 		let content;
 		let day;
+		const { diary } = this.props;
 
 		if (this.tabs.isOpen('calendar')) {
 			content = <CalendarComponent 
@@ -63,15 +64,15 @@ export default class CalendarManagerComponent extends React.Component {
 						month={this.activeMonth.current}
 						setMonth={this.setMonth.bind(this)}
 						setActiveDay={this.setActiveDay.bind(this)}
-						diary={this.props.diary}
+						diary={diary}
 					/>
 		}
 
 		if (this.tabs.isOpen('detail')) {
 			day = this.activeDay.current;
-			const entry = this.props.diary.getItemFromDateIdentifier(day.identifier);
+			const entry = diary.getItemFromDateIdentifier(day.identifier);
 			content = <CalendarDetailComponent
-						diary={this.props.diary}
+						diary={diary}
 						day={day} 
 						entry={entry}
 						showCalendar={this.showCalendar.bind(this)}

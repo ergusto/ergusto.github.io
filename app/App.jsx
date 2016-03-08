@@ -31,12 +31,12 @@ const diary = new Diary();
 class App extends React.Component {
 
 	componentDidMount() {
-		const shouldShowAnimation = this.props.user.shouldSeeIntroAnimation;
-		if (shouldShowAnimation) window.scrollTo(0,0);  
+		const { user } = this.props;
+		if (user.shouldShowAnimation) window.scrollTo(0,0);  
 	}
 
 	render() {
-		const user = this.props.user;
+		const { user } = this.props;
 
 		return (
 			<div>
