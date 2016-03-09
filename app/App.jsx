@@ -46,7 +46,7 @@ class App extends React.Component {
 				<CommentListComponent user={user} comments={comments} />
 				<CalendarManagerComponent user={user} diary={diary} />
 				<BookmarkManagerComponent user={user} bookmarks={bookmarks} />
-				<TaskManagerComponent user={user} tasks={tasks} />
+				{/*<TaskManagerComponent user={user} tasks={tasks} />*/}
 				<ContactInfoComponent />
 			</div>
 		)

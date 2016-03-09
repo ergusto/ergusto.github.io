@@ -155,7 +155,6 @@
 					_react2.default.createElement(_index6.default, { user: user, comments: comments }),
 					_react2.default.createElement(_index10.default, { user: user, diary: diary }),
 					_react2.default.createElement(_index4.default, { user: user, bookmarks: bookmarks }),
-					_react2.default.createElement(_index8.default, { user: user, tasks: tasks }),
 					_react2.default.createElement(_index14.default, null)
 				);
 			}
@@ -44965,12 +44964,7 @@
 																									_react2.default.createElement(
 																													'p',
 																													null,
-																													'Want to hire me?'
-																									),
-																									_react2.default.createElement(
-																													'p',
-																													null,
-																													'Get in contact -> ',
+																													'Want to hire me? Get in contact -> ',
 																													_react2.default.createElement(
 																																	'a',
 																																	{ href: 'mailto:ergusto@gmail.com' },
@@ -44979,6 +44973,30 @@
 																																					null,
 																																					'ergusto@gmail.com'
 																																	)
+																													)
+																									),
+																									_react2.default.createElement(
+																													'ul',
+																													{ className: 'skills' },
+																													_react2.default.createElement(
+																																	'li',
+																																	null,
+																																	'JS'
+																													),
+																													_react2.default.createElement(
+																																	'li',
+																																	null,
+																																	'UX'
+																													),
+																													_react2.default.createElement(
+																																	'li',
+																																	null,
+																																	'React'
+																													),
+																													_react2.default.createElement(
+																																	'li',
+																																	null,
+																																	'Meteor'
 																													)
 																									)
 																					)
@@ -45027,7 +45045,7 @@
 
 
 	// module
-	exports.push([module.id, ".contact-info {\n  border-radius: 15px;\n  color: #777;\n  width: 100%;\n  max-width: 600px;\n  position: relative; }\n\n.contact-landscape {\n  width: 100%;\n  max-width: 100%;\n  border-top-left-radius: 15px;\n  border-top-right-radius: 15px; }\n\n.contact-img {\n  border-radius: 150px;\n  width: 150px;\n  border: 6px solid white;\n  margin-top: -160px;\n  margin-left: 20px; }\n\n.contact-info p:last-child {\n  margin-bottom: 0px; }\n\n.contact-info a {\n  text-decoration: none; }\n", ""]);
+	exports.push([module.id, ".contact-info {\n  border-radius: 15px;\n  color: #777;\n  width: 100%;\n  max-width: 600px;\n  position: relative; }\n\n.contact-landscape {\n  width: 100%;\n  max-width: 100%;\n  border-top-left-radius: 15px;\n  border-top-right-radius: 15px; }\n\n.contact-img {\n  border-radius: 150px;\n  width: 150px;\n  border: 6px solid white;\n  margin-top: -160px;\n  margin-left: 20px; }\n\n.contact-info p {\n  margin-bottom: 0px; }\n\n.contact-info a {\n  text-decoration: none; }\n\n.skills {\n  padding: 0;\n  margin: 0px;\n  margin-top: 10px; }\n\n.skills li {\n  display: inline-block;\n  background: #777;\n  color: white;\n  padding: 4px 10px;\n  margin-left: 4px; }\n  .skills li:first-child {\n    margin-left: 0px; }\n", ""]);
 
 	// exports
 

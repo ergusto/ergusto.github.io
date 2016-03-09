@@ -14,8 +14,13 @@ export default class ContactInfoComponent extends  React.Component {
 		 			<div className="padding">
 		 				<h2>Fergus Ruston</h2>
 		 				<p>I'm a front end developer currently living in Oxford. I love building user interfaces. You can find me around the web as <strong>ergusto</strong>.</p>
-		 				<p>Want to hire me?</p>
-		 				<p>Get in contact -> <a href="mailto:ergusto@gmail.com"><strong>ergusto@gmail.com</strong></a></p>
+		 				<p>Want to hire me? Get in contact -> <a href="mailto:ergusto@gmail.com"><strong>ergusto@gmail.com</strong></a></p>
+		 				<ul className="skills">
+		 					<li>JS</li>
+		 					<li>UX</li>
+		 					<li>React</li>
+		 					<li>Meteor</li>
+		 				</ul>
 		 			</div>
 			 	</div>
 			 </section>
