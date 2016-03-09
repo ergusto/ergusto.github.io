@@ -88,12 +88,13 @@ export default class CalendarDetailComponent extends React.Component {
 		const { day, calendar, entry } = this.props;
 
 		const hourList = calendar.hours.map((hour) => {
-			let className = "calendar-hour padding-horizontal padding-vertical-sm border-bottom hover-cursor--pointer";
+			let className = "calendar-hour hover-cursor--pointer";
 			if (this.activeHour.is(hour.hour)) className = className + ' active-hour';
 			const events = this.getEventsForHour(hour);
 			return (
 				<li className={className} key={hour.hour} onClick={this.toggleSelectedHour.bind(this, hour)}>
-					<div className="calendar-hour-time">{hour.hour}</div><ul className="calendar-hour-events margin-left">{events}</ul>
+					<div className="calendar-hour-time border-right padding-horizontal padding-vertical-sm">{hour.hour}</div>
+					<ul className="calendar-hour-events padding-horizontal padding-vertical-sm">{events}</ul>
 				</li>
 			);
 		});
