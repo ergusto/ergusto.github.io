@@ -39789,7 +39789,9 @@
 			value: function render() {
 				var content = undefined;
 				var tabs = this.tabs;
-				var bookmarks = this.props.bookmarks;
+				var _props = this.props;
+				var bookmarks = _props.bookmarks;
+				var user = _props.user;
 
 				var bookmark = bookmarks.get(this.getActiveBookmarkId());;
 				var tabClass = 'btn';
@@ -39804,7 +39806,7 @@
 
 				if (tabs.isOpen('add')) {
 					addTabClass += activeClass;
-					content = _react2.default.createElement(_formCreate2.default, { bookmarks: bookmarks, submitCallback: this.submitCallback.bind(this) });
+					content = _react2.default.createElement(_formCreate2.default, { user: user, bookmarks: bookmarks, submitCallback: this.submitCallback.bind(this) });
 				}
 
 				if (tabs.isOpen('detail')) {
@@ -39817,7 +39819,7 @@
 				}
 
 				if (tabs.isOpen('edit')) {
-					content = _react2.default.createElement(_formEdit2.default, { formTitle: 'edit', bookmark: bookmark, bookmarks: bookmarks, submitCallback: this.editSubmitCallback.bind(this) });
+					content = _react2.default.createElement(_formEdit2.default, { formTitle: 'edit', user: user, bookmark: bookmark, bookmarks: bookmarks, submitCallback: this.editSubmitCallback.bind(this) });
 				}
 
 				return _react2.default.createElement(
@@ -40044,6 +40046,11 @@
 						'div',
 						{ className: 'bookmark-buttons padding-horizontal bg-gray' },
 						_react2.default.createElement(
+							'small',
+							{ className: 'bookmark-item-username pull-right' },
+							bookmark.username
+						),
+						_react2.default.createElement(
 							'a',
 							{ href: bookmark.url, className: '' },
 							_react2.default.createElement(
@@ -40112,7 +40119,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-item-title {\n  display: inline-block; }\n\n.bookmark-item-url {\n  display: inline-block; }\n\n.bookmark-item-image {\n  max-width: 100%; }\n", ""]);
+	exports.push([module.id, ".bookmark-item-title {\n  display: inline-block; }\n\n.bookmark-item-url {\n  display: inline-block; }\n\n.bookmark-item-image {\n  max-width: 100%; }\n\n.bookmark-item-username {\n  color: #777; }\n", ""]);
 
 	// exports
 
@@ -40268,6 +40275,11 @@
 						'div',
 						{ className: 'bookmark-buttons padding-horizontal padding-vertical-sm bg-gray' },
 						_react2.default.createElement(
+							'small',
+							{ className: 'bookmark-detail-username pull-right' },
+							bookmark.username
+						),
+						_react2.default.createElement(
 							'a',
 							{ href: bookmark.url },
 							_react2.default.createElement(
@@ -40348,7 +40360,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-title {\n  margin: 0;\n  color: #777; }\n", ""]);
+	exports.push([module.id, ".bookmark-title {\n  margin: 0;\n  color: #777; }\n\n.bookmark-detail-username {\n  color: #777; }\n", ""]);
 
 	// exports
 
@@ -40454,6 +40466,7 @@
 	            var form = this.form;
 	            var saved = undefined;
 	            var _props = this.props;
+	            var user = _props.user;
 	            var bookmark = _props.bookmark;
 	            var bookmarks = _props.bookmarks;
 	            var submitCallback = _props.submitCallback;
@@ -40486,6 +40499,7 @@
 	            if (bookmark.id) {
 	                saved = bookmarks.update(bookmark);
 	            } else {
+	                bookmark.username = user.getUsername();
 	                saved = bookmarks.create(bookmark);
 	            }
 
@@ -43360,6 +43374,7 @@
 				bookmark.title = '';
 				bookmark.url = '';
 				bookmark.notes = '';
+				bookmark.username = '';
 				return bookmark;
 			}
 		}, {
@@ -43368,15 +43383,18 @@
 				return [{
 					title: 'Some of my photography',
 					url: 'https://www.flickr.com/photos/fergusruston/',
-					notes: 'Go see it on Flickr!'
+					notes: 'Go see it on Flickr!',
+					username: 'ergusto'
 				}, {
 					title: 'Github profile',
 					url: 'http://github.com/ergusto',
-					notes: 'You can see this project on Github.'
+					notes: 'You can see this project on Github.',
+					username: 'ergusto'
 				}, {
 					title: 'Twitter profile',
 					url: 'http://twitter.com/ergusto',
-					notes: 'Tweet terwoo'
+					notes: 'Tweet terwoo',
+					username: 'ergusto'
 				}];
 			}
 		}]);
@@ -44981,22 +44999,38 @@
 																													_react2.default.createElement(
 																																	'li',
 																																	null,
-																																	'JS'
+																																	_react2.default.createElement(
+																																					'small',
+																																					null,
+																																					'JS'
+																																	)
 																													),
 																													_react2.default.createElement(
 																																	'li',
 																																	null,
-																																	'UX'
+																																	_react2.default.createElement(
+																																					'small',
+																																					null,
+																																					'UX'
+																																	)
 																													),
 																													_react2.default.createElement(
 																																	'li',
 																																	null,
-																																	'React'
+																																	_react2.default.createElement(
+																																					'small',
+																																					null,
+																																					'React'
+																																	)
 																													),
 																													_react2.default.createElement(
 																																	'li',
 																																	null,
-																																	'Meteor'
+																																	_react2.default.createElement(
+																																					'small',
+																																					null,
+																																					'Meteor'
+																																	)
 																													)
 																									)
 																					)

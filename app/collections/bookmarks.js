@@ -7,6 +7,7 @@ export default class Bookmarks extends LocalStorageCollection {
 		bookmark.title = '';
 		bookmark.url = '';
 		bookmark.notes = '';
+		bookmark.username = '';
 		return bookmark;
 	}
 
@@ -15,17 +16,20 @@ export default class Bookmarks extends LocalStorageCollection {
 			{ 
 				title: 'Some of my photography',
 				url: 'https://www.flickr.com/photos/fergusruston/',
-				notes: 'Go see it on Flickr!'
+				notes: 'Go see it on Flickr!',
+				username: 'ergusto'
 			},
 			{
 				title: 'Github profile',
 				url: 'http://github.com/ergusto', 
-				notes: 'You can see this project on Github.' 
+				notes: 'You can see this project on Github.',
+				username: 'ergusto'
 			},
 			{
 				title: 'Twitter profile',
 				url: 'http://twitter.com/ergusto', 
-				notes: 'Tweet terwoo' 
+				notes: 'Tweet terwoo',
+				username: 'ergusto'
 			}
 		]
 	}

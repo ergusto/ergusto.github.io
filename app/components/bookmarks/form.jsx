@@ -17,7 +17,7 @@ export default class BookmarkFormComponent extends React.Component {
         event.preventDefault();
         const form = this.form;
         let saved;
-        let { bookmark, bookmarks, submitCallback } = this.props;
+        let { user, bookmark, bookmarks, submitCallback } = this.props;
         const { bookmarkTitleInput, bookmarkUrlInput, bookmarkNotesInput } = this.refs;
         
         if (!bookmark) bookmark = bookmarks.shell();
@@ -43,6 +43,7 @@ export default class BookmarkFormComponent extends React.Component {
         if (bookmark.id) {
             saved = bookmarks.update(bookmark);
         } else {
+            bookmark.username = user.getUsername();
             saved = bookmarks.create(bookmark);
         }
 

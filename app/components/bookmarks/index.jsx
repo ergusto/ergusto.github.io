@@ -59,7 +59,7 @@ export default class BookmarkManagerComponent extends React.Component {
 	render() {
 		let content;
 		const tabs = this.tabs;
-		const { bookmarks } = this.props;
+		const { bookmarks, user } = this.props;
 		const bookmark = bookmarks.get(this.getActiveBookmarkId());; 
 		const tabClass = 'btn';
 		const activeClass = ' active';
@@ -73,7 +73,7 @@ export default class BookmarkManagerComponent extends React.Component {
 
 		if (tabs.isOpen('add')) {
 			addTabClass += activeClass;
-			content = <BookmarkCreateFormComponent bookmarks={bookmarks} submitCallback={this.submitCallback.bind(this)} />;
+			content = <BookmarkCreateFormComponent user={user} bookmarks={bookmarks} submitCallback={this.submitCallback.bind(this)} />;
 		}
 
 		if (tabs.isOpen('detail')) {
@@ -88,7 +88,7 @@ export default class BookmarkManagerComponent extends React.Component {
 		}
 
 		if (tabs.isOpen('edit')) {
-			content = <BookmarkEditFormComponent formTitle='edit' bookmark={bookmark} bookmarks={bookmarks} submitCallback={this.editSubmitCallback.bind(this)} />;
+			content = <BookmarkEditFormComponent formTitle='edit' user={user} bookmark={bookmark} bookmarks={bookmarks} submitCallback={this.editSubmitCallback.bind(this)} />;
 		}
 
 		return (
