@@ -42967,7 +42967,7 @@
 						if (index <= 2) {
 							return _react2.default.createElement(
 								'li',
-								{ className: 'calendar-item-entry', key: 'calendar-item-' + entry.time },
+								{ className: 'calendar-item-entry', key: 'calendar-item-' + entry.title },
 								_react2.default.createElement(
 									'small',
 									null,

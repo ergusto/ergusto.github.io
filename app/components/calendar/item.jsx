@@ -26,7 +26,7 @@ export default class CalendarItemComponent extends React.Component {
 			const sortedEntries = _.sortBy(entry.entries, 'time');
 			const entryTextHtml = sortedEntries.map((entry, index) => {
 				if (index <= 2) {
-					return <li className="calendar-item-entry" key={'calendar-item-' + entry.time}><small>{Tools.truncate(entry.title, 17)}</small></li>;
+					return <li className="calendar-item-entry" key={'calendar-item-' + entry.title}><small>{Tools.truncate(entry.title, 17)}</small></li>;
 				}
 				if (index == 3) {
 					return <li className="calendar-item-entry">...</li>;
