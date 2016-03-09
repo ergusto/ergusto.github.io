@@ -29,7 +29,7 @@ export default class CalendarItemComponent extends React.Component {
 					return <li className="calendar-item-entry" key={'calendar-item-' + entry.title}><small>{Tools.truncate(entry.title, 17)}</small></li>;
 				}
 				if (index == 3) {
-					return <li className="calendar-item-entry">...</li>;
+					return <li className="calendar-item-entry" key={'calendar-item-' + entry.title}>...</li>;
 				}
 			});
 

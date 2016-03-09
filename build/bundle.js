@@ -42976,7 +42976,7 @@
 						if (index == 3) {
 							return _react2.default.createElement(
 								'li',
-								{ className: 'calendar-item-entry' },
+								{ className: 'calendar-item-entry', key: 'calendar-item-' + entry.title },
 								'...'
 							);
 						}
@@ -43207,6 +43207,16 @@
 				}
 			}
 		}, {
+			key: 'selectHour',
+			value: function selectHour(hour) {
+				var _refs2 = this.refs;
+				var calendarTitleInput = _refs2.calendarTitleInput;
+				var calendarTimeInput = _refs2.calendarTimeInput;
+
+				calendarTimeInput.value = hour.hour;
+				calendarTitleInput.focus();
+			}
+		}, {
 			key: 'generateHourHTML',
 			value: function generateHourHTML() {
 				var _this2 = this;
@@ -43220,13 +43230,12 @@
 					var events = _this2.getEventsForHour(hour);
 					return _react2.default.createElement(
 						'li',
-						{ className: 'calendar-hour padding-horizontal padding-vertical-sm border-bottom', key: hour.hour },
+						{ className: 'calendar-hour padding-horizontal padding-vertical-sm border-bottom hover-cursor--pointer', key: hour.hour, onClick: _this2.selectHour.bind(_this2, hour) },
 						_react2.default.createElement(
 							'div',
 							{ className: 'calendar-hour-time' },
 							hour.hour
 						),
-						' ',
 						_react2.default.createElement(
 							'div',
 							{ className: 'calendar-hour-events margin-left' },
