@@ -42965,7 +42965,7 @@
 						if (index <= 2) {
 							return _react2.default.createElement(
 								'li',
-								{ className: 'calendar-item-entry', key: 'calendar-item-' + entry.title },
+								{ className: 'calendar-item-entry', key: 'calendar-item-' + _tools2.default.generateID() },
 								_react2.default.createElement(
 									'small',
 									null,
@@ -42976,7 +42976,7 @@
 						if (index == 3) {
 							return _react2.default.createElement(
 								'li',
-								{ className: 'calendar-item-entry', key: 'calendar-item-' + entry.title },
+								{ className: 'calendar-item-entry', key: 'calendar-item-' + _tools2.default.generateID() },
 								'...'
 							);
 						}
@@ -43198,7 +43198,7 @@
 					return entry.entries.map(function (event) {
 						if (event.time.substring(0, 2) == hour.hour.substring(0, 2)) {
 							return _react2.default.createElement(
-								'p',
+								'li',
 								{ key: event.time + event.title, className: 'calendar-hour-event' },
 								event.title
 							);
@@ -43226,7 +43226,7 @@
 				var entry = _props2.entry;
 
 
-				var hourList = day.hours.map(function (hour) {
+				var hourList = day.hours.map(function (hour, index) {
 					var events = _this2.getEventsForHour(hour);
 					return _react2.default.createElement(
 						'li',
@@ -43237,7 +43237,7 @@
 							hour.hour
 						),
 						_react2.default.createElement(
-							'div',
+							'ul',
 							{ className: 'calendar-hour-events margin-left' },
 							events
 						)
@@ -43357,7 +43357,7 @@
 
 
 	// module
-	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  max-height: 400px;\n  overflow-y: scroll; }\n\n.calendar-hour-list li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour-time, .calendar-hour-events {\n  display: inline-block; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px; }\n  .calendar-hour-event:last-child {\n    margin-bottom: 0px; }\n", ""]);
+	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px; }\n\n.calendar-hour-list li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour-time {\n  vertical-align: top; }\n\n.calendar-hour-time, .calendar-hour-events {\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block; }\n  .calendar-hour-event:last-child {\n    margin-bottom: 0px; }\n", ""]);
 
 	// exports
 

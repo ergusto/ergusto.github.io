@@ -3,8 +3,8 @@
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
-	max-height: 400px;
 	overflow-y: scroll;
+	max-height: 400px;
 }
 
 .calendar-hour-list li:last-child {
@@ -12,13 +12,24 @@
 	border-bottom: 0px;
 }
 
+.calendar-hour-time {
+	vertical-align: top;
+}
+
 .calendar-hour-time, .calendar-hour-events {
 	display: inline-block;
+}
+
+.calendar-hour-events {
+	list-style: none;
+	list-style-type: none;
+	padding: 0px;
 }
 
 .calendar-hour-event {
 	margin: 0;
 	margin-bottom: 4px;
+	display: block;
 
 	&:last-child {
 		margin-bottom: 0px;

@@ -65,7 +65,7 @@ export default class CalendarDetailComponent extends React.Component {
 		if (entry) {
 			return entry.entries.map((event) => {
 				if (event.time.substring(0, 2) == hour.hour.substring(0, 2)) {
-					return <p key={event.time + event.title} className="calendar-hour-event">{event.title}</p>;
+					return <li key={event.time + event.title} className="calendar-hour-event">{event.title}</li>;
 				}
 			});
 		}
@@ -80,11 +80,11 @@ export default class CalendarDetailComponent extends React.Component {
 	generateHourHTML() {
 		const { day, entry } = this.props;
 
-		const hourList = day.hours.map((hour) => {
+		const hourList = day.hours.map((hour, index) => {
 			const events = this.getEventsForHour(hour);
 			return (
 				<li className="calendar-hour padding-horizontal padding-vertical-sm border-bottom hover-cursor--pointer" key={hour.hour} onClick={this.selectHour.bind(this, hour)}>
-					<div className="calendar-hour-time">{hour.hour}</div><div className="calendar-hour-events margin-left">{events}</div>
+					<div className="calendar-hour-time">{hour.hour}</div><ul className="calendar-hour-events margin-left">{events}</ul>
 				</li>
 			);
 		});
