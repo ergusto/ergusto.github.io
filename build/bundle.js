@@ -44985,11 +44985,11 @@
 																													'Want to hire me? Get in contact -> ',
 																													_react2.default.createElement(
 																																	'a',
-																																	{ href: 'mailto:ergusto@gmail.com' },
+																																	{ href: 'mailto:fergus@ergusto.com' },
 																																	_react2.default.createElement(
 																																					'strong',
 																																					null,
-																																					'ergusto@gmail.com'
+																																					'fergus@ergusto.com'
 																																	)
 																													)
 																									),
