@@ -43243,7 +43243,7 @@
 
 
 				var hourList = calendar.hours.map(function (hour) {
-					var className = "calendar-hour hover-cursor--pointer";
+					var className = "calendar-hour padding-horizontal padding-vertical-sm border-bottom hover-cursor--pointer";
 					if (_this2.activeHour.is(hour.hour)) className = className + ' active-hour';
 					var events = _this2.getEventsForHour(hour);
 					return _react2.default.createElement(
@@ -43251,12 +43251,12 @@
 						{ className: className, key: hour.hour, onClick: _this2.toggleSelectedHour.bind(_this2, hour) },
 						_react2.default.createElement(
 							'div',
-							{ className: 'calendar-hour-time border-right padding-horizontal padding-vertical-sm' },
+							{ className: 'calendar-hour-time' },
 							hour.hour
 						),
 						_react2.default.createElement(
 							'ul',
-							{ className: 'calendar-hour-events padding-horizontal padding-vertical-sm' },
+							{ className: 'calendar-hour-events margin-left' },
 							events
 						)
 					);
