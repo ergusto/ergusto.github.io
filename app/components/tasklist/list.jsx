@@ -10,7 +10,7 @@ export default class TaskListComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		props.tasks.onChange(() => {
-			this.forceUpdate()
+			this.forceUpdate();
 		});
 	}
 
@@ -19,26 +19,22 @@ export default class TaskListComponent extends React.Component {
 		this.props.setActiveTask(task);
 	} 
 
-	removeHandler(id, event) {
+	removeHandler(task, event) {
 		event.preventDefault();
 		const { tasks, showTaskForm } = this.props;
-		tasks.remove(id);
+		tasks.remove(task);
 		showTaskForm();
 	}
 
 	render() {
 		const { tasks } = this.props;
 		const taskList = tasks.get();
-		let content;
+		let content = <li>No tasks!</li>;
 
 		if (taskList.length) {
 			content = taskList.map((task) => {
 				return <TaskItemComponent key={task.id} task={task} clickHandler={this.clickHandler.bind(this, task)} removeHandler={this.removeHandler.bind(this, task)} />;
 			});
-		} else {
-			content = (
-				<li>No tasks!</li>
-			)
 		}
 
 		return (

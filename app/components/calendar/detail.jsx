@@ -60,9 +60,9 @@ export default class CalendarDetailComponent extends React.Component {
 	}
 
 	generateEntryHTML() {
-		
-		let entryList;
 		const { entry } = this.props;
+		
+		let entryList = <li>No entries!</li>;;
 
 		if (entry) {
 			const { entries } = entry;
@@ -74,10 +74,6 @@ export default class CalendarDetailComponent extends React.Component {
 					);
 				});
 			}
-		}
-
-		if (!entryList) {
-			entryList = <li>No entries!</li>;
 		}
 
 		return  <ul className="calendar-entry-list padding padding-top-sm">{entryList}</ul>;

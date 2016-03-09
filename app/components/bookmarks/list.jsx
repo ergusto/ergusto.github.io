@@ -11,7 +11,7 @@ export default class BookmarkListComponent extends React.Component {
 	render() {
 		const { bookmarks, setActiveBookmark } = this.props;
 		const bookmarkList = bookmarks.get();
-		let content;
+		let content = <li className="box padding margin-vertical">No bookmarks!</li>;
 
 		if (bookmarkList.length) {
 			content = bookmarkList.map((bookmark) => {
@@ -19,10 +19,6 @@ export default class BookmarkListComponent extends React.Component {
 					<BookmarkItemComponent key={bookmark.id} setActiveBookmark={setActiveBookmark} bookmark={bookmark} />
 				);
 			});
-		} else {
-			content = (
-				<li className="box padding margin-vertical">No bookmarks!</li>
-			);
 		}
 
 		return (

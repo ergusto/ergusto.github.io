@@ -1,0 +1,30 @@
+.contact-info {
+	border-radius: 15px;
+	color: #777;
+	width: 100%;
+	max-width: 600px;
+	position: relative;
+}
+
+.contact-landscape {
+	width: 100%;
+	max-width: 100%;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+.contact-img {
+	border-radius: 150px;
+	width: 150px;
+	border: 6px solid white;
+	margin-top: -160px;
+	margin-left: 20px;
+}
+
+.contact-info p:last-child {
+	margin-bottom: 0px;
+}
+
+.contact-info a {
+	text-decoration: none;
+}

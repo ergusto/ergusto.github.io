@@ -80,6 +80,10 @@
 
 	var _index12 = _interopRequireDefault(_index11);
 
+	var _index13 = __webpack_require__(247);
+
+	var _index14 = _interopRequireDefault(_index13);
+
 	var _bookmarks = __webpack_require__(229);
 
 	var _bookmarks2 = _interopRequireDefault(_bookmarks);
@@ -151,7 +155,8 @@
 					_react2.default.createElement(_index6.default, { user: user, comments: comments }),
 					_react2.default.createElement(_index10.default, { user: user, diary: diary }),
 					_react2.default.createElement(_index4.default, { user: user, bookmarks: bookmarks }),
-					_react2.default.createElement(_index8.default, { user: user, tasks: tasks })
+					_react2.default.createElement(_index8.default, { user: user, tasks: tasks }),
+					_react2.default.createElement(_index14.default, null)
 				);
 			}
 		}]);
@@ -39924,18 +39929,16 @@
 				var setActiveBookmark = _props.setActiveBookmark;
 
 				var bookmarkList = bookmarks.get();
-				var content = undefined;
+				var content = _react2.default.createElement(
+					'li',
+					{ className: 'box padding margin-vertical' },
+					'No bookmarks!'
+				);
 
 				if (bookmarkList.length) {
 					content = bookmarkList.map(function (bookmark) {
 						return _react2.default.createElement(_item2.default, { key: bookmark.id, setActiveBookmark: setActiveBookmark, bookmark: bookmark });
 					});
-				} else {
-					content = _react2.default.createElement(
-						'li',
-						{ className: 'box padding margin-vertical' },
-						'No bookmarks!'
-					);
 				}
 
 				return _react2.default.createElement(
@@ -42110,13 +42113,13 @@
 			}
 		}, {
 			key: 'removeHandler',
-			value: function removeHandler(id, event) {
+			value: function removeHandler(task, event) {
 				event.preventDefault();
 				var _props = this.props;
 				var tasks = _props.tasks;
 				var showTaskForm = _props.showTaskForm;
 
-				tasks.remove(id);
+				tasks.remove(task);
 				showTaskForm();
 			}
 		}, {
@@ -42127,18 +42130,16 @@
 				var tasks = this.props.tasks;
 
 				var taskList = tasks.get();
-				var content = undefined;
+				var content = _react2.default.createElement(
+					'li',
+					null,
+					'No tasks!'
+				);
 
 				if (taskList.length) {
 					content = taskList.map(function (task) {
 						return _react2.default.createElement(_item2.default, { key: task.id, task: task, clickHandler: _this2.clickHandler.bind(_this2, task), removeHandler: _this2.removeHandler.bind(_this2, task) });
 					});
-				} else {
-					content = _react2.default.createElement(
-						'li',
-						null,
-						'No tasks!'
-					);
 				}
 
 				return _react2.default.createElement(
@@ -43167,10 +43168,14 @@
 		}, {
 			key: 'generateEntryHTML',
 			value: function generateEntryHTML() {
-
-				var entryList = undefined;
 				var entry = this.props.entry;
 
+
+				var entryList = _react2.default.createElement(
+					'li',
+					null,
+					'No entries!'
+				);;
 
 				if (entry) {
 					var entries = entry.entries;
@@ -43187,14 +43192,6 @@
 							);
 						});
 					}
-				}
-
-				if (!entryList) {
-					entryList = _react2.default.createElement(
-						'li',
-						null,
-						'No entries!'
-					);
 				}
 
 				return _react2.default.createElement(
@@ -44898,6 +44895,142 @@
 	}(_react2.default.Component);
 
 	exports.default = TaskItemComponent;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+					value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import styles for this component
+	__webpack_require__(248);
+
+	var ContactInfoComponent = function (_React$Component) {
+					_inherits(ContactInfoComponent, _React$Component);
+
+					function ContactInfoComponent() {
+									_classCallCheck(this, ContactInfoComponent);
+
+									return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInfoComponent).apply(this, arguments));
+					}
+
+					_createClass(ContactInfoComponent, [{
+									key: 'render',
+									value: function render() {
+													return _react2.default.createElement(
+																	'section',
+																	{ className: 'contact-panel full-height padding justify-centre' },
+																	_react2.default.createElement(
+																					'div',
+																					{ className: 'contact-info box' },
+																					_react2.default.createElement('img', { className: 'contact-landscape', src: '../../../static/landscape.jpg' }),
+																					_react2.default.createElement('img', { className: 'contact-img', src: '../../../static/ferg.jpg' }),
+																					_react2.default.createElement(
+																									'div',
+																									{ className: 'padding' },
+																									_react2.default.createElement(
+																													'h2',
+																													null,
+																													'Fergus Ruston'
+																									),
+																									_react2.default.createElement(
+																													'p',
+																													null,
+																													'I\'m a front end developer currently living in Oxford. I love building user interfaces. You can find me around the web as ',
+																													_react2.default.createElement(
+																																	'strong',
+																																	null,
+																																	'ergusto'
+																													),
+																													'.'
+																									),
+																									_react2.default.createElement(
+																													'p',
+																													null,
+																													'Want to hire me?'
+																									),
+																									_react2.default.createElement(
+																													'p',
+																													null,
+																													'Get in contact -> ',
+																													_react2.default.createElement(
+																																	'a',
+																																	{ href: 'mailto:ergusto@gmail.com' },
+																																	_react2.default.createElement(
+																																					'strong',
+																																					null,
+																																					'ergusto@gmail.com'
+																																	)
+																													)
+																									)
+																					)
+																	)
+													);
+									}
+					}]);
+
+					return ContactInfoComponent;
+	}(_react2.default.Component);
+
+	exports.default = ContactInfoComponent;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(249);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./contact.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./contact.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".contact-info {\n  border-radius: 15px;\n  color: #777;\n  width: 100%;\n  max-width: 600px;\n  position: relative; }\n\n.contact-landscape {\n  width: 100%;\n  max-width: 100%;\n  border-top-left-radius: 15px;\n  border-top-right-radius: 15px; }\n\n.contact-img {\n  border-radius: 150px;\n  width: 150px;\n  border: 6px solid white;\n  margin-top: -160px;\n  margin-left: 20px; }\n\n.contact-info p:last-child {\n  margin-bottom: 0px; }\n\n.contact-info a {\n  text-decoration: none; }\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);
