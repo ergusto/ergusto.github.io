@@ -59,13 +59,13 @@ export default class CalendarDetailComponent extends React.Component {
 		calendarTitleInput.value = '';
 	}
 
-	getEntryForHour(hour) {
+	getEventsForHour(hour) {
 		const { entry } = this.props;
 
 		if (entry) {
 			return entry.entries.map((event) => {
 				if (event.time.substring(0, 2) == hour.hour.substring(0, 2)) {
-					return <p key={event.time} className="calendar-hour-event">{event.title}</p>;
+					return <p key={event.time + event.title} className="calendar-hour-event">{event.title}</p>;
 				}
 			});
 		}
@@ -75,7 +75,7 @@ export default class CalendarDetailComponent extends React.Component {
 		const { day, entry } = this.props;
 
 		const hourList = day.hours.map((hour) => {
-			const events = this.getEntryForHour(hour);
+			const events = this.getEventsForHour(hour);
 			return (
 				<li className="calendar-hour padding-horizontal padding-vertical-sm border-bottom" key={hour.hour}>
 					<div className="calendar-hour-time">{hour.hour}</div> <div className="calendar-hour-events margin-left">{events}</div>

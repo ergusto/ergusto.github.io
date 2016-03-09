@@ -42819,6 +42819,8 @@
 				var setActiveDay = _props3.setActiveDay;
 
 
+				console.log(month);
+
 				var subheaderHTML = calendar.weekdaysAbbr.map(function (day) {
 					return _react2.default.createElement(
 						'li',
@@ -43189,8 +43191,8 @@
 				calendarTitleInput.value = '';
 			}
 		}, {
-			key: 'getEntryForHour',
-			value: function getEntryForHour(hour) {
+			key: 'getEventsForHour',
+			value: function getEventsForHour(hour) {
 				var entry = this.props.entry;
 
 
@@ -43199,7 +43201,7 @@
 						if (event.time.substring(0, 2) == hour.hour.substring(0, 2)) {
 							return _react2.default.createElement(
 								'p',
-								{ key: event.time, className: 'calendar-hour-event' },
+								{ key: event.time + event.title, className: 'calendar-hour-event' },
 								event.title
 							);
 						}
@@ -43217,7 +43219,7 @@
 
 
 				var hourList = day.hours.map(function (hour) {
-					var events = _this2.getEntryForHour(hour);
+					var events = _this2.getEventsForHour(hour);
 					return _react2.default.createElement(
 						'li',
 						{ className: 'calendar-hour padding-horizontal padding-vertical-sm border-bottom', key: hour.hour },
