@@ -42819,8 +42819,6 @@
 				var setActiveDay = _props3.setActiveDay;
 
 
-				console.log(month);
-
 				var subheaderHTML = calendar.weekdaysAbbr.map(function (day) {
 					return _react2.default.createElement(
 						'li',

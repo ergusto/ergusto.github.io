@@ -24,8 +24,6 @@ export default class CalendarComponent extends React.Component {
 
 		const { month, calendar, diary, setActiveDay } = this.props;
 
-		console.log(month)
-
 		const subheaderHTML = calendar.weekdaysAbbr.map((day) => {
 			return <li key={Math.random()} className="padding-sm">{day}</li>;
 		});
