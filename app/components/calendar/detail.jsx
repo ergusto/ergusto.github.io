@@ -74,10 +74,14 @@ export default class CalendarDetailComponent extends React.Component {
 		}
 	}
 
-	selectHour(hour) {
-		const { calendarTitleInput, calendarTimeInput } = this.refs;
-		this.activeHour.set(hour.hour);
-		calendarTitleInput.focus();
+	toggleSelectedHour(hour) {
+		if (this.activeHour.current == hour.hour) {
+			this.activeHour.clear();
+		} else {
+			const { calendarTitleInput, calendarTimeInput } = this.refs;
+			this.activeHour.set(hour.hour);
+			calendarTitleInput.focus();
+		}
 	}
 
 	generateHourHTML() {
@@ -88,7 +92,7 @@ export default class CalendarDetailComponent extends React.Component {
 			if (this.activeHour.is(hour.hour)) className = className + ' active-hour';
 			const events = this.getEventsForHour(hour);
 			return (
-				<li className={className} key={hour.hour} onClick={this.selectHour.bind(this, hour)}>
+				<li className={className} key={hour.hour} onClick={this.toggleSelectedHour.bind(this, hour)}>
 					<div className="calendar-hour-time">{hour.hour}</div><ul className="calendar-hour-events margin-left">{events}</ul>
 				</li>
 			);
