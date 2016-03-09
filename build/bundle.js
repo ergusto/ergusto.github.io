@@ -42611,6 +42611,15 @@
 	var calendarDayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	var calendarMonthLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	var calendarDaysInEachMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+	var hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+
+	function generateHours() {
+		return hours.map(function (hour) {
+			var hourObj = {};
+			hourObj.hour = hour;
+			return hourObj;
+		});
+	}
 
 	var Calendar = function () {
 		function Calendar() {
@@ -42688,6 +42697,7 @@
 							day.identifier = day.date + day.month + day.year;
 							day.dateObj = new Date(day.year, day.monthNo, day.date);
 							day.isToday = false;
+							day.hours = generateHours();
 
 							if (day.date == todayDate) {
 								if (day.monthNo == todayMonthNo) {
@@ -43179,38 +43189,56 @@
 				calendarTitleInput.value = '';
 			}
 		}, {
-			key: 'generateEntryHTML',
-			value: function generateEntryHTML() {
+			key: 'getEntryForHour',
+			value: function getEntryForHour(hour) {
 				var entry = this.props.entry;
 
 
-				var entryList = _react2.default.createElement(
-					'li',
-					null,
-					'No entries!'
-				);;
-
 				if (entry) {
-					var entries = entry.entries;
-
-					if (entries.length) {
-						var sortedEntries = _.sortBy(entries, 'time');
-						entryList = sortedEntries.map(function (entry) {
+					return entry.entries.map(function (event) {
+						if (event.time.substring(0, 2) == hour.hour.substring(0, 2)) {
 							return _react2.default.createElement(
-								'li',
-								{ key: entry.title, className: 'margin-bottom-sm' },
-								entry.time,
-								' - ',
-								entry.title
+								'p',
+								{ key: event.time, className: 'calendar-hour-event' },
+								event.title
 							);
-						});
-					}
+						}
+					});
 				}
+			}
+		}, {
+			key: 'generateHourHTML',
+			value: function generateHourHTML() {
+				var _this2 = this;
+
+				var _props2 = this.props;
+				var day = _props2.day;
+				var entry = _props2.entry;
+
+
+				var hourList = day.hours.map(function (hour) {
+					var events = _this2.getEntryForHour(hour);
+					return _react2.default.createElement(
+						'li',
+						{ className: 'calendar-hour padding-horizontal padding-vertical-sm border-bottom', key: hour.hour },
+						_react2.default.createElement(
+							'div',
+							{ className: 'calendar-hour-time' },
+							hour.hour
+						),
+						' ',
+						_react2.default.createElement(
+							'div',
+							{ className: 'calendar-hour-events margin-left' },
+							events
+						)
+					);
+				});
 
 				return _react2.default.createElement(
 					'ul',
-					{ className: 'calendar-entry-list padding padding-top-sm' },
-					entryList
+					{ className: 'calendar-hour-list' },
+					hourList
 				);
 			}
 		}, {
@@ -43220,7 +43248,7 @@
 				var day = this.props.day;
 
 				var errorContent = undefined;
-				var entryHTML = this.generateEntryHTML();
+				var hourHTML = this.generateHourHTML();
 
 				if (error) {
 					errorContent = _react2.default.createElement(
@@ -43262,27 +43290,18 @@
 					_react2.default.createElement(
 						'div',
 						{ className: 'calendar-body' },
+						hourHTML
+					),
+					_react2.default.createElement(
+						'form',
+						{ onSubmit: this.submitHandler.bind(this), className: 'padding border-top' },
+						_react2.default.createElement('input', { ref: 'calendarTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
+						_react2.default.createElement('input', { ref: 'calendarTimeInput', placeholder: 'time (hh:mm)', className: 'field', name: 'time' }),
+						errorContent,
 						_react2.default.createElement(
 							'div',
-							{ className: 'padding-except-bottom' },
-							_react2.default.createElement(
-								'h3',
-								null,
-								'events:'
-							)
-						),
-						entryHTML,
-						_react2.default.createElement(
-							'form',
-							{ onSubmit: this.submitHandler.bind(this), className: 'padding border-top' },
-							_react2.default.createElement('input', { ref: 'calendarTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
-							_react2.default.createElement('input', { ref: 'calendarTimeInput', placeholder: 'time (hh:mm)', className: 'field', name: 'time' }),
-							errorContent,
-							_react2.default.createElement(
-								'div',
-								{ className: 'btn-group' },
-								_react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' })
-							)
+							{ className: 'btn-group' },
+							_react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' })
 						)
 					)
 				);
@@ -43329,7 +43348,7 @@
 
 
 	// module
-	exports.push([module.id, ".calendar-entry-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0; }\n\n.calendar-entry-list li:last-child {\n  margin-bottom: 0px; }\n", ""]);
+	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  max-height: 400px;\n  overflow-y: scroll; }\n\n.calendar-hour-list li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour-time, .calendar-hour-events {\n  display: inline-block; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px; }\n  .calendar-hour-event:last-child {\n    margin-bottom: 0px; }\n", ""]);
 
 	// exports
 

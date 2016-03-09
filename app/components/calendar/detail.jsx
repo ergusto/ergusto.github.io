@@ -59,24 +59,31 @@ export default class CalendarDetailComponent extends React.Component {
 		calendarTitleInput.value = '';
 	}
 
-	generateEntryHTML() {
+	getEntryForHour(hour) {
 		const { entry } = this.props;
-		
-		let entryList = <li>No entries!</li>;;
 
 		if (entry) {
-			const { entries } = entry;
-			if (entries.length) {
-				const sortedEntries = _.sortBy(entries, 'time');
-				entryList = sortedEntries.map((entry) => {
-					return (
-						<li key={entry.title} className="margin-bottom-sm">{entry.time} - {entry.title}</li>
-					);
-				});
-			}
+			return entry.entries.map((event) => {
+				if (event.time.substring(0, 2) == hour.hour.substring(0, 2)) {
+					return <p key={event.time} className="calendar-hour-event">{event.title}</p>;
+				}
+			});
 		}
+	}
 
-		return  <ul className="calendar-entry-list padding padding-top-sm">{entryList}</ul>;
+	generateHourHTML() {
+		const { day, entry } = this.props;
+
+		const hourList = day.hours.map((hour) => {
+			const events = this.getEntryForHour(hour);
+			return (
+				<li className="calendar-hour padding-horizontal padding-vertical-sm border-bottom" key={hour.hour}>
+					<div className="calendar-hour-time">{hour.hour}</div> <div className="calendar-hour-events margin-left">{events}</div>
+				</li>
+			);
+		});
+
+		return  <ul className="calendar-hour-list">{hourList}</ul>;
 
 	}
 
@@ -84,7 +91,7 @@ export default class CalendarDetailComponent extends React.Component {
 		const { error } = this.form;
 		const { day } = this.props;
 		let errorContent;
-		const entryHTML = this.generateEntryHTML();
+		const hourHTML = this.generateHourHTML();
 
 		if (error) {
 			errorContent = <span className="form-error">{error}</span>;
@@ -99,23 +106,19 @@ export default class CalendarDetailComponent extends React.Component {
 				<ul className="calendar-buttons calendar-subheader horizontal-list-menu--btns border-vertical">
 					<li><a className="btn btn-large" href="#" onClick={this.showCalendarHandler.bind(this)}>back</a></li>
 				</ul>
-
 				<div className="calendar-body">
-					<div className="padding-except-bottom">
-						<h3>events:</h3>
-					</div>
-					{entryHTML}
-					<form onSubmit={this.submitHandler.bind(this)} className="padding border-top">
-
-						<input ref="calendarTitleInput" placeholder="title" className="field" name="title" />
-						<input ref="calendarTimeInput" placeholder="time (hh:mm)" className="field" name="time" />
-						{errorContent}
-						<div className="btn-group">
-							<input type="submit" value="submit" className="btn"></input>
-						</div>
-
-					</form>
+					{hourHTML}
 				</div>
+				<form onSubmit={this.submitHandler.bind(this)} className="padding border-top">
+
+					<input ref="calendarTitleInput" placeholder="title" className="field" name="title" />
+					<input ref="calendarTimeInput" placeholder="time (hh:mm)" className="field" name="time" />
+					{errorContent}
+					<div className="btn-group">
+						<input type="submit" value="submit" className="btn"></input>
+					</div>
+
+				</form>
 			</div>
 		)
 	}
