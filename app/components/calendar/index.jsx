@@ -72,6 +72,7 @@ export default class CalendarManagerComponent extends React.Component {
 			day = this.activeDay.current;
 			const entry = diary.getItemFromDateIdentifier(day.identifier);
 			content = <CalendarDetailComponent
+						calendar={this.calendar}
 						diary={diary}
 						day={day} 
 						entry={entry}

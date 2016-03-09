@@ -42569,6 +42569,7 @@
 					day = this.activeDay.current;
 					var entry = diary.getItemFromDateIdentifier(day.identifier);
 					content = _react2.default.createElement(_detail2.default, {
+						calendar: this.calendar,
 						diary: diary,
 						day: day,
 						entry: entry,
@@ -42697,7 +42698,6 @@
 							day.identifier = day.date + day.month + day.year;
 							day.dateObj = new Date(day.year, day.monthNo, day.date);
 							day.isToday = false;
-							day.hours = generateHours();
 
 							if (day.date == todayDate) {
 								if (day.monthNo == todayMonthNo) {
@@ -42737,6 +42737,11 @@
 			key: 'months',
 			get: function get() {
 				return calendarMonthLabels;
+			}
+		}, {
+			key: 'hours',
+			get: function get() {
+				return generateHours();
 			}
 		}]);
 
@@ -43107,6 +43112,10 @@
 
 	var _form2 = _interopRequireDefault(_form);
 
+	var _activeModel = __webpack_require__(191);
+
+	var _activeModel2 = _interopRequireDefault(_activeModel);
+
 	var _tools = __webpack_require__(164);
 
 	var _tools2 = _interopRequireDefault(_tools);
@@ -43132,6 +43141,7 @@
 
 			_this.state = {};
 			_this.form = new _form2.default(_this);
+			_this.activeHour = new _activeModel2.default(_this);
 			return _this;
 		}
 
@@ -43187,6 +43197,7 @@
 				form.clearError();
 				calendarTimeInput.value = '';
 				calendarTitleInput.value = '';
+				this.activeHour.clear();
 			}
 		}, {
 			key: 'getEventsForHour',
@@ -43213,7 +43224,7 @@
 				var calendarTitleInput = _refs2.calendarTitleInput;
 				var calendarTimeInput = _refs2.calendarTimeInput;
 
-				calendarTimeInput.value = hour.hour;
+				this.activeHour.set(hour.hour);
 				calendarTitleInput.focus();
 			}
 		}, {
@@ -43223,14 +43234,17 @@
 
 				var _props2 = this.props;
 				var day = _props2.day;
+				var calendar = _props2.calendar;
 				var entry = _props2.entry;
 
 
-				var hourList = day.hours.map(function (hour, index) {
+				var hourList = calendar.hours.map(function (hour) {
+					var className = "calendar-hour padding-horizontal padding-vertical-sm border-bottom hover-cursor--pointer";
+					if (_this2.activeHour.is(hour.hour)) className = className + ' active-hour';
 					var events = _this2.getEventsForHour(hour);
 					return _react2.default.createElement(
 						'li',
-						{ className: 'calendar-hour padding-horizontal padding-vertical-sm border-bottom hover-cursor--pointer', key: hour.hour, onClick: _this2.selectHour.bind(_this2, hour) },
+						{ className: className, key: hour.hour, onClick: _this2.selectHour.bind(_this2, hour) },
 						_react2.default.createElement(
 							'div',
 							{ className: 'calendar-hour-time' },
@@ -43305,7 +43319,7 @@
 						'form',
 						{ onSubmit: this.submitHandler.bind(this), className: 'padding border-top' },
 						_react2.default.createElement('input', { ref: 'calendarTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
-						_react2.default.createElement('input', { ref: 'calendarTimeInput', placeholder: 'time (hh:mm)', className: 'field', name: 'time' }),
+						_react2.default.createElement('input', { ref: 'calendarTimeInput', value: this.activeHour.current, placeholder: 'time (hh:mm)', className: 'field', name: 'time' }),
 						errorContent,
 						_react2.default.createElement(
 							'div',
@@ -43357,7 +43371,7 @@
 
 
 	// module
-	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px; }\n\n.calendar-hour-list li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour-time {\n  vertical-align: top; }\n\n.calendar-hour-time, .calendar-hour-events {\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block; }\n  .calendar-hour-event:last-child {\n    margin-bottom: 0px; }\n", ""]);
+	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px; }\n\n.calendar-hour-list li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour-time {\n  vertical-align: top; }\n\n.calendar-hour-time, .calendar-hour-events {\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block; }\n  .calendar-hour-event:last-child {\n    margin-bottom: 0px; }\n\n.active-hour {\n  background: rgba(70, 150, 229, 0.05); }\n", ""]);
 
 	// exports
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import FormStateBehaviour from '../../behaviours/form.js';
+import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
 
 import Tools from '../../lib/tools.js';
 
@@ -12,6 +13,7 @@ export default class CalendarDetailComponent extends React.Component {
 		super();
 		this.state = {};
 	 	this.form = new FormStateBehaviour(this);
+		this.activeHour = new ActiveModelStateBehaviour(this);
 	}
 
 	showCalendarHandler(event) {
@@ -57,6 +59,7 @@ export default class CalendarDetailComponent extends React.Component {
 		form.clearError();
 		calendarTimeInput.value = '';
 		calendarTitleInput.value = '';
+		this.activeHour.clear();
 	}
 
 	getEventsForHour(hour) {
@@ -73,17 +76,19 @@ export default class CalendarDetailComponent extends React.Component {
 
 	selectHour(hour) {
 		const { calendarTitleInput, calendarTimeInput } = this.refs;
-		calendarTimeInput.value = hour.hour;
+		this.activeHour.set(hour.hour);
 		calendarTitleInput.focus();
 	}
 
 	generateHourHTML() {
-		const { day, entry } = this.props;
+		const { day, calendar, entry } = this.props;
 
-		const hourList = day.hours.map((hour, index) => {
+		const hourList = calendar.hours.map((hour) => {
+			let className = "calendar-hour padding-horizontal padding-vertical-sm border-bottom hover-cursor--pointer";
+			if (this.activeHour.is(hour.hour)) className = className + ' active-hour';
 			const events = this.getEventsForHour(hour);
 			return (
-				<li className="calendar-hour padding-horizontal padding-vertical-sm border-bottom hover-cursor--pointer" key={hour.hour} onClick={this.selectHour.bind(this, hour)}>
+				<li className={className} key={hour.hour} onClick={this.selectHour.bind(this, hour)}>
 					<div className="calendar-hour-time">{hour.hour}</div><ul className="calendar-hour-events margin-left">{events}</ul>
 				</li>
 			);
@@ -118,7 +123,7 @@ export default class CalendarDetailComponent extends React.Component {
 				<form onSubmit={this.submitHandler.bind(this)} className="padding border-top">
 
 					<input ref="calendarTitleInput" placeholder="title" className="field" name="title" />
-					<input ref="calendarTimeInput" placeholder="time (hh:mm)" className="field" name="time" />
+					<input ref="calendarTimeInput" value={this.activeHour.current} placeholder="time (hh:mm)" className="field" name="time" />
 					{errorContent}
 					<div className="btn-group">
 						<input type="submit" value="submit" className="btn"></input>

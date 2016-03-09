@@ -26,6 +26,10 @@ export default class Calendar {
 		return calendarMonthLabels;
 	}
 
+	get hours() {
+		return generateHours();
+	}
+
 	getMonth(date) {
 		const today = new Date();
 		const todayDate = today.getDate();
@@ -95,7 +99,6 @@ export default class Calendar {
 					day.identifier = day.date + day.month + day.year;
 					day.dateObj = new Date(day.year, day.monthNo, day.date);
 					day.isToday = false;
-					day.hours = generateHours();
 
 					if (day.date == todayDate) {
 						if (day.monthNo == todayMonthNo) {
