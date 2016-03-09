@@ -20,22 +20,22 @@ export default class TaskDetailComponent extends React.Component {
 
 	render() {
 		const { task } = this.props;
-		let completeBtnText = 'mark as complete';
+		let toggleCompleteBtnText = 'mark as complete';
 
-		if (task.completed) completeBtnText = 'mark as active';
+		if (task.completed) toggleCompleteBtnText = 'mark as active';
 
-		var body;
+		let body;
 
-		if (task.text) {
-			body = (<p>{task.text}</p>)
+		if (task.description) {
+			body = <p>{task.description}</p>;
 		}
 
 		return (
 			<div className="task-detail">
 				<h3 className="task-detail-title padding-bottom-sm margin-bottom-sm">{task.title}</h3>
+				<a onClick={this.setManagerEditingTask.bind(this)} href="#" className="btn margin-bottom-sm">edit</a>
+				<a onClick={this.toggleCompleted.bind(this)} href="#" className="btn margin-bottom-sm margin-left-sm">{toggleCompleteBtnText}</a>
 				{body}
-				<a onClick={this.setManagerEditingTask.bind(this)} href="#" className="btn margin-top-sm">edit</a>
-				<a onClick={this.toggleCompleted.bind(this)} href="#" className="btn margin-top-sm margin-left-sm">{completeBtnText}</a>
 			</div>
 		)
 	}

@@ -17,16 +17,17 @@ export default class TaskFormComponent extends React.Component {
 		let saved;
 		let { task, tasks, submitCallback } = this.props;
 		const title = this.refs.taskTitleInput.value;
-		const text = this.refs.taskTextInput.value;
-		if (!task) task = tasks.shell();
+		const description = this.refs.taskDescriptionInput.value;
 
 		if (!title.trim().length) {
 			this.form.addError('please enter a title');
 			return;
 		}
 
+		if (!task) task = tasks.shell();
+
 		task.title = title;
-		task.text = text;
+		task.description = description;
 
 		if (task.id) {
 			saved = tasks.update(task);
@@ -42,20 +43,18 @@ export default class TaskFormComponent extends React.Component {
 		const { task } = this.props;
 		
 		let errContent;
-		let formTitleContent;
+		let formTitleContent = 'new task';
 		let titleDefaultValue;
-		let textDefaultValue;
+		let descriptionDefaultValue;
 
 		if (task) {
 			formTitleContent = 'edit task';
 			titleDefaultValue = task.title;
-			textDefaultValue = task.text;
-		} else {
-			formTitleContent = 'new task';
+			descriptionDefaultValue = task.description;
 		}
 
 		if (err) {
-			errContent = (<span className="form-error">{err}</span>);
+			errContent = <span className="form-error">{err}</span>;
 		}
 
 		return (
@@ -64,7 +63,7 @@ export default class TaskFormComponent extends React.Component {
 				<form onSubmit={this.submitHandler.bind(this)} className="task-form">
 					<input defaultValue={titleDefaultValue} ref="taskTitleInput" placeholder="title" className="field" name="title" />
 					{errContent}
-					<textarea defaultValue={textDefaultValue} ref="taskTextInput" placeholder="text" className="field" name="text"></textarea>
+					<textarea defaultValue={descriptionDefaultValue} ref="taskTextInput" placeholder="description" className="field" name="description"></textarea>
 					<input type="submit" value="submit" className="btn"></input>
 				</form>
 			</div>

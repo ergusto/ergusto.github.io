@@ -41975,17 +41975,17 @@
 			value: function render() {
 				var task = this.props.task;
 
-				var completeBtnText = 'mark as complete';
+				var toggleCompleteBtnText = 'mark as complete';
 
-				if (task.completed) completeBtnText = 'mark as active';
+				if (task.completed) toggleCompleteBtnText = 'mark as active';
 
-				var body;
+				var body = undefined;
 
-				if (task.text) {
+				if (task.description) {
 					body = _react2.default.createElement(
 						'p',
 						null,
-						task.text
+						task.description
 					);
 				}
 
@@ -41997,17 +41997,17 @@
 						{ className: 'task-detail-title padding-bottom-sm margin-bottom-sm' },
 						task.title
 					),
-					body,
 					_react2.default.createElement(
 						'a',
-						{ onClick: this.setManagerEditingTask.bind(this), href: '#', className: 'btn margin-top-sm' },
+						{ onClick: this.setManagerEditingTask.bind(this), href: '#', className: 'btn margin-bottom-sm' },
 						'edit'
 					),
 					_react2.default.createElement(
 						'a',
-						{ onClick: this.toggleCompleted.bind(this), href: '#', className: 'btn margin-top-sm margin-left-sm' },
-						completeBtnText
-					)
+						{ onClick: this.toggleCompleted.bind(this), href: '#', className: 'btn margin-bottom-sm margin-left-sm' },
+						toggleCompleteBtnText
+					),
+					body
 				);
 			}
 		}]);
@@ -42285,16 +42285,17 @@
 				var submitCallback = _props.submitCallback;
 
 				var title = this.refs.taskTitleInput.value;
-				var text = this.refs.taskTextInput.value;
-				if (!task) task = tasks.shell();
+				var description = this.refs.taskDescriptionInput.value;
 
 				if (!title.trim().length) {
 					this.form.addError('please enter a title');
 					return;
 				}
 
+				if (!task) task = tasks.shell();
+
 				task.title = title;
-				task.text = text;
+				task.description = description;
 
 				if (task.id) {
 					saved = tasks.update(task);
@@ -42312,16 +42313,14 @@
 
 
 				var errContent = undefined;
-				var formTitleContent = undefined;
+				var formTitleContent = 'new task';
 				var titleDefaultValue = undefined;
-				var textDefaultValue = undefined;
+				var descriptionDefaultValue = undefined;
 
 				if (task) {
 					formTitleContent = 'edit task';
 					titleDefaultValue = task.title;
-					textDefaultValue = task.text;
-				} else {
-					formTitleContent = 'new task';
+					descriptionDefaultValue = task.description;
 				}
 
 				if (err) {
@@ -42345,7 +42344,7 @@
 						{ onSubmit: this.submitHandler.bind(this), className: 'task-form' },
 						_react2.default.createElement('input', { defaultValue: titleDefaultValue, ref: 'taskTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
 						errContent,
-						_react2.default.createElement('textarea', { defaultValue: textDefaultValue, ref: 'taskTextInput', placeholder: 'text', className: 'field', name: 'text' }),
+						_react2.default.createElement('textarea', { defaultValue: descriptionDefaultValue, ref: 'taskTextInput', placeholder: 'description', className: 'field', name: 'description' }),
 						_react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' })
 					)
 				);
@@ -43998,14 +43997,14 @@
 			value: function shell() {
 				var task = {};
 				task.title = '';
-				task.text = '';
+				task.description = '';
 				task.completed = false;
 				return task;
 			}
 		}, {
 			key: 'defaultModels',
 			value: function defaultModels() {
-				return [{ title: 'Get the groceries', text: 'Some peas, some toothpaste, and 7 courgettes.', completed: false }, { title: 'Clean the bathroom', text: 'It\'s dirty!', completed: false }];
+				return [{ title: 'Get the groceries', description: 'Some peas, some toothpaste, and 7 courgettes.', completed: false }, { title: 'Clean the bathroom', description: 'It\'s dirty!', completed: false }];
 			}
 		}]);
 
