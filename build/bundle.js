@@ -45057,11 +45057,11 @@
 																													'Want to hire me? Get in contact -> ',
 																													_react2.default.createElement(
 																																	'a',
-																																	{ href: 'mailto:fergus@ergusto.com' },
+																																	{ href: 'mailto:ergusto@gmail.com' },
 																																	_react2.default.createElement(
 																																					'strong',
 																																					null,
-																																					'fergus@ergusto.com'
+																																					'ergusto@gmail.com'
 																																	)
 																													)
 																									)
@@ -45111,7 +45111,7 @@
 
 
 	// module
-	exports.push([module.id, ".contact-info {\n  border-radius: 15px;\n  color: #777;\n  width: 100%;\n  max-width: 600px;\n  position: relative; }\n\n.contact-landscape {\n  width: 100%;\n  max-width: 100%;\n  border-top-left-radius: 15px;\n  border-top-right-radius: 15px; }\n\n.contact-img {\n  border-radius: 150px;\n  width: 150px;\n  border: 6px solid white;\n  margin-top: -160px;\n  margin-left: 20px; }\n\n.contact-info p {\n  margin-bottom: 0px; }\n\n.contact-info a {\n  text-decoration: none; }\n\n.skills {\n  padding: 0;\n  margin: 0px;\n  margin-top: 10px; }\n\n.skills li {\n  display: inline-block;\n  background: #777;\n  color: white;\n  padding: 4px 10px;\n  margin-left: 4px; }\n  .skills li:first-child {\n    margin-left: 0px; }\n", ""]);
+	exports.push([module.id, ".contact-info {\n  border-radius: 15px;\n  border-top-left-radius: 20px;\n  border-top-right-radius: 20px;\n  color: #777;\n  width: 100%;\n  max-width: 600px;\n  position: relative; }\n\n.contact-landscape {\n  width: 100%;\n  max-width: 100%;\n  border-top-left-radius: 15px;\n  border-top-right-radius: 15px; }\n\n.contact-img {\n  border-radius: 150px;\n  width: 150px;\n  border: 6px solid white;\n  margin-top: -160px;\n  margin-left: 20px; }\n\n.contact-info p {\n  margin-bottom: 0px; }\n\n.contact-info a {\n  text-decoration: none; }\n\n.skills {\n  padding: 0;\n  margin: 0px;\n  margin-top: 10px; }\n\n.skills li {\n  display: inline-block;\n  background: #777;\n  color: white;\n  padding: 4px 10px;\n  margin-left: 4px; }\n  .skills li:first-child {\n    margin-left: 0px; }\n", ""]);
 
 	// exports
 
