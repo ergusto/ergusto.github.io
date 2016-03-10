@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import FormStateBehaviour from '../../behaviours/form.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
@@ -80,15 +81,17 @@ export default class CalendarDetailComponent extends React.Component {
 		const { entry } = this.props;
 
 		if (entry) {
-			return entry.entries.map((event) => {
-				if (event.time.substring(0, 2) == hour.hour.substring(0, 2)) {
-					return (
-						<li onClick={this.stopPropagationHandler} key={event.time + event.title + Tools.generateID()} className="calendar-hour-event hover-cursor--default">
-							<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">x</a>
-							{event.title}
-						</li>
-					);
-				}
+			const hourHour = hour.hour.substring(0, 2);
+			const entries = _.filter(entry.entries, (item) => {
+				return item.time.substring(0, 2) == hourHour;
+			});
+			return entries.map((event) => {
+				return (
+					<li onClick={this.stopPropagationHandler} key={event.time + event.title + Tools.generateID()} className="calendar-hour-event hover-cursor--default">
+						<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">x</a>
+						{event.title}
+					</li>
+				);
 			});
 		}
 	}
@@ -123,9 +126,9 @@ export default class CalendarDetailComponent extends React.Component {
 	}
 
 	render() {
+		let errorContent;
 		const { error } = this.form;
 		const { day } = this.props;
-		let errorContent;
 		const hourHTML = this.generateHourHTML();
 
 		if (error) {

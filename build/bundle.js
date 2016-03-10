@@ -43102,7 +43102,13 @@
 		value: true
 	});
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _lodash = __webpack_require__(165);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
 
 	var _react = __webpack_require__(1);
 
@@ -43227,20 +43233,28 @@
 
 
 				if (entry) {
-					return entry.entries.map(function (event) {
-						if (event.time.substring(0, 2) == hour.hour.substring(0, 2)) {
-							return _react2.default.createElement(
-								'li',
-								{ onClick: _this2.stopPropagationHandler, key: event.time + event.title + _tools2.default.generateID(), className: 'calendar-hour-event hover-cursor--default' },
-								_react2.default.createElement(
-									'a',
-									{ onClick: _this2.removeEventHandler.bind(_this2, event), href: '#', className: 'pull-right remove-event' },
-									'x'
-								),
-								event.title
-							);
-						}
-					});
+					var _ret = function () {
+						var hourHour = hour.hour.substring(0, 2);
+						var entries = _lodash2.default.filter(entry.entries, function (item) {
+							return item.time.substring(0, 2) == hourHour;
+						});
+						return {
+							v: entries.map(function (event) {
+								return _react2.default.createElement(
+									'li',
+									{ onClick: _this2.stopPropagationHandler, key: event.time + event.title + _tools2.default.generateID(), className: 'calendar-hour-event hover-cursor--default' },
+									_react2.default.createElement(
+										'a',
+										{ onClick: _this2.removeEventHandler.bind(_this2, event), href: '#', className: 'pull-right remove-event' },
+										'x'
+									),
+									event.title
+								);
+							})
+						};
+					}();
+
+					if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 				}
 			}
 		}, {
@@ -43297,10 +43311,10 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				var errorContent = undefined;
 				var error = this.form.error;
 				var day = this.props.day;
 
-				var errorContent = undefined;
 				var hourHTML = this.generateHourHTML();
 
 				if (error) {
