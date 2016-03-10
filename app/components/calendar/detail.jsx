@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import FormStateBehaviour from '../../behaviours/form.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
