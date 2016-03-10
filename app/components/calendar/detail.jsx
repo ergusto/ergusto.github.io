@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import FormStateBehaviour from '../../behaviours/form.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
@@ -62,19 +63,38 @@ export default class CalendarDetailComponent extends React.Component {
 		this.activeHour.clear();
 	}
 
+	stopPropagationHandler(event) {
+		event.stopPropagation();
+	}
+
+	removeEventHandler(entryEvent, event) {
+		event.preventDefault();
+		const { entry, diary } = this.props;
+		const index = entry.entries.indexOf(entryEvent);
+		if (index > -1) {
+			entry.entries.splice(index, 1);
+		}
+		diary.update(entry);
+	}
+
 	getEventsForHour(hour) {
 		const { entry } = this.props;
 
 		if (entry) {
 			return entry.entries.map((event) => {
 				if (event.time.substring(0, 2) == hour.hour.substring(0, 2)) {
-					return <li key={event.time + event.title} className="calendar-hour-event">{event.title}</li>;
+					return (
+						<li onClick={this.stopPropagationHandler} key={event.time + event.title + Tools.generateID()} className="calendar-hour-event hover-cursor--default">
+							<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">x</a>
+							{event.title}
+						</li>
+					);
 				}
 			});
 		}
 	}
 
-	toggleSelectedHour(hour) {
+	toggleSelectedHour(hour, event) {
 		if (this.activeHour.current == hour.hour) {
 			this.activeHour.clear();
 		} else {
@@ -88,12 +108,13 @@ export default class CalendarDetailComponent extends React.Component {
 		const { day, calendar, entry } = this.props;
 
 		const hourList = calendar.hours.map((hour) => {
-			let className = "calendar-hour padding-horizontal padding-vertical-sm border-bottom hover-cursor--pointer";
+			let className = "calendar-hour hover-cursor--pointer";
 			if (this.activeHour.is(hour.hour)) className = className + ' active-hour';
 			const events = this.getEventsForHour(hour);
 			return (
 				<li className={className} key={hour.hour} onClick={this.toggleSelectedHour.bind(this, hour)}>
-					<div className="calendar-hour-time">{hour.hour}</div><ul className="calendar-hour-events margin-left">{events}</ul>
+					<div className="calendar-hour-time padding-horizontal">{hour.hour}</div>
+					<ul className="calendar-hour-events">{events}</ul>
 				</li>
 			);
 		});
