@@ -15,12 +15,6 @@ export default class ContactInfoComponent extends  React.Component {
 		 				<h2>Fergus Ruston</h2>
 		 				<p>I'm a front end developer currently living in Oxford. I love building user interfaces. You can find me around the web as <strong>ergusto</strong>.</p>
 		 				<p>Want to hire me? Get in contact -> <a href="mailto:fergus@ergusto.com"><strong>fergus@ergusto.com</strong></a></p>
-		 				<ul className="skills">
-		 					<li><small>JS</small></li>
-		 					<li><small>UX</small></li>
-		 					<li><small>React</small></li>
-		 					<li><small>Meteor</small></li>
-		 				</ul>
 		 			</div>
 			 	</div>
 			 </section>

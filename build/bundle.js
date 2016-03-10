@@ -45064,46 +45064,6 @@
 																																					'fergus@ergusto.com'
 																																	)
 																													)
-																									),
-																									_react2.default.createElement(
-																													'ul',
-																													{ className: 'skills' },
-																													_react2.default.createElement(
-																																	'li',
-																																	null,
-																																	_react2.default.createElement(
-																																					'small',
-																																					null,
-																																					'JS'
-																																	)
-																													),
-																													_react2.default.createElement(
-																																	'li',
-																																	null,
-																																	_react2.default.createElement(
-																																					'small',
-																																					null,
-																																					'UX'
-																																	)
-																													),
-																													_react2.default.createElement(
-																																	'li',
-																																	null,
-																																	_react2.default.createElement(
-																																					'small',
-																																					null,
-																																					'React'
-																																	)
-																													),
-																													_react2.default.createElement(
-																																	'li',
-																																	null,
-																																	_react2.default.createElement(
-																																					'small',
-																																					null,
-																																					'Meteor'
-																																	)
-																													)
 																									)
 																					)
 																	)
