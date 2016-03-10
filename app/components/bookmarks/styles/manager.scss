@@ -7,6 +7,10 @@
 	margin: 0;
 	padding: 0;
 	display: inline-block;
+
+	&:hover {
+		color: black;
+	}
 }
 
 .bookmark-manager-control {

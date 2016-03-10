@@ -1,5 +1,9 @@
 .bookmark-item-title {
 	display: inline-block;
+
+	&:hover {
+		color: black;
+	}
 }
 
 .bookmark-item-url {

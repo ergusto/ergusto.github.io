@@ -6,7 +6,6 @@ import BookmarkManagerComponent from './components/bookmarks/index.jsx';
 import CommentListComponent from './components/comments/index.jsx';
 import TaskManagerComponent from './components/tasklist/index.jsx';
 import CalendarManagerComponent from './components/calendar/index.jsx';
-import WordsComponent from './components/words/index.jsx';
 import ContactInfoComponent from './components/contact/index.jsx';
 
 import Bookmarks from './collections/bookmarks.js';

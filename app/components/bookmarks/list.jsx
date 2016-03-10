@@ -15,15 +15,11 @@ export default class BookmarkListComponent extends React.Component {
 
 		if (bookmarkList.length) {
 			content = bookmarkList.map((bookmark) => {
-				return (
-					<BookmarkItemComponent key={bookmark.id} setActiveBookmark={setActiveBookmark} bookmark={bookmark} />
-				);
+				return <BookmarkItemComponent key={bookmark.id} setActiveBookmark={setActiveBookmark} bookmark={bookmark} />;
 			});
 		}
 
-		return (
-			<ul className="bookmark-list">{content}</ul>
-		);
+		return <ul className="bookmark-list">{content}</ul>;
 	}
 
 }

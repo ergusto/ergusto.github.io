@@ -72,35 +72,31 @@
 
 	var _index8 = _interopRequireDefault(_index7);
 
-	var _index9 = __webpack_require__(218);
+	var _index9 = __webpack_require__(219);
 
 	var _index10 = _interopRequireDefault(_index9);
 
-	var _index11 = __webpack_require__(240);
+	var _index11 = __webpack_require__(230);
 
 	var _index12 = _interopRequireDefault(_index11);
 
-	var _index13 = __webpack_require__(247);
-
-	var _index14 = _interopRequireDefault(_index13);
-
-	var _bookmarks = __webpack_require__(229);
+	var _bookmarks = __webpack_require__(233);
 
 	var _bookmarks2 = _interopRequireDefault(_bookmarks);
 
-	var _comments = __webpack_require__(234);
+	var _comments = __webpack_require__(238);
 
 	var _comments2 = _interopRequireDefault(_comments);
 
-	var _tasks = __webpack_require__(235);
+	var _tasks = __webpack_require__(239);
 
 	var _tasks2 = _interopRequireDefault(_tasks);
 
-	var _diary = __webpack_require__(236);
+	var _diary = __webpack_require__(240);
 
 	var _diary2 = _interopRequireDefault(_diary);
 
-	var _user = __webpack_require__(237);
+	var _user = __webpack_require__(241);
 
 	var _user2 = _interopRequireDefault(_user);
 
@@ -113,7 +109,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import generic/site wide styles
-	__webpack_require__(238);
+	__webpack_require__(242);
 
 	// end of imports
 
@@ -155,7 +151,7 @@
 					_react2.default.createElement(_index6.default, { user: user, comments: comments }),
 					_react2.default.createElement(_index10.default, { user: user, diary: diary }),
 					_react2.default.createElement(_index4.default, { user: user, bookmarks: bookmarks }),
-					_react2.default.createElement(_index14.default, null)
+					_react2.default.createElement(_index12.default, null)
 				);
 			}
 		}]);
@@ -39726,6 +39722,8 @@
 
 	var PropTypes = _react2.default.PropTypes;
 
+	var tabs = { list: 'list', detail: 'detail', edit: 'edit', add: 'add' };
+
 	// import styles for this component
 	__webpack_require__(192);
 
@@ -39738,7 +39736,7 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BookmarkManagerComponent).call(this, props));
 
 			_this.state = {};
-			_this.tabs = new _tabs2.default(_this, 'list');
+			_this.tabs = new _tabs2.default(_this, tabs.list);
 			_this.activeBookmark = new _activeModel2.default(_this);
 			props.bookmarks.onUpdate(function () {
 				_this.forceUpdate();
@@ -39755,13 +39753,13 @@
 			key: 'clearActiveBookmark',
 			value: function clearActiveBookmark() {
 				this.activeBookmark.clear();
-				this.tabs.open('list');
+				this.showTab(tabs.list);
 			}
 		}, {
 			key: 'setActiveBookmark',
 			value: function setActiveBookmark(id) {
 				this.activeBookmark.set(id);
-				this.tabs.open('detail');
+				this.showTab(tabs.detail);
 			}
 		}, {
 			key: 'showTab',
@@ -39777,7 +39775,7 @@
 		}, {
 			key: 'showEditTab',
 			value: function showEditTab() {
-				this.showTab('edit');
+				this.showTab(tabs.edit);
 			}
 		}, {
 			key: 'editSubmitCallback',
@@ -39788,7 +39786,6 @@
 			key: 'render',
 			value: function render() {
 				var content = undefined;
-				var tabs = this.tabs;
 				var _props = this.props;
 				var bookmarks = _props.bookmarks;
 				var user = _props.user;
@@ -39799,17 +39796,17 @@
 				var listTabClass = tabClass;
 				var addTabClass = tabClass;
 
-				if (tabs.isOpen('list')) {
+				if (this.tabs.isOpen(tabs.list)) {
 					listTabClass += activeClass;
 					content = _react2.default.createElement(_list2.default, { setActiveBookmark: this.setActiveBookmark.bind(this), bookmarks: bookmarks });
 				}
 
-				if (tabs.isOpen('add')) {
+				if (this.tabs.isOpen(tabs.add)) {
 					addTabClass += activeClass;
 					content = _react2.default.createElement(_formCreate2.default, { user: user, bookmarks: bookmarks, submitCallback: this.submitCallback.bind(this) });
 				}
 
-				if (tabs.isOpen('detail')) {
+				if (this.tabs.isOpen(tabs.detail)) {
 					content = _react2.default.createElement(_detail2.default, {
 						bookmarks: bookmarks,
 						bookmark: bookmark,
@@ -39818,7 +39815,7 @@
 						clearActiveBookmark: this.clearActiveBookmark.bind(this) });
 				}
 
-				if (tabs.isOpen('edit')) {
+				if (this.tabs.isOpen(tabs.edit)) {
 					content = _react2.default.createElement(_formEdit2.default, { formTitle: 'edit', user: user, bookmark: bookmark, bookmarks: bookmarks, submitCallback: this.editSubmitCallback.bind(this) });
 				}
 
@@ -39847,7 +39844,7 @@
 										null,
 										_react2.default.createElement(
 											'a',
-											{ onClick: this.showTab.bind(this, 'list'), href: '#', className: listTabClass },
+											{ onClick: this.showTab.bind(this, tabs.list), href: '#', className: listTabClass },
 											'list'
 										)
 									),
@@ -39856,7 +39853,7 @@
 										null,
 										_react2.default.createElement(
 											'a',
-											{ onClick: this.showTab.bind(this, 'add'), href: '#', className: addTabClass },
+											{ onClick: this.showTab.bind(this, tabs.add), href: '#', className: addTabClass },
 											'add'
 										)
 									)
@@ -40119,7 +40116,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-item-title {\n  display: inline-block; }\n\n.bookmark-item-url {\n  display: inline-block; }\n\n.bookmark-item-image {\n  max-width: 100%; }\n\n.bookmark-item-username {\n  color: #777; }\n", ""]);
+	exports.push([module.id, ".bookmark-item-title {\n  display: inline-block; }\n  .bookmark-item-title:hover {\n    color: black; }\n\n.bookmark-item-url {\n  display: inline-block; }\n\n.bookmark-item-image {\n  max-width: 100%; }\n\n.bookmark-item-username {\n  color: #777; }\n", ""]);
 
 	// exports
 
@@ -40944,7 +40941,7 @@
 
 
 	// module
-	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n\n.bookmark-manager-control {\n  display: block; }\n\n.bookmark-manager-header {\n  line-height: 4rem; }\n\n.bookmark-buttons {\n  padding-top: 8px;\n  padding-bottom: 8px; }\n\n.bookmark-buttons a {\n  text-decoration: none; }\n", ""]);
+	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n  .bookmark-manager-title:hover {\n    color: black; }\n\n.bookmark-manager-control {\n  display: block; }\n\n.bookmark-manager-header {\n  line-height: 4rem; }\n\n.bookmark-buttons {\n  padding-top: 8px;\n  padding-bottom: 8px; }\n\n.bookmark-buttons a {\n  text-decoration: none; }\n", ""]);
 
 	// exports
 
@@ -41787,11 +41784,11 @@
 
 	var _list2 = _interopRequireDefault(_list);
 
-	var _formEdit = __webpack_require__(213);
+	var _formEdit = __webpack_require__(214);
 
 	var _formEdit2 = _interopRequireDefault(_formEdit);
 
-	var _formCreate = __webpack_require__(217);
+	var _formCreate = __webpack_require__(218);
 
 	var _formCreate2 = _interopRequireDefault(_formCreate);
 
@@ -42089,7 +42086,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _item = __webpack_require__(246);
+	var _item = __webpack_require__(211);
 
 	var _item2 = _interopRequireDefault(_item);
 
@@ -42102,7 +42099,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(211);
+	__webpack_require__(212);
 
 	var TaskListComponent = function (_React$Component) {
 		_inherits(TaskListComponent, _React$Component);
@@ -42172,10 +42169,80 @@
 /* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TaskItemComponent = function (_React$Component) {
+		_inherits(TaskItemComponent, _React$Component);
+
+		function TaskItemComponent() {
+			_classCallCheck(this, TaskItemComponent);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(TaskItemComponent).apply(this, arguments));
+		}
+
+		_createClass(TaskItemComponent, [{
+			key: "render",
+			value: function render() {
+				var _props = this.props;
+				var task = _props.task;
+				var clickHandler = _props.clickHandler;
+				var removeHandler = _props.removeHandler;
+
+				var taskTitleHtml = task.title;
+				if (task.completed) taskTitleHtml = _react2.default.createElement(
+					"strike",
+					null,
+					task.title
+				);
+
+				return _react2.default.createElement(
+					"li",
+					{ className: "task-item", key: task.id },
+					_react2.default.createElement(
+						"a",
+						{ href: "#", onClick: clickHandler },
+						taskTitleHtml
+					),
+					_react2.default.createElement(
+						"a",
+						{ onClick: removeHandler, href: "#", className: "pull-right remove-task" },
+						"x"
+					)
+				);
+			}
+		}]);
+
+		return TaskItemComponent;
+	}(_react2.default.Component);
+
+	exports.default = TaskItemComponent;
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(212);
+	var content = __webpack_require__(213);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(170)(content, {});
@@ -42195,7 +42262,7 @@
 	}
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(169)();
@@ -42209,7 +42276,7 @@
 
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42218,7 +42285,7 @@
 	  value: true
 	});
 
-	var _form = __webpack_require__(214);
+	var _form = __webpack_require__(215);
 
 	var _form2 = _interopRequireDefault(_form);
 
@@ -42245,7 +42312,7 @@
 	exports.default = TaskEditFormComponent;
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42273,7 +42340,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(215);
+	__webpack_require__(216);
 
 	var TaskFormComponent = function (_React$Component) {
 		_inherits(TaskFormComponent, _React$Component);
@@ -42371,13 +42438,13 @@
 	exports.default = TaskFormComponent;
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(216);
+	var content = __webpack_require__(217);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(170)(content, {});
@@ -42397,7 +42464,7 @@
 	}
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(169)();
@@ -42411,7 +42478,7 @@
 
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42420,7 +42487,7 @@
 	  value: true
 	});
 
-	var _form = __webpack_require__(214);
+	var _form = __webpack_require__(215);
 
 	var _form2 = _interopRequireDefault(_form);
 
@@ -42447,7 +42514,7 @@
 	exports.default = TaskCreateFormComponent;
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42462,15 +42529,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _calendar = __webpack_require__(219);
+	var _calendar = __webpack_require__(220);
 
 	var _calendar2 = _interopRequireDefault(_calendar);
 
-	var _calendar3 = __webpack_require__(220);
+	var _calendar3 = __webpack_require__(221);
 
 	var _calendar4 = _interopRequireDefault(_calendar3);
 
-	var _detail = __webpack_require__(226);
+	var _detail = __webpack_require__(227);
 
 	var _detail2 = _interopRequireDefault(_detail);
 
@@ -42491,7 +42558,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(224);
+	__webpack_require__(225);
 
 	var CalendarManagerComponent = function (_React$Component) {
 		_inherits(CalendarManagerComponent, _React$Component);
@@ -42595,7 +42662,7 @@
 	exports.default = CalendarManagerComponent;
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -42612,15 +42679,17 @@
 	var calendarDayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	var calendarMonthLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	var calendarDaysInEachMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-	var hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+	var hourDigits = Array.apply(null, Array(24));
 
 	function generateHours() {
-		return hours.map(function (hour) {
-			var hourObj = {};
-			hourObj.hour = hour;
-			return hourObj;
+		return hourDigits.map(function (thing, index) {
+			var hour = index + ':00';
+			if (hour.length == 4) hour = '0' + hour;
+			return hour;
 		});
 	}
+
+	var hours = generateHours();
 
 	var Calendar = function () {
 		function Calendar() {
@@ -42741,7 +42810,7 @@
 		}, {
 			key: 'hours',
 			get: function get() {
-				return generateHours();
+				return hours;
 			}
 		}]);
 
@@ -42751,7 +42820,7 @@
 	exports.default = Calendar;
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42766,11 +42835,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _calendar = __webpack_require__(219);
+	var _calendar = __webpack_require__(220);
 
 	var _calendar2 = _interopRequireDefault(_calendar);
 
-	var _item = __webpack_require__(221);
+	var _item = __webpack_require__(222);
 
 	var _item2 = _interopRequireDefault(_item);
 
@@ -42783,7 +42852,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(224);
+	__webpack_require__(225);
 
 	var CalendarComponent = function (_React$Component) {
 		_inherits(CalendarComponent, _React$Component);
@@ -42904,7 +42973,7 @@
 	exports.default = CalendarComponent;
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42932,7 +43001,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(222);
+	__webpack_require__(223);
 
 	var CalendarItemComponent = function (_React$Component) {
 		_inherits(CalendarItemComponent, _React$Component);
@@ -43013,13 +43082,13 @@
 	exports.default = CalendarItemComponent;
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(223);
+	var content = __webpack_require__(224);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(170)(content, {});
@@ -43039,7 +43108,7 @@
 	}
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(169)();
@@ -43053,13 +43122,13 @@
 
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(225);
+	var content = __webpack_require__(226);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(170)(content, {});
@@ -43079,7 +43148,7 @@
 	}
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(169)();
@@ -43093,7 +43162,7 @@
 
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43135,7 +43204,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	// import styles for this component
-	__webpack_require__(227);
+	__webpack_require__(228);
 
 	var CalendarDetailComponent = function (_React$Component) {
 		_inherits(CalendarDetailComponent, _React$Component);
@@ -43234,7 +43303,7 @@
 
 				if (entry) {
 					var _ret = function () {
-						var hourHour = hour.hour.substring(0, 2);
+						var hourHour = hour.substring(0, 2);
 						var entries = _lodash2.default.filter(entry.entries, function (item) {
 							return item.time.substring(0, 2) == hourHour;
 						});
@@ -43260,14 +43329,14 @@
 		}, {
 			key: 'toggleSelectedHour',
 			value: function toggleSelectedHour(hour, event) {
-				if (this.activeHour.current == hour.hour) {
+				if (this.activeHour.current == hour) {
 					this.activeHour.clear();
 				} else {
 					var _refs2 = this.refs;
 					var calendarTitleInput = _refs2.calendarTitleInput;
 					var calendarTimeInput = _refs2.calendarTimeInput;
 
-					this.activeHour.set(hour.hour);
+					this.activeHour.set(hour);
 					calendarTitleInput.focus();
 				}
 			}
@@ -43284,15 +43353,15 @@
 
 				var hourList = calendar.hours.map(function (hour) {
 					var className = "calendar-hour hover-cursor--pointer";
-					if (_this3.activeHour.is(hour.hour)) className = className + ' active-hour';
+					if (_this3.activeHour.is(hour)) className = className + ' active-hour';
 					var events = _this3.getEventsForHour(hour);
 					return _react2.default.createElement(
 						'li',
-						{ className: className, key: hour.hour, onClick: _this3.toggleSelectedHour.bind(_this3, hour) },
+						{ className: className, key: hour, onClick: _this3.toggleSelectedHour.bind(_this3, hour) },
 						_react2.default.createElement(
 							'div',
 							{ className: 'calendar-hour-time padding-horizontal' },
-							hour.hour
+							hour
 						),
 						_react2.default.createElement(
 							'ul',
@@ -43381,13 +43450,13 @@
 	exports.default = CalendarDetailComponent;
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(228);
+	var content = __webpack_require__(229);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(170)(content, {});
@@ -43407,7 +43476,7 @@
 	}
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(169)();
@@ -43415,13 +43484,144 @@
 
 
 	// module
-	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #ddd; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px; }\n\n.calendar-hour-time, .calendar-hour-events {\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  min-width: 75%; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block;\n  background: rgba(70, 150, 229, 0.1);\n  padding: 2px 10px;\n  border: 1px solid #ccc;\n  position: relative; }\n  .calendar-hour-event:first-child {\n    margin-top: 10px; }\n  .calendar-hour-event:last-child {\n    margin-bottom: 10px; }\n\n.remove-event {\n  line-height: 14px;\n  position: absolute;\n  top: 3px;\n  right: 10px;\n  text-decoration: none;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour {\n  background: rgba(70, 150, 229, 0.05); }\n", ""]);
+	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #ddd; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px; }\n\n.calendar-hour-time, .calendar-hour-events {\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  min-width: 75%; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block;\n  background: rgba(70, 150, 229, 0.1);\n  padding: 2px 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  position: relative; }\n  .calendar-hour-event:first-child {\n    margin-top: 10px; }\n  .calendar-hour-event:last-child {\n    margin-bottom: 10px; }\n\n.remove-event {\n  line-height: 14px;\n  position: absolute;\n  top: 3px;\n  right: 10px;\n  text-decoration: none;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour {\n  background: rgba(70, 150, 229, 0.05); }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 229 */
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+					value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import styles for this component
+	__webpack_require__(231);
+
+	var ContactInfoComponent = function (_React$Component) {
+					_inherits(ContactInfoComponent, _React$Component);
+
+					function ContactInfoComponent() {
+									_classCallCheck(this, ContactInfoComponent);
+
+									return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInfoComponent).apply(this, arguments));
+					}
+
+					_createClass(ContactInfoComponent, [{
+									key: 'render',
+									value: function render() {
+													return _react2.default.createElement(
+																	'section',
+																	{ className: 'contact-panel full-height padding justify-centre' },
+																	_react2.default.createElement(
+																					'div',
+																					{ className: 'contact-info box' },
+																					_react2.default.createElement('img', { className: 'contact-landscape', src: '../../../static/landscape.jpg' }),
+																					_react2.default.createElement('img', { className: 'contact-img', src: '../../../static/ferg.jpg' }),
+																					_react2.default.createElement(
+																									'div',
+																									{ className: 'padding' },
+																									_react2.default.createElement(
+																													'h2',
+																													null,
+																													'Fergus Ruston'
+																									),
+																									_react2.default.createElement(
+																													'p',
+																													null,
+																													'I\'m a front end developer currently living in Oxford. I love building user interfaces. You can find me around the web as ',
+																													_react2.default.createElement(
+																																	'strong',
+																																	null,
+																																	'ergusto'
+																													),
+																													'.'
+																									),
+																									_react2.default.createElement(
+																													'p',
+																													null,
+																													'Want to hire me? Get in contact -> ',
+																													_react2.default.createElement(
+																																	'a',
+																																	{ href: 'mailto:ergusto@gmail.com' },
+																																	_react2.default.createElement(
+																																					'strong',
+																																					null,
+																																					'ergusto@gmail.com'
+																																	)
+																													)
+																									)
+																					)
+																	)
+													);
+									}
+					}]);
+
+					return ContactInfoComponent;
+	}(_react2.default.Component);
+
+	exports.default = ContactInfoComponent;
+
+/***/ },
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(232);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(170)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./contact.scss", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./contact.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(169)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".contact-info {\n  border-radius: 15px;\n  border-top-left-radius: 20px;\n  border-top-right-radius: 20px;\n  width: 100%;\n  max-width: 600px;\n  position: relative; }\n\n.contact-landscape {\n  width: 100%;\n  max-width: 100%;\n  border-top-left-radius: 15px;\n  border-top-right-radius: 15px; }\n\n.contact-img {\n  border-radius: 150px;\n  width: 150px;\n  border: 6px solid white;\n  margin-top: -160px;\n  margin-left: 20px; }\n\n.contact-info p {\n  margin-bottom: 0px; }\n\n.contact-info a {\n  text-decoration: none; }\n\n.skills {\n  padding: 0;\n  margin: 0px;\n  margin-top: 10px; }\n\n.skills li {\n  display: inline-block;\n  background: #777;\n  color: white;\n  padding: 4px 10px;\n  margin-left: 4px; }\n  .skills li:first-child {\n    margin-left: 0px; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43432,7 +43632,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _localstorageCollection = __webpack_require__(230);
+	var _localstorageCollection = __webpack_require__(234);
 
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 
@@ -43491,7 +43691,7 @@
 	exports.default = Bookmarks;
 
 /***/ },
-/* 230 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43506,11 +43706,11 @@
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
-	var _collection = __webpack_require__(231);
+	var _collection = __webpack_require__(235);
 
 	var _collection2 = _interopRequireDefault(_collection);
 
-	var _localstorage = __webpack_require__(233);
+	var _localstorage = __webpack_require__(237);
 
 	var _localstorage2 = _interopRequireDefault(_localstorage);
 
@@ -43563,7 +43763,6 @@
 
 				this.onCreate(function (model) {
 					if (model) {
-						if (!_this2.hasLocallyStoredModels) _this2.hasLocallyStoredModels = true;
 						var models = _lodash2.default.isArray(model) ? model : [model];
 						models.forEach(function (created) {
 							if (created && created.id) {
@@ -43640,7 +43839,7 @@
 	exports.default = LocalStorageCollection;
 
 /***/ },
-/* 231 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43659,7 +43858,7 @@
 
 	var _tools2 = _interopRequireDefault(_tools);
 
-	var _event = __webpack_require__(232);
+	var _event = __webpack_require__(236);
 
 	var _event2 = _interopRequireDefault(_event);
 
@@ -43830,7 +44029,7 @@
 	exports.default = Collection;
 
 /***/ },
-/* 232 */
+/* 236 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -43894,7 +44093,7 @@
 	exports.default = EventBehaviour;
 
 /***/ },
-/* 233 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43966,7 +44165,7 @@
 	exports.default = LocalStorageBehaviour;
 
 /***/ },
-/* 234 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43981,7 +44180,7 @@
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
-	var _localstorageCollection = __webpack_require__(230);
+	var _localstorageCollection = __webpack_require__(234);
 
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 
@@ -44060,7 +44259,7 @@
 	exports.default = Comments;
 
 /***/ },
-/* 235 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44071,7 +44270,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _localstorageCollection = __webpack_require__(230);
+	var _localstorageCollection = __webpack_require__(234);
 
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 
@@ -44114,7 +44313,7 @@
 	exports.default = Tasks;
 
 /***/ },
-/* 236 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44129,7 +44328,7 @@
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
-	var _localstorageCollection = __webpack_require__(230);
+	var _localstorageCollection = __webpack_require__(234);
 
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 
@@ -44174,7 +44373,7 @@
 	exports.default = Diary;
 
 /***/ },
-/* 237 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44189,11 +44388,11 @@
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
-	var _localstorage = __webpack_require__(233);
+	var _localstorage = __webpack_require__(237);
 
 	var _localstorage2 = _interopRequireDefault(_localstorage);
 
-	var _event = __webpack_require__(232);
+	var _event = __webpack_require__(236);
 
 	var _event2 = _interopRequireDefault(_event);
 
@@ -44290,13 +44489,13 @@
 	exports.default = User;
 
 /***/ },
-/* 238 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(239);
+	var content = __webpack_require__(243);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(170)(content, {});
@@ -44316,126 +44515,6 @@
 	}
 
 /***/ },
-/* 239 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(169)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "/* vendor */\n/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */ }\n\n/**\n * Remove default margin.\n */\nbody {\n  margin: 0; }\n\n/* HTML5 display definitions\n   ========================================================================== */\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block; }\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n[hidden],\ntemplate {\n  display: none; }\n\n/* Links\n   ========================================================================== */\n/**\n * Remove the gray background color from active links in IE 10.\n */\na {\n  background-color: transparent; }\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\na:active,\na:hover {\n  outline: 0; }\n\n/* Text-level semantics\n   ========================================================================== */\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\nb,\nstrong {\n  font-weight: bold; }\n\n/**\n * Address styling not present in Safari and Chrome.\n */\ndfn {\n  font-style: italic; }\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0; }\n\n/**\n * Address styling not present in IE 8/9.\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\nsmall {\n  font-size: 80%; }\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\n   ========================================================================== */\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\nimg {\n  border: 0; }\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\n   ========================================================================== */\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\nfigure {\n  margin: 1em 40px; }\n\n/**\n * Address differences between Firefox and other browsers.\n */\nhr {\n  box-sizing: content-box;\n  height: 0; }\n\n/**\n * Contain overflow in all browsers.\n */\npre {\n  overflow: auto; }\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em; }\n\n/* Forms\n   ========================================================================== */\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\nbutton {\n  overflow: visible; }\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\nbutton,\nselect {\n  text-transform: none; }\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\nbutton,\nhtml input[type=\"button\"],\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\n * Re-set default cursor for disabled elements.\n */\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default; }\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\ninput {\n  line-height: normal; }\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  box-sizing: content-box;\n  /* 2 */ }\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\n * Define consistent border, margin, and padding.\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\ntextarea {\n  overflow: auto; }\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\n   ========================================================================== */\n/**\n * Remove most spacing between table cells.\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd,\nth {\n  padding: 0; }\n\n/* base */\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*:before,\n*:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\nh1, h2, h3, h4, h5, h6 {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  background: #FCFCFC;\n  font-size: 14px;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; }\n\na {\n  color: #777; }\n\na:hover {\n  color: black; }\n\nlabel {\n  display: block;\n  color: #777;\n  margin-bottom: 6px; }\n\nform {\n  padding: 0;\n  margin: 0; }\n\nform .btn {\n  margin-right: 2px; }\n\n.field {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 6px 8px;\n  margin-bottom: 10px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 0px;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }\n\n.fieldCount {\n  color: #777;\n  font-size: 80%; }\n\n.field:focus {\n  outline: none;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);\n  border-color: black; }\n\n.inline-field {\n  display: inline-block;\n  padding: 0 5px; }\n\n.inline-field:first-child {\n  padding-left: 0px; }\n\n.form-error {\n  margin-bottom: 10px;\n  display: block;\n  color: #777; }\n\n/* helpers */\n/**\n * For modern browsers\n * 1. The space content is one way to avoid an Opera bug when the\n *    contenteditable attribute is included anywhere else in the document.\n *    Otherwise it causes space to appear at the top and bottom of elements\n *    that are clearfixed.\n * 2. The use of `table` rather than `block` is only necessary if using\n *    `:before` to contain the top-margins of child elements.\n */\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  /* 1 */\n  display: table;\n  /* 2 */ }\n\n.clearfix:after {\n  clear: both; }\n\n/**\n * For IE 6/7 only\n * Include this rule to trigger hasLayout and contain floats.\n */\n.clearfix {\n  *zoom: 1; }\n\n.bg-gray {\n  background: #f8f8f8; }\n\n.border-top {\n  border-top: 1px solid #ccc; }\n\n.border-right {\n  border-right: 1px solid #ccc; }\n\n.border-bottom {\n  border-bottom: 1px solid #ccc; }\n\n.border-left {\n  border-left: 1px solid #ccc; }\n\n.border-vertical {\n  border-top: 1px solid #ccc;\n  border-bottom: 1px solid #ccc; }\n\n.border-horizontal {\n  border-left: 1px solid #ccc;\n  border-right: 1px solid #ccc; }\n\n.margin {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-sm {\n  margin-top: 10px;\n  margin-right: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin.margin-left-sm {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-bottom: 20px;\n  margin-left: 10px; }\n\n.margin.margin-bottom-sm {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-bottom: 10px;\n  margin-left: 20px; }\n\n.margin.margin-right-sm {\n  margin-top: 20px;\n  margin-right: 10px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin.margin-top-sm {\n  margin-top: 10px;\n  margin-right: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-left {\n  margin-left: 20px; }\n\n.margin-bottom {\n  margin-bottom: 20px; }\n\n.margin-right {\n  margin-right: 20px; }\n\n.margin-top {\n  margin-top: 20px; }\n\n.margin-left-sm {\n  margin-left: 10px; }\n\n.margin-bottom-sm {\n  margin-bottom: 10px; }\n\n.margin-right-sm {\n  margin-right: 10px; }\n\n.margin-top-sm {\n  margin-top: 10px; }\n\n.margin-vertical {\n  margin-top: 20px;\n  margin-bottom: 20px; }\n\n.margin-vertical-sm {\n  margin-top: 10px;\n  margin-bottom: 10px; }\n\n.margin-vertical.margin-left {\n  margin-top: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-vertical-sm.margin-left {\n  margin-top: 10px;\n  margin-bottom: 10px;\n  margin-left: 20px; }\n\n.margin-vertical.margin-left-sm {\n  margin-top: 20px;\n  margin-bottom: 20px;\n  margin-left: 10px; }\n\n.margin-vertical-sm.margin-left-sm {\n  margin-top: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin-vertical.margin-right {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-bottom: 20px; }\n\n.margin-vertical-sm.margin-right {\n  margin-top: 10px;\n  margin-right: 20px;\n  margin-bottom: 10px; }\n\n.margin-vertical.margin-right-sm {\n  margin-top: 20px;\n  margin-right: 10px;\n  margin-bottom: 20px; }\n\n.margin-vertical-sm.margin-right-sm {\n  margin-top: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin-horizontal {\n  margin-right: 20px;\n  margin-left: 20px; }\n\n.margin-horizontal-sm {\n  margin-right: 10px;\n  margin-left: 10px; }\n\n.margin-horizontal.margin-top {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-left: 20px; }\n\n.margin-horizontal-sm.margin-top {\n  margin-top: 20px;\n  margin-right: 10px;\n  margin-left: 10px; }\n\n.margin-horizontal.margin-top-sm {\n  margin-top: 10px;\n  margin-right: 20px;\n  margin-left: 20px; }\n\n.margin-horizontal-sm.margin-top-sm {\n  margin-top: 10px;\n  margin-right: 10px;\n  margin-left: 10px; }\n\n.margin-horizontal.margin-bottom {\n  margin-right: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-horizontal-sm.margin-bottom {\n  margin-right: 10px;\n  margin-bottom: 20px;\n  margin-left: 10px; }\n\n.margin-horizontal.margin-bottom-sm {\n  margin-right: 20px;\n  margin-bottom: 10px;\n  margin-left: 20px; }\n\n.margin-horizontal-sm.margin-bottom-sm {\n  margin-right: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin-vertical.margin-horizontal-sm {\n  margin-top: 20px;\n  margin-right: 10px;\n  margin-bottom: 20px;\n  margin-left: 10px; }\n\n.margin-horizontal.margin-vertical-sm {\n  margin-top: 10px;\n  margin-right: 20px;\n  margin-bottom: 10px;\n  margin-left: 20px; }\n\n.margin-except-top {\n  margin-right: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-except-right {\n  margin-top: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-except-bottom {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-left: 20px; }\n\n.margin-except-left {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-bottom: 20px; }\n\n.margin-sm-except-top {\n  margin-right: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin-sm-except-right {\n  margin-top: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin-sm-except-bottom {\n  margin-top: 10px;\n  margin-right: 10px;\n  margin-left: 10px; }\n\n.margin-sm-except-left {\n  margin-top: 10px;\n  margin-right: 10px;\n  margin-bottom: 10px; }\n\n.padding {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-sm {\n  padding-top: 10px;\n  padding-right: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding.padding-left-sm {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-bottom: 20px;\n  padding-left: 10px; }\n\n.padding.padding-bottom-sm {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-bottom: 10px;\n  padding-left: 20px; }\n\n.padding.padding-right-sm {\n  padding-top: 20px;\n  padding-right: 10px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding.padding-top-sm {\n  padding-top: 10px;\n  padding-right: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-left {\n  padding-left: 20px; }\n\n.padding-bottom {\n  padding-bottom: 20px; }\n\n.padding-right {\n  padding-right: 20px; }\n\n.padding-top {\n  padding-top: 20px; }\n\n.padding-left-sm {\n  padding-left: 10px; }\n\n.padding-bottom-sm {\n  padding-bottom: 10px; }\n\n.padding-right-sm {\n  padding-right: 10px; }\n\n.padding-top-sm {\n  padding-top: 10px; }\n\n.padding-vertical {\n  padding-top: 20px;\n  padding-bottom: 20px; }\n\n.padding-vertical-sm {\n  padding-top: 10px;\n  padding-bottom: 10px; }\n\n.padding-vertical.padding-left {\n  padding-top: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-vertical-sm.padding-left {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  padding-left: 20px; }\n\n.padding-vertical.padding-left-sm {\n  padding-top: 20px;\n  padding-bottom: 20px;\n  padding-left: 10px; }\n\n.padding-vertical-sm.padding-left-sm {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding-vertical.padding-right {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-bottom: 20px; }\n\n.padding-vertical-sm.padding-right {\n  padding-top: 10px;\n  padding-right: 20px;\n  padding-bottom: 10px; }\n\n.padding-vertical.padding-right-sm {\n  padding-top: 20px;\n  padding-right: 10px;\n  padding-bottom: 20px; }\n\n.padding-vertical-sm.padding-right-sm {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding-horizontal {\n  padding-right: 20px;\n  padding-left: 20px; }\n\n.padding-horizontal-sm {\n  padding-right: 10px;\n  padding-left: 10px; }\n\n.padding-horizontal.padding-top {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-left: 20px; }\n\n.padding-horizontal-sm.padding-top {\n  padding-top: 20px;\n  padding-right: 10px;\n  padding-left: 10px; }\n\n.padding-horizontal.padding-top-sm {\n  padding-top: 10px;\n  padding-right: 20px;\n  padding-left: 20px; }\n\n.padding-horizontal-sm.padding-top-sm {\n  padding-top: 10px;\n  padding-right: 10px;\n  padding-left: 10px; }\n\n.padding-horizontal.padding-bottom {\n  padding-right: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-horizontal-sm.padding-bottom {\n  padding-right: 10px;\n  padding-bottom: 20px;\n  padding-left: 10px; }\n\n.padding-horizontal.padding-bottom-sm {\n  padding-right: 20px;\n  padding-bottom: 10px;\n  padding-left: 20px; }\n\n.padding-horizontal-sm.padding-bottom-sm {\n  padding-right: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding-vertical.padding-horizontal-sm {\n  padding-top: 20px;\n  padding-right: 10px;\n  padding-bottom: 20px;\n  padding-left: 10px; }\n\n.padding-horizontal.padding-vertical-sm {\n  padding-top: 10px;\n  padding-right: 20px;\n  padding-bottom: 10px;\n  padding-left: 20px; }\n\n.padding-except-top {\n  padding-right: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-except-right {\n  padding-top: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-except-bottom {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-left: 20px; }\n\n.padding-except-left {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-bottom: 20px; }\n\n.padding-sm-except-top {\n  padding-right: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding-sm-except-right {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding-sm-except-bottom {\n  padding-top: 10px;\n  padding-right: 10px;\n  padding-left: 10px; }\n\n.padding-sm-except-left {\n  padding-top: 10px;\n  padding-right: 10px;\n  padding-bottom: 10px; }\n\n.flex-col-container, .flex-col {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex; }\n\n.flex-col-container {\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.flex-col-inner {\n  width: 100%;\n  display: block; }\n\n.opaque {\n  opacity: 1; }\n\n.black {\n  color: black; }\n\n.hidden {\n  display: none; }\n\n.seethrough {\n  opacity: 0; }\n\n.invisible {\n  visibility: hidden; }\n\n.muted {\n  color: #777; }\n\n.muted {\n  color: #777; }\n\n.pull-right {\n  float: right; }\n\n.full-height {\n  min-height: 100vh; }\n\n.centred {\n  margin: 0 auto; }\n\n.centred.margin-top {\n  margin: 20px auto 0px; }\n\n.centred.margin-bottom {\n  margin: 0px auto 20px; }\n\n.hover-cursor--pointer:hover {\n  cursor: pointer; }\n\n.hover-cursor--default {\n  cursor: default; }\n\n.box-shadow {\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.box-shadow-inset {\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075) inset; }\n\n/* objects */\n.btn {\n  display: inline-block;\n  border: 1px solid #ccc;\n  background: white;\n  padding: 4px 8px;\n  text-decoration: none;\n  font-size: 90%;\n  color: #777;\n  border-radius: 0px; }\n\n.btn:hover {\n  border-color: black;\n  color: black;\n  cursor: pointer; }\n\n.btn:active {\n  border-color: #ccc;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.btn-group .btn {\n  margin-right: 2px; }\n\n.btn-group .btn:last-child {\n  margin-right: 0px; }\n\n.btn-wide {\n  padding: 4px 16px; }\n\n.btn-tall {\n  padding: 8px 8px; }\n\n.btn-large {\n  padding: 8px 16px; }\n\n.media {\n  display: flex;\n  align-items: flex-start; }\n\n.media-figure {\n  margin-right: 1em; }\n\n.media-body {\n  flex: 1; }\n\n.box {\n  background: white;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.box-header {\n  border-bottom: 1px solid #ccc; }\n\n.box.borderless {\n  border: none; }\n\n.dropdown {\n  position: absolute;\n  z-index: 100;\n  display: block; }\n\n.dropdown.hidden {\n  display: none; }\n\n.horizontal-list-menu, .horizontal-list-menu--btns {\n  list-style: none;\n  list-style-type: none;\n  margin: 0; }\n\n.horizontal-list-menu li, .horizontal-list-menu--btns li {\n  display: inline-block;\n  padding-right: 10px; }\n\n.horizontal-list-menu li.pull-right, .horizontal-list-menu--btns li.pull-right {\n  padding-right: 0px; }\n\n.horizontal-list-menu a, .horizontal-list-menu--btns a {\n  margin-right: 0px; }\n\n.horizontal-list-menu a:hover, .horizontal-list-menu--btns a:hover {\n  color: black; }\n\n.horizontal-list-menu--btns li {\n  padding-right: 0px;\n  display: inline-block; }\n\n.horizontal-list-menu--btns li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.horizontal-list-menu--btns .btn {\n  padding: 0px 1rem;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.horizontal-list-menu--btns .btn.active {\n  color: black;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.horizontal-list-menu--btns .btn:hover {\n  border-color: #ccc; }\n\n.panel {\n  padding: 20px; }\n\n.justify-centre {\n  -moz-align-items: center;\n  -webkit-align-items: center;\n  -ms-align-items: center;\n  align-items: center;\n  display: -moz-flex;\n  display: -webkit-flex;\n  display: -ms-flex;\n  display: flex;\n  -moz-justify-content: center;\n  -webkit-justify-content: center;\n  -ms-justify-content: center;\n  justify-content: center; }\n\n.example {\n  width: 100%; }\n\n.comments-example {\n  padding-top: 4rem; }\n\n.bookmarks-example {\n  padding-top: 100px; }\n\n.calendar-example .example {\n  max-width: 1000px; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 240 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _activeModel = __webpack_require__(191);
-
-	var _activeModel2 = _interopRequireDefault(_activeModel);
-
-	var _item = __webpack_require__(244);
-
-	var _item2 = _interopRequireDefault(_item);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import styles for this component
-	__webpack_require__(242);
-
-	var WordLearner = function (_React$Component) {
-		_inherits(WordLearner, _React$Component);
-
-		function WordLearner(props) {
-			_classCallCheck(this, WordLearner);
-
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(WordLearner).call(this, props));
-
-			_this.state = {};
-			_this.activeWord = new _activeModel2.default(_this);
-			return _this;
-		}
-
-		_createClass(WordLearner, [{
-			key: 'render',
-			value: function render() {
-				var wordHTML = undefined;
-				var words = this.props.words;
-
-				var wordList = words.get();
-
-				if (wordList.length) {
-					wordHTML = wordList.map(function (word) {
-						return _react2.default.createElement(_item2.default, { key: Math.random(), word: word });
-					});
-				}
-
-				return _react2.default.createElement(
-					'section',
-					{ className: 'words-example full-height padding justify-centre' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'words' },
-						wordHTML
-					)
-				);
-			}
-		}]);
-
-		return WordLearner;
-	}(_react2.default.Component);
-
-	exports.default = WordLearner;
-
-/***/ },
-/* 241 */,
-/* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(243);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(170)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./words.scss", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./words.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
 /* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -44444,688 +44523,7 @@
 
 
 	// module
-	exports.push([module.id, ".words-example {\n  position: relative; }\n\n.word {\n  display: inline-block; }\n\n.word:hover {\n  font-size: 200%; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 244 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _randomcolor = __webpack_require__(245);
-
-	var _randomcolor2 = _interopRequireDefault(_randomcolor);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var WordItemComponent = function (_React$Component) {
-	    _inherits(WordItemComponent, _React$Component);
-
-	    function WordItemComponent() {
-	        _classCallCheck(this, WordItemComponent);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(WordItemComponent).apply(this, arguments));
-	    }
-
-	    _createClass(WordItemComponent, [{
-	        key: 'render',
-	        value: function render() {
-	            var word = this.props.word;
-
-	            var style = {
-	                color: (0, _randomcolor2.default)({ hue: 'blue' }),
-	                fontSize: Math.floor(Math.random() * 4.5 + 1) + 'rem'
-	            };
-
-	            return _react2.default.createElement(
-	                'p',
-	                { className: 'word', style: style },
-	                word.word
-	            );
-	        }
-	    }]);
-
-	    return WordItemComponent;
-	}(_react2.default.Component);
-
-	exports.default = WordItemComponent;
-
-/***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// randomColor by David Merfield under the MIT license
-	// https://github.com/davidmerfield/randomColor/
-	;(function(root, factory) {
-
-	  // Support AMD
-	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-	  // Support CommonJS
-	  } else if (typeof exports === 'object') {
-	    var randomColor = factory();
-
-	    // Support NodeJS & Component, which allow module.exports to be a function
-	    if (typeof module === 'object' && module && module.exports) {
-	      exports = module.exports = randomColor;
-	    }
-
-	    // Support CommonJS 1.1.1 spec
-	    exports.randomColor = randomColor;
-
-	  // Support vanilla script loading
-	  } else {
-	    root.randomColor = factory();
-	  }
-
-	}(this, function() {
-
-	  // Seed to get repeatable colors
-	  var seed = null;
-
-	  // Shared color dictionary
-	  var colorDictionary = {};
-
-	  // Populate the color dictionary
-	  loadColorBounds();
-
-	  var randomColor = function (options) {
-
-	    options = options || {};
-
-	    // Check if there is a seed and ensure it's an
-	    // integer. Otherwise, reset the seed value.
-	    if (options.seed && options.seed === parseInt(options.seed, 10)) {
-	      seed = options.seed;
-
-	    // Something was passed as a seed but it wasn't an integer
-	    } else if (options.seed !== undefined && options.seed !== null) {
-	      throw new TypeError('The seed value must be an integer');
-
-	    // No seed, reset the value outside.
-	    } else {
-	      seed = null;
-	    }
-
-	    var H,S,B;
-
-	    // Check if we need to generate multiple colors
-	    if (options.count !== null && options.count !== undefined) {
-
-	      var totalColors = options.count,
-	          colors = [];
-
-	      options.count = null;
-
-	      while (totalColors > colors.length) {
-
-	        // Since we're generating multiple colors,
-	        // incremement the seed. Otherwise we'd just
-	        // generate the same color each time...
-	        if (seed && options.seed) options.seed += 1;
-
-	        colors.push(randomColor(options));
-	      }
-
-	      options.count = totalColors;
-
-	      return colors;
-	    }
-
-	    // First we pick a hue (H)
-	    H = pickHue(options);
-
-	    // Then use H to determine saturation (S)
-	    S = pickSaturation(H, options);
-
-	    // Then use S and H to determine brightness (B).
-	    B = pickBrightness(H, S, options);
-
-	    // Then we return the HSB color in the desired format
-	    return setFormat([H,S,B], options);
-	  };
-
-	  function pickHue (options) {
-
-	    var hueRange = getHueRange(options.hue),
-	        hue = randomWithin(hueRange);
-
-	    // Instead of storing red as two seperate ranges,
-	    // we group them, using negative numbers
-	    if (hue < 0) {hue = 360 + hue;}
-
-	    return hue;
-
-	  }
-
-	  function pickSaturation (hue, options) {
-
-	    if (options.luminosity === 'random') {
-	      return randomWithin([0,100]);
-	    }
-
-	    if (options.hue === 'monochrome') {
-	      return 0;
-	    }
-
-	    var saturationRange = getSaturationRange(hue);
-
-	    var sMin = saturationRange[0],
-	        sMax = saturationRange[1];
-
-	    switch (options.luminosity) {
-
-	      case 'bright':
-	        sMin = 55;
-	        break;
-
-	      case 'dark':
-	        sMin = sMax - 10;
-	        break;
-
-	      case 'light':
-	        sMax = 55;
-	        break;
-	   }
-
-	    return randomWithin([sMin, sMax]);
-
-	  }
-
-	  function pickBrightness (H, S, options) {
-
-	    var bMin = getMinimumBrightness(H, S),
-	        bMax = 100;
-
-	    switch (options.luminosity) {
-
-	      case 'dark':
-	        bMax = bMin + 20;
-	        break;
-
-	      case 'light':
-	        bMin = (bMax + bMin)/2;
-	        break;
-
-	      case 'random':
-	        bMin = 0;
-	        bMax = 100;
-	        break;
-	    }
-
-	    return randomWithin([bMin, bMax]);
-	  }
-
-	  function setFormat (hsv, options) {
-
-	    switch (options.format) {
-
-	      case 'hsvArray':
-	        return hsv;
-
-	      case 'hslArray':
-	        return HSVtoHSL(hsv);
-
-	      case 'hsl':
-	        var hsl = HSVtoHSL(hsv);
-	        return 'hsl('+hsl[0]+', '+hsl[1]+'%, '+hsl[2]+'%)';
-
-	      case 'hsla':
-	        var hslColor = HSVtoHSL(hsv);
-	        return 'hsla('+hslColor[0]+', '+hslColor[1]+'%, '+hslColor[2]+'%, ' + Math.random() + ')';
-
-	      case 'rgbArray':
-	        return HSVtoRGB(hsv);
-
-	      case 'rgb':
-	        var rgb = HSVtoRGB(hsv);
-	        return 'rgb(' + rgb.join(', ') + ')';
-
-	      case 'rgba':
-	        var rgbColor = HSVtoRGB(hsv);
-	        return 'rgba(' + rgbColor.join(', ') + ', ' + Math.random() + ')';
-
-	      default:
-	        return HSVtoHex(hsv);
-	    }
-
-	  }
-
-	  function getMinimumBrightness(H, S) {
-
-	    var lowerBounds = getColorInfo(H).lowerBounds;
-
-	    for (var i = 0; i < lowerBounds.length - 1; i++) {
-
-	      var s1 = lowerBounds[i][0],
-	          v1 = lowerBounds[i][1];
-
-	      var s2 = lowerBounds[i+1][0],
-	          v2 = lowerBounds[i+1][1];
-
-	      if (S >= s1 && S <= s2) {
-
-	         var m = (v2 - v1)/(s2 - s1),
-	             b = v1 - m*s1;
-
-	         return m*S + b;
-	      }
-
-	    }
-
-	    return 0;
-	  }
-
-	  function getHueRange (colorInput) {
-
-	    if (typeof parseInt(colorInput) === 'number') {
-
-	      var number = parseInt(colorInput);
-
-	      if (number < 360 && number > 0) {
-	        return [number, number];
-	      }
-
-	    }
-
-	    if (typeof colorInput === 'string') {
-
-	      if (colorDictionary[colorInput]) {
-	        var color = colorDictionary[colorInput];
-	        if (color.hueRange) {return color.hueRange;}
-	      }
-	    }
-
-	    return [0,360];
-
-	  }
-
-	  function getSaturationRange (hue) {
-	    return getColorInfo(hue).saturationRange;
-	  }
-
-	  function getColorInfo (hue) {
-
-	    // Maps red colors to make picking hue easier
-	    if (hue >= 334 && hue <= 360) {
-	      hue-= 360;
-	    }
-
-	    for (var colorName in colorDictionary) {
-	       var color = colorDictionary[colorName];
-	       if (color.hueRange &&
-	           hue >= color.hueRange[0] &&
-	           hue <= color.hueRange[1]) {
-	          return colorDictionary[colorName];
-	       }
-	    } return 'Color not found';
-	  }
-
-	  function randomWithin (range) {
-	    if (seed === null) {
-	      return Math.floor(range[0] + Math.random()*(range[1] + 1 - range[0]));
-	    } else {
-	      //Seeded random algorithm from http://indiegamr.com/generate-repeatable-random-numbers-in-js/
-	      var max = range[1] || 1;
-	      var min = range[0] || 0;
-	      seed = (seed * 9301 + 49297) % 233280;
-	      var rnd = seed / 233280.0;
-	      return Math.floor(min + rnd * (max - min));
-	    }
-	  }
-
-	  function HSVtoHex (hsv){
-
-	    var rgb = HSVtoRGB(hsv);
-
-	    function componentToHex(c) {
-	        var hex = c.toString(16);
-	        return hex.length == 1 ? '0' + hex : hex;
-	    }
-
-	    var hex = '#' + componentToHex(rgb[0]) + componentToHex(rgb[1]) + componentToHex(rgb[2]);
-
-	    return hex;
-
-	  }
-
-	  function defineColor (name, hueRange, lowerBounds) {
-
-	    var sMin = lowerBounds[0][0],
-	        sMax = lowerBounds[lowerBounds.length - 1][0],
-
-	        bMin = lowerBounds[lowerBounds.length - 1][1],
-	        bMax = lowerBounds[0][1];
-
-	    colorDictionary[name] = {
-	      hueRange: hueRange,
-	      lowerBounds: lowerBounds,
-	      saturationRange: [sMin, sMax],
-	      brightnessRange: [bMin, bMax]
-	    };
-
-	  }
-
-	  function loadColorBounds () {
-
-	    defineColor(
-	      'monochrome',
-	      null,
-	      [[0,0],[100,0]]
-	    );
-
-	    defineColor(
-	      'red',
-	      [-26,18],
-	      [[20,100],[30,92],[40,89],[50,85],[60,78],[70,70],[80,60],[90,55],[100,50]]
-	    );
-
-	    defineColor(
-	      'orange',
-	      [19,46],
-	      [[20,100],[30,93],[40,88],[50,86],[60,85],[70,70],[100,70]]
-	    );
-
-	    defineColor(
-	      'yellow',
-	      [47,62],
-	      [[25,100],[40,94],[50,89],[60,86],[70,84],[80,82],[90,80],[100,75]]
-	    );
-
-	    defineColor(
-	      'green',
-	      [63,178],
-	      [[30,100],[40,90],[50,85],[60,81],[70,74],[80,64],[90,50],[100,40]]
-	    );
-
-	    defineColor(
-	      'blue',
-	      [179, 257],
-	      [[20,100],[30,86],[40,80],[50,74],[60,60],[70,52],[80,44],[90,39],[100,35]]
-	    );
-
-	    defineColor(
-	      'purple',
-	      [258, 282],
-	      [[20,100],[30,87],[40,79],[50,70],[60,65],[70,59],[80,52],[90,45],[100,42]]
-	    );
-
-	    defineColor(
-	      'pink',
-	      [283, 334],
-	      [[20,100],[30,90],[40,86],[60,84],[80,80],[90,75],[100,73]]
-	    );
-
-	  }
-
-	  function HSVtoRGB (hsv) {
-
-	    // this doesn't work for the values of 0 and 360
-	    // here's the hacky fix
-	    var h = hsv[0];
-	    if (h === 0) {h = 1;}
-	    if (h === 360) {h = 359;}
-
-	    // Rebase the h,s,v values
-	    h = h/360;
-	    var s = hsv[1]/100,
-	        v = hsv[2]/100;
-
-	    var h_i = Math.floor(h*6),
-	      f = h * 6 - h_i,
-	      p = v * (1 - s),
-	      q = v * (1 - f*s),
-	      t = v * (1 - (1 - f)*s),
-	      r = 256,
-	      g = 256,
-	      b = 256;
-
-	    switch(h_i) {
-	      case 0: r = v; g = t; b = p;  break;
-	      case 1: r = q; g = v; b = p;  break;
-	      case 2: r = p; g = v; b = t;  break;
-	      case 3: r = p; g = q; b = v;  break;
-	      case 4: r = t; g = p; b = v;  break;
-	      case 5: r = v; g = p; b = q;  break;
-	    }
-
-	    var result = [Math.floor(r*255), Math.floor(g*255), Math.floor(b*255)];
-	    return result;
-	  }
-
-	  function HSVtoHSL (hsv) {
-	    var h = hsv[0],
-	      s = hsv[1]/100,
-	      v = hsv[2]/100,
-	      k = (2-s)*v;
-
-	    return [
-	      h,
-	      Math.round(s*v / (k<1 ? k : 2-k) * 10000) / 100,
-	      k/2 * 100
-	    ];
-	  }
-
-	  return randomColor;
-	}));
-
-/***/ },
-/* 246 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var TaskItemComponent = function (_React$Component) {
-		_inherits(TaskItemComponent, _React$Component);
-
-		function TaskItemComponent() {
-			_classCallCheck(this, TaskItemComponent);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(TaskItemComponent).apply(this, arguments));
-		}
-
-		_createClass(TaskItemComponent, [{
-			key: "render",
-			value: function render() {
-				var _props = this.props;
-				var task = _props.task;
-				var clickHandler = _props.clickHandler;
-				var removeHandler = _props.removeHandler;
-
-				var taskTitleHtml = task.title;
-				if (task.completed) taskTitleHtml = _react2.default.createElement(
-					"strike",
-					null,
-					task.title
-				);
-
-				return _react2.default.createElement(
-					"li",
-					{ className: "task-item", key: task.id },
-					_react2.default.createElement(
-						"a",
-						{ href: "#", onClick: clickHandler },
-						taskTitleHtml
-					),
-					_react2.default.createElement(
-						"a",
-						{ onClick: removeHandler, href: "#", className: "pull-right remove-task" },
-						"x"
-					)
-				);
-			}
-		}]);
-
-		return TaskItemComponent;
-	}(_react2.default.Component);
-
-	exports.default = TaskItemComponent;
-
-/***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-					value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import styles for this component
-	__webpack_require__(248);
-
-	var ContactInfoComponent = function (_React$Component) {
-					_inherits(ContactInfoComponent, _React$Component);
-
-					function ContactInfoComponent() {
-									_classCallCheck(this, ContactInfoComponent);
-
-									return _possibleConstructorReturn(this, Object.getPrototypeOf(ContactInfoComponent).apply(this, arguments));
-					}
-
-					_createClass(ContactInfoComponent, [{
-									key: 'render',
-									value: function render() {
-													return _react2.default.createElement(
-																	'section',
-																	{ className: 'contact-panel full-height padding justify-centre' },
-																	_react2.default.createElement(
-																					'div',
-																					{ className: 'contact-info box' },
-																					_react2.default.createElement('img', { className: 'contact-landscape', src: '../../../static/landscape.jpg' }),
-																					_react2.default.createElement('img', { className: 'contact-img', src: '../../../static/ferg.jpg' }),
-																					_react2.default.createElement(
-																									'div',
-																									{ className: 'padding' },
-																									_react2.default.createElement(
-																													'h2',
-																													null,
-																													'Fergus Ruston'
-																									),
-																									_react2.default.createElement(
-																													'p',
-																													null,
-																													'I\'m a front end developer currently living in Oxford. I love building user interfaces. You can find me around the web as ',
-																													_react2.default.createElement(
-																																	'strong',
-																																	null,
-																																	'ergusto'
-																													),
-																													'.'
-																									),
-																									_react2.default.createElement(
-																													'p',
-																													null,
-																													'Want to hire me? Get in contact -> ',
-																													_react2.default.createElement(
-																																	'a',
-																																	{ href: 'mailto:ergusto@gmail.com' },
-																																	_react2.default.createElement(
-																																					'strong',
-																																					null,
-																																					'ergusto@gmail.com'
-																																	)
-																													)
-																									)
-																					)
-																	)
-													);
-									}
-					}]);
-
-					return ContactInfoComponent;
-	}(_react2.default.Component);
-
-	exports.default = ContactInfoComponent;
-
-/***/ },
-/* 248 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(249);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(170)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./contact.scss", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/sass-loader/index.js!./contact.scss");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 249 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(169)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".contact-info {\n  border-radius: 15px;\n  border-top-left-radius: 20px;\n  border-top-right-radius: 20px;\n  color: #777;\n  width: 100%;\n  max-width: 600px;\n  position: relative; }\n\n.contact-landscape {\n  width: 100%;\n  max-width: 100%;\n  border-top-left-radius: 15px;\n  border-top-right-radius: 15px; }\n\n.contact-img {\n  border-radius: 150px;\n  width: 150px;\n  border: 6px solid white;\n  margin-top: -160px;\n  margin-left: 20px; }\n\n.contact-info p {\n  margin-bottom: 0px; }\n\n.contact-info a {\n  text-decoration: none; }\n\n.skills {\n  padding: 0;\n  margin: 0px;\n  margin-top: 10px; }\n\n.skills li {\n  display: inline-block;\n  background: #777;\n  color: white;\n  padding: 4px 10px;\n  margin-left: 4px; }\n  .skills li:first-child {\n    margin-left: 0px; }\n", ""]);
+	exports.push([module.id, "/* vendor */\n/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */ }\n\n/**\n * Remove default margin.\n */\nbody {\n  margin: 0; }\n\n/* HTML5 display definitions\n   ========================================================================== */\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block; }\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */ }\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\naudio:not([controls]) {\n  display: none;\n  height: 0; }\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n[hidden],\ntemplate {\n  display: none; }\n\n/* Links\n   ========================================================================== */\n/**\n * Remove the gray background color from active links in IE 10.\n */\na {\n  background-color: transparent; }\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\na:active,\na:hover {\n  outline: 0; }\n\n/* Text-level semantics\n   ========================================================================== */\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\nabbr[title] {\n  border-bottom: 1px dotted; }\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\nb,\nstrong {\n  font-weight: bold; }\n\n/**\n * Address styling not present in Safari and Chrome.\n */\ndfn {\n  font-style: italic; }\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0; }\n\n/**\n * Address styling not present in IE 8/9.\n */\nmark {\n  background: #ff0;\n  color: #000; }\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\nsmall {\n  font-size: 80%; }\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline; }\n\nsup {\n  top: -0.5em; }\n\nsub {\n  bottom: -0.25em; }\n\n/* Embedded content\n   ========================================================================== */\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\nimg {\n  border: 0; }\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\nsvg:not(:root) {\n  overflow: hidden; }\n\n/* Grouping content\n   ========================================================================== */\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\nfigure {\n  margin: 1em 40px; }\n\n/**\n * Address differences between Firefox and other browsers.\n */\nhr {\n  box-sizing: content-box;\n  height: 0; }\n\n/**\n * Contain overflow in all browsers.\n */\npre {\n  overflow: auto; }\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em; }\n\n/* Forms\n   ========================================================================== */\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */ }\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\nbutton {\n  overflow: visible; }\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\nbutton,\nselect {\n  text-transform: none; }\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\nbutton,\nhtml input[type=\"button\"],\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */ }\n\n/**\n * Re-set default cursor for disabled elements.\n */\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default; }\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0; }\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\ninput {\n  line-height: normal; }\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto; }\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  box-sizing: content-box;\n  /* 2 */ }\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none; }\n\n/**\n * Define consistent border, margin, and padding.\n */\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em; }\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */ }\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\ntextarea {\n  overflow: auto; }\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\noptgroup {\n  font-weight: bold; }\n\n/* Tables\n   ========================================================================== */\n/**\n * Remove most spacing between table cells.\n */\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\ntd,\nth {\n  padding: 0; }\n\n/* base */\n* {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\n*:before,\n*:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box; }\n\nh1, h2, h3, h4, h5, h6 {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  background: #FCFCFC;\n  font-size: 14px;\n  font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif; }\n\na {\n  color: #777; }\n\na:hover {\n  color: black; }\n\nlabel {\n  display: block;\n  color: #777;\n  margin-bottom: 6px; }\n\nform {\n  padding: 0;\n  margin: 0; }\n\nform .btn {\n  margin-right: 2px; }\n\n.field {\n  display: block;\n  width: 100%;\n  max-width: 100%;\n  padding: 6px 8px;\n  margin-bottom: 10px;\n  font-size: 14px;\n  line-height: 1.42857143;\n  color: #555;\n  background-color: #fff;\n  background-image: none;\n  border: 1px solid #ccc;\n  border-radius: 0px;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;\n  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;\n  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }\n\n.fieldCount {\n  color: #777;\n  font-size: 80%; }\n\n.field:focus {\n  outline: none;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075);\n  border-color: black; }\n\n.inline-field {\n  display: inline-block;\n  padding: 0 5px; }\n\n.inline-field:first-child {\n  padding-left: 0px; }\n\n.form-error {\n  margin-bottom: 10px;\n  display: block;\n  color: #777; }\n\n/* helpers */\n/**\n * For modern browsers\n * 1. The space content is one way to avoid an Opera bug when the\n *    contenteditable attribute is included anywhere else in the document.\n *    Otherwise it causes space to appear at the top and bottom of elements\n *    that are clearfixed.\n * 2. The use of `table` rather than `block` is only necessary if using\n *    `:before` to contain the top-margins of child elements.\n */\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  /* 1 */\n  display: table;\n  /* 2 */ }\n\n.clearfix:after {\n  clear: both; }\n\n/**\n * For IE 6/7 only\n * Include this rule to trigger hasLayout and contain floats.\n */\n.clearfix {\n  *zoom: 1; }\n\n.bg-gray {\n  background: #f8f8f8; }\n\n.border-top {\n  border-top: 1px solid #ccc; }\n\n.border-right {\n  border-right: 1px solid #ccc; }\n\n.border-bottom {\n  border-bottom: 1px solid #ccc; }\n\n.border-left {\n  border-left: 1px solid #ccc; }\n\n.border-vertical {\n  border-top: 1px solid #ccc;\n  border-bottom: 1px solid #ccc; }\n\n.border-horizontal {\n  border-left: 1px solid #ccc;\n  border-right: 1px solid #ccc; }\n\n.margin {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-sm {\n  margin-top: 10px;\n  margin-right: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin.margin-left-sm {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-bottom: 20px;\n  margin-left: 10px; }\n\n.margin.margin-bottom-sm {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-bottom: 10px;\n  margin-left: 20px; }\n\n.margin.margin-right-sm {\n  margin-top: 20px;\n  margin-right: 10px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin.margin-top-sm {\n  margin-top: 10px;\n  margin-right: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-left {\n  margin-left: 20px; }\n\n.margin-bottom {\n  margin-bottom: 20px; }\n\n.margin-right {\n  margin-right: 20px; }\n\n.margin-top {\n  margin-top: 20px; }\n\n.margin-left-sm {\n  margin-left: 10px; }\n\n.margin-bottom-sm {\n  margin-bottom: 10px; }\n\n.margin-right-sm {\n  margin-right: 10px; }\n\n.margin-top-sm {\n  margin-top: 10px; }\n\n.margin-vertical {\n  margin-top: 20px;\n  margin-bottom: 20px; }\n\n.margin-vertical-sm {\n  margin-top: 10px;\n  margin-bottom: 10px; }\n\n.margin-vertical.margin-left {\n  margin-top: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-vertical-sm.margin-left {\n  margin-top: 10px;\n  margin-bottom: 10px;\n  margin-left: 20px; }\n\n.margin-vertical.margin-left-sm {\n  margin-top: 20px;\n  margin-bottom: 20px;\n  margin-left: 10px; }\n\n.margin-vertical-sm.margin-left-sm {\n  margin-top: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin-vertical.margin-right {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-bottom: 20px; }\n\n.margin-vertical-sm.margin-right {\n  margin-top: 10px;\n  margin-right: 20px;\n  margin-bottom: 10px; }\n\n.margin-vertical.margin-right-sm {\n  margin-top: 20px;\n  margin-right: 10px;\n  margin-bottom: 20px; }\n\n.margin-vertical-sm.margin-right-sm {\n  margin-top: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin-horizontal {\n  margin-right: 20px;\n  margin-left: 20px; }\n\n.margin-horizontal-sm {\n  margin-right: 10px;\n  margin-left: 10px; }\n\n.margin-horizontal.margin-top {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-left: 20px; }\n\n.margin-horizontal-sm.margin-top {\n  margin-top: 20px;\n  margin-right: 10px;\n  margin-left: 10px; }\n\n.margin-horizontal.margin-top-sm {\n  margin-top: 10px;\n  margin-right: 20px;\n  margin-left: 20px; }\n\n.margin-horizontal-sm.margin-top-sm {\n  margin-top: 10px;\n  margin-right: 10px;\n  margin-left: 10px; }\n\n.margin-horizontal.margin-bottom {\n  margin-right: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-horizontal-sm.margin-bottom {\n  margin-right: 10px;\n  margin-bottom: 20px;\n  margin-left: 10px; }\n\n.margin-horizontal.margin-bottom-sm {\n  margin-right: 20px;\n  margin-bottom: 10px;\n  margin-left: 20px; }\n\n.margin-horizontal-sm.margin-bottom-sm {\n  margin-right: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin-vertical.margin-horizontal-sm {\n  margin-top: 20px;\n  margin-right: 10px;\n  margin-bottom: 20px;\n  margin-left: 10px; }\n\n.margin-horizontal.margin-vertical-sm {\n  margin-top: 10px;\n  margin-right: 20px;\n  margin-bottom: 10px;\n  margin-left: 20px; }\n\n.margin-except-top {\n  margin-right: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-except-right {\n  margin-top: 20px;\n  margin-bottom: 20px;\n  margin-left: 20px; }\n\n.margin-except-bottom {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-left: 20px; }\n\n.margin-except-left {\n  margin-top: 20px;\n  margin-right: 20px;\n  margin-bottom: 20px; }\n\n.margin-sm-except-top {\n  margin-right: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin-sm-except-right {\n  margin-top: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px; }\n\n.margin-sm-except-bottom {\n  margin-top: 10px;\n  margin-right: 10px;\n  margin-left: 10px; }\n\n.margin-sm-except-left {\n  margin-top: 10px;\n  margin-right: 10px;\n  margin-bottom: 10px; }\n\n.padding {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-sm {\n  padding-top: 10px;\n  padding-right: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding.padding-left-sm {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-bottom: 20px;\n  padding-left: 10px; }\n\n.padding.padding-bottom-sm {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-bottom: 10px;\n  padding-left: 20px; }\n\n.padding.padding-right-sm {\n  padding-top: 20px;\n  padding-right: 10px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding.padding-top-sm {\n  padding-top: 10px;\n  padding-right: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-left {\n  padding-left: 20px; }\n\n.padding-bottom {\n  padding-bottom: 20px; }\n\n.padding-right {\n  padding-right: 20px; }\n\n.padding-top {\n  padding-top: 20px; }\n\n.padding-left-sm {\n  padding-left: 10px; }\n\n.padding-bottom-sm {\n  padding-bottom: 10px; }\n\n.padding-right-sm {\n  padding-right: 10px; }\n\n.padding-top-sm {\n  padding-top: 10px; }\n\n.padding-vertical {\n  padding-top: 20px;\n  padding-bottom: 20px; }\n\n.padding-vertical-sm {\n  padding-top: 10px;\n  padding-bottom: 10px; }\n\n.padding-vertical.padding-left {\n  padding-top: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-vertical-sm.padding-left {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  padding-left: 20px; }\n\n.padding-vertical.padding-left-sm {\n  padding-top: 20px;\n  padding-bottom: 20px;\n  padding-left: 10px; }\n\n.padding-vertical-sm.padding-left-sm {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding-vertical.padding-right {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-bottom: 20px; }\n\n.padding-vertical-sm.padding-right {\n  padding-top: 10px;\n  padding-right: 20px;\n  padding-bottom: 10px; }\n\n.padding-vertical.padding-right-sm {\n  padding-top: 20px;\n  padding-right: 10px;\n  padding-bottom: 20px; }\n\n.padding-vertical-sm.padding-right-sm {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding-horizontal {\n  padding-right: 20px;\n  padding-left: 20px; }\n\n.padding-horizontal-sm {\n  padding-right: 10px;\n  padding-left: 10px; }\n\n.padding-horizontal.padding-top {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-left: 20px; }\n\n.padding-horizontal-sm.padding-top {\n  padding-top: 20px;\n  padding-right: 10px;\n  padding-left: 10px; }\n\n.padding-horizontal.padding-top-sm {\n  padding-top: 10px;\n  padding-right: 20px;\n  padding-left: 20px; }\n\n.padding-horizontal-sm.padding-top-sm {\n  padding-top: 10px;\n  padding-right: 10px;\n  padding-left: 10px; }\n\n.padding-horizontal.padding-bottom {\n  padding-right: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-horizontal-sm.padding-bottom {\n  padding-right: 10px;\n  padding-bottom: 20px;\n  padding-left: 10px; }\n\n.padding-horizontal.padding-bottom-sm {\n  padding-right: 20px;\n  padding-bottom: 10px;\n  padding-left: 20px; }\n\n.padding-horizontal-sm.padding-bottom-sm {\n  padding-right: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding-vertical.padding-horizontal-sm {\n  padding-top: 20px;\n  padding-right: 10px;\n  padding-bottom: 20px;\n  padding-left: 10px; }\n\n.padding-horizontal.padding-vertical-sm {\n  padding-top: 10px;\n  padding-right: 20px;\n  padding-bottom: 10px;\n  padding-left: 20px; }\n\n.padding-except-top {\n  padding-right: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-except-right {\n  padding-top: 20px;\n  padding-bottom: 20px;\n  padding-left: 20px; }\n\n.padding-except-bottom {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-left: 20px; }\n\n.padding-except-left {\n  padding-top: 20px;\n  padding-right: 20px;\n  padding-bottom: 20px; }\n\n.padding-sm-except-top {\n  padding-right: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding-sm-except-right {\n  padding-top: 10px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n\n.padding-sm-except-bottom {\n  padding-top: 10px;\n  padding-right: 10px;\n  padding-left: 10px; }\n\n.padding-sm-except-left {\n  padding-top: 10px;\n  padding-right: 10px;\n  padding-bottom: 10px; }\n\n.flex-col-container, .flex-col {\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex; }\n\n.flex-col-container {\n  -webkit-flex-wrap: wrap;\n  -ms-flex-wrap: wrap;\n  flex-wrap: wrap; }\n\n.flex-col-inner {\n  width: 100%;\n  display: block; }\n\n.opaque {\n  opacity: 1; }\n\n.black {\n  color: black; }\n\n.hidden {\n  display: none; }\n\n.seethrough {\n  opacity: 0; }\n\n.invisible {\n  visibility: hidden; }\n\n.muted {\n  color: #777; }\n\n.muted {\n  color: #777; }\n\n.pull-right {\n  float: right; }\n\n.full-height {\n  min-height: 100vh; }\n\n.centred {\n  margin: 0 auto; }\n\n.centred.margin-top {\n  margin: 20px auto 0px; }\n\n.centred.margin-bottom {\n  margin: 0px auto 20px; }\n\n.hover-cursor--pointer:hover {\n  cursor: pointer; }\n\n.hover-cursor--default {\n  cursor: default; }\n\n.box-shadow {\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.box-shadow-inset {\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075) inset; }\n\n/* objects */\n.btn {\n  display: inline-block;\n  border: 1px solid #ccc;\n  background: white;\n  padding: 4px 8px;\n  text-decoration: none;\n  font-size: 90%;\n  color: #777;\n  border-radius: 0px; }\n\n.btn:hover {\n  border-color: black;\n  color: black;\n  cursor: pointer; }\n\n.btn:active {\n  border-color: #ccc;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.btn-group .btn {\n  margin-right: 2px; }\n\n.btn-group .btn:last-child {\n  margin-right: 0px; }\n\n.btn-wide {\n  padding: 4px 16px; }\n\n.btn-tall {\n  padding: 8px 8px; }\n\n.btn-large {\n  padding: 8px 16px; }\n\n.media {\n  display: flex;\n  align-items: flex-start; }\n\n.media-figure {\n  margin-right: 1em; }\n\n.media-body {\n  flex: 1; }\n\n.box {\n  background: white;\n  border: 1px solid #ccc;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.box-header {\n  border-bottom: 1px solid #ccc; }\n\n.box.borderless {\n  border: none; }\n\n.dropdown {\n  position: absolute;\n  z-index: 100;\n  display: block; }\n\n.dropdown.hidden {\n  display: none; }\n\n.horizontal-list-menu, .horizontal-list-menu--btns {\n  list-style: none;\n  list-style-type: none;\n  margin: 0; }\n\n.horizontal-list-menu li, .horizontal-list-menu--btns li {\n  display: inline-block;\n  padding-right: 10px; }\n\n.horizontal-list-menu li.pull-right, .horizontal-list-menu--btns li.pull-right {\n  padding-right: 0px; }\n\n.horizontal-list-menu a, .horizontal-list-menu--btns a {\n  margin-right: 0px; }\n\n.horizontal-list-menu a:hover, .horizontal-list-menu--btns a:hover {\n  color: black; }\n\n.horizontal-list-menu--btns li {\n  padding-right: 0px;\n  display: inline-block; }\n\n.horizontal-list-menu--btns li:last-child .btn {\n  border-right: 1px solid #ccc; }\n\n.horizontal-list-menu--btns .btn {\n  padding: 0px 1rem;\n  border-top: 0px;\n  border-bottom: 0px;\n  border-right: 0px; }\n\n.horizontal-list-menu--btns .btn.active {\n  color: black;\n  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.075); }\n\n.horizontal-list-menu--btns .btn:hover {\n  border-color: #ccc; }\n\n.panel {\n  padding: 20px; }\n\n.justify-centre {\n  -moz-align-items: center;\n  -webkit-align-items: center;\n  -ms-align-items: center;\n  align-items: center;\n  display: -moz-flex;\n  display: -webkit-flex;\n  display: -ms-flex;\n  display: flex;\n  -moz-justify-content: center;\n  -webkit-justify-content: center;\n  -ms-justify-content: center;\n  justify-content: center; }\n\n.example {\n  width: 100%; }\n\n.comments-example {\n  padding-top: 4rem; }\n\n.bookmarks-example {\n  padding-top: 100px; }\n\n.calendar-example .example {\n  max-width: 1000px; }\n", ""]);
 
 	// exports
 

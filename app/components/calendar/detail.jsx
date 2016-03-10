@@ -81,7 +81,7 @@ export default class CalendarDetailComponent extends React.Component {
 		const { entry } = this.props;
 
 		if (entry) {
-			const hourHour = hour.hour.substring(0, 2);
+			const hourHour = hour.substring(0, 2);
 			const entries = _.filter(entry.entries, (item) => {
 				return item.time.substring(0, 2) == hourHour;
 			});
@@ -97,11 +97,11 @@ export default class CalendarDetailComponent extends React.Component {
 	}
 
 	toggleSelectedHour(hour, event) {
-		if (this.activeHour.current == hour.hour) {
+		if (this.activeHour.current == hour) {
 			this.activeHour.clear();
 		} else {
 			const { calendarTitleInput, calendarTimeInput } = this.refs;
-			this.activeHour.set(hour.hour);
+			this.activeHour.set(hour);
 			calendarTitleInput.focus();
 		}
 	}
@@ -111,11 +111,11 @@ export default class CalendarDetailComponent extends React.Component {
 
 		const hourList = calendar.hours.map((hour) => {
 			let className = "calendar-hour hover-cursor--pointer";
-			if (this.activeHour.is(hour.hour)) className = className + ' active-hour';
+			if (this.activeHour.is(hour)) className = className + ' active-hour';
 			const events = this.getEventsForHour(hour);
 			return (
-				<li className={className} key={hour.hour} onClick={this.toggleSelectedHour.bind(this, hour)}>
-					<div className="calendar-hour-time padding-horizontal">{hour.hour}</div>
+				<li className={className} key={hour} onClick={this.toggleSelectedHour.bind(this, hour)}>
+					<div className="calendar-hour-time padding-horizontal">{hour}</div>
 					<ul className="calendar-hour-events">{events}</ul>
 				</li>
 			);

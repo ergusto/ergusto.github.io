@@ -9,6 +9,8 @@ import BookmarkCreateFormComponent from './form.create.jsx';
 import TabbedStateBehaviour from '../../behaviours/tabs.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
 
+const tabs = {list: 'list', detail: 'detail', edit: 'edit', add: 'add'};
+
 // import styles for this component
 require('!style!css!sass!./styles/manager.scss');
 
@@ -18,7 +20,7 @@ export default class BookmarkManagerComponent extends React.Component {
 		super(props);
 
 		this.state = {};
-		this.tabs = new TabbedStateBehaviour(this, 'list');
+		this.tabs = new TabbedStateBehaviour(this, tabs.list);
 		this.activeBookmark = new ActiveModelStateBehaviour(this);
 		props.bookmarks.onUpdate(() => {
 			this.forceUpdate();
@@ -31,12 +33,12 @@ export default class BookmarkManagerComponent extends React.Component {
 
 	clearActiveBookmark() {
 		this.activeBookmark.clear();
-		this.tabs.open('list');
+		this.showTab(tabs.list);
 	}
 
 	setActiveBookmark(id) {
 		this.activeBookmark.set(id);
-		this.tabs.open('detail');
+		this.showTab(tabs.detail);
 	}
 
 	showTab(tab, event) {
@@ -49,7 +51,7 @@ export default class BookmarkManagerComponent extends React.Component {
 	}
 
 	showEditTab() {
-		this.showTab('edit');
+		this.showTab(tabs.edit);
 	}
 
 	editSubmitCallback(bookmark) {
@@ -58,7 +60,6 @@ export default class BookmarkManagerComponent extends React.Component {
 
 	render() {
 		let content;
-		const tabs = this.tabs;
 		const { bookmarks, user } = this.props;
 		const bookmark = bookmarks.get(this.getActiveBookmarkId());; 
 		const tabClass = 'btn';
@@ -66,28 +67,26 @@ export default class BookmarkManagerComponent extends React.Component {
 		let listTabClass = tabClass;
 		let addTabClass = tabClass;
 
-		if (tabs.isOpen('list')) {
+		if (this.tabs.isOpen(tabs.list)) {
 			listTabClass += activeClass;
 			content = <BookmarkListComponent setActiveBookmark={this.setActiveBookmark.bind(this)} bookmarks={bookmarks} />;
 		}
 
-		if (tabs.isOpen('add')) {
+		if (this.tabs.isOpen(tabs.add)) {
 			addTabClass += activeClass;
 			content = <BookmarkCreateFormComponent user={user} bookmarks={bookmarks} submitCallback={this.submitCallback.bind(this)} />;
 		}
 
-		if (tabs.isOpen('detail')) {
-			content = (
-					<BookmarkDetailComponent 
+		if (this.tabs.isOpen(tabs.detail)) {
+			content = <BookmarkDetailComponent 
 						bookmarks={bookmarks} 
 						bookmark={bookmark} 
 						showEditTab={this.showEditTab.bind(this)} 
 						submitCallback={this.editSubmitCallback}
-						clearActiveBookmark={this.clearActiveBookmark.bind(this)} />
-					);
+						clearActiveBookmark={this.clearActiveBookmark.bind(this)} />;
 		}
 
-		if (tabs.isOpen('edit')) {
+		if (this.tabs.isOpen(tabs.edit)) {
 			content = <BookmarkEditFormComponent formTitle='edit' user={user} bookmark={bookmark} bookmarks={bookmarks} submitCallback={this.editSubmitCallback.bind(this)} />;
 		}
 
@@ -104,8 +103,8 @@ export default class BookmarkManagerComponent extends React.Component {
 
 							<ul className="bookmark-manager-control horizontal-list-menu--btns padding-horizontal pull-right">
 
-								<li><a onClick={this.showTab.bind(this, 'list')} href="#" className={listTabClass}>list</a></li>
-								<li><a onClick={this.showTab.bind(this, 'add')} href="#" className={addTabClass}>add</a></li>
+								<li><a onClick={this.showTab.bind(this, tabs.list)} href="#" className={listTabClass}>list</a></li>
+								<li><a onClick={this.showTab.bind(this, tabs.add)} href="#" className={addTabClass}>add</a></li>
 
 							</ul>
 
