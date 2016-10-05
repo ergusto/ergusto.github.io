@@ -43690,7 +43690,10 @@
 	
 			var _this = _possibleConstructorReturn(this, (CommentListComponent.__proto__ || Object.getPrototypeOf(CommentListComponent)).call(this, props));
 	
-			props.comments.onChange(function () {
+			var comments = _this.props.comments;
+	
+	
+			comments.onChange(function () {
 				_this.forceUpdate();
 			});
 			return _this;

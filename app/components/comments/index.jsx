@@ -8,8 +8,9 @@ export default class CommentListComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
-
-		props.comments.onChange(() => {
+		const { comments } = this.props;
+		
+		comments.onChange(() => {
 			this.forceUpdate();
 		});
 	}
