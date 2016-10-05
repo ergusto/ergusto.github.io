@@ -3,22 +3,9 @@ var webpack = require('webpack');
 module.exports = {
 	entry: './app/App.jsx',
 	output: {
-		filename: 'build/bundle.js'
+		filename: 'build/ergusto.js'
 	},
-	// fetch polyfill
-	plugins: [
-		new webpack.ProvidePlugin({
-			'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-		})
-	],
 	module: {
-		preLoaders: [
-			{
-				test: /\.js$/,
-				loader: 'eslint',
-				exclude: /(node_modules|bower_components)/
-			}
-		],
 		loaders: [
 			{
 				test: /\.jsx?$/,
