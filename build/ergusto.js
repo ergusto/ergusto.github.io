@@ -43244,7 +43244,7 @@
 	                { className: 'bookmark-form-container box margin-top' },
 	                _react2.default.createElement(
 	                    'header',
-	                    { className: 'box-header padding bg-gray' },
+	                    { className: 'box-header bookmark-form-header padding-horizontal bg-gray' },
 	                    _react2.default.createElement(
 	                        'h3',
 	                        { className: 'bookmark-form-title muted' },
@@ -43466,7 +43466,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".bookmark-form-title {\n  margin: 0; }\n", ""]);
+	exports.push([module.id, ".bookmark-form-title {\n  margin: 0; }\n\n.bookmark-form-header {\n  padding-top: 12px;\n  padding-bottom: 12px; }\n", ""]);
 	
 	// exports
 
