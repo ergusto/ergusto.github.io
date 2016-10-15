@@ -26,7 +26,7 @@ export default class Comments extends LocalStorageCollection {
 
 	defaultModels() {
 		return [{
-			text: 'This site is for showcasing things I made while learning React. Most examples are interactive. Try replying to or editing this comment.',
+			text: 'This site is a sort of playground of things I made while learning React. Most examples are interactive. Try replying to or editing this comment.',
 			username: 'ergusto',
 			date: new Date(),
 			parentId: false
