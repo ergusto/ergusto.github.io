@@ -47088,11 +47088,6 @@
 					username: 'ergusto',
 					date: new Date(),
 					parentId: false
-				}, {
-					text: 'Almost everything uses the localStorage API, so changes you make will persist between visits.',
-					username: 'ergusto',
-					date: new Date(),
-					parentId: false
 				}];
 			}
 		}, {
