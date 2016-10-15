@@ -43148,6 +43148,7 @@
 	
 	        _this.state = {};
 	        _this.form = new _form2.default(_this);
+	        _this.form.makeFields(['title', 'url', 'description']);
 	        return _this;
 	    }
 	
@@ -43175,12 +43176,12 @@
 	            var notes = bookmarkNotesInput.value;
 	
 	            if (!title.trim().length) {
-	                form.addError('Please enter a title');
+	                form.title.addError('Please enter a title');
 	                return;
 	            }
 	
 	            if (!url.trim().length) {
-	                form.addError('Please enter a URL');
+	                form.url.addError('Please enter a URL');
 	                return;
 	            }
 	
@@ -43198,6 +43199,16 @@
 	            if (submitCallback) {
 	                submitCallback(saved);
 	            }
+	        }
+	    }, {
+	        key: 'renderError',
+	        value: function renderError(key) {
+	            var error = this.form[key] ? this.form[key].error : null;
+	            if (error) return _react2.default.createElement(
+	                'span',
+	                { className: 'form-error padding-left-sm' },
+	                error
+	            );
 	        }
 	    }, {
 	        key: 'render',
@@ -43244,9 +43255,10 @@
 	                    'form',
 	                    { onSubmit: this.submitHandler.bind(this), className: 'bookmark-form padding' },
 	                    _react2.default.createElement('input', { defaultValue: titleValue, ref: 'bookmarkTitleInput', name: 'title', placeholder: 'title', className: 'field' }),
+	                    this.renderError('title'),
 	                    _react2.default.createElement('input', { defaultValue: urlValue, ref: 'bookmarkUrlInput', name: 'url', placeholder: 'url', type: 'url', className: 'field' }),
+	                    this.renderError('url'),
 	                    _react2.default.createElement('textarea', { defaultValue: notesValue, ref: 'bookmarkNotesInput', name: 'notes', placeholder: 'notes', className: 'field' }),
-	                    errContent,
 	                    _react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn btn-tall' })
 	                )
 	            );

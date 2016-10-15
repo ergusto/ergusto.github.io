@@ -11,6 +11,7 @@ export default class BookmarkFormComponent extends React.Component {
 
         this.state = {};
         this.form = new FormStateBehaviour(this);
+        this.form.makeFields(['title', 'url', 'description']);
     }
 
     submitHandler(event) {
@@ -27,12 +28,12 @@ export default class BookmarkFormComponent extends React.Component {
         const notes = bookmarkNotesInput.value;
         
         if (!title.trim().length) {
-            form.addError('Please enter a title');
+            form.title.addError('Please enter a title');
             return;
         }
         
         if (!url.trim().length) {
-            form.addError('Please enter a URL');
+            form.url.addError('Please enter a URL');
             return;
         }
 
@@ -50,6 +51,11 @@ export default class BookmarkFormComponent extends React.Component {
         if (submitCallback) {
             submitCallback(saved);
         }
+    }
+
+    renderError(key) {
+        const error = this.form[key] ? this.form[key].error : null;
+        if (error) return <span className="form-error padding-left-sm">{error}</span>
     }
 
     render() {
@@ -79,9 +85,10 @@ export default class BookmarkFormComponent extends React.Component {
                 </header>
 				<form onSubmit={this.submitHandler.bind(this)} className="bookmark-form padding">
 					<input defaultValue={titleValue} ref="bookmarkTitleInput" name="title" placeholder="title" className="field" />
+                    {this.renderError('title')}
 					<input defaultValue={urlValue} ref="bookmarkUrlInput" name="url" placeholder="url" type="url" className="field" />
+                    {this.renderError('url')}
 					<textarea defaultValue={notesValue} ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
-                    {errContent}
                     <input type="submit" value="submit" className="btn btn-tall"></input>
 				</form>
         	</div>
