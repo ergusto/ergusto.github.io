@@ -47084,7 +47084,7 @@
 			key: 'defaultModels',
 			value: function defaultModels() {
 				return [{
-					text: 'This site showcases some of the things I have created while learning React. Most examples are interactive. Try replying to or editing this comment.',
+					text: 'This site is a playground I made while learning React. Most examples are interactive. Try replying to or editing this comment.',
 					username: 'ergusto',
 					date: new Date(),
 					parentId: false
