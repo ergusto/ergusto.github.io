@@ -14,6 +14,7 @@
 .calendar-buttons {
 	line-height: 2rem;
 	padding: 0px;
+	font-size: 110%;
 }
 
 .calendar-buttons li:last-child .btn {
@@ -31,7 +32,7 @@
 .calendar-day, .calendar-day-empty {
 	float: left;
 	width: 14%;
-	min-height: 7rem;
+	min-height: 6rem;
 	border-bottom: 1px solid #ccc;
 	border-right: 1px solid #ccc;
 	background: white;

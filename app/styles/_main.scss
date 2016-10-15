@@ -29,9 +29,11 @@
 	padding-top: 100px;
 }
 
-.calendar-example {
+.calendar-example .example {
+	max-width: 800px;
+	font-size: 90%;
 }
 
-.calendar-example .example {
-	max-width: 1000px;
+.calendar-example .example small {
+
 }
