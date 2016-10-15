@@ -42709,7 +42709,7 @@
 					imageHtml,
 					_react2.default.createElement(
 						'div',
-						{ className: 'bookmark-buttons padding-horizontal bg-gray' },
+						{ className: 'bookmark-buttons padding-horizontal bg-gray box-shadow-inset' },
 						_react2.default.createElement(
 							'small',
 							{ className: 'bookmark-item-username pull-right' },
@@ -43675,7 +43675,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n  .bookmark-manager-title:hover {\n    color: black; }\n\n.bookmark-manager-control {\n  display: block; }\n\n.bookmark-manager-header {\n  line-height: 4rem; }\n\n.bookmark-buttons {\n  padding-top: 8px;\n  padding-bottom: 8px; }\n\n.bookmark-buttons a {\n  text-decoration: none; }\n", ""]);
+	exports.push([module.id, ".bookmark-manager {\n  max-width: 900px;\n  position: relative; }\n\n.bookmark-manager-title {\n  margin: 0;\n  padding: 0;\n  display: inline-block; }\n  .bookmark-manager-title:hover {\n    color: black; }\n\n.bookmark-manager-control {\n  display: block; }\n\n.bookmark-manager-header {\n  line-height: 3rem; }\n\n.bookmark-buttons {\n  padding-top: 8px;\n  padding-bottom: 8px; }\n\n.bookmark-buttons a {\n  text-decoration: none; }\n", ""]);
 	
 	// exports
 
@@ -46386,7 +46386,7 @@
 																					_react2.default.createElement('img', { className: 'contact-img', src: '../../../static/ferg.jpg' }),
 																					_react2.default.createElement(
 																									'div',
-																									{ className: 'padding' },
+																									{ className: 'padding box-shadow-inset' },
 																									_react2.default.createElement(
 																													'h2',
 																													null,
