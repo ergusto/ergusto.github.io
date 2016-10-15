@@ -92,7 +92,7 @@ export default class CommentComponent extends React.Component {
 					<div className="comment-item-body">
 						<p>{comment.text}</p>
 					</div>
-					<footer className="comment-item-footer clearfix">
+					<footer className="comment-item-footer clearfix box-shadow-inset border-top">
 						<ul className="horizontal-list-menu muted">
 							<li className="pull-right"><TimeAgo date={comment.date} /></li>
 							<li><a href="#" onClick={this.replyHandler.bind(this)}>reply</a></li>

@@ -43933,7 +43933,7 @@
 						),
 						_react2.default.createElement(
 							'footer',
-							{ className: 'comment-item-footer clearfix' },
+							{ className: 'comment-item-footer clearfix box-shadow-inset border-top' },
 							_react2.default.createElement(
 								'ul',
 								{ className: 'horizontal-list-menu muted' },
