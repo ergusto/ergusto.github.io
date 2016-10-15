@@ -69,7 +69,7 @@ export default class IntroductionComponent extends React.Component {
 
 										}, 300);
 									}, 700);
-								}, 700);
+								}, 600);
 							});
 						});
 					}, 300);
