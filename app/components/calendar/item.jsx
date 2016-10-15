@@ -25,10 +25,10 @@ export default class CalendarItemComponent extends React.Component {
 		if (entry && entry.identifier) {
 			const sortedEntries = _.sortBy(entry.entries, 'time');
 			const entryTextHtml = sortedEntries.map((entry, index) => {
-				if (index <= 2) {
+				if (index <= 1) {
 					return <li className="calendar-item-entry" key={'calendar-item-' + Tools.generateID()}><small>{Tools.truncate(entry.title, 17)}</small></li>;
 				}
-				if (index == 3) {
+				if (index == 2) {
 					return <li className="calendar-item-entry" key={'calendar-item-' + Tools.generateID()}>...</li>;
 				}
 			});

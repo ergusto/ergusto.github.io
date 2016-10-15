@@ -45848,7 +45848,7 @@
 				if (entry && entry.identifier) {
 					var sortedEntries = _.sortBy(entry.entries, 'time');
 					var entryTextHtml = sortedEntries.map(function (entry, index) {
-						if (index <= 2) {
+						if (index <= 1) {
 							return _react2.default.createElement(
 								'li',
 								{ className: 'calendar-item-entry', key: 'calendar-item-' + _tools2.default.generateID() },
@@ -45859,7 +45859,7 @@
 								)
 							);
 						}
-						if (index == 3) {
+						if (index == 2) {
 							return _react2.default.createElement(
 								'li',
 								{ className: 'calendar-item-entry', key: 'calendar-item-' + _tools2.default.generateID() },
