@@ -47096,7 +47096,7 @@
 			key: 'defaultModels',
 			value: function defaultModels() {
 				return [{
-					text: "Hi. I'm a Javascript enginer with a strong interest in user interface and user experience design. My name's Fergus Ruston.",
+					text: "Hi. I'm a Javascript engineer with a strong interest in user interface and user experience design. My name's Fergus Ruston.",
 					username: 'ergusto',
 					date: new Date(),
 					parentId: false
