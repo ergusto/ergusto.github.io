@@ -43273,7 +43273,7 @@
 	                { className: 'bookmark-form-container box margin-top' },
 	                _react2.default.createElement(
 	                    'header',
-	                    { className: 'box-header bookmark-form-header padding-horizontal bg-gray box-shadow' },
+	                    { className: 'box-header bookmark-form-header padding-horizontal box-shadow' },
 	                    _react2.default.createElement(
 	                        'h3',
 	                        { className: 'bookmark-form-title muted' },
@@ -43294,7 +43294,7 @@
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'form-footer bg-gray padding-horizontal padding-vertical-sm box-shadow border-top' },
+	                        { className: 'form-footer box-shadow-inset padding-horizontal padding-vertical-sm border-top' },
 	                        _react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' }),
 	                        cancelContent
 	                    )

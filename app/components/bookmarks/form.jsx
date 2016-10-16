@@ -94,7 +94,7 @@ export default class BookmarkFormComponent extends React.Component {
 
         return (
         	<div className="bookmark-form-container box margin-top">
-                <header className="box-header bookmark-form-header padding-horizontal bg-gray box-shadow">
+                <header className="box-header bookmark-form-header padding-horizontal box-shadow">
 				    <h3 className="bookmark-form-title muted">{formTitle}</h3> 
                 </header>
 				<form onSubmit={this.submitHandler.bind(this)} className="bookmark-form">
@@ -105,7 +105,7 @@ export default class BookmarkFormComponent extends React.Component {
                         {this.renderError('url')}
     					<textarea defaultValue={notesValue} ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
                     </div>
-                    <div className="form-footer bg-gray padding-horizontal padding-vertical-sm box-shadow border-top">
+                    <div className="form-footer box-shadow-inset padding-horizontal padding-vertical-sm border-top">
                         <input type="submit" value="submit" className="btn"></input>
                         {cancelContent}
                     </div>
