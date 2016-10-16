@@ -42907,9 +42907,9 @@
 				var notesHtml = void 0;
 				var bookmark = this.props.bookmark;
 	
-				var isImageUrl = isImageUrl(bookmark.url);
+				var urlIsImage = (0, _tools.isImageUrl)(bookmark.url);
 	
-				if (isImageUrl) {
+				if (urlIsImage) {
 					imageHtml = _react2.default.createElement(
 						'div',
 						{ className: 'padding border-bottom box-shadow-inset' },
@@ -43182,7 +43182,7 @@
 	            if (!url.trim().length) {
 	                form.url.addError('Please enter a URL');
 	                hasError = true;
-	            } else if (!(0, _tools.isImageUrl)(url.trim())) {
+	            } else if (!(0, _tools.isURL)(url.trim())) {
 	                form.url.addError('Please enter a valid URL');
 	                hasError = true;
 	            }

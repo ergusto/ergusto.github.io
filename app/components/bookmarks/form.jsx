@@ -1,7 +1,7 @@
 import React from 'react';
 import FormStateBehaviour from '../../behaviours/form.js';
 
-import { isImageUrl } from '../../lib/tools.js';
+import { isURL } from '../../lib/tools.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/form.scss');
@@ -39,7 +39,7 @@ export default class BookmarkFormComponent extends React.Component {
             hasError = true;
         } else 
 
-        if (!isImageUrl(url.trim())) {
+        if (!isURL(url.trim())) {
             form.url.addError('Please enter a valid URL');
             hasError = true;
         }
