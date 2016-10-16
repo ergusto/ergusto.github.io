@@ -1,6 +1,8 @@
 import React from 'react';
 import FormStateBehaviour from '../../behaviours/form.js';
 
+import { isImageUrl } from '../../lib/tools.js';
+
 // import styles for this component
 require('!style!css!sass!./styles/form.scss');
 
@@ -17,7 +19,7 @@ export default class BookmarkFormComponent extends React.Component {
     submitHandler(event) {
         event.preventDefault();
         const form = this.form;
-        let saved;
+        let saved, hasError = false;
         let { user, bookmark, bookmarks, submitCallback } = this.props;
         const { bookmarkTitleInput, bookmarkUrlInput, bookmarkNotesInput } = this.refs;
         
@@ -29,13 +31,20 @@ export default class BookmarkFormComponent extends React.Component {
         
         if (!title.trim().length) {
             form.title.addError('Please enter a title');
-            return;
+            hasError = true;
         }
         
         if (!url.trim().length) {
             form.url.addError('Please enter a URL');
-            return;
+            hasError = true;
+        } else 
+
+        if (!isImageUrl(url.trim())) {
+            form.url.addError('Please enter a valid URL');
+            hasError = true;
         }
+
+        if (hasError) return;
 
         bookmark.title = title;
         bookmark.url = url;
@@ -55,7 +64,7 @@ export default class BookmarkFormComponent extends React.Component {
 
     renderError(key) {
         const error = this.form[key] ? this.form[key].error : null;
-        if (error) return <span className="form-error padding-left-sm">{error}</span>
+        if (error) return <span className="form-error padding-left-sm"><small>{error}</small></span>
     }
 
     render() {

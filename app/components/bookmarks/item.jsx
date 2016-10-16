@@ -1,7 +1,7 @@
 import React from 'react';
 const PropTypes = React.PropTypes;
 
-import Tools from '../../lib/tools.js';
+import { isImageUrl } from '../../lib/tools.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/item.scss');
@@ -17,9 +17,9 @@ export default class BookmarkItemComponent extends React.Component {
 	render() {
 		let imageHtml;
 		const { bookmark } = this.props;
-		const isImageUrl = Tools.isImageUrl(bookmark.url);
+		const urlIsImage = isImageUrl(bookmark.url);
 
-		if (isImageUrl) {
+		if (urlIsImage) {
 			imageHtml = (
 				<div className="padding border-bottom box-shadow-inset">
 					<img className="bookmark-item-image" src={bookmark.url} />

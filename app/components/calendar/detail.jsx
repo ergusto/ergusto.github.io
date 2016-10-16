@@ -3,7 +3,7 @@ import React from 'react';
 import FormStateBehaviour from '../../behaviours/form.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
 
-import Tools from '../../lib/tools.js';
+import { validate24HourTime, generateID } from '../../lib/tools.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/detail.scss');
@@ -33,7 +33,7 @@ export default class CalendarDetailComponent extends React.Component {
 
 		const titleValue = calendarTitleInput.value;
 		const timeValue = calendarTimeInput.value;
-		const timeIsFormattedCorrectly = Tools.validate24HourTime(timeValue);
+		const timeIsFormattedCorrectly = validate24HourTime(timeValue);
 
 		if (!titleValue) {
 			form.addError('please enter a title');
@@ -87,7 +87,7 @@ export default class CalendarDetailComponent extends React.Component {
 			});
 			return entries.map((event) => {
 				return (
-					<li onClick={this.stopPropagationHandler} key={event.time + event.title + Tools.generateID()} className="calendar-hour-event hover-cursor--default">
+					<li onClick={this.stopPropagationHandler} key={event.time + event.title + generateID()} className="calendar-hour-event hover-cursor--default">
 						<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">x</a>
 						{event.title}
 					</li>

@@ -1,4 +1,4 @@
-import Tools from '../lib/tools.js';
+import { generateID }from '../lib/tools.js';
 
 export default class ComponentSingleStateModifierBehaviour {
 
@@ -6,7 +6,7 @@ export default class ComponentSingleStateModifierBehaviour {
 
 	constructor(component, defaultState) {
 		this.component = component;
-		this.stateName = 'ergusto:state-modifier:' + Tools.generateID();
+		this.stateName = 'ergusto:state-modifier:' + generateID();
 		this.defaultState = defaultState;
 		this.component.state[this.stateName] = this.defaultState;
 	}

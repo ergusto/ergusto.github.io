@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Tools from '../../lib/tools.js';
+import { truncate, generateID } from '../../lib/tools.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/item.scss');
@@ -26,10 +26,10 @@ export default class CalendarItemComponent extends React.Component {
 			const sortedEntries = _.sortBy(entry.entries, 'time');
 			const entryTextHtml = sortedEntries.map((entry, index) => {
 				if (index <= 1) {
-					return <li className="calendar-item-entry" key={'calendar-item-' + Tools.generateID()}><small>{Tools.truncate(entry.title, 17)}</small></li>;
+					return <li className="calendar-item-entry" key={'calendar-item-' + generateID()}><small>{truncate(entry.title, 17)}</small></li>;
 				}
 				if (index == 2) {
-					return <li className="calendar-item-entry" key={'calendar-item-' + Tools.generateID()}>...</li>;
+					return <li className="calendar-item-entry" key={'calendar-item-' + generateID()}>...</li>;
 				}
 			});
 

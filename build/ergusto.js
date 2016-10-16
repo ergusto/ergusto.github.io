@@ -24801,10 +24801,6 @@
 	
 	var _tools = __webpack_require__(/*! ../lib/tools.js */ 164);
 	
-	var _tools2 = _interopRequireDefault(_tools);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var ComponentSingleStateModifierBehaviour = function () {
@@ -24815,7 +24811,7 @@
 			_classCallCheck(this, ComponentSingleStateModifierBehaviour);
 	
 			this.component = component;
-			this.stateName = 'ergusto:state-modifier:' + _tools2.default.generateID();
+			this.stateName = 'ergusto:state-modifier:' + (0, _tools.generateID)();
 			this.defaultState = defaultState;
 			this.component.state[this.stateName] = this.defaultState;
 		}
@@ -24861,6 +24857,13 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.validate24HourTime = validate24HourTime;
+	exports.truncate = truncate;
+	exports.generateID = generateID;
+	exports.isURL = isURL;
+	exports.isImageUrl = isImageUrl;
+	exports.containsSpaces = containsSpaces;
+	exports.buildQueryString = buildQueryString;
 	
 	var _lodash = __webpack_require__(/*! lodash */ 165);
 	
@@ -24868,51 +24871,48 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Tools = {};
 	var twentyFourHourTimeValidator = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
 	
-	Tools.validate24HourTime = function (time) {
+	function validate24HourTime(time) {
 	
 		return time && twentyFourHourTimeValidator.test(time);
 	};
 	
-	Tools.truncate = function (string, limit) {
+	function truncate(string, limit) {
 		return string.length > limit ? string.substr(0, limit - 1) + '...' : string;
 	};
 	
-	Tools.generateID = function () {
+	function generateID() {
 		// Math.random should be unique because of its seeding algorithm.
 		// Convert it to base 36 (numbers + letters), and grab the first 9 characters
 		// after the decimal.
 		return '_' + Math.random().toString(36).substr(2, 9);
 	};
 	
-	Tools.isURL = function (string) {
+	function isURL(string) {
 		var urlRegex = '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$';
 		var url = new RegExp(urlRegex, 'i');
 		return string.length < 2083 && url.test(string);
 	};
 	
-	Tools.isImageUrl = function (url) {
+	function isImageUrl(url) {
 		if (_lodash2.default.isString(url)) {
-			return Tools.isURL(url) && url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+			return isURL(url) && url.match(/\.(jpeg|jpg|gif|png)$/) != null;
 		}
 		return false;
 	};
 	
-	Tools.containsSpaces = function (string) {
+	function containsSpaces(string) {
 		return (/\s/g.test(string)
 		);
 	};
 	
-	Tools.buildQueryString = function (obj) {
+	function buildQueryString(obj) {
 	
 		return _lodash2.default.map(obj, function (value, key) {
 			return key + '=' + value;
 		}).join('&');
 	};
-	
-	exports.default = Tools;
 
 /***/ },
 /* 165 */
@@ -42644,8 +42644,6 @@
 	
 	var _tools = __webpack_require__(/*! ../../lib/tools.js */ 164);
 	
-	var _tools2 = _interopRequireDefault(_tools);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42684,9 +42682,9 @@
 				var imageHtml = void 0;
 				var bookmark = this.props.bookmark;
 	
-				var isImageUrl = _tools2.default.isImageUrl(bookmark.url);
+				var urlIsImage = (0, _tools.isImageUrl)(bookmark.url);
 	
-				if (isImageUrl) {
+				if (urlIsImage) {
 					imageHtml = _react2.default.createElement(
 						'div',
 						{ className: 'padding border-bottom box-shadow-inset' },
@@ -42862,8 +42860,6 @@
 	
 	var _tools = __webpack_require__(/*! ../../lib/tools.js */ 164);
 	
-	var _tools2 = _interopRequireDefault(_tools);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42911,7 +42907,7 @@
 				var notesHtml = void 0;
 				var bookmark = this.props.bookmark;
 	
-				var isImageUrl = _tools2.default.isImageUrl(bookmark.url);
+				var isImageUrl = isImageUrl(bookmark.url);
 	
 				if (isImageUrl) {
 					imageHtml = _react2.default.createElement(
@@ -43127,6 +43123,8 @@
 	
 	var _form2 = _interopRequireDefault(_form);
 	
+	var _tools = __webpack_require__(/*! ../../lib/tools.js */ 164);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43157,7 +43155,8 @@
 	        value: function submitHandler(event) {
 	            event.preventDefault();
 	            var form = this.form;
-	            var saved = void 0;
+	            var saved = void 0,
+	                hasError = false;
 	            var _props = this.props;
 	            var user = _props.user;
 	            var bookmark = _props.bookmark;
@@ -43177,13 +43176,18 @@
 	
 	            if (!title.trim().length) {
 	                form.title.addError('Please enter a title');
-	                return;
+	                hasError = true;
 	            }
 	
 	            if (!url.trim().length) {
 	                form.url.addError('Please enter a URL');
-	                return;
+	                hasError = true;
+	            } else if (!(0, _tools.isImageUrl)(url.trim())) {
+	                form.url.addError('Please enter a valid URL');
+	                hasError = true;
 	            }
+	
+	            if (hasError) return;
 	
 	            bookmark.title = title;
 	            bookmark.url = url;
@@ -43207,7 +43211,11 @@
 	            if (error) return _react2.default.createElement(
 	                'span',
 	                { className: 'form-error padding-left-sm' },
-	                error
+	                _react2.default.createElement(
+	                    'small',
+	                    null,
+	                    error
+	                )
 	            );
 	        }
 	    }, {
@@ -45768,8 +45776,6 @@
 	
 	var _tools = __webpack_require__(/*! ../../lib/tools.js */ 164);
 	
-	var _tools2 = _interopRequireDefault(_tools);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45817,18 +45823,18 @@
 						if (index <= 1) {
 							return _react2.default.createElement(
 								'li',
-								{ className: 'calendar-item-entry', key: 'calendar-item-' + _tools2.default.generateID() },
+								{ className: 'calendar-item-entry', key: 'calendar-item-' + (0, _tools.generateID)() },
 								_react2.default.createElement(
 									'small',
 									null,
-									_tools2.default.truncate(entry.title, 17)
+									(0, _tools.truncate)(entry.title, 17)
 								)
 							);
 						}
 						if (index == 2) {
 							return _react2.default.createElement(
 								'li',
-								{ className: 'calendar-item-entry', key: 'calendar-item-' + _tools2.default.generateID() },
+								{ className: 'calendar-item-entry', key: 'calendar-item-' + (0, _tools.generateID)() },
 								'...'
 							);
 						}
@@ -45986,8 +45992,6 @@
 	
 	var _tools = __webpack_require__(/*! ../../lib/tools.js */ 164);
 	
-	var _tools2 = _interopRequireDefault(_tools);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46038,7 +46042,7 @@
 	
 				var titleValue = calendarTitleInput.value;
 				var timeValue = calendarTimeInput.value;
-				var timeIsFormattedCorrectly = _tools2.default.validate24HourTime(timeValue);
+				var timeIsFormattedCorrectly = (0, _tools.validate24HourTime)(timeValue);
 	
 				if (!titleValue) {
 					form.addError('please enter a title');
@@ -46104,7 +46108,7 @@
 							v: entries.map(function (event) {
 								return _react2.default.createElement(
 									'li',
-									{ onClick: _this2.stopPropagationHandler, key: event.time + event.title + _tools2.default.generateID(), className: 'calendar-hour-event hover-cursor--default' },
+									{ onClick: _this2.stopPropagationHandler, key: event.time + event.title + (0, _tools.generateID)(), className: 'calendar-hour-event hover-cursor--default' },
 									_react2.default.createElement(
 										'a',
 										{ onClick: _this2.removeEventHandler.bind(_this2, event), href: '#', className: 'pull-right remove-event' },
@@ -46673,8 +46677,6 @@
 	
 	var _tools = __webpack_require__(/*! ../../lib/tools.js */ 164);
 	
-	var _tools2 = _interopRequireDefault(_tools);
-	
 	var _event = __webpack_require__(/*! ../../behaviours/event.js */ 234);
 	
 	var _event2 = _interopRequireDefault(_event);
@@ -46766,7 +46768,7 @@
 		}, {
 			key: 'create',
 			value: function create(model) {
-				model.id = _tools2.default.generateID();
+				model.id = (0, _tools.generateID)();
 				this.models[model.id] = model;
 				this.triggerCreate(model);
 				return model;
@@ -46777,7 +46779,7 @@
 				var _this = this;
 	
 				var created = models.map(function (model) {
-					model.id = _tools2.default.generateID();
+					model.id = (0, _tools.generateID)();
 					_this.models[model.id] = model;
 					return model;
 				});

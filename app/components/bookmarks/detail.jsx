@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Tools from '../../lib/tools.js';
+import { isImageUrl } from '../../lib/tools.js';
 
 const PropTypes = React.PropTypes;
 
@@ -25,7 +25,7 @@ export default class BookmarkDetailComponent extends React.Component {
 		let imageHtml;
 		let notesHtml;
 		const { bookmark } = this.props;
-		const isImageUrl = Tools.isImageUrl(bookmark.url);
+		const isImageUrl = isImageUrl(bookmark.url);
 
 		if (isImageUrl) {
 			imageHtml = (

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Tools from '../../lib/tools.js';
+import { generateID } from '../../lib/tools.js';
 import EventBehaviour from '../../behaviours/event.js';
 
 export default class Collection {
@@ -67,7 +67,7 @@ export default class Collection {
 	// change models
 
 	create(model) {
-		model.id = Tools.generateID();
+		model.id = generateID();
 		this.models[model.id] = model;
 		this.triggerCreate(model);
 		return model;
@@ -75,7 +75,7 @@ export default class Collection {
 
 	createMany(models) {
 		const created = models.map((model) => {
-			model.id = Tools.generateID();
+			model.id = generateID();
 			this.models[model.id] = model;
 			return model;
 		});
