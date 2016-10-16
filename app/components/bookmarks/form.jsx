@@ -97,14 +97,18 @@ export default class BookmarkFormComponent extends React.Component {
                 <header className="box-header bookmark-form-header padding-horizontal bg-gray box-shadow">
 				    <h3 className="bookmark-form-title muted">{formTitle}</h3> 
                 </header>
-				<form onSubmit={this.submitHandler.bind(this)} className="bookmark-form padding">
-					<input defaultValue={titleValue} ref="bookmarkTitleInput" name="title" placeholder="title" className="field" />
-                    {this.renderError('title')}
-					<input defaultValue={urlValue} ref="bookmarkUrlInput" name="url" placeholder="url" type="url" className="field" />
-                    {this.renderError('url')}
-					<textarea defaultValue={notesValue} ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
-                    <input type="submit" value="submit" className="btn btn-tall"></input>
-                    {cancelContent}
+				<form onSubmit={this.submitHandler.bind(this)} className="bookmark-form">
+                    <div className="padding">
+    					<input defaultValue={titleValue} ref="bookmarkTitleInput" name="title" placeholder="title" className="field" />
+                        {this.renderError('title')}
+    					<input defaultValue={urlValue} ref="bookmarkUrlInput" name="url" placeholder="url" type="url" className="field" />
+                        {this.renderError('url')}
+    					<textarea defaultValue={notesValue} ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
+                    </div>
+                    <div className="form-footer bg-gray padding-horizontal padding-vertical-sm box-shadow border-top">
+                        <input type="submit" value="submit" className="btn"></input>
+                        {cancelContent}
+                    </div>
 				</form>
         	</div>
         );

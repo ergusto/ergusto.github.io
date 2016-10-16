@@ -43282,14 +43282,22 @@
 	                ),
 	                _react2.default.createElement(
 	                    'form',
-	                    { onSubmit: this.submitHandler.bind(this), className: 'bookmark-form padding' },
-	                    _react2.default.createElement('input', { defaultValue: titleValue, ref: 'bookmarkTitleInput', name: 'title', placeholder: 'title', className: 'field' }),
-	                    this.renderError('title'),
-	                    _react2.default.createElement('input', { defaultValue: urlValue, ref: 'bookmarkUrlInput', name: 'url', placeholder: 'url', type: 'url', className: 'field' }),
-	                    this.renderError('url'),
-	                    _react2.default.createElement('textarea', { defaultValue: notesValue, ref: 'bookmarkNotesInput', name: 'notes', placeholder: 'notes', className: 'field' }),
-	                    _react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn btn-tall' }),
-	                    cancelContent
+	                    { onSubmit: this.submitHandler.bind(this), className: 'bookmark-form' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'padding' },
+	                        _react2.default.createElement('input', { defaultValue: titleValue, ref: 'bookmarkTitleInput', name: 'title', placeholder: 'title', className: 'field' }),
+	                        this.renderError('title'),
+	                        _react2.default.createElement('input', { defaultValue: urlValue, ref: 'bookmarkUrlInput', name: 'url', placeholder: 'url', type: 'url', className: 'field' }),
+	                        this.renderError('url'),
+	                        _react2.default.createElement('textarea', { defaultValue: notesValue, ref: 'bookmarkNotesInput', name: 'notes', placeholder: 'notes', className: 'field' })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-footer bg-gray padding-horizontal padding-vertical-sm box-shadow border-top' },
+	                        _react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn' }),
+	                        cancelContent
+	                    )
 	                )
 	            );
 	        }
@@ -43496,7 +43504,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".bookmark-form-title {\n  margin: 0; }\n\n.bookmark-form-header {\n  padding-top: 12px;\n  padding-bottom: 12px; }\n", ""]);
+	exports.push([module.id, ".bookmark-form-title {\n  margin: 0; }\n\n.bookmark-form-header {\n  padding-top: 12px;\n  padding-bottom: 12px; }\n\n.bookmark-form textarea {\n  margin-bottom: 0px; }\n", ""]);
 	
 	// exports
 
