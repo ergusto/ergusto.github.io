@@ -147,7 +147,7 @@ export default class CalendarDetailComponent extends React.Component {
 				</div>
 				<form onSubmit={this.submitHandler.bind(this)} className="calendar-form padding border-top">
 
-					<input ref="calendarTitleInput" placeholder="title" className="field" name="title" />
+					<input ref="calendarTitleInput" placeholder="event" className="field" name="title" />
 					{errorContent}
 					<div className="btn-group">
 						<input type="submit" value="submit" className="btn"></input>
