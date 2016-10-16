@@ -27,21 +27,20 @@ export default class CalendarDetailComponent extends React.Component {
 		const form = this.form;
 		const entryEvent = {};
 		let { day, diary, entry } = this.props;
-		const { calendarTitleInput, calendarTimeInput } = this.refs;
+		const { calendarTitleInput } = this.refs;
 		
 		if (!entry) entry = diary.shell();
 
 		const titleValue = calendarTitleInput.value;
-		const timeValue = calendarTimeInput.value;
-		const timeIsFormattedCorrectly = validate24HourTime(timeValue);
+		const timeValue = this.activeHour.current;
 
 		if (!titleValue) {
 			form.addError('please enter a title');
 			return;
 		}
 
-		if (!timeIsFormattedCorrectly) {
-			form.addError('please enter a time in the format: HH:MM (e.g. 06:00)');
+		if (!timeValue) {
+			form.addError('please click an hour to specify the event time');
 			return;
 		}
 
@@ -58,7 +57,6 @@ export default class CalendarDetailComponent extends React.Component {
 		}
 
 		form.clearError();
-		calendarTimeInput.value = '';
 		calendarTitleInput.value = '';
 		this.activeHour.clear();
 	}
@@ -100,7 +98,7 @@ export default class CalendarDetailComponent extends React.Component {
 		if (this.activeHour.current == hour) {
 			this.activeHour.clear();
 		} else {
-			const { calendarTitleInput, calendarTimeInput } = this.refs;
+			const { calendarTitleInput } = this.refs;
 			this.activeHour.set(hour);
 			calendarTitleInput.focus();
 		}
@@ -147,10 +145,9 @@ export default class CalendarDetailComponent extends React.Component {
 				<div className="calendar-body">
 					{hourHTML}
 				</div>
-				<form onSubmit={this.submitHandler.bind(this)} className="padding border-top">
+				<form onSubmit={this.submitHandler.bind(this)} className="calendar-form padding border-top">
 
 					<input ref="calendarTitleInput" placeholder="title" className="field" name="title" />
-					<input ref="calendarTimeInput" value={this.activeHour.current} placeholder="time (hh:mm)" className="field" name="time" />
 					{errorContent}
 					<div className="btn-group">
 						<input type="submit" value="submit" className="btn"></input>

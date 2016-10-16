@@ -42407,9 +42407,11 @@
 		}
 	
 		_createClass(BookmarkManagerComponent, [{
-			key: 'getActiveBookmarkId',
-			value: function getActiveBookmarkId() {
-				return this.activeBookmark.current;
+			key: 'getActiveBookmark',
+			value: function getActiveBookmark() {
+				var bookmarks = this.props.bookmarks;
+	
+				return bookmarks.get(this.activeBookmark.current);
 			}
 		}, {
 			key: 'clearActiveBookmark',
@@ -42452,7 +42454,7 @@
 				var bookmarks = _props.bookmarks;
 				var user = _props.user;
 	
-				var bookmark = bookmarks.get(this.getActiveBookmarkId());;
+				var bookmark = this.getActiveBookmark();
 				var tabClass = 'btn';
 				var activeClass = ' active';
 				var listTabClass = tabClass;
@@ -42478,7 +42480,12 @@
 				}
 	
 				if (this.tabs.isOpen(tabs.edit)) {
-					content = _react2.default.createElement(_formEdit2.default, { formTitle: 'edit', user: user, bookmark: bookmark, bookmarks: bookmarks, submitCallback: this.editSubmitCallback.bind(this) });
+					var cancelEditCallback = function cancelEditCallback(event) {
+						event.preventDefault();
+						this.setActiveBookmark(bookmark.id);
+					};
+	
+					content = _react2.default.createElement(_formEdit2.default, { formTitle: 'edit', user: user, bookmark: bookmark, bookmarks: bookmarks, submitCallback: this.editSubmitCallback.bind(this), cancelCallback: cancelEditCallback.bind(this) });
 				}
 	
 				return _react2.default.createElement(
@@ -43229,6 +43236,7 @@
 	            var _props2 = this.props;
 	            var bookmark = _props2.bookmark;
 	            var formTitle = _props2.formTitle;
+	            var cancelCallback = _props2.cancelCallback;
 	
 	            if (!formTitle) formTitle = 'new bookmark';
 	
@@ -43236,6 +43244,7 @@
 	            var urlValue = void 0;
 	            var notesValue = void 0;
 	            var errContent = void 0;
+	            var cancelContent = void 0;
 	
 	            if (bookmark) {
 	                titleValue = bookmark.title;
@@ -43251,12 +43260,20 @@
 	                );
 	            }
 	
+	            if (cancelCallback) {
+	                cancelContent = _react2.default.createElement(
+	                    'a',
+	                    { href: '#', className: 'btn btn-tall', onClick: cancelCallback },
+	                    'Cancel'
+	                );
+	            }
+	
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'bookmark-form-container box margin-top' },
 	                _react2.default.createElement(
 	                    'header',
-	                    { className: 'box-header bookmark-form-header padding-horizontal bg-gray' },
+	                    { className: 'box-header bookmark-form-header padding-horizontal bg-gray box-shadow' },
 	                    _react2.default.createElement(
 	                        'h3',
 	                        { className: 'bookmark-form-title muted' },
@@ -43271,7 +43288,8 @@
 	                    _react2.default.createElement('input', { defaultValue: urlValue, ref: 'bookmarkUrlInput', name: 'url', placeholder: 'url', type: 'url', className: 'field' }),
 	                    this.renderError('url'),
 	                    _react2.default.createElement('textarea', { defaultValue: notesValue, ref: 'bookmarkNotesInput', name: 'notes', placeholder: 'notes', className: 'field' }),
-	                    _react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn btn-tall' })
+	                    _react2.default.createElement('input', { type: 'submit', value: 'submit', className: 'btn btn-tall' }),
+	                    cancelContent
 	                )
 	            );
 	        }
@@ -45956,7 +45974,7 @@
 	
 	
 	// module
-	exports.push([module.id, "#calendar-example {\n  position: relative; }\n\n.calendar .calendar-header {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n\n.calendar-subheader {\n  padding: 0; }\n  .calendar-subheader li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  line-height: 2rem;\n  padding: 0px;\n  font-size: 110%; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 6rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.06);\n  cursor: pointer;\n  color: black; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n", ""]);
+	exports.push([module.id, "#calendar-example {\n  position: relative; }\n\n.calendar .calendar-header {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n\n.calendar-subheader {\n  padding: 0; }\n  .calendar-subheader li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  line-height: 2rem;\n  padding: 0px;\n  font-size: 110%; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 6rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.06);\n  cursor: pointer;\n  color: black; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n\n.calendar-detail .calendar-form {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n", ""]);
 	
 	// exports
 
@@ -46037,24 +46055,21 @@
 				var day = _props.day;
 				var diary = _props.diary;
 				var entry = _props.entry;
-				var _refs = this.refs;
-				var calendarTitleInput = _refs.calendarTitleInput;
-				var calendarTimeInput = _refs.calendarTimeInput;
+				var calendarTitleInput = this.refs.calendarTitleInput;
 	
 	
 				if (!entry) entry = diary.shell();
 	
 				var titleValue = calendarTitleInput.value;
-				var timeValue = calendarTimeInput.value;
-				var timeIsFormattedCorrectly = (0, _tools.validate24HourTime)(timeValue);
+				var timeValue = this.activeHour.current;
 	
 				if (!titleValue) {
 					form.addError('please enter a title');
 					return;
 				}
 	
-				if (!timeIsFormattedCorrectly) {
-					form.addError('please enter a time in the format: HH:MM (e.g. 06:00)');
+				if (!timeValue) {
+					form.addError('please click an hour to specify the event time');
 					return;
 				}
 	
@@ -46071,7 +46086,6 @@
 				}
 	
 				form.clearError();
-				calendarTimeInput.value = '';
 				calendarTitleInput.value = '';
 				this.activeHour.clear();
 			}
@@ -46133,9 +46147,7 @@
 				if (this.activeHour.current == hour) {
 					this.activeHour.clear();
 				} else {
-					var _refs2 = this.refs;
-					var calendarTitleInput = _refs2.calendarTitleInput;
-					var calendarTimeInput = _refs2.calendarTimeInput;
+					var calendarTitleInput = this.refs.calendarTitleInput;
 	
 					this.activeHour.set(hour);
 					calendarTitleInput.focus();
@@ -46231,9 +46243,8 @@
 					),
 					_react2.default.createElement(
 						'form',
-						{ onSubmit: this.submitHandler.bind(this), className: 'padding border-top' },
+						{ onSubmit: this.submitHandler.bind(this), className: 'calendar-form padding border-top' },
 						_react2.default.createElement('input', { ref: 'calendarTitleInput', placeholder: 'title', className: 'field', name: 'title' }),
-						_react2.default.createElement('input', { ref: 'calendarTimeInput', value: this.activeHour.current, placeholder: 'time (hh:mm)', className: 'field', name: 'time' }),
 						errorContent,
 						_react2.default.createElement(
 							'div',

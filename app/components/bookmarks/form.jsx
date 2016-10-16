@@ -69,13 +69,14 @@ export default class BookmarkFormComponent extends React.Component {
 
     render() {
         const err = this.form.error;
-        let { bookmark, formTitle } = this.props;
+        let { bookmark, formTitle, cancelCallback } = this.props;
         if (!formTitle) formTitle = 'new bookmark';
         
         let titleValue;
         let urlValue;
         let notesValue;
         let errContent;
+        let cancelContent;
 
         if (bookmark) {
             titleValue = bookmark.title;
@@ -87,9 +88,13 @@ export default class BookmarkFormComponent extends React.Component {
             errContent = <span className="form-error">{err}</span>;
         }
 
+        if (cancelCallback) {
+            cancelContent = <a href="#" className="btn btn-tall" onClick={cancelCallback}>Cancel</a>;
+        }
+
         return (
         	<div className="bookmark-form-container box margin-top">
-                <header className="box-header bookmark-form-header padding-horizontal bg-gray">
+                <header className="box-header bookmark-form-header padding-horizontal bg-gray box-shadow">
 				    <h3 className="bookmark-form-title muted">{formTitle}</h3> 
                 </header>
 				<form onSubmit={this.submitHandler.bind(this)} className="bookmark-form padding">
@@ -99,6 +104,7 @@ export default class BookmarkFormComponent extends React.Component {
                     {this.renderError('url')}
 					<textarea defaultValue={notesValue} ref="bookmarkNotesInput" name="notes" placeholder="notes" className="field"></textarea>
                     <input type="submit" value="submit" className="btn btn-tall"></input>
+                    {cancelContent}
 				</form>
         	</div>
         );
