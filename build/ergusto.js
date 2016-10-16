@@ -42931,7 +42931,7 @@
 				if (bookmark.notes.length) {
 					notesHtml = _react2.default.createElement(
 						'div',
-						{ className: 'padding border-top' },
+						{ className: 'padding padding-bottom-sm border-top box-shadow-inset' },
 						_react2.default.createElement(
 							'small',
 							{ className: 'muted' },
@@ -42960,7 +42960,7 @@
 					imageHtml,
 					_react2.default.createElement(
 						'div',
-						{ className: 'bookmark-buttons padding-horizontal padding-vertical-sm bg-gray' },
+						{ className: 'bookmark-buttons padding-horizontal padding-vertical-sm bg-gray box-shadow-inset' },
 						_react2.default.createElement(
 							'small',
 							{ className: 'bookmark-detail-username pull-right' },
