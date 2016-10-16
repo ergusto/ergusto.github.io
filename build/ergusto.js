@@ -42699,9 +42699,13 @@
 						'header',
 						{ className: 'border-bottom padding' },
 						_react2.default.createElement(
-							'h3',
-							{ href: bookmark.url, className: 'bookmark-item-title hover-cursor--pointer muted' },
-							bookmark.title
+							'a',
+							{ href: '#', onClick: this.clickHandler.bind(this) },
+							_react2.default.createElement(
+								'h3',
+								{ className: 'bookmark-item-title hover-cursor--pointer muted' },
+								bookmark.title
+							)
 						)
 					),
 					imageHtml,
