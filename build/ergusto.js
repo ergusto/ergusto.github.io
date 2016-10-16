@@ -42931,7 +42931,7 @@
 				if (bookmark.notes.length) {
 					notesHtml = _react2.default.createElement(
 						'div',
-						{ className: 'padding padding-bottom-sm border-top box-shadow-inset' },
+						{ className: 'padding padding-vertical-sm  border-top box-shadow-inset' },
 						_react2.default.createElement(
 							'small',
 							{ className: 'muted' },

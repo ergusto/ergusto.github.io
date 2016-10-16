@@ -36,7 +36,7 @@ export default class BookmarkDetailComponent extends React.Component {
 
 		if (bookmark.notes.length) {
 			notesHtml = (
-				<div className="padding padding-bottom-sm border-top box-shadow-inset">
+				<div className="padding padding-vertical-sm  border-top box-shadow-inset">
 					<small className="muted">notes</small>
 					<p>{bookmark.notes}</p>
 				</div>
