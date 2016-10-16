@@ -5,7 +5,8 @@
   "main": "behaviour/entry.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack -d --watch",
-    "minify": "./node_modules/.bin/minify --output build/ergusto.min.js build/ergusto.js"
+    "minify": "./node_modules/.bin/minify --output build/ergusto.min.js build/ergusto.js",
+    "start": "python -m SimpleHTTPServer"
   },
   "repository": {
     "type": "git",

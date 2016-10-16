@@ -46351,7 +46351,7 @@
 									value: function render() {
 													return _react2.default.createElement(
 																	'section',
-																	{ className: 'contact-panel full-height padding justify-centre' },
+																	{ className: 'contact contact-panel full-height padding justify-centre' },
 																	_react2.default.createElement(
 																					'div',
 																					{ className: 'contact-info box' },
@@ -46442,7 +46442,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".contact-info {\n  width: 100%;\n  max-width: 600px;\n  position: relative; }\n\n.contact-landscape {\n  width: 100%;\n  max-width: 100%; }\n\n.contact-img {\n  border-radius: 150px;\n  width: 150px;\n  border: 6px solid white;\n  margin-top: -160px;\n  margin-left: 20px; }\n\n.contact-info p {\n  margin-bottom: 0px; }\n\n.contact-info a {\n  text-decoration: none; }\n\n.skills {\n  padding: 0;\n  margin: 0px;\n  margin-top: 10px; }\n\n.skills li {\n  display: inline-block;\n  background: #777;\n  color: white;\n  padding: 4px 10px;\n  margin-left: 4px; }\n  .skills li:first-child {\n    margin-left: 0px; }\n", ""]);
+	exports.push([module.id, ".contact .contact-info {\n  width: 100%;\n  max-width: 600px;\n  position: relative;\n  border-radius: 20px; }\n\n.contact-landscape {\n  width: 100%;\n  max-width: 100%;\n  border-top-left-radius: 20px;\n  border-top-right-radius: 20px; }\n\n.contact-img {\n  border-radius: 150px;\n  width: 150px;\n  border: 6px solid white;\n  margin-top: -160px;\n  margin-left: 20px; }\n\n.contact-info p {\n  margin-bottom: 0px; }\n\n.contact-info a {\n  text-decoration: none; }\n\n.skills {\n  padding: 0;\n  margin: 0px;\n  margin-top: 10px; }\n\n.skills li {\n  display: inline-block;\n  background: #777;\n  color: white;\n  padding: 4px 10px;\n  margin-left: 4px; }\n  .skills li:first-child {\n    margin-left: 0px; }\n", ""]);
 	
 	// exports
 

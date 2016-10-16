@@ -7,7 +7,7 @@ export default class ContactInfoComponent extends  React.Component {
 
     render() {
         return (
-			 <section className="contact-panel full-height padding justify-centre">
+			 <section className="contact contact-panel full-height padding justify-centre">
 			 	<div className="contact-info box">
 			 		<img className="contact-landscape" src="../../../static/landscape.jpg" />
 			 		<img className="contact-img" src="../../../static/ferg.jpg" />
