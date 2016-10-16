@@ -76,7 +76,7 @@ export default class CommentFormComponent extends React.Component {
 		if (!shouldShowForm) return false;
 
 		return (
-			<form refs="commentform" onSubmit={this.submitHandler.bind(this)} className="comment-form box padding margin-top">
+			<form refs="commentform" onSubmit={this.submitHandler.bind(this)} className="comment-form box padding-horizontal margin-top">
 				<span className="fieldCount pull-right">{this.form.text.length}</span>
 				<label httmlFor="comment"><small>{formTitle}</small></label>
 				<textarea onChange={this.changeHandler.bind(this)} ref="commentInput" className="field" name="comment" defaultValue={defaultValue}></textarea>
