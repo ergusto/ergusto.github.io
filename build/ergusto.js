@@ -42702,7 +42702,7 @@
 						{ className: 'border-bottom padding' },
 						_react2.default.createElement(
 							'h3',
-							{ onClick: this.clickHandler.bind(this), className: 'bookmark-item-title hover-cursor--pointer muted' },
+							{ href: bookmark.url, className: 'bookmark-item-title hover-cursor--pointer muted' },
 							bookmark.title
 						)
 					),

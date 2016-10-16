@@ -30,7 +30,7 @@ export default class BookmarkItemComponent extends React.Component {
 		return (
 			<li className="bookmark-item box margin-vertical">
 				<header className="border-bottom padding">
-					<h3 onClick={this.clickHandler.bind(this)} className="bookmark-item-title hover-cursor--pointer muted">{bookmark.title}</h3>
+					<h3 href={bookmark.url} className="bookmark-item-title hover-cursor--pointer muted">{bookmark.title}</h3>
 				</header>
 				{imageHtml}
 				<div className="bookmark-buttons padding-horizontal bg-gray box-shadow-inset">
