@@ -46069,7 +46069,7 @@
 				}
 	
 				if (!timeValue) {
-					form.addError('please click an hour to specify the event time');
+					form.addError('please click an hour to select the event time');
 					return;
 				}
 	
