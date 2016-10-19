@@ -3,7 +3,6 @@ import _ from 'lodash';
 const twentyFourHourTimeValidator = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/
 
 export function validate24HourTime(time) {
-
 	return time && twentyFourHourTimeValidator.test(time);
 };
 
