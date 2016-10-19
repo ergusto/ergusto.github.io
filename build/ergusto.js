@@ -20569,7 +20569,7 @@
 					{ ref: 'panel', className: panelClass },
 					_react2.default.createElement(
 						'div',
-						{ id: 'introduction', className: 'introduction-content' },
+						{ className: 'introduction-content' },
 						_react2.default.createElement(
 							'div',
 							{ ref: 'settings', className: settingsClass },
@@ -42493,7 +42493,7 @@
 					{ className: 'bookmarks-example full-height justify-centre padding' },
 					_react2.default.createElement(
 						'div',
-						{ id: 'bookmarks-example', className: 'example' },
+						{ className: 'example' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'bookmark-manager centred' },
@@ -43790,7 +43790,7 @@
 					{ className: 'comments-example full-height padding justify-centre' },
 					_react2.default.createElement(
 						'div',
-						{ id: 'comment-example', className: 'example' },
+						{ className: 'example' },
 						_react2.default.createElement(
 							'ul',
 							{ className: 'comment-list' },
@@ -44689,7 +44689,7 @@
 					{ className: 'tasklist-example full-height padding justify-centre' },
 					_react2.default.createElement(
 						'div',
-						{ id: 'tasklist-example', className: 'example' },
+						{ className: 'example' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'tasklist box flex-col-container' },
@@ -45502,7 +45502,7 @@
 					{ className: 'calendar-example full-height justify-centre padding' },
 					_react2.default.createElement(
 						'div',
-						{ id: 'calendar-example', className: 'example' },
+						{ className: 'example' },
 						content
 					)
 				);
@@ -46028,7 +46028,7 @@
 	
 	
 	// module
-	exports.push([module.id, "#calendar-example {\n  position: relative; }\n\n.calendar .calendar-header {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n\n.calendar-subheader {\n  padding: 0; }\n  .calendar-subheader li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  line-height: 2rem;\n  padding: 0px;\n  font-size: 110%; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 6rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.06);\n  cursor: pointer;\n  color: black; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n\n.calendar-detail .calendar-form {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n", ""]);
+	exports.push([module.id, ".calendar .calendar-header {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n\n.calendar-subheader {\n  padding: 0; }\n  .calendar-subheader li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  line-height: 2rem;\n  padding: 0px;\n  font-size: 110%; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 6rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.06);\n  cursor: pointer;\n  color: black; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n\n.calendar-detail .calendar-form {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n", ""]);
 	
 	// exports
 

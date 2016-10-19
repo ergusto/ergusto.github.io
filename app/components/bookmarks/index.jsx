@@ -98,7 +98,7 @@ export default class BookmarkManagerComponent extends React.Component {
 		return (
 			 <section className="bookmarks-example full-height justify-centre padding">
 
-				<div id="bookmarks-example" className="example">
+				<div className="example">
 
 					<div className="bookmark-manager centred">
 

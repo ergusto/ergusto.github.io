@@ -120,7 +120,7 @@ export default class IntroductionComponent extends React.Component {
 
 			<header ref="panel" className={panelClass}>
 
-				<div id="introduction" className="introduction-content">
+				<div className="introduction-content">
 
 					<div ref="settings" className={settingsClass}>
 						<SettingsComponent user={user} />

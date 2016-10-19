@@ -62,7 +62,7 @@ export default class TaskManagerComponent extends React.Component {
 		return (
 			 <section className="tasklist-example full-height padding justify-centre">
 
-				<div id="tasklist-example" className="example">
+				<div className="example">
 
 					<div className="tasklist box flex-col-container">
 						<div className="tasklist-sidebar border-right flex-col">
