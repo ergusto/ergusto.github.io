@@ -43787,7 +43787,7 @@
 	
 				return _react2.default.createElement(
 					'section',
-					{ className: 'comments-example full-height padding justify-centre' },
+					{ className: 'comments-example full-height justify-centre padding' },
 					_react2.default.createElement(
 						'div',
 						{ className: 'example' },

@@ -29,7 +29,7 @@ export default class CommentListComponent extends React.Component {
 		}
 
 		return (
-			 <section className="comments-example full-height padding justify-centre">
+			 <section className="comments-example full-height justify-centre padding">
 
 				<div className="example">
 					
