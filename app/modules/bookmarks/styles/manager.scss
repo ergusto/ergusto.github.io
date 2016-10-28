@@ -1,0 +1,33 @@
+.bookmark-manager {
+	max-width: 900px;
+	position: relative;
+}
+
+.bookmark-manager-title {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+
+	&:hover {
+		color: black;
+	}
+}
+
+.bookmark-manager-control {
+	display: block;
+}
+
+.bookmark-manager-header {
+    line-height: 3rem;
+}
+
+
+
+.bookmark-buttons {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.bookmark-buttons a {
+	text-decoration: none;
+}

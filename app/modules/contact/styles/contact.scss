@@ -1,0 +1,47 @@
+.contact .contact-info {
+	width: 100%;
+	max-width: 600px;
+	position: relative;
+	border-radius: 20px;
+}
+
+.contact-landscape {
+	width: 100%;
+	max-width: 100%;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+.contact-img {
+	border-radius: 150px;
+	width: 150px;
+	border: 6px solid white;
+	margin-top: -160px;
+	margin-left: 20px;
+}
+
+.contact-info p {
+	margin-bottom: 0px;
+}
+
+.contact-info a {
+	text-decoration: none;
+}
+
+.skills {
+	padding: 0;
+	margin: 0px;
+	margin-top: 10px;
+}
+
+.skills li {
+	display: inline-block;
+	background: #777;
+	color: white;
+	padding: 4px 10px;
+	margin-left: 4px;
+
+	&:first-child {
+		margin-left: 0px;
+	}
+}

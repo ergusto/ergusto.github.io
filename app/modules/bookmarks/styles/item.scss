@@ -1,0 +1,19 @@
+.bookmark-item-title {
+	display: inline-block;
+
+	&:hover {
+		color: black;
+	}
+}
+
+.bookmark-item-url {
+	display: inline-block;
+}
+
+.bookmark-item-image {
+	max-width: 100%;
+}
+
+.bookmark-item-username {
+	color: #777;
+}

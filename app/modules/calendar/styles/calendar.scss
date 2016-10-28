@@ -1,0 +1,67 @@
+.calendar .calendar-header {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.calendar-subheader {
+	padding: 0;
+
+	li {
+		width: 14%;
+		border-left: 1px solid transparent;
+	}
+}
+
+.calendar-buttons {
+	line-height: 2rem;
+	padding: 0px;
+	font-size: 110%;
+}
+
+.calendar-buttons li:last-child .btn {
+	border-left: 0px;
+}
+
+.calendar-week {
+	display: block;
+	list-style: none;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.calendar-day, .calendar-day-empty {
+	float: left;
+	width: 14%;
+	min-height: 6rem;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	background: white;
+}
+
+.calendar-day.isToday {
+	background: rgba(70, 150, 229, 0.05);
+}
+
+.calendar-day.isToday:hover {
+	background: rgba(70, 150, 229, 0.2);
+}
+
+.calendar-day-empty {
+	background: rgba(0, 0, 0, 0.03);
+}
+
+.calendar-day:hover {
+	background: rgba(0, 0, 0, 0.06);
+	cursor: pointer;
+	color: black;
+}
+
+.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {
+	border-bottom: 0px;
+}
+
+.calendar-detail .calendar-form {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}

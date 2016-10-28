@@ -59,27 +59,27 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _index = __webpack_require__(/*! ./components/introduction/index.jsx */ 159);
+	var _index = __webpack_require__(/*! ./modules/introduction/index.jsx */ 159);
 	
 	var _index2 = _interopRequireDefault(_index);
 	
-	var _index3 = __webpack_require__(/*! ./components/bookmarks/index.jsx */ 173);
+	var _index3 = __webpack_require__(/*! ./modules/bookmarks/index.jsx */ 173);
 	
 	var _index4 = _interopRequireDefault(_index3);
 	
-	var _index5 = __webpack_require__(/*! ./components/comments/index.jsx */ 194);
+	var _index5 = __webpack_require__(/*! ./modules/comments/index.jsx */ 194);
 	
 	var _index6 = _interopRequireDefault(_index5);
 	
-	var _index7 = __webpack_require__(/*! ./components/tasklist/index.jsx */ 206);
+	var _index7 = __webpack_require__(/*! ./modules/tasklist/index.jsx */ 206);
 	
 	var _index8 = _interopRequireDefault(_index7);
 	
-	var _index9 = __webpack_require__(/*! ./components/calendar/index.jsx */ 219);
+	var _index9 = __webpack_require__(/*! ./modules/calendar/index.jsx */ 219);
 	
 	var _index10 = _interopRequireDefault(_index9);
 	
-	var _index11 = __webpack_require__(/*! ./components/contact/index.jsx */ 230);
+	var _index11 = __webpack_require__(/*! ./modules/contact/index.jsx */ 230);
 	
 	var _index12 = _interopRequireDefault(_index11);
 	
@@ -20334,9 +20334,9 @@
 
 /***/ },
 /* 159 */
-/*!***********************************************!*\
-  !*** ./app/components/introduction/index.jsx ***!
-  \***********************************************/
+/*!********************************************!*\
+  !*** ./app/modules/introduction/index.jsx ***!
+  \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20379,6 +20379,9 @@
 			var _this = _possibleConstructorReturn(this, (IntroductionComponent.__proto__ || Object.getPrototypeOf(IntroductionComponent)).call(this, props));
 	
 			_this.setBeforeUnload();
+			_this.state = {
+				hasShownAnimation: false
+			};
 			return _this;
 		}
 	
@@ -24490,9 +24493,9 @@
 
 /***/ },
 /* 161 */
-/*!*******************************************!*\
-  !*** ./app/components/settings/index.jsx ***!
-  \*******************************************/
+/*!****************************************!*\
+  !*** ./app/modules/settings/index.jsx ***!
+  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41926,9 +41929,9 @@
 
 /***/ },
 /* 167 */
-/*!******************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/settings/styles/settings.scss ***!
-  \******************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/settings/styles/settings.scss ***!
+  \***************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -41955,9 +41958,9 @@
 
 /***/ },
 /* 168 */
-/*!*************************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/settings/styles/settings.scss ***!
-  \*************************************************************************************/
+/*!**********************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/settings/styles/settings.scss ***!
+  \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -42286,9 +42289,9 @@
 
 /***/ },
 /* 171 */
-/*!**************************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/introduction/styles/introduction.scss ***!
-  \**************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/introduction/styles/introduction.scss ***!
+  \***********************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -42315,9 +42318,9 @@
 
 /***/ },
 /* 172 */
-/*!*********************************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/introduction/styles/introduction.scss ***!
-  \*********************************************************************************************/
+/*!******************************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/introduction/styles/introduction.scss ***!
+  \******************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -42325,16 +42328,16 @@
 	
 	
 	// module
-	exports.push([module.id, ".introduction {\n  background: #4696e5;\n  color: white;\n  padding: 10px 20px 10px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n\n.introduction a {\n  text-decoration: none; }\n\n.introduction-heading {\n  display: block;\n  font-size: 2.2rem;\n  margin: 0px auto 4px; }\n\n.introduction-heading a {\n  color: white; }\n\n.introduction-heading a:hover {\n  color: white; }\n\n@media only screen and (min-width: 768px) {\n  .introduction-heading {\n    font-size: 3rem; } }\n\n.introduction-no-animation .introduction-heading {\n  font-size: 20px;\n  margin: 0 0 4px; }\n\n.introduction-content {\n  width: 100%; }\n\n.name span {\n  display: inline-block; }\n", ""]);
+	exports.push([module.id, ".introduction {\n  background: #4696e5;\n  color: white;\n  padding: 10px 20px 10px;\n  position: absolute;\n  left: 0;\n  right: 0;\n  z-index: 1; }\n\n.introduction a {\n  text-decoration: none; }\n\n.introduction-heading {\n  display: block;\n  font-size: 2.2rem;\n  margin: 0px auto 4px; }\n\n.introduction-heading a {\n  color: white; }\n\n.introduction-heading a:hover {\n  color: white; }\n\n@media only screen and (min-width: 768px) {\n  .introduction-heading {\n    font-size: 3rem; } }\n\n.introduction-no-animation .introduction-heading {\n  font-size: 20px;\n  margin: 0 0 4px; }\n\n.introduction-content {\n  width: 100%; }\n\n.name:hover {\n  opacity: 0.7; }\n\n.name span {\n  display: inline-block; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
 /* 173 */
-/*!********************************************!*\
-  !*** ./app/components/bookmarks/index.jsx ***!
-  \********************************************/
+/*!*****************************************!*\
+  !*** ./app/modules/bookmarks/index.jsx ***!
+  \*****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42547,9 +42550,9 @@
 
 /***/ },
 /* 174 */
-/*!*******************************************!*\
-  !*** ./app/components/bookmarks/list.jsx ***!
-  \*******************************************/
+/*!****************************************!*\
+  !*** ./app/modules/bookmarks/list.jsx ***!
+  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42631,9 +42634,9 @@
 
 /***/ },
 /* 175 */
-/*!*******************************************!*\
-  !*** ./app/components/bookmarks/item.jsx ***!
-  \*******************************************/
+/*!****************************************!*\
+  !*** ./app/modules/bookmarks/item.jsx ***!
+  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42759,9 +42762,9 @@
 
 /***/ },
 /* 176 */
-/*!***************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/bookmarks/styles/item.scss ***!
-  \***************************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/bookmarks/styles/item.scss ***!
+  \************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -42788,9 +42791,9 @@
 
 /***/ },
 /* 177 */
-/*!**********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/bookmarks/styles/item.scss ***!
-  \**********************************************************************************/
+/*!*******************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/bookmarks/styles/item.scss ***!
+  \*******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -42805,9 +42808,9 @@
 
 /***/ },
 /* 178 */
-/*!***************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/bookmarks/styles/list.scss ***!
-  \***************************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/bookmarks/styles/list.scss ***!
+  \************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -42834,9 +42837,9 @@
 
 /***/ },
 /* 179 */
-/*!**********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/bookmarks/styles/list.scss ***!
-  \**********************************************************************************/
+/*!*******************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/bookmarks/styles/list.scss ***!
+  \*******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -42851,9 +42854,9 @@
 
 /***/ },
 /* 180 */
-/*!*********************************************!*\
-  !*** ./app/components/bookmarks/detail.jsx ***!
-  \*********************************************/
+/*!******************************************!*\
+  !*** ./app/modules/bookmarks/detail.jsx ***!
+  \******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43013,9 +43016,9 @@
 
 /***/ },
 /* 181 */
-/*!*****************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/bookmarks/styles/detail.scss ***!
-  \*****************************************************************************************************/
+/*!**************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/bookmarks/styles/detail.scss ***!
+  \**************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -43042,9 +43045,9 @@
 
 /***/ },
 /* 182 */
-/*!************************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/bookmarks/styles/detail.scss ***!
-  \************************************************************************************/
+/*!*********************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/bookmarks/styles/detail.scss ***!
+  \*********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -43059,9 +43062,9 @@
 
 /***/ },
 /* 183 */
-/*!************************************************!*\
-  !*** ./app/components/bookmarks/form.edit.jsx ***!
-  \************************************************/
+/*!*********************************************!*\
+  !*** ./app/modules/bookmarks/form.edit.jsx ***!
+  \*********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43112,9 +43115,9 @@
 
 /***/ },
 /* 184 */
-/*!*******************************************!*\
-  !*** ./app/components/bookmarks/form.jsx ***!
-  \*******************************************/
+/*!****************************************!*\
+  !*** ./app/modules/bookmarks/form.jsx ***!
+  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43464,9 +43467,9 @@
 
 /***/ },
 /* 187 */
-/*!***************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/bookmarks/styles/form.scss ***!
-  \***************************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/bookmarks/styles/form.scss ***!
+  \************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -43493,9 +43496,9 @@
 
 /***/ },
 /* 188 */
-/*!**********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/bookmarks/styles/form.scss ***!
-  \**********************************************************************************/
+/*!*******************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/bookmarks/styles/form.scss ***!
+  \*******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -43510,9 +43513,9 @@
 
 /***/ },
 /* 189 */
-/*!**************************************************!*\
-  !*** ./app/components/bookmarks/form.create.jsx ***!
-  \**************************************************/
+/*!***********************************************!*\
+  !*** ./app/modules/bookmarks/form.create.jsx ***!
+  \***********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43673,9 +43676,9 @@
 
 /***/ },
 /* 192 */
-/*!******************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/bookmarks/styles/manager.scss ***!
-  \******************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/bookmarks/styles/manager.scss ***!
+  \***************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -43702,9 +43705,9 @@
 
 /***/ },
 /* 193 */
-/*!*************************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/bookmarks/styles/manager.scss ***!
-  \*************************************************************************************/
+/*!**********************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/bookmarks/styles/manager.scss ***!
+  \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -43719,9 +43722,9 @@
 
 /***/ },
 /* 194 */
-/*!*******************************************!*\
-  !*** ./app/components/comments/index.jsx ***!
-  \*******************************************/
+/*!****************************************!*\
+  !*** ./app/modules/comments/index.jsx ***!
+  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43807,9 +43810,9 @@
 
 /***/ },
 /* 195 */
-/*!*********************************************!*\
-  !*** ./app/components/comments/comment.jsx ***!
-  \*********************************************/
+/*!******************************************!*\
+  !*** ./app/modules/comments/comment.jsx ***!
+  \******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44187,9 +44190,9 @@
 
 /***/ },
 /* 197 */
-/*!***********************************************!*\
-  !*** ./app/components/comments/form.edit.jsx ***!
-  \***********************************************/
+/*!********************************************!*\
+  !*** ./app/modules/comments/form.edit.jsx ***!
+  \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44226,9 +44229,9 @@
 
 /***/ },
 /* 198 */
-/*!******************************************!*\
-  !*** ./app/components/comments/form.jsx ***!
-  \******************************************/
+/*!***************************************!*\
+  !*** ./app/modules/comments/form.jsx ***!
+  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44395,9 +44398,9 @@
 
 /***/ },
 /* 199 */
-/*!**************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/comments/styles/form.scss ***!
-  \**************************************************************************************************/
+/*!***********************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/comments/styles/form.scss ***!
+  \***********************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -44424,9 +44427,9 @@
 
 /***/ },
 /* 200 */
-/*!*********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/comments/styles/form.scss ***!
-  \*********************************************************************************/
+/*!******************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/comments/styles/form.scss ***!
+  \******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -44441,9 +44444,9 @@
 
 /***/ },
 /* 201 */
-/*!*************************************************!*\
-  !*** ./app/components/comments/form.create.jsx ***!
-  \*************************************************/
+/*!**********************************************!*\
+  !*** ./app/modules/comments/form.create.jsx ***!
+  \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44480,9 +44483,9 @@
 
 /***/ },
 /* 202 */
-/*!*****************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/comments/styles/comment.scss ***!
-  \*****************************************************************************************************/
+/*!**************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/comments/styles/comment.scss ***!
+  \**************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -44509,9 +44512,9 @@
 
 /***/ },
 /* 203 */
-/*!************************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/comments/styles/comment.scss ***!
-  \************************************************************************************/
+/*!*********************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/comments/styles/comment.scss ***!
+  \*********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -44526,9 +44529,9 @@
 
 /***/ },
 /* 204 */
-/*!**************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/comments/styles/list.scss ***!
-  \**************************************************************************************************/
+/*!***********************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/comments/styles/list.scss ***!
+  \***********************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -44555,9 +44558,9 @@
 
 /***/ },
 /* 205 */
-/*!*********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/comments/styles/list.scss ***!
-  \*********************************************************************************/
+/*!******************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/comments/styles/list.scss ***!
+  \******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -44572,9 +44575,9 @@
 
 /***/ },
 /* 206 */
-/*!*******************************************!*\
-  !*** ./app/components/tasklist/index.jsx ***!
-  \*******************************************/
+/*!****************************************!*\
+  !*** ./app/modules/tasklist/index.jsx ***!
+  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44741,9 +44744,9 @@
 
 /***/ },
 /* 207 */
-/*!********************************************!*\
-  !*** ./app/components/tasklist/detail.jsx ***!
-  \********************************************/
+/*!*****************************************!*\
+  !*** ./app/modules/tasklist/detail.jsx ***!
+  \*****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44848,9 +44851,9 @@
 
 /***/ },
 /* 208 */
-/*!****************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/tasklist/styles/detail.scss ***!
-  \****************************************************************************************************/
+/*!*************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/tasklist/styles/detail.scss ***!
+  \*************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -44877,9 +44880,9 @@
 
 /***/ },
 /* 209 */
-/*!***********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/tasklist/styles/detail.scss ***!
-  \***********************************************************************************/
+/*!********************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/tasklist/styles/detail.scss ***!
+  \********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -44894,9 +44897,9 @@
 
 /***/ },
 /* 210 */
-/*!******************************************!*\
-  !*** ./app/components/tasklist/list.jsx ***!
-  \******************************************/
+/*!***************************************!*\
+  !*** ./app/modules/tasklist/list.jsx ***!
+  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44992,9 +44995,9 @@
 
 /***/ },
 /* 211 */
-/*!******************************************!*\
-  !*** ./app/components/tasklist/item.jsx ***!
-  \******************************************/
+/*!***************************************!*\
+  !*** ./app/modules/tasklist/item.jsx ***!
+  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -45065,9 +45068,9 @@
 
 /***/ },
 /* 212 */
-/*!**************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/tasklist/styles/list.scss ***!
-  \**************************************************************************************************/
+/*!***********************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/tasklist/styles/list.scss ***!
+  \***********************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -45094,9 +45097,9 @@
 
 /***/ },
 /* 213 */
-/*!*********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/tasklist/styles/list.scss ***!
-  \*********************************************************************************/
+/*!******************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/tasklist/styles/list.scss ***!
+  \******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -45111,9 +45114,9 @@
 
 /***/ },
 /* 214 */
-/*!***********************************************!*\
-  !*** ./app/components/tasklist/form.edit.jsx ***!
-  \***********************************************/
+/*!********************************************!*\
+  !*** ./app/modules/tasklist/form.edit.jsx ***!
+  \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45150,9 +45153,9 @@
 
 /***/ },
 /* 215 */
-/*!******************************************!*\
-  !*** ./app/components/tasklist/form.jsx ***!
-  \******************************************/
+/*!***************************************!*\
+  !*** ./app/modules/tasklist/form.jsx ***!
+  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45279,9 +45282,9 @@
 
 /***/ },
 /* 216 */
-/*!**************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/tasklist/styles/form.scss ***!
-  \**************************************************************************************************/
+/*!***********************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/tasklist/styles/form.scss ***!
+  \***********************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -45308,9 +45311,9 @@
 
 /***/ },
 /* 217 */
-/*!*********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/tasklist/styles/form.scss ***!
-  \*********************************************************************************/
+/*!******************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/tasklist/styles/form.scss ***!
+  \******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -45325,9 +45328,9 @@
 
 /***/ },
 /* 218 */
-/*!*************************************************!*\
-  !*** ./app/components/tasklist/form.create.jsx ***!
-  \*************************************************/
+/*!**********************************************!*\
+  !*** ./app/modules/tasklist/form.create.jsx ***!
+  \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45364,9 +45367,9 @@
 
 /***/ },
 /* 219 */
-/*!*******************************************!*\
-  !*** ./app/components/calendar/index.jsx ***!
-  \*******************************************/
+/*!****************************************!*\
+  !*** ./app/modules/calendar/index.jsx ***!
+  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45676,9 +45679,9 @@
 
 /***/ },
 /* 221 */
-/*!**********************************************!*\
-  !*** ./app/components/calendar/calendar.jsx ***!
-  \**********************************************/
+/*!*******************************************!*\
+  !*** ./app/modules/calendar/calendar.jsx ***!
+  \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45832,9 +45835,9 @@
 
 /***/ },
 /* 222 */
-/*!******************************************!*\
-  !*** ./app/components/calendar/item.jsx ***!
-  \******************************************/
+/*!***************************************!*\
+  !*** ./app/modules/calendar/item.jsx ***!
+  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45893,7 +45896,9 @@
 				}
 	
 				if (entry && entry.identifier) {
-					var sortedEntries = _.sortBy(entry.entries, 'time');
+					var sortedEntries = (0, _tools.sortBy)(entry.entries, function (item) {
+						return item.date;
+					});
 					var entryTextHtml = sortedEntries.map(function (entry, index) {
 						if (index <= 1) {
 							return _react2.default.createElement(
@@ -45942,9 +45947,9 @@
 
 /***/ },
 /* 223 */
-/*!**************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/calendar/styles/item.scss ***!
-  \**************************************************************************************************/
+/*!***********************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/calendar/styles/item.scss ***!
+  \***********************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -45971,9 +45976,9 @@
 
 /***/ },
 /* 224 */
-/*!*********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/calendar/styles/item.scss ***!
-  \*********************************************************************************/
+/*!******************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/calendar/styles/item.scss ***!
+  \******************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -45988,9 +45993,9 @@
 
 /***/ },
 /* 225 */
-/*!******************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/calendar/styles/calendar.scss ***!
-  \******************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/calendar/styles/calendar.scss ***!
+  \***************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -46017,9 +46022,9 @@
 
 /***/ },
 /* 226 */
-/*!*************************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/calendar/styles/calendar.scss ***!
-  \*************************************************************************************/
+/*!**********************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/calendar/styles/calendar.scss ***!
+  \**********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -46034,9 +46039,9 @@
 
 /***/ },
 /* 227 */
-/*!********************************************!*\
-  !*** ./app/components/calendar/detail.jsx ***!
-  \********************************************/
+/*!*****************************************!*\
+  !*** ./app/modules/calendar/detail.jsx ***!
+  \*****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46048,10 +46053,6 @@
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _lodash = __webpack_require__(/*! lodash */ 165);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
 	
 	var _react = __webpack_require__(/*! react */ 1);
 	
@@ -46172,7 +46173,7 @@
 				if (entry) {
 					var _ret = function () {
 						var hourHour = hour.substring(0, 2);
-						var entries = _lodash2.default.filter(entry.entries, function (item) {
+						var entries = Array.prototype.filter.call(entry.entries, function (item) {
 							return item.time.substring(0, 2) == hourHour;
 						});
 						return {
@@ -46316,9 +46317,9 @@
 
 /***/ },
 /* 228 */
-/*!****************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/calendar/styles/detail.scss ***!
-  \****************************************************************************************************/
+/*!*************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/calendar/styles/detail.scss ***!
+  \*************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -46345,9 +46346,9 @@
 
 /***/ },
 /* 229 */
-/*!***********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/calendar/styles/detail.scss ***!
-  \***********************************************************************************/
+/*!********************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/calendar/styles/detail.scss ***!
+  \********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();
@@ -46362,9 +46363,9 @@
 
 /***/ },
 /* 230 */
-/*!******************************************!*\
-  !*** ./app/components/contact/index.jsx ***!
-  \******************************************/
+/*!***************************************!*\
+  !*** ./app/modules/contact/index.jsx ***!
+  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46456,9 +46457,9 @@
 
 /***/ },
 /* 231 */
-/*!****************************************************************************************************!*\
-  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/components/contact/styles/contact.scss ***!
-  \****************************************************************************************************/
+/*!*************************************************************************************************!*\
+  !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/contact/styles/contact.scss ***!
+  \*************************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -46485,9 +46486,9 @@
 
 /***/ },
 /* 232 */
-/*!***********************************************************************************!*\
-  !*** ./~/css-loader!./~/sass-loader!./app/components/contact/styles/contact.scss ***!
-  \***********************************************************************************/
+/*!********************************************************************************!*\
+  !*** ./~/css-loader!./~/sass-loader!./app/modules/contact/styles/contact.scss ***!
+  \********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(/*! ./../../../../~/css-loader/lib/css-base.js */ 169)();

@@ -1,0 +1,75 @@
+.tasklist {
+	max-width: 800px;
+	padding: 0;
+	margin: 0 auto;
+	min-height: 600px;
+}
+
+.tasklist-sidebar {
+	width: 40%;
+	padding: 20px;
+	background: rgb(55, 61, 64);
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.tasklist-sidebar-header {
+	border-bottom: 1px solid #777;
+}
+
+.tasklist-sidebar-title {
+	display: inline-block;
+	margin: 0;
+}
+
+.tasklist-content {
+	width: 60%;
+	padding: 20px;
+}
+
+.tasklist-content p {
+	margin: 0;
+}
+
+.plus-btn {
+	display: block;
+	text-decoration: none;
+	font-size: 150%;
+	line-height: 14px;
+}
+
+.plus-btn:hover {
+	color: white;
+}
+
+.task-list {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	list-style-type: none;
+}
+
+.task-list li {
+	position: relative;
+	margin-top: 10px;
+	padding-right: 20px;
+}
+
+.task-list li:first-child {
+	margin-top: 0px;
+}
+
+.task-list a {
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.task-list a:hover {
+	color: white;
+}
+
+.remove-task {
+	line-height: 14px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}

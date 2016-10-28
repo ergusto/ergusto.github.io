@@ -1,0 +1,38 @@
+.comment-item {
+	display: block;
+	max-width: 600px;
+	margin-top: 0px;
+}
+
+.comment-item-header {
+	padding: 10px 20px 0;
+}
+
+.comment-item-body {
+	padding: 10px 20px 15px;
+}
+
+.comment-item-footer {
+	background: #f8f8f8;
+	border-top: 1px solid #ddd;
+	font-size: 80%;
+}
+
+.comment-item-footer .horizontal-list-menu {
+	padding: 6px 20px 8px;
+}
+
+.comment-item-footer a {
+	text-decoration: none;
+}
+
+.comment-item p {
+	margin: 0;
+	padding: 0;
+}
+
+.comment-children {
+	padding-left: 20px;
+	list-style: none;
+	list-style-type: none;
+}

@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import IntroductionComponent from './components/introduction/index.jsx';
-import BookmarkManagerComponent from './components/bookmarks/index.jsx';
-import CommentListComponent from './components/comments/index.jsx';
-import TaskManagerComponent from './components/tasklist/index.jsx';
-import CalendarManagerComponent from './components/calendar/index.jsx';
-import ContactInfoComponent from './components/contact/index.jsx';
+import IntroductionComponent from './modules/introduction/index.jsx';
+import BookmarkManagerComponent from './modules/bookmarks/index.jsx';
+import CommentListComponent from './modules/comments/index.jsx';
+import TaskManagerComponent from './modules/tasklist/index.jsx';
+import CalendarManagerComponent from './modules/calendar/index.jsx';
+import ContactInfoComponent from './modules/contact/index.jsx';
 
 import Bookmarks from './collections/bookmarks.js';
 import Comments from './collections/comments.js';
