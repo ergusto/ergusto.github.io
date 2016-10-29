@@ -46043,7 +46043,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".calendar .calendar-header {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n\n.calendar-subheader {\n  padding: 0; }\n  .calendar-subheader li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  line-height: 2rem;\n  padding: 0px;\n  font-size: 110%; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 6rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.06);\n  cursor: pointer;\n  color: black; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n\n.calendar-detail .calendar-form {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n\n.calendar-form input:disabled {\n  opacity: 0.4; }\n\n.calendar-hour-event {\n  position: absolute; }\n", ""]);
+	exports.push([module.id, ".calendar .calendar-header {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n\n.calendar-subheader {\n  padding: 0; }\n  .calendar-subheader li {\n    width: 14%;\n    border-left: 1px solid transparent; }\n\n.calendar-buttons {\n  line-height: 2rem;\n  padding: 0px;\n  font-size: 110%; }\n\n.calendar-buttons li:last-child .btn {\n  border-left: 0px; }\n\n.calendar-week {\n  display: block;\n  list-style: none;\n  list-style-type: none;\n  margin: 0;\n  padding: 0; }\n\n.calendar-day, .calendar-day-empty {\n  float: left;\n  width: 14%;\n  min-height: 6rem;\n  border-bottom: 1px solid #ccc;\n  border-right: 1px solid #ccc;\n  background: white; }\n\n.calendar-day.isToday {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-day.isToday:hover {\n  background: rgba(70, 150, 229, 0.2); }\n\n.calendar-day-empty {\n  background: rgba(0, 0, 0, 0.03); }\n\n.calendar-day:hover {\n  background: rgba(0, 0, 0, 0.06);\n  cursor: pointer;\n  color: black; }\n\n.calendar-list:last-child .calendar-day, .calendar-list:last-child .calendar-day-empty {\n  border-bottom: 0px; }\n\n.calendar-detail .calendar-form {\n  padding-top: 15px;\n  padding-bottom: 15px; }\n\n.calendar-form input:disabled {\n  opacity: 0.4; }\n", ""]);
 	
 	// exports
 
@@ -46198,6 +46198,14 @@
 						});
 						return {
 							v: entries.map(function (event) {
+								var l = entries.length;
+								var className = "calendar-hour-event box-shadow hover-cursor--default";
+	
+								if (l > 1) {
+									if (l == 2) className += ' calendar-hour-event-double';
+									if (l == 3) className += ' calendar-hour-event-triple';
+								}
+	
 								var hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
 								// for safari
 								var nominalHeight = 43;
@@ -46215,7 +46223,7 @@
 								if (hourDifference == 1) style.paddingTop = '8px';
 								return _react2.default.createElement(
 									'li',
-									{ onClick: _this2.stopPropagationHandler, key: event.startHour + event.title + (0, _tools.generateID)(), style: style, className: 'calendar-hour-event box-shadow hover-cursor--default' },
+									{ onClick: _this2.stopPropagationHandler, key: event.startHour + event.title + (0, _tools.generateID)(), style: style, className: className },
 									_react2.default.createElement(
 										'a',
 										{ onClick: _this2.removeEventHandler.bind(_this2, event), href: '#', className: 'pull-right remove-event' },
@@ -46449,7 +46457,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px;\n  position: relative; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #e9e9e9;\n  position: relative; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px;\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  min-width: 75%;\n  display: inline-block; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block;\n  background: rgba(70, 150, 229, 0.08);\n  padding: 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  position: absolute;\n  left: 80px;\n  right: 20px;\n  top: 5px;\n  text-shadow: 0 1px white;\n  z-index: 1; }\n\n.hour-event-time-text {\n  margin-top: 2px;\n  margin-left: 10px; }\n\n.remove-event {\n  line-height: 7px;\n  position: absolute;\n  right: 10px;\n  text-decoration: none;\n  font-size: 200%;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour, .selected-hour {\n  background: rgba(70, 150, 229, 0.1); }\n\n.hovered-hour {\n  background: rgba(70, 150, 229, 0.05); }\n", ""]);
+	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px;\n  position: relative; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #e9e9e9;\n  position: relative; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px;\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  display: inline-block;\n  position: absolute;\n  left: 80px;\n  right: 20px;\n  top: 5px; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: inline-block;\n  float: left;\n  background: rgba(70, 150, 229, 0.08);\n  padding: 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  text-shadow: 0 1px white;\n  z-index: 1;\n  width: 100%;\n  position: relative; }\n\n.calendar-hour-event-double {\n  width: 48%;\n  margin-left: 4%; }\n\n.calendar-hour-event-triple {\n  width: 30.6%;\n  margin-left: 4%; }\n\n.calendar-hour-event-double:first-child, .calendar-hour-event-triple:first-child {\n  margin-left: 0px; }\n\n.hour-event-time-text {\n  margin-top: 2px;\n  margin-left: 10px; }\n\n.remove-event {\n  line-height: 7px;\n  position: absolute;\n  right: 10px;\n  text-decoration: none;\n  font-size: 200%;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour, .selected-hour {\n  background: rgba(70, 150, 229, 0.1); }\n\n.hovered-hour {\n  background: rgba(70, 150, 229, 0.05); }\n", ""]);
 	
 	// exports
 

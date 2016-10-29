@@ -29,24 +29,40 @@
 	list-style: none;
 	list-style-type: none;
 	padding: 0px;
-	min-width: 75%;
 	display: inline-block;
+	position: absolute;
+	left: 80px;
+	right: 20px;
+	top: 5px;
 }
 
 .calendar-hour-event {
 	margin: 0;
 	margin-bottom: 4px;
-	display: block;
+	display: inline-block;
+	float: left;
 	background: rgba(70, 150, 229, 0.08);
 	padding: 10px;
 	padding-right: 30px;
 	border: 1px solid #ccc;
-	position: absolute;
-	left: 80px;
-	right: 20px;
-	top: 5px;
 	text-shadow: 0 1px white;
 	z-index: 1;
+	width: 100%;
+	position: relative;
+}
+
+.calendar-hour-event-double {
+	width: 48%;
+	margin-left: 4%;
+}
+
+.calendar-hour-event-triple {
+	width: 30.6%;
+	margin-left: 4%;
+}
+
+.calendar-hour-event-double:first-child, .calendar-hour-event-triple:first-child {
+	margin-left: 0px;
 }
 
 .hour-event-time-text {

@@ -91,6 +91,14 @@ export default class CalendarDetailComponent extends React.Component {
 				return item.startHour.substring(0, 2) == hourHour;
 			});
 			return entries.map((event) => {
+				const l = entries.length;
+				let className = "calendar-hour-event box-shadow hover-cursor--default";
+
+				if (l > 1) {
+					if (l == 2) className += ' calendar-hour-event-double';
+					if (l == 3) className += ' calendar-hour-event-triple';
+				}
+
 				const hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
 				// for safari
 				let nominalHeight = 43;
@@ -107,7 +115,7 @@ export default class CalendarDetailComponent extends React.Component {
 
 				if (hourDifference == 1) style.paddingTop = '8px';
 				return (
-					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className="calendar-hour-event box-shadow hover-cursor--default">
+					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className={className}>
 						<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">&#10799;</a>
 						<small className="pull-right hour-event-time-text">{event.startHour} to {event.endHour}</small>
 						{event.title}
