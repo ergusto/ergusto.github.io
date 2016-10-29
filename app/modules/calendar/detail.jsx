@@ -90,8 +90,22 @@ export default class CalendarDetailComponent extends React.Component {
 			});
 			return entries.map((event) => {
 				const hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
+				// for safari
+				let nominalHeight = 43;
+
+				// i hate this browser ecosystem!
+				// for chrome
+				if (navigator.userAgent.indexOf('Chrome') > -1) {
+					nominalHeight = 42;
+				}
+
+				// for firefox
+				if (navigator.userAgent.indexOf('Firefox') > -1) {
+					nominalHeight = 38;
+				}
+
 				const style = {
-					height: (((hourDifference + 1) * 43) - 11) + 'px'
+					height: (((hourDifference + 1) * nominalHeight) - 11) + 'px'
 				};
 				return (
 					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className="calendar-hour-event box-shadow hover-cursor--default">

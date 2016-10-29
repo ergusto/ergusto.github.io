@@ -46190,8 +46190,22 @@
 						return {
 							v: entries.map(function (event) {
 								var hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
+								// for safari
+								var nominalHeight = 43;
+	
+								// i hate this browser ecosystem!
+								// for chrome
+								if (navigator.userAgent.indexOf('Chrome') > -1) {
+									nominalHeight = 42;
+								}
+	
+								// for firefox
+								if (navigator.userAgent.indexOf('Firefox') > -1) {
+									nominalHeight = 38;
+								}
+	
 								var style = {
-									height: (hourDifference + 1) * 43 - 11 + 'px'
+									height: (hourDifference + 1) * nominalHeight - 11 + 'px'
 								};
 								return _react2.default.createElement(
 									'li',
