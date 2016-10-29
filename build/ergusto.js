@@ -47377,7 +47377,17 @@
 		function Diary() {
 			_classCallCheck(this, Diary);
 	
-			return _possibleConstructorReturn(this, (Diary.__proto__ || Object.getPrototypeOf(Diary)).apply(this, arguments));
+			// avoids crashing on incompatible outdated data
+			var _this = _possibleConstructorReturn(this, (Diary.__proto__ || Object.getPrototypeOf(Diary)).call(this));
+	
+			var models = _this.get();
+	
+			models.forEach(function (model) {
+				model.entries.forEach(function (entry) {
+					if (entry.time) _this.remove(model);
+				});
+			});
+			return _this;
 		}
 	
 		_createClass(Diary, [{
