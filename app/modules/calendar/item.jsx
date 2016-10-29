@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import { truncate, generateID, sortBy } from '../../lib/tools.js';
 
@@ -22,10 +23,9 @@ export default class CalendarItemComponent extends React.Component {
 			classes = classes + ' isToday';
 		}
 		
-		//if (entry && entry.identifier) {
-		if (false) {
-			const sortedEntries = sortBy(entry.entries, function(item) {
-				return item.date;
+		if (entry && entry.identifier) {
+			const sortedEntries = _.sortBy(entry.entries, function(item) {
+				return item.startHour;
 			});
 			const entryTextHtml = sortedEntries.map((entry, index) => {
 				if (index <= 1) {
