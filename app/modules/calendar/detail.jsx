@@ -100,8 +100,10 @@ export default class CalendarDetailComponent extends React.Component {
 				}
 
 				const style = {
-					height: (((hourDifference + 1) * nominalHeight) - 11) + 'px'
+					height: ((hourDifference * nominalHeight) - 11) + 'px'
 				};
+
+				if (hourDifference == 1) style['padding-top'] = '8px';
 				return (
 					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className="calendar-hour-event box-shadow hover-cursor--default">
 						<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">x</a>

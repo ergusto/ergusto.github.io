@@ -46200,8 +46200,10 @@
 								}
 	
 								var style = {
-									height: (hourDifference + 1) * nominalHeight - 11 + 'px'
+									height: hourDifference * nominalHeight - 11 + 'px'
 								};
+	
+								if (hourDifference == 1) style['padding-top'] = '8px';
 								return _react2.default.createElement(
 									'li',
 									{ onClick: _this2.stopPropagationHandler, key: event.startHour + event.title + (0, _tools.generateID)(), style: style, className: 'calendar-hour-event box-shadow hover-cursor--default' },
