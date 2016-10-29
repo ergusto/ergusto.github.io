@@ -130,7 +130,7 @@ export default class CalendarDetailComponent extends React.Component {
 			return entries.map((event) => {
 				const hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
 				const style = {
-					height: (hourDifference * 42) + 'px'
+					height: (hourDifference * 50) + 'px'
 				};
 				return (
 					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className="calendar-hour-event box-shadow hover-cursor--default">

@@ -46232,7 +46232,7 @@
 							v: entries.map(function (event) {
 								var hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
 								var style = {
-									height: hourDifference * 42 + 'px'
+									height: hourDifference * 50 + 'px'
 								};
 								return _react2.default.createElement(
 									'li',
