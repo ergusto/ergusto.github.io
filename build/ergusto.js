@@ -46215,15 +46215,14 @@
 										{ onClick: _this2.removeEventHandler.bind(_this2, event), href: '#', className: 'pull-right remove-event' },
 										'x'
 									),
-									event.title,
-									' ',
 									_react2.default.createElement(
 										'small',
 										{ className: 'pull-right hour-event-time-text' },
 										event.startHour,
 										' to ',
 										event.endHour
-									)
+									),
+									event.title
 								);
 							})
 						};
@@ -46413,7 +46412,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px;\n  position: relative; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #ddd;\n  position: relative; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px;\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  min-width: 75%;\n  display: inline-block; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block;\n  background: rgba(70, 150, 229, 0.08);\n  padding: 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  position: absolute;\n  left: 80px;\n  right: 20px;\n  top: 5px; }\n\n.hour-event-time-text {\n  margin-top: 2px; }\n\n.remove-event {\n  line-height: 14px;\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  text-decoration: none;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour, .selected-hour {\n  background: rgba(70, 150, 229, 0.1); }\n", ""]);
+	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px;\n  position: relative; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #ddd;\n  position: relative; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px;\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  min-width: 75%;\n  display: inline-block; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block;\n  background: rgba(70, 150, 229, 0.08);\n  padding: 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  position: absolute;\n  left: 80px;\n  right: 20px;\n  top: 5px; }\n\n.hour-event-time-text {\n  margin-top: 2px;\n  margin-left: 10px; }\n\n.remove-event {\n  line-height: 14px;\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  text-decoration: none;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour, .selected-hour {\n  background: rgba(70, 150, 229, 0.1); }\n", ""]);
 	
 	// exports
 

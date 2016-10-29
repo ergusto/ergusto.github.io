@@ -110,7 +110,8 @@ export default class CalendarDetailComponent extends React.Component {
 				return (
 					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className="calendar-hour-event box-shadow hover-cursor--default">
 						<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">x</a>
-						{event.title} <small className="pull-right hour-event-time-text">{event.startHour} to {event.endHour}</small>
+						<small className="pull-right hour-event-time-text">{event.startHour} to {event.endHour}</small>
+						{event.title}
 					</li>
 				);
 			});
