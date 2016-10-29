@@ -46106,50 +46106,6 @@
 				this.props.showCalendar();
 			}
 		}, {
-			key: '_submitHandler',
-			value: function _submitHandler(event) {
-				event.preventDefault();
-				var form = this.form;
-				var entryEvent = {};
-				var _props = this.props;
-				var day = _props.day;
-				var diary = _props.diary;
-				var entry = _props.entry;
-				var calendarTitleInput = this.refs.calendarTitleInput;
-	
-	
-				if (!entry) entry = diary.shell();
-	
-				var titleValue = calendarTitleInput.value;
-				var timeValue = this.activeHour.current;
-	
-				if (!titleValue) {
-					form.addError('please enter a title');
-					return;
-				}
-	
-				if (!timeValue) {
-					form.addError('please click an hour to select the event time');
-					return;
-				}
-	
-				entryEvent.title = titleValue;
-				entryEvent.time = timeValue;
-	
-				entry.entries.push(entryEvent);
-	
-				if (entry.id) {
-					diary.update(entry);
-				} else {
-					entry.identifier = day.identifier;
-					diary.create(entry);
-				}
-	
-				form.clearError();
-				calendarTitleInput.value = '';
-				this.activeHour.clear();
-			}
-		}, {
 			key: 'formIsEnabled',
 			value: function formIsEnabled() {
 				var startHour = this.activeStartHour.current;
@@ -46163,9 +46119,9 @@
 				event.preventDefault();
 				var form = this.form;
 				var entryEvent = {};
-				var _props2 = this.props;
-				var day = _props2.day;
-				var diary = _props2.diary;
+				var _props = this.props;
+				var day = _props.day;
+				var diary = _props.diary;
 	
 				var entry = this.props.entry || diary.shell();
 				var calendarTitleInput = this.refs.calendarTitleInput;
@@ -46207,9 +46163,9 @@
 			key: 'removeEventHandler',
 			value: function removeEventHandler(entryEvent, event) {
 				event.preventDefault();
-				var _props3 = this.props;
-				var entry = _props3.entry;
-				var diary = _props3.diary;
+				var _props2 = this.props;
+				var entry = _props2.entry;
+				var diary = _props2.diary;
 	
 				var index = entry.entries.indexOf(entryEvent);
 				if (index > -1) {
@@ -46255,18 +46211,6 @@
 				}
 			}
 		}, {
-			key: 'toggleSelectedHour',
-			value: function toggleSelectedHour(hour, event) {
-				if (this.activeHour.is(hour)) {
-					this.activeHour.clear();
-				} else {
-					var calendarTitleInput = this.refs.calendarTitleInput;
-	
-					this.activeHour.set(hour);
-					calendarTitleInput.focus();
-				}
-			}
-		}, {
 			key: 'hourClickHandler',
 			value: function hourClickHandler(hour, event) {
 				var calendarTitleInput = this.refs.calendarTitleInput;
@@ -46292,17 +46236,14 @@
 				}
 			}
 		}, {
-			key: 'hourHoverHandler',
-			value: function hourHoverHandler() {}
-		}, {
 			key: 'generateHourHTML',
 			value: function generateHourHTML() {
 				var _this3 = this;
 	
-				var _props4 = this.props;
-				var day = _props4.day;
-				var calendar = _props4.calendar;
-				var entry = _props4.entry;
+				var _props3 = this.props;
+				var day = _props3.day;
+				var calendar = _props3.calendar;
+				var entry = _props3.entry;
 	
 				var startHour = this.activeStartHour.current;
 				var endHour = this.activeEndHour.current;
@@ -46312,7 +46253,7 @@
 					if (startHour == hour) className += ' selected-hour active-start-hour';
 					if (endHour == hour) className += ' selected-hour active-end-hour';
 					if (hour > startHour && hour < endHour) className += ' selected-hour';
-					if (!!startHour && !endHour && hour > startHour || startHour == hour || endHour == hour || !startHour && !endHour) {
+					if (!!startHour && hour > startHour || startHour == hour || endHour == hour || !startHour && !endHour) {
 						className += ' hover-cursor--pointer selectable-hour';
 					}
 					var events = _this3.getEventsForHour(hour);
@@ -46343,10 +46284,10 @@
 			value: function _generateHourHTML() {
 				var _this4 = this;
 	
-				var _props5 = this.props;
-				var day = _props5.day;
-				var calendar = _props5.calendar;
-				var entry = _props5.entry;
+				var _props4 = this.props;
+				var day = _props4.day;
+				var calendar = _props4.calendar;
+				var entry = _props4.entry;
 	
 	
 				var hourList = calendar.hours.map(function (hour) {
@@ -46487,7 +46428,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px;\n  position: relative; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #ddd; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px; }\n\n.calendar-hour-time, .calendar-hour-events {\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  min-width: 75%; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block;\n  background: rgba(70, 150, 229, 0.1);\n  padding: 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  position: absolute;\n  left: 80px;\n  right: 20px; }\n\n.remove-event {\n  line-height: 14px;\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  text-decoration: none;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour, .selected-hour {\n  background: rgba(70, 150, 229, 0.05); }\n", ""]);
+	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px;\n  position: relative; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #ddd; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px; }\n\n.calendar-hour-time, .calendar-hour-events {\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  min-width: 75%; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block;\n  background: rgba(70, 150, 229, 0.1);\n  padding: 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  position: absolute;\n  left: 80px;\n  right: 20px; }\n\n.remove-event {\n  line-height: 14px;\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  text-decoration: none;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour, .selected-hour {\n  background: rgba(70, 150, 229, 0.1); }\n", ""]);
 	
 	// exports
 

@@ -23,45 +23,6 @@ export default class CalendarDetailComponent extends React.Component {
 		this.props.showCalendar();
 	}
 
-	_submitHandler(event) {
-		event.preventDefault();
-		const form = this.form;
-		const entryEvent = {};
-		let { day, diary, entry } = this.props;
-		const { calendarTitleInput } = this.refs;
-		
-		if (!entry) entry = diary.shell();
-
-		const titleValue = calendarTitleInput.value;
-		const timeValue = this.activeHour.current;
-
-		if (!titleValue) {
-			form.addError('please enter a title');
-			return;
-		}
-
-		if (!timeValue) {
-			form.addError('please click an hour to select the event time');
-			return;
-		}
-
-		entryEvent.title = titleValue;
-		entryEvent.time = timeValue;
-
-		entry.entries.push(entryEvent);
-
-		if (entry.id) {
-			diary.update(entry);
-		} else {
-			entry.identifier = day.identifier;
-			diary.create(entry);
-		}
-
-		form.clearError();
-		calendarTitleInput.value = '';
-		this.activeHour.clear();
-	}
-
 	formIsEnabled() {
 		const startHour = this.activeStartHour.current;
 		const endHour = this.activeEndHour.current;
@@ -142,16 +103,6 @@ export default class CalendarDetailComponent extends React.Component {
 		}
 	}
 
-	toggleSelectedHour(hour, event) {
-		if (this.activeHour.is(hour)) {
-			this.activeHour.clear();
-		} else {
-			const { calendarTitleInput } = this.refs;
-			this.activeHour.set(hour);
-			calendarTitleInput.focus();
-		}
-	}
-
 	hourClickHandler(hour, event) {
 		const { calendarTitleInput } = this.refs;
 		if (!this.activeStartHour.current) {
@@ -175,10 +126,6 @@ export default class CalendarDetailComponent extends React.Component {
 		}
 	}
 
-	hourHoverHandler() {
-
-	}
-
 	generateHourHTML() {
 		const { day, calendar, entry } = this.props;
 		const startHour = this.activeStartHour.current;
@@ -189,7 +136,7 @@ export default class CalendarDetailComponent extends React.Component {
 			if (startHour == hour) className += ' selected-hour active-start-hour';
 			if (endHour == hour) className += ' selected-hour active-end-hour';
 			if (hour > startHour && hour < endHour) className += ' selected-hour';
-			if (((!!startHour && !endHour) && hour > startHour) || (startHour == hour || endHour == hour) || (!startHour && !endHour)) {
+			if ((!!startHour && (hour > startHour)) || (startHour == hour || endHour == hour) || (!startHour && !endHour)) {
 				className += ' hover-cursor--pointer selectable-hour';
 			}
 			const events = this.getEventsForHour(hour);
