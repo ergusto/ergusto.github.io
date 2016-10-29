@@ -94,14 +94,9 @@ export default class CalendarDetailComponent extends React.Component {
 				let nominalHeight = 43;
 
 				// i hate this browser ecosystem!
-				// for chrome
-				if (navigator.userAgent.indexOf('Chrome') > -1) {
+				// for chrome & firefox
+				if (navigator.userAgent.indexOf('Chrome') > -1 || navigator.userAgent.indexOf('Firefox') > -1) {
 					nominalHeight = 42;
-				}
-
-				// for firefox
-				if (navigator.userAgent.indexOf('Firefox') > -1) {
-					nominalHeight = 38;
 				}
 
 				const style = {
