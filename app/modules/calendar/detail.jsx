@@ -77,6 +77,8 @@ export default class CalendarDetailComponent extends React.Component {
 
 	getEventsForHour(hour) {
 		const { entry } = this.props;
+		const currentStartHour = this.activeStartHour.current;
+		const currentEndHour = this.activeEndHour.current;
 
 		if (entry) {
 			const hourHour = hour.substring(0, 2);
@@ -86,6 +88,8 @@ export default class CalendarDetailComponent extends React.Component {
 			return entries.map((event) => {
 				const l = entries.length;
 				let className = "calendar-hour-event box-shadow hover-cursor--default";
+
+				if (!!currentStartHour && !currentEndHour) className += ' calendar-hour-event-z-index-default';
 
 				if (l > 1) {
 					if (l == 2) className += ' calendar-hour-event-double';
@@ -122,6 +126,7 @@ export default class CalendarDetailComponent extends React.Component {
 		this.activeStartHour.clear();
 		this.activeEndHour.clear();
 		this.activeHoveredHour.clear();
+		this.form.clearError();
 	}
 
 	hourClickHandler(hour, event) {

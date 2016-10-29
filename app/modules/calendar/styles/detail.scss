@@ -51,6 +51,10 @@
 	position: relative;
 }
 
+.calendar-hour-event-z-index-default {
+	z-index: auto;
+}
+
 .calendar-hour-event-double {
 	width: 48%;
 	margin-left: 4%;
@@ -106,7 +110,8 @@
 }
 
 .calendar-form {
-	min-width: 50%;
+	width: 50%;
+	min-width: 260px;
 }
 
 .calendar-form input:disabled {
