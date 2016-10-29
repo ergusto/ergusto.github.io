@@ -22,7 +22,8 @@ export default class CalendarItemComponent extends React.Component {
 			classes = classes + ' isToday';
 		}
 		
-		if (entry && entry.identifier) {
+		//if (entry && entry.identifier) {
+		if (false) {
 			const sortedEntries = sortBy(entry.entries, function(item) {
 				return item.date;
 			});

@@ -5,6 +5,7 @@
 	margin: 0;
 	overflow-y: scroll;
 	max-height: 400px;
+	position: relative;
 }
 
 .calendar-hour-list > li:last-child {
@@ -41,15 +42,9 @@
 	padding: 2px 10px;
 	padding-right: 30px;
 	border: 1px solid #ccc;
-	position: relative;
-
-	&:first-child {
-		margin-top: 10px;
-	}
-
-	&:last-child {
-		margin-bottom: 10px;
-	}
+	position: absolute;
+	left: 80px;
+	right: 20px;
 }
 
 .remove-event {
@@ -65,6 +60,6 @@
 	display: block;
 }
 
-.active-hour {
+.active-hour, .selected-hour {
 	background: rgba(70, 150, 229, 0.05);
 }

@@ -14,6 +14,8 @@ export default class CalendarDetailComponent extends React.Component {
 		this.state = {};
 	 	this.form = new FormStateBehaviour(this);
 		this.activeHour = new ActiveModelStateBehaviour(this);
+		this.activeStartHour = new ActiveModelStateBehaviour(this);
+		this.activeEndHour = new ActiveModelStateBehaviour(this);
 	}
 
 	showCalendarHandler(event) {
@@ -21,7 +23,7 @@ export default class CalendarDetailComponent extends React.Component {
 		this.props.showCalendar();
 	}
 
-	submitHandler(event) {
+	_submitHandler(event) {
 		event.preventDefault();
 		const form = this.form;
 		const entryEvent = {};
@@ -60,6 +62,49 @@ export default class CalendarDetailComponent extends React.Component {
 		this.activeHour.clear();
 	}
 
+	formIsEnabled() {
+		const startHour = this.activeStartHour.current;
+		const endHour = this.activeEndHour.current;
+
+		return !!startHour && !!endHour;
+	}
+
+	submitHandler(event) {
+		event.preventDefault();
+		const form = this.form;
+		const entryEvent = {};
+		const { day, diary } = this.props;
+		const entry = this.props.entry || diary.shell();
+		const { calendarTitleInput } = this.refs;
+
+		const titleValue = calendarTitleInput.value;
+		const startHour = this.activeStartHour.current;
+		const endHour = this.activeEndHour.current;
+
+		if (!titleValue) {
+			form.addError('please enter a title for this event');
+			return;
+		}
+
+		entryEvent.title = titleValue;
+		entryEvent.startHour = startHour;
+		entryEvent.endHour = endHour;
+
+		entry.entries.push(entryEvent);
+
+		if (entry.id) {
+			diary.update(entry);
+		} else {
+			entry.identifier = day.identifier;
+			diary.create(entry);
+		}
+
+		form.clearError();
+		this.activeStartHour.clear();
+		this.activeEndHour.clear();
+		calendarTitleInput.value = '';
+	}
+
 	stopPropagationHandler(event) {
 		event.stopPropagation();
 	}
@@ -80,11 +125,15 @@ export default class CalendarDetailComponent extends React.Component {
 		if (entry) {
 			const hourHour = hour.substring(0, 2);
 			const entries = Array.prototype.filter.call(entry.entries, (item) => {
-				return item.time.substring(0, 2) == hourHour;
+				return item.startHour.substring(0, 2) == hourHour;
 			});
 			return entries.map((event) => {
+				const hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
+				const style = {
+					height: (hourDifference * 42) + 'px'
+				};
 				return (
-					<li onClick={this.stopPropagationHandler} key={event.time + event.title + generateID()} className="calendar-hour-event hover-cursor--default">
+					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className="calendar-hour-event box-shadow hover-cursor--default">
 						<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">x</a>
 						{event.title}
 					</li>
@@ -94,7 +143,7 @@ export default class CalendarDetailComponent extends React.Component {
 	}
 
 	toggleSelectedHour(hour, event) {
-		if (this.activeHour.current == hour) {
+		if (this.activeHour.is(hour)) {
 			this.activeHour.clear();
 		} else {
 			const { calendarTitleInput } = this.refs;
@@ -103,7 +152,59 @@ export default class CalendarDetailComponent extends React.Component {
 		}
 	}
 
+	hourClickHandler(hour, event) {
+		const { calendarTitleInput } = this.refs;
+		if (!this.activeStartHour.current) {
+			this.activeStartHour.set(hour);		
+		} else {
+			if (this.activeStartHour.is(hour) || this.activeEndHour.is(hour)) {
+				this.activeStartHour.clear();
+				this.activeEndHour.clear();
+			} else {
+				if (!this.activeEndHour.is(hour)) {
+					if (this.activeStartHour.current) {
+						if (this.activeStartHour.current < hour) {
+							this.activeEndHour.set(hour);
+							setTimeout(function() {
+								calendarTitleInput.focus();
+							}, 100);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	hourHoverHandler() {
+
+	}
+
 	generateHourHTML() {
+		const { day, calendar, entry } = this.props;
+		const startHour = this.activeStartHour.current;
+		const endHour = this.activeEndHour.current;
+
+		const hourList = calendar.hours.map(hour => {
+			let className = 'calendar-hour';
+			if (startHour == hour) className += ' selected-hour active-start-hour';
+			if (endHour == hour) className += ' selected-hour active-end-hour';
+			if (hour > startHour && hour < endHour) className += ' selected-hour';
+			if (((!!startHour && !endHour) && hour > startHour) || (startHour == hour || endHour == hour) || (!startHour && !endHour)) {
+				className += ' hover-cursor--pointer selectable-hour';
+			}
+			const events = this.getEventsForHour(hour);
+			return (
+				<li className={className} key={hour} onClick={this.hourClickHandler.bind(this, hour)}>
+					<div className="calendar-hour-time padding-horizontal">{hour}</div>
+					<ul className="calendar-hour-events">{events}</ul>
+				</li>
+			);
+		});
+
+		return <ul className="calendar-hour-list">{hourList}</ul>;
+	}
+
+	_generateHourHTML() {
 		const { day, calendar, entry } = this.props;
 
 		const hourList = calendar.hours.map((hour) => {
@@ -111,7 +212,7 @@ export default class CalendarDetailComponent extends React.Component {
 			if (this.activeHour.is(hour)) className = className + ' active-hour';
 			const events = this.getEventsForHour(hour);
 			return (
-				<li className={className} key={hour} onClick={this.toggleSelectedHour.bind(this, hour)}>
+				<li className={className} key={hour} onClick={this.hourClickHandler.bind(this, hour)}>
 					<div className="calendar-hour-time padding-horizontal">{hour}</div>
 					<ul className="calendar-hour-events">{events}</ul>
 				</li>
@@ -145,10 +246,10 @@ export default class CalendarDetailComponent extends React.Component {
 					{hourHTML}
 				</div>
 				<form onSubmit={this.submitHandler.bind(this)} className="calendar-form padding border-top">
-					<input ref="calendarTitleInput" placeholder="event" className="field" name="title" />
+					<input ref="calendarTitleInput" placeholder="event" className="field" name="title" disabled={this.formIsEnabled() ? false : true} />
 					{errorContent}
 					<div className="btn-group">
-						<input type="submit" value="submit" className="btn"></input>
+						<input type="submit" value="submit" className="btn" disabled={this.formIsEnabled() ? false : true}></input>
 					</div>
 				</form>
 			</div>
