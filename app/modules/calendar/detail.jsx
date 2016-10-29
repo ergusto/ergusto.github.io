@@ -91,7 +91,7 @@ export default class CalendarDetailComponent extends React.Component {
 			return entries.map((event) => {
 				const hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
 				const style = {
-					height: (hourDifference * 50) + 'px'
+					height: (((hourDifference + 1) * 43) - 11) + 'px'
 				};
 				return (
 					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className="calendar-hour-event box-shadow hover-cursor--default">
@@ -148,26 +148,7 @@ export default class CalendarDetailComponent extends React.Component {
 			);
 		});
 
-		return <ul className="calendar-hour-list">{hourList}</ul>;
-	}
-
-	_generateHourHTML() {
-		const { day, calendar, entry } = this.props;
-
-		const hourList = calendar.hours.map((hour) => {
-			let className = "calendar-hour hover-cursor--pointer";
-			if (this.activeHour.is(hour)) className = className + ' active-hour';
-			const events = this.getEventsForHour(hour);
-			return (
-				<li className={className} key={hour} onClick={this.hourClickHandler.bind(this, hour)}>
-					<div className="calendar-hour-time padding-horizontal">{hour}</div>
-					<ul className="calendar-hour-events">{events}</ul>
-				</li>
-			);
-		});
-
-		return  <ul className="calendar-hour-list">{hourList}</ul>;
-
+		return <ul className="calendar-hour-list clearfix">{hourList}</ul>;
 	}
 
 	render() {

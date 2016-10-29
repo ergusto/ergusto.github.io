@@ -15,15 +15,13 @@
 
 .calendar-hour {
 	border-bottom: 1px solid #ddd;
+	position: relative;
 }
 
 .calendar-hour-time {
 	vertical-align: top;
 	padding-top: 13px;
 	padding-bottom: 13px;
-}
-
-.calendar-hour-time, .calendar-hour-events {
 	display: inline-block;
 }
 
@@ -32,19 +30,21 @@
 	list-style-type: none;
 	padding: 0px;
 	min-width: 75%;
+	display: inline-block;
 }
 
 .calendar-hour-event {
 	margin: 0;
 	margin-bottom: 4px;
 	display: block;
-	background: rgba(70, 150, 229, 0.1);
+	background: rgba(70, 150, 229, 0.08);
 	padding: 10px;
 	padding-right: 30px;
 	border: 1px solid #ccc;
 	position: absolute;
 	left: 80px;
 	right: 20px;
+	top: 5px;
 }
 
 .remove-event {
