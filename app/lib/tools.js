@@ -41,3 +41,9 @@ export function buildQueryString(obj) {
 	}).join('&');
 
 };
+
+export function generateCorrectEndHour(hour) {
+	let hourDigit = Number(hour.slice(0, -3));
+	hourDigit = String(hourDigit + 1);
+	return hourDigit.length == 1 ? '0' + hourDigit + ':00' : hourDigit + ':00';
+};

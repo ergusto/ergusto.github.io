@@ -24867,6 +24867,7 @@
 	exports.isImageUrl = isImageUrl;
 	exports.containsSpaces = containsSpaces;
 	exports.buildQueryString = buildQueryString;
+	exports.generateCorrectEndHour = generateCorrectEndHour;
 	
 	var _lodash = __webpack_require__(/*! lodash */ 165);
 	
@@ -24914,6 +24915,12 @@
 		return _lodash2.default.map(obj, function (value, key) {
 			return key + '=' + value;
 		}).join('&');
+	};
+	
+	function generateCorrectEndHour(hour) {
+		var hourDigit = Number(hour.slice(0, -3));
+		hourDigit = String(hourDigit + 1);
+		return hourDigit.length == 1 ? '0' + hourDigit + ':00' : hourDigit + ':00';
 	};
 
 /***/ },
@@ -46096,6 +46103,7 @@
 			_this.activeHour = new _activeModel2.default(_this);
 			_this.activeStartHour = new _activeModel2.default(_this);
 			_this.activeEndHour = new _activeModel2.default(_this);
+			_this.activeHoveredHour = new _activeModel2.default(_this);
 			return _this;
 		}
 	
@@ -46136,9 +46144,12 @@
 					return;
 				}
 	
+				calendarTitleInput.value = '';
+				calendarTitleInput.blur();
+	
 				entryEvent.title = titleValue;
 				entryEvent.startHour = startHour;
-				entryEvent.endHour = endHour;
+				entryEvent.endHour = (0, _tools.generateCorrectEndHour)(endHour);
 	
 				entry.entries.push(entryEvent);
 	
@@ -46152,7 +46163,7 @@
 				form.clearError();
 				this.activeStartHour.clear();
 				this.activeEndHour.clear();
-				calendarTitleInput.value = '';
+				this.activeHoveredHour.clear();
 			}
 		}, {
 			key: 'stopPropagationHandler',
@@ -46203,7 +46214,7 @@
 									height: hourDifference * nominalHeight - 11 + 'px'
 								};
 	
-								if (hourDifference == 1) style['padding-top'] = '8px';
+								if (hourDifference == 1) style.paddingTop = '8px';
 								return _react2.default.createElement(
 									'li',
 									{ onClick: _this2.stopPropagationHandler, key: event.startHour + event.title + (0, _tools.generateID)(), style: style, className: 'calendar-hour-event box-shadow hover-cursor--default' },
@@ -46239,6 +46250,7 @@
 					if (this.activeStartHour.is(hour) || this.activeEndHour.is(hour)) {
 						this.activeStartHour.clear();
 						this.activeEndHour.clear();
+						this.activeHoveredHour.clear();
 					} else {
 						if (!this.activeEndHour.is(hour)) {
 							if (this.activeStartHour.current) {
@@ -46254,6 +46266,20 @@
 				}
 			}
 		}, {
+			key: 'hourMouseEnterHandler',
+			value: function hourMouseEnterHandler(hour, event) {
+				if (!!this.activeStartHour.current) {
+					this.activeHoveredHour.set(hour);
+				}
+			}
+		}, {
+			key: 'hourMouseLeaveHandler',
+			value: function hourMouseLeaveHandler(hour, event) {
+				if (!!this.activeStartHour.current && !!this.activeHoveredHour.current) {
+					this.activeHoveredHour.clear();
+				}
+			}
+		}, {
 			key: 'generateHourHTML',
 			value: function generateHourHTML() {
 				var _this3 = this;
@@ -46265,19 +46291,23 @@
 	
 				var startHour = this.activeStartHour.current;
 				var endHour = this.activeEndHour.current;
+				var hoveredHour = this.activeHoveredHour.current;
 	
 				var hourList = calendar.hours.map(function (hour) {
 					var className = 'calendar-hour';
-					if (startHour == hour) className += ' selected-hour active-start-hour';
-					if (endHour == hour) className += ' selected-hour active-end-hour';
-					if (hour > startHour && hour < endHour) className += ' selected-hour';
+					if (startHour == hour) className += ' active-start-hour';
+					if (endHour == hour) className += ' active-end-hour';
+					if (hour > startHour && hour < endHour || startHour == hour || endHour == hour) className += ' selected-hour';
+					if (!!startHour && !endHour && !!hoveredHour && hour > startHour && hour <= hoveredHour) className += ' hovered-hour';
 					if (!!startHour && hour > startHour || startHour == hour || endHour == hour || !startHour && !endHour) {
 						className += ' hover-cursor--pointer selectable-hour';
 					}
 					var events = _this3.getEventsForHour(hour);
 					return _react2.default.createElement(
 						'li',
-						{ className: className, key: hour, onClick: _this3.hourClickHandler.bind(_this3, hour) },
+						{ className: className, key: hour, onClick: _this3.hourClickHandler.bind(_this3, hour),
+							onMouseEnter: _this3.hourMouseEnterHandler.bind(_this3, hour),
+							onMouseLeave: _this3.hourMouseLeaveHandler.bind(_this3, hour) },
 						_react2.default.createElement(
 							'div',
 							{ className: 'calendar-hour-time padding-horizontal' },
@@ -46409,7 +46439,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px;\n  position: relative; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #ddd;\n  position: relative; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px;\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  min-width: 75%;\n  display: inline-block; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block;\n  background: rgba(70, 150, 229, 0.08);\n  padding: 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  position: absolute;\n  left: 80px;\n  right: 20px;\n  top: 5px; }\n\n.hour-event-time-text {\n  margin-top: 2px;\n  margin-left: 10px; }\n\n.remove-event {\n  line-height: 14px;\n  position: absolute;\n  right: 10px;\n  text-decoration: none;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour, .selected-hour {\n  background: rgba(70, 150, 229, 0.1); }\n", ""]);
+	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 400px;\n  position: relative; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #ddd;\n  position: relative; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px;\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  min-width: 75%;\n  display: inline-block; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: block;\n  background: rgba(70, 150, 229, 0.08);\n  padding: 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  position: absolute;\n  left: 80px;\n  right: 20px;\n  top: 5px; }\n\n.hour-event-time-text {\n  margin-top: 2px;\n  margin-left: 10px; }\n\n.remove-event {\n  line-height: 14px;\n  position: absolute;\n  right: 10px;\n  text-decoration: none;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour, .selected-hour {\n  background: rgba(70, 150, 229, 0.1); }\n\n.hovered-hour {\n  background: rgba(70, 150, 229, 0.05); }\n", ""]);
 	
 	// exports
 

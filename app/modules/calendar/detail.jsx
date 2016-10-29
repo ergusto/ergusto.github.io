@@ -2,7 +2,7 @@ import React from 'react';
 import FormStateBehaviour from '../../behaviours/form.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
 
-import { validate24HourTime, generateID } from '../../lib/tools.js';
+import { validate24HourTime, generateID, generateCorrectEndHour } from '../../lib/tools.js';
 
 // import styles for this component
 require('!style!css!sass!./styles/detail.scss');
@@ -16,6 +16,7 @@ export default class CalendarDetailComponent extends React.Component {
 		this.activeHour = new ActiveModelStateBehaviour(this);
 		this.activeStartHour = new ActiveModelStateBehaviour(this);
 		this.activeEndHour = new ActiveModelStateBehaviour(this);
+		this.activeHoveredHour = new ActiveModelStateBehaviour(this);
 	}
 
 	showCalendarHandler(event) {
@@ -46,10 +47,13 @@ export default class CalendarDetailComponent extends React.Component {
 			form.addError('please enter a title for this event');
 			return;
 		}
+		
+		calendarTitleInput.value = '';
+		calendarTitleInput.blur();
 
 		entryEvent.title = titleValue;
 		entryEvent.startHour = startHour;
-		entryEvent.endHour = endHour;
+		entryEvent.endHour = generateCorrectEndHour(endHour);
 
 		entry.entries.push(entryEvent);
 
@@ -63,7 +67,7 @@ export default class CalendarDetailComponent extends React.Component {
 		form.clearError();
 		this.activeStartHour.clear();
 		this.activeEndHour.clear();
-		calendarTitleInput.value = '';
+		this.activeHoveredHour.clear();
 	}
 
 	stopPropagationHandler(event) {
@@ -103,7 +107,7 @@ export default class CalendarDetailComponent extends React.Component {
 					height: ((hourDifference * nominalHeight) - 11) + 'px'
 				};
 
-				if (hourDifference == 1) style['padding-top'] = '8px';
+				if (hourDifference == 1) style.paddingTop = '8px';
 				return (
 					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className="calendar-hour-event box-shadow hover-cursor--default">
 						<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">x</a>
@@ -123,6 +127,7 @@ export default class CalendarDetailComponent extends React.Component {
 			if (this.activeStartHour.is(hour) || this.activeEndHour.is(hour)) {
 				this.activeStartHour.clear();
 				this.activeEndHour.clear();
+				this.activeHoveredHour.clear();
 			} else {
 				if (!this.activeEndHour.is(hour)) {
 					if (this.activeStartHour.current) {
@@ -138,22 +143,38 @@ export default class CalendarDetailComponent extends React.Component {
 		}
 	}
 
+	hourMouseEnterHandler(hour, event) {
+		if (!!this.activeStartHour.current) {
+			this.activeHoveredHour.set(hour);
+		}
+	}
+
+	hourMouseLeaveHandler(hour, event) {
+		if (!!this.activeStartHour.current && !!this.activeHoveredHour.current) {
+			this.activeHoveredHour.clear();
+		}
+	}
+
 	generateHourHTML() {
 		const { day, calendar, entry } = this.props;
 		const startHour = this.activeStartHour.current;
 		const endHour = this.activeEndHour.current;
+		const hoveredHour = this.activeHoveredHour.current;
 
 		const hourList = calendar.hours.map(hour => {
 			let className = 'calendar-hour';
-			if (startHour == hour) className += ' selected-hour active-start-hour';
-			if (endHour == hour) className += ' selected-hour active-end-hour';
-			if (hour > startHour && hour < endHour) className += ' selected-hour';
+			if (startHour == hour) className += ' active-start-hour';
+			if (endHour == hour) className += ' active-end-hour';
+			if (hour > startHour && hour < endHour || startHour == hour || endHour == hour) className += ' selected-hour';
+			if (((!!startHour && !endHour) && !!hoveredHour) && ((hour > startHour) && hour <= hoveredHour)) className += ' hovered-hour';
 			if ((!!startHour && (hour > startHour)) || (startHour == hour || endHour == hour) || (!startHour && !endHour)) {
 				className += ' hover-cursor--pointer selectable-hour';
 			}
 			const events = this.getEventsForHour(hour);
 			return (
-				<li className={className} key={hour} onClick={this.hourClickHandler.bind(this, hour)}>
+				<li className={className} key={hour} onClick={this.hourClickHandler.bind(this, hour)} 
+					onMouseEnter={this.hourMouseEnterHandler.bind(this, hour)}
+					onMouseLeave={this.hourMouseLeaveHandler.bind(this, hour)}>
 					<div className="calendar-hour-time padding-horizontal">{hour}</div>
 					<ul className="calendar-hour-events">{events}</ul>
 				</li>
