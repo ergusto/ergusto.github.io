@@ -65,9 +65,7 @@ export default class CalendarDetailComponent extends React.Component {
 		}
 
 		form.clearError();
-		this.activeStartHour.clear();
-		this.activeEndHour.clear();
-		this.activeHoveredHour.clear();
+		this.clearActiveState();
 	}
 
 	stopPropagationHandler(event) {
@@ -119,24 +117,35 @@ export default class CalendarDetailComponent extends React.Component {
 		}
 	}
 
+	clearActiveState() {
+		this.activeStartHour.clear();
+		this.activeEndHour.clear();
+		this.activeHoveredHour.clear();
+	}
+
 	hourClickHandler(hour, event) {
 		const { calendarTitleInput } = this.refs;
 		if (!this.activeStartHour.current) {
 			this.activeStartHour.set(hour);		
 		} else {
-			if (this.activeStartHour.is(hour) || this.activeEndHour.is(hour)) {
-				this.activeStartHour.clear();
-				this.activeEndHour.clear();
-				this.activeHoveredHour.clear();
+			if (this.activeStartHour.is(hour)) {
+				if (!this.activeEndHour.current) {
+					this.activeEndHour.set(hour);
+					setTimeout(function() {
+						calendarTitleInput.focus();
+					}, 100);
+				} else {
+					this.clearActiveState();
+				}
+			} else if (this.activeEndHour.is(hour)) {
+				this.clearActiveState();
 			} else {
-				if (!this.activeEndHour.is(hour)) {
-					if (this.activeStartHour.current) {
-						if (this.activeStartHour.current < hour) {
-							this.activeEndHour.set(hour);
-							setTimeout(function() {
-								calendarTitleInput.focus();
-							}, 100);
-						}
+				if (this.activeStartHour.current) {
+					if (this.activeStartHour.current < hour) {
+						this.activeEndHour.set(hour);
+						setTimeout(function() {
+							calendarTitleInput.focus();
+						}, 100);
 					}
 				}
 			}

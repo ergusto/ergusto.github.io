@@ -46161,9 +46161,7 @@
 				}
 	
 				form.clearError();
-				this.activeStartHour.clear();
-				this.activeEndHour.clear();
-				this.activeHoveredHour.clear();
+				this.clearActiveState();
 			}
 		}, {
 			key: 'stopPropagationHandler',
@@ -46240,6 +46238,13 @@
 				}
 			}
 		}, {
+			key: 'clearActiveState',
+			value: function clearActiveState() {
+				this.activeStartHour.clear();
+				this.activeEndHour.clear();
+				this.activeHoveredHour.clear();
+			}
+		}, {
 			key: 'hourClickHandler',
 			value: function hourClickHandler(hour, event) {
 				var calendarTitleInput = this.refs.calendarTitleInput;
@@ -46247,19 +46252,24 @@
 				if (!this.activeStartHour.current) {
 					this.activeStartHour.set(hour);
 				} else {
-					if (this.activeStartHour.is(hour) || this.activeEndHour.is(hour)) {
-						this.activeStartHour.clear();
-						this.activeEndHour.clear();
-						this.activeHoveredHour.clear();
+					if (this.activeStartHour.is(hour)) {
+						if (!this.activeEndHour.current) {
+							this.activeEndHour.set(hour);
+							setTimeout(function () {
+								calendarTitleInput.focus();
+							}, 100);
+						} else {
+							this.clearActiveState();
+						}
+					} else if (this.activeEndHour.is(hour)) {
+						this.clearActiveState();
 					} else {
-						if (!this.activeEndHour.is(hour)) {
-							if (this.activeStartHour.current) {
-								if (this.activeStartHour.current < hour) {
-									this.activeEndHour.set(hour);
-									setTimeout(function () {
-										calendarTitleInput.focus();
-									}, 100);
-								}
+						if (this.activeStartHour.current) {
+							if (this.activeStartHour.current < hour) {
+								this.activeEndHour.set(hour);
+								setTimeout(function () {
+									calendarTitleInput.focus();
+								}, 100);
 							}
 						}
 					}
