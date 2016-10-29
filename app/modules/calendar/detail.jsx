@@ -108,7 +108,7 @@ export default class CalendarDetailComponent extends React.Component {
 				if (hourDifference == 1) style.paddingTop = '8px';
 				return (
 					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className="calendar-hour-event box-shadow hover-cursor--default">
-						<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">x</a>
+						<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">&#10799;</a>
 						<small className="pull-right hour-event-time-text">{event.startHour} to {event.endHour}</small>
 						{event.title}
 					</li>
