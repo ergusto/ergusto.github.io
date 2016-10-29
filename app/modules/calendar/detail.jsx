@@ -24,13 +24,6 @@ export default class CalendarDetailComponent extends React.Component {
 		this.props.showCalendar();
 	}
 
-	formIsEnabled() {
-		const startHour = this.activeStartHour.current;
-		const endHour = this.activeEndHour.current;
-
-		return !!startHour && !!endHour;
-	}
-
 	submitHandler(event) {
 		event.preventDefault();
 		const form = this.form;
@@ -132,15 +125,14 @@ export default class CalendarDetailComponent extends React.Component {
 	}
 
 	hourClickHandler(hour, event) {
-		const { calendarTitleInput } = this.refs;
 		if (!this.activeStartHour.current) {
 			this.activeStartHour.set(hour);		
 		} else {
 			if (this.activeStartHour.is(hour)) {
 				if (!this.activeEndHour.current) {
 					this.activeEndHour.set(hour);
-					setTimeout(function() {
-						calendarTitleInput.focus();
+					setTimeout(() => {
+						this.refs.calendarTitleInput.focus();
 					}, 100);
 				} else {
 					this.clearActiveState();
@@ -151,8 +143,8 @@ export default class CalendarDetailComponent extends React.Component {
 				if (this.activeStartHour.current) {
 					if (this.activeStartHour.current < hour) {
 						this.activeEndHour.set(hour);
-						setTimeout(function() {
-							calendarTitleInput.focus();
+						setTimeout(() => {
+							this.refs.calendarTitleInput.focus();
 						}, 100);
 					}
 				}
@@ -201,14 +193,38 @@ export default class CalendarDetailComponent extends React.Component {
 		return <ul className="calendar-hour-list clearfix">{hourList}</ul>;
 	}
 
+	shouldShowForm() {
+		return !!this.activeStartHour.current && !!this.activeEndHour.current;
+	}
+
+	cancelForm(event) {
+		event.preventDefault();
+		this.clearActiveState();
+	}
+
 	render() {
-		let errorContent;
+		let errorContent, eventForm;
 		const { error } = this.form;
 		const { day } = this.props;
 		const hourHTML = this.generateHourHTML();
 
 		if (error) {
 			errorContent = <span className="form-error">{error}</span>;
+		}
+
+		if (this.shouldShowForm()) {
+			eventForm = (
+				<div className="calendar-form-wrapper justify-centre">
+					<form onSubmit={this.submitHandler.bind(this)} className="calendar-form box padding border-top">
+						<input ref="calendarTitleInput" placeholder="event" className="field" name="title" />
+						{errorContent}
+						<div className="btn-group">
+							<input type="submit" value="submit" className="btn"></input>
+							<a href="#" className="btn" onClick={this.cancelForm.bind(this)}>cancel</a>
+						</div>
+					</form>
+				</div>
+			);
 		}
 
 		return (
@@ -222,14 +238,8 @@ export default class CalendarDetailComponent extends React.Component {
 				</ul>
 				<div className="calendar-body">
 					{hourHTML}
+					{eventForm}
 				</div>
-				<form onSubmit={this.submitHandler.bind(this)} className="calendar-form padding border-top">
-					<input ref="calendarTitleInput" placeholder="event" className="field" name="title" disabled={this.formIsEnabled() ? false : true} />
-					{errorContent}
-					<div className="btn-group">
-						<input type="submit" value="submit" className="btn" disabled={this.formIsEnabled() ? false : true}></input>
-					</div>
-				</form>
 			</div>
 		);
 	}
