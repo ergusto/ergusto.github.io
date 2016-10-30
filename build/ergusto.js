@@ -79,27 +79,27 @@
 	
 	var _index10 = _interopRequireDefault(_index9);
 	
-	var _index11 = __webpack_require__(/*! ./modules/contact/index.jsx */ 230);
+	var _index11 = __webpack_require__(/*! ./modules/contact/index.jsx */ 231);
 	
 	var _index12 = _interopRequireDefault(_index11);
 	
-	var _bookmarks = __webpack_require__(/*! ./collections/bookmarks.js */ 233);
+	var _bookmarks = __webpack_require__(/*! ./collections/bookmarks.js */ 234);
 	
 	var _bookmarks2 = _interopRequireDefault(_bookmarks);
 	
-	var _comments = __webpack_require__(/*! ./collections/comments.js */ 238);
+	var _comments = __webpack_require__(/*! ./collections/comments.js */ 239);
 	
 	var _comments2 = _interopRequireDefault(_comments);
 	
-	var _tasks = __webpack_require__(/*! ./collections/tasks.js */ 239);
+	var _tasks = __webpack_require__(/*! ./collections/tasks.js */ 240);
 	
 	var _tasks2 = _interopRequireDefault(_tasks);
 	
-	var _diary = __webpack_require__(/*! ./collections/diary.js */ 240);
+	var _diary = __webpack_require__(/*! ./collections/diary.js */ 241);
 	
 	var _diary2 = _interopRequireDefault(_diary);
 	
-	var _user = __webpack_require__(/*! ./lib/user.js */ 241);
+	var _user = __webpack_require__(/*! ./lib/user.js */ 242);
 	
 	var _user2 = _interopRequireDefault(_user);
 	
@@ -112,7 +112,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	// import generic/site wide styles
-	__webpack_require__(/*! style!css!sass!./styles/app.scss */ 242);
+	__webpack_require__(/*! style!css!sass!./styles/app.scss */ 243);
 	
 	// end of imports
 	
@@ -46077,6 +46077,10 @@
 	
 	var _activeModel2 = _interopRequireDefault(_activeModel);
 	
+	var _event = __webpack_require__(/*! ./event.jsx */ 228);
+	
+	var _event2 = _interopRequireDefault(_event);
+	
 	var _tools = __webpack_require__(/*! ../../lib/tools.js */ 164);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -46088,7 +46092,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	// import styles for this component
-	__webpack_require__(/*! style!css!sass!./styles/detail.scss */ 228);
+	__webpack_require__(/*! style!css!sass!./styles/detail.scss */ 229);
 	
 	var CalendarDetailComponent = function (_React$Component) {
 		_inherits(CalendarDetailComponent, _React$Component);
@@ -46156,84 +46160,24 @@
 				this.clearActiveState();
 			}
 		}, {
-			key: 'stopPropagationHandler',
-			value: function stopPropagationHandler(event) {
-				event.stopPropagation();
-			}
-		}, {
-			key: 'removeEventHandler',
-			value: function removeEventHandler(entryEvent, event) {
-				event.preventDefault();
+			key: 'getEventsForHour',
+			value: function getEventsForHour(hour) {
 				var _props2 = this.props;
 				var entry = _props2.entry;
 				var diary = _props2.diary;
-	
-				var index = entry.entries.indexOf(entryEvent);
-				if (index > -1) {
-					entry.entries.splice(index, 1);
-				}
-				diary.update(entry);
-			}
-		}, {
-			key: 'getEventsForHour',
-			value: function getEventsForHour(hour) {
-				var _this2 = this;
-	
-				var entry = this.props.entry;
 	
 				var currentStartHour = this.activeStartHour.current;
 				var currentEndHour = this.activeEndHour.current;
 	
 				if (entry) {
 					var _ret = function () {
-						var hourHour = hour.substring(0, 2);
 						var entries = Array.prototype.filter.call(entry.entries, function (item) {
-							return item.startHour.substring(0, 2) == hourHour;
+							return item.startHour.substring(0, 2) == hour.substring(0, 2);
 						});
+						var entriesLength = entries.length;
 						return {
 							v: entries.map(function (event) {
-								var l = entries.length;
-								var className = "calendar-hour-event box-shadow hover-cursor--default";
-	
-								if (!!currentStartHour && !currentEndHour) className += ' calendar-hour-event-z-index-default';
-	
-								if (l > 1) {
-									if (l == 2) className += ' calendar-hour-event-double';
-									if (l == 3) className += ' calendar-hour-event-triple';
-								}
-	
-								var hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
-								// for safari
-								var nominalHeight = 43;
-	
-								// i hate this browser ecosystem!
-								// for chrome & firefox
-								if (navigator.userAgent.indexOf('Chrome') > -1 || navigator.userAgent.indexOf('Firefox') > -1) {
-									nominalHeight = 42;
-								}
-	
-								var style = {
-									height: hourDifference * nominalHeight - 11 + 'px'
-								};
-	
-								if (hourDifference == 1) style.paddingTop = '8px';
-								return _react2.default.createElement(
-									'li',
-									{ onClick: _this2.stopPropagationHandler, key: event.startHour + event.title + (0, _tools.generateID)(), style: style, className: className },
-									_react2.default.createElement(
-										'a',
-										{ onClick: _this2.removeEventHandler.bind(_this2, event), href: '#', className: 'pull-right remove-event' },
-										'\u2A2F'
-									),
-									_react2.default.createElement(
-										'small',
-										{ className: 'pull-right hour-event-time-text' },
-										event.startHour,
-										' to ',
-										event.endHour
-									),
-									event.title
-								);
+								return _react2.default.createElement(_event2.default, { key: event.startHour + event.title + (0, _tools.generateID)(), diary: diary, entry: entry, event: event, entriesLength: entriesLength, currentStartHour: currentStartHour, currentEndHour: currentEndHour });
 							})
 						};
 					}();
@@ -46252,7 +46196,7 @@
 		}, {
 			key: 'hourClickHandler',
 			value: function hourClickHandler(hour, event) {
-				var _this3 = this;
+				var _this2 = this;
 	
 				if (!this.activeStartHour.current) {
 					this.activeStartHour.set(hour);
@@ -46261,7 +46205,7 @@
 						if (!this.activeEndHour.current) {
 							this.activeEndHour.set(hour);
 							setTimeout(function () {
-								_this3.refs.calendarTitleInput.focus();
+								_this2.refs.calendarTitleInput.focus();
 							}, 100);
 						} else {
 							this.clearActiveState();
@@ -46273,7 +46217,7 @@
 							if (this.activeStartHour.current < hour) {
 								this.activeEndHour.set(hour);
 								setTimeout(function () {
-									_this3.refs.calendarTitleInput.focus();
+									_this2.refs.calendarTitleInput.focus();
 								}, 100);
 							}
 						}
@@ -46297,7 +46241,7 @@
 		}, {
 			key: 'generateHourHTML',
 			value: function generateHourHTML() {
-				var _this4 = this;
+				var _this3 = this;
 	
 				var _props3 = this.props;
 				var day = _props3.day;
@@ -46317,12 +46261,12 @@
 					if (!!startHour && hour > startHour || startHour == hour || endHour == hour || !startHour && !endHour) {
 						className += ' hover-cursor--pointer selectable-hour';
 					}
-					var events = _this4.getEventsForHour(hour);
+					var events = _this3.getEventsForHour(hour);
 					return _react2.default.createElement(
 						'li',
-						{ className: className, key: hour, onClick: _this4.hourClickHandler.bind(_this4, hour),
-							onMouseEnter: _this4.hourMouseEnterHandler.bind(_this4, hour),
-							onMouseLeave: _this4.hourMouseLeaveHandler.bind(_this4, hour) },
+						{ className: className, key: hour, onClick: _this3.hourClickHandler.bind(_this3, hour),
+							onMouseEnter: _this3.hourMouseEnterHandler.bind(_this3, hour),
+							onMouseLeave: _this3.hourMouseLeaveHandler.bind(_this3, hour) },
 						_react2.default.createElement(
 							'div',
 							{ className: 'calendar-hour-time padding-horizontal' },
@@ -46440,6 +46384,123 @@
 
 /***/ },
 /* 228 */
+/*!****************************************!*\
+  !*** ./app/modules/calendar/event.jsx ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _tools = __webpack_require__(/*! ../../lib/tools.js */ 164);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var topMostClassText = 'calendar-hour-event-topmost';
+	var hoverableClassText = 'hover-cursor--pointer';
+	
+	var CalendarEventComponent = function (_React$Component) {
+		_inherits(CalendarEventComponent, _React$Component);
+	
+		function CalendarEventComponent() {
+			_classCallCheck(this, CalendarEventComponent);
+	
+			return _possibleConstructorReturn(this, (CalendarEventComponent.__proto__ || Object.getPrototypeOf(CalendarEventComponent)).call(this));
+		}
+	
+		_createClass(CalendarEventComponent, [{
+			key: 'onClickHandler',
+			value: function onClickHandler(event) {
+				event.stopPropagation();
+				var topMostEvent = document.querySelector('.' + topMostClassText);
+				if (topMostEvent) {
+					topMostEvent.classList.remove(topMostClassText);
+					topMostEvent.classList.add(hoverableClassText);
+				}
+				this.refs.listitem.classList.remove(hoverableClassText);
+				this.refs.listitem.classList.add(topMostClassText);
+			}
+		}, {
+			key: 'removeEventHandler',
+			value: function removeEventHandler(entryEvent, event) {
+				event.preventDefault();
+				var _props = this.props;
+				var entry = _props.entry;
+				var diary = _props.diary;
+	
+				var index = entry.entries.indexOf(entryEvent);
+				if (index > -1) {
+					entry.entries.splice(index, 1);
+				}
+				diary.update(entry);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _props2 = this.props;
+				var event = _props2.event;
+				var currentStartHour = _props2.currentStartHour;
+				var currentEndHour = _props2.currentEndHour;
+				var entriesLength = _props2.entriesLength;
+	
+				var className = "calendar-hour-event box-shadow hover-cursor--default";
+	
+				if (entriesLength > 1) {
+					if (entriesLength == 2) className += ' calendar-hour-event-double';
+					if (entriesLength == 3) className += ' calendar-hour-event-triple';
+					if (entriesLength > 3) className += ' calendar-hour-event-multiple';
+				}
+	
+				var hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
+				// for safari
+				var nominalHeight = 43;
+	
+				// i hate this browser ecosystem!
+				// for chrome & firefox
+				if (navigator.userAgent.indexOf('Chrome') > -1 || navigator.userAgent.indexOf('Firefox') > -1) {
+					nominalHeight = 42;
+				}
+	
+				var style = {
+					height: hourDifference * nominalHeight - 11 + 'px'
+				};
+	
+				if (hourDifference == 1) style.paddingTop = '8px';
+				return _react2.default.createElement(
+					'li',
+					{ ref: 'listitem', onClick: this.onClickHandler.bind(this), style: style, className: className },
+					_react2.default.createElement(
+						'a',
+						{ onClick: this.removeEventHandler.bind(this, event), href: '#', className: 'pull-right remove-event' },
+						'\u2A2F'
+					),
+					event.title
+				);
+			}
+		}]);
+	
+		return CalendarEventComponent;
+	}(_react2.default.Component);
+	
+	exports.default = CalendarEventComponent;
+
+/***/ },
+/* 229 */
 /*!*************************************************************************************************!*\
   !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/calendar/styles/detail.scss ***!
   \*************************************************************************************************/
@@ -46448,7 +46509,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../~/css-loader!./../../../../~/sass-loader!./detail.scss */ 229);
+	var content = __webpack_require__(/*! !./../../../../~/css-loader!./../../../../~/sass-loader!./detail.scss */ 230);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../../~/style-loader/addStyles.js */ 170)(content, {});
@@ -46468,7 +46529,7 @@
 	}
 
 /***/ },
-/* 229 */
+/* 230 */
 /*!********************************************************************************!*\
   !*** ./~/css-loader!./~/sass-loader!./app/modules/calendar/styles/detail.scss ***!
   \********************************************************************************/
@@ -46479,13 +46540,13 @@
 	
 	
 	// module
-	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 550px;\n  position: relative; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #e9e9e9;\n  position: relative; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px;\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  display: inline-block;\n  position: absolute;\n  left: 80px;\n  right: 20px;\n  top: 5px; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: inline-block;\n  float: left;\n  background: rgba(70, 150, 229, 0.08);\n  padding: 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  text-shadow: 0 1px white;\n  z-index: 1;\n  width: 100%;\n  position: relative; }\n\n.calendar-hour-event-z-index-default {\n  z-index: auto; }\n\n.calendar-hour-event-double {\n  width: 48%;\n  margin-left: 4%; }\n\n.calendar-hour-event-triple {\n  width: 30.6%;\n  margin-left: 4%; }\n\n.calendar-hour-event-double:first-child, .calendar-hour-event-triple:first-child {\n  margin-left: 0px; }\n\n.hour-event-time-text {\n  margin-top: 2px;\n  margin-left: 10px; }\n\n.remove-event {\n  line-height: 7px;\n  position: absolute;\n  right: 10px;\n  text-decoration: none;\n  font-size: 200%;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour, .selected-hour {\n  background: rgba(70, 150, 229, 0.1); }\n\n.hovered-hour {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-body {\n  position: relative; }\n\n.calendar-form-wrapper {\n  z-index: 2;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background: rgba(255, 255, 255, 0.8); }\n\n.calendar-form {\n  width: 50%;\n  min-width: 260px; }\n\n.calendar-form input:disabled {\n  opacity: 0.4; }\n", ""]);
+	exports.push([module.id, ".calendar-hour-list {\n  list-style: none;\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n  overflow-y: scroll;\n  max-height: 550px;\n  position: relative; }\n\n.calendar-hour-list > li:last-child {\n  margin-bottom: 0px;\n  border-bottom: 0px; }\n\n.calendar-hour {\n  border-bottom: 1px solid #e9e9e9;\n  position: relative; }\n\n.calendar-hour-time {\n  vertical-align: top;\n  padding-top: 13px;\n  padding-bottom: 13px;\n  display: inline-block; }\n\n.calendar-hour-events {\n  list-style: none;\n  list-style-type: none;\n  padding: 0px;\n  display: inline-block;\n  position: absolute;\n  left: 80px;\n  right: 20px;\n  top: 5px; }\n\n.calendar-hour-event {\n  margin: 0;\n  margin-bottom: 4px;\n  display: inline-block;\n  float: left;\n  background: #f1f7fd;\n  padding: 10px;\n  padding-right: 30px;\n  border: 1px solid #ccc;\n  text-shadow: 0 1px white;\n  z-index: 2;\n  width: 100%;\n  position: relative; }\n\n.calendar-hour-event-topmost {\n  z-index: 3; }\n\n.calendar-hour-event-z-index-default {\n  z-index: auto; }\n\n.calendar-hour-event-double {\n  width: 48%;\n  margin-left: 4%; }\n\n.calendar-hour-event-triple {\n  width: 30.6%;\n  margin-left: 4%; }\n\n.calendar-hour-event-multiple {\n  position: absolute; }\n\n.calendar-hour-event-double:first-child, .calendar-hour-event-triple:first-child {\n  margin-left: 0px; }\n\n.hour-event-time-text {\n  margin-top: 2px; }\n\n.hour-event-title-text {\n  margin-top: 6px; }\n\n.remove-event {\n  line-height: 7px;\n  position: absolute;\n  top: 6px;\n  right: 10px;\n  text-decoration: none;\n  font-size: 200%;\n  display: none; }\n\n.calendar-hour-event:hover .remove-event {\n  display: block; }\n\n.active-hour, .selected-hour {\n  background: rgba(70, 150, 229, 0.1); }\n\n.hovered-hour {\n  background: rgba(70, 150, 229, 0.05); }\n\n.calendar-body {\n  position: relative; }\n\n.calendar-form-wrapper {\n  z-index: 2;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background: rgba(255, 255, 255, 0.8); }\n\n.calendar-form {\n  width: 50%;\n  min-width: 260px; }\n\n.calendar-form input:disabled {\n  opacity: 0.4; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 230 */
+/* 231 */
 /*!***************************************!*\
   !*** ./app/modules/contact/index.jsx ***!
   \***************************************/
@@ -46512,7 +46573,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	// import styles for this component
-	__webpack_require__(/*! style!css!sass!./styles/contact.scss */ 231);
+	__webpack_require__(/*! style!css!sass!./styles/contact.scss */ 232);
 	
 	var ContactInfoComponent = function (_React$Component) {
 					_inherits(ContactInfoComponent, _React$Component);
@@ -46579,7 +46640,7 @@
 	exports.default = ContactInfoComponent;
 
 /***/ },
-/* 231 */
+/* 232 */
 /*!*************************************************************************************************!*\
   !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/modules/contact/styles/contact.scss ***!
   \*************************************************************************************************/
@@ -46588,7 +46649,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../../~/css-loader!./../../../../~/sass-loader!./contact.scss */ 232);
+	var content = __webpack_require__(/*! !./../../../../~/css-loader!./../../../../~/sass-loader!./contact.scss */ 233);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../../../~/style-loader/addStyles.js */ 170)(content, {});
@@ -46608,7 +46669,7 @@
 	}
 
 /***/ },
-/* 232 */
+/* 233 */
 /*!********************************************************************************!*\
   !*** ./~/css-loader!./~/sass-loader!./app/modules/contact/styles/contact.scss ***!
   \********************************************************************************/
@@ -46625,7 +46686,7 @@
 
 
 /***/ },
-/* 233 */
+/* 234 */
 /*!**************************************!*\
   !*** ./app/collections/bookmarks.js ***!
   \**************************************/
@@ -46639,7 +46700,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _localstorageCollection = __webpack_require__(/*! ./base/localstorage.collection.js */ 234);
+	var _localstorageCollection = __webpack_require__(/*! ./base/localstorage.collection.js */ 235);
 	
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 	
@@ -46698,7 +46759,7 @@
 	exports.default = Bookmarks;
 
 /***/ },
-/* 234 */
+/* 235 */
 /*!*********************************************************!*\
   !*** ./app/collections/base/localstorage.collection.js ***!
   \*********************************************************/
@@ -46716,11 +46777,11 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _collection = __webpack_require__(/*! ./collection.js */ 235);
+	var _collection = __webpack_require__(/*! ./collection.js */ 236);
 	
 	var _collection2 = _interopRequireDefault(_collection);
 	
-	var _localstorage = __webpack_require__(/*! ../../behaviours/localstorage.js */ 237);
+	var _localstorage = __webpack_require__(/*! ../../behaviours/localstorage.js */ 238);
 	
 	var _localstorage2 = _interopRequireDefault(_localstorage);
 	
@@ -46849,7 +46910,7 @@
 	exports.default = LocalStorageCollection;
 
 /***/ },
-/* 235 */
+/* 236 */
 /*!********************************************!*\
   !*** ./app/collections/base/collection.js ***!
   \********************************************/
@@ -46869,7 +46930,7 @@
 	
 	var _tools = __webpack_require__(/*! ../../lib/tools.js */ 164);
 	
-	var _event = __webpack_require__(/*! ../../behaviours/event.js */ 236);
+	var _event = __webpack_require__(/*! ../../behaviours/event.js */ 237);
 	
 	var _event2 = _interopRequireDefault(_event);
 	
@@ -47040,7 +47101,7 @@
 	exports.default = Collection;
 
 /***/ },
-/* 236 */
+/* 237 */
 /*!*********************************!*\
   !*** ./app/behaviours/event.js ***!
   \*********************************/
@@ -47107,7 +47168,7 @@
 	exports.default = EventBehaviour;
 
 /***/ },
-/* 237 */
+/* 238 */
 /*!****************************************!*\
   !*** ./app/behaviours/localstorage.js ***!
   \****************************************/
@@ -47182,7 +47243,7 @@
 	exports.default = LocalStorageBehaviour;
 
 /***/ },
-/* 238 */
+/* 239 */
 /*!*************************************!*\
   !*** ./app/collections/comments.js ***!
   \*************************************/
@@ -47200,7 +47261,7 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _localstorageCollection = __webpack_require__(/*! ./base/localstorage.collection.js */ 234);
+	var _localstorageCollection = __webpack_require__(/*! ./base/localstorage.collection.js */ 235);
 	
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 	
@@ -47279,7 +47340,7 @@
 	exports.default = Comments;
 
 /***/ },
-/* 239 */
+/* 240 */
 /*!**********************************!*\
   !*** ./app/collections/tasks.js ***!
   \**********************************/
@@ -47293,7 +47354,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _localstorageCollection = __webpack_require__(/*! ./base/localstorage.collection.js */ 234);
+	var _localstorageCollection = __webpack_require__(/*! ./base/localstorage.collection.js */ 235);
 	
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 	
@@ -47336,7 +47397,7 @@
 	exports.default = Tasks;
 
 /***/ },
-/* 240 */
+/* 241 */
 /*!**********************************!*\
   !*** ./app/collections/diary.js ***!
   \**********************************/
@@ -47354,7 +47415,7 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _localstorageCollection = __webpack_require__(/*! ./base/localstorage.collection.js */ 234);
+	var _localstorageCollection = __webpack_require__(/*! ./base/localstorage.collection.js */ 235);
 	
 	var _localstorageCollection2 = _interopRequireDefault(_localstorageCollection);
 	
@@ -47409,7 +47470,7 @@
 	exports.default = Diary;
 
 /***/ },
-/* 241 */
+/* 242 */
 /*!*************************!*\
   !*** ./app/lib/user.js ***!
   \*************************/
@@ -47427,11 +47488,11 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _localstorage = __webpack_require__(/*! ../behaviours/localstorage.js */ 237);
+	var _localstorage = __webpack_require__(/*! ../behaviours/localstorage.js */ 238);
 	
 	var _localstorage2 = _interopRequireDefault(_localstorage);
 	
-	var _event = __webpack_require__(/*! ../behaviours/event.js */ 236);
+	var _event = __webpack_require__(/*! ../behaviours/event.js */ 237);
 	
 	var _event2 = _interopRequireDefault(_event);
 	
@@ -47528,7 +47589,7 @@
 	exports.default = User;
 
 /***/ },
-/* 242 */
+/* 243 */
 /*!*****************************************************************************!*\
   !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./app/styles/app.scss ***!
   \*****************************************************************************/
@@ -47537,7 +47598,7 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../~/css-loader!./../../~/sass-loader!./app.scss */ 243);
+	var content = __webpack_require__(/*! !./../../~/css-loader!./../../~/sass-loader!./app.scss */ 244);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../../~/style-loader/addStyles.js */ 170)(content, {});
@@ -47557,7 +47618,7 @@
 	}
 
 /***/ },
-/* 243 */
+/* 244 */
 /*!************************************************************!*\
   !*** ./~/css-loader!./~/sass-loader!./app/styles/app.scss ***!
   \************************************************************/

@@ -41,14 +41,19 @@
 	margin-bottom: 4px;
 	display: inline-block;
 	float: left;
-	background: rgba(70, 150, 229, 0.08);
+	background: rgba(241, 247, 253, 1);
+	// 70, 150, 229, 0.08
 	padding: 10px;
 	padding-right: 30px;
 	border: 1px solid #ccc;
 	text-shadow: 0 1px white;
-	z-index: 1;
+	z-index: 2;
 	width: 100%;
 	position: relative;
+}
+
+.calendar-hour-event-topmost {
+	z-index: 3;
 }
 
 .calendar-hour-event-z-index-default {
@@ -65,18 +70,26 @@
 	margin-left: 4%;
 }
 
+.calendar-hour-event-multiple {
+	position: absolute;
+}
+
 .calendar-hour-event-double:first-child, .calendar-hour-event-triple:first-child {
 	margin-left: 0px;
 }
 
 .hour-event-time-text {
 	margin-top: 2px;
-	margin-left: 10px;
+}
+
+.hour-event-title-text {
+	margin-top: 6px;
 }
 
 .remove-event {
 	line-height: 7px;
 	position: absolute;
+	top: 6px;
 	right: 10px;
 	text-decoration: none;
 	font-size: 200%;

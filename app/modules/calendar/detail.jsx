@@ -1,6 +1,7 @@
 import React from 'react';
 import FormStateBehaviour from '../../behaviours/form.js';
 import ActiveModelStateBehaviour from '../../behaviours/active.model.js';
+import CalendarEventComponent from './event.jsx';
 
 import { validate24HourTime, generateID, generateCorrectEndHour } from '../../lib/tools.js';
 
@@ -61,63 +62,18 @@ export default class CalendarDetailComponent extends React.Component {
 		this.clearActiveState();
 	}
 
-	stopPropagationHandler(event) {
-		event.stopPropagation();
-	}
-
-	removeEventHandler(entryEvent, event) {
-		event.preventDefault();
-		const { entry, diary } = this.props;
-		const index = entry.entries.indexOf(entryEvent);
-		if (index > -1) {
-			entry.entries.splice(index, 1);
-		}
-		diary.update(entry);
-	}
-
 	getEventsForHour(hour) {
-		const { entry } = this.props;
+		const { entry, diary } = this.props;
 		const currentStartHour = this.activeStartHour.current;
 		const currentEndHour = this.activeEndHour.current;
 
 		if (entry) {
-			const hourHour = hour.substring(0, 2);
 			const entries = Array.prototype.filter.call(entry.entries, (item) => {
-				return item.startHour.substring(0, 2) == hourHour;
+				return item.startHour.substring(0, 2) == hour.substring(0, 2);
 			});
+			const entriesLength = entries.length;
 			return entries.map((event) => {
-				const l = entries.length;
-				let className = "calendar-hour-event box-shadow hover-cursor--default";
-
-				if (!!currentStartHour && !currentEndHour) className += ' calendar-hour-event-z-index-default';
-
-				if (l > 1) {
-					if (l == 2) className += ' calendar-hour-event-double';
-					if (l == 3) className += ' calendar-hour-event-triple';
-				}
-
-				const hourDifference = event.endHour.substring(0, 2) - event.startHour.substring(0, 2);
-				// for safari
-				let nominalHeight = 43;
-
-				// i hate this browser ecosystem!
-				// for chrome & firefox
-				if (navigator.userAgent.indexOf('Chrome') > -1 || navigator.userAgent.indexOf('Firefox') > -1) {
-					nominalHeight = 42;
-				}
-
-				const style = {
-					height: ((hourDifference * nominalHeight) - 11) + 'px'
-				};
-
-				if (hourDifference == 1) style.paddingTop = '8px';
-				return (
-					<li onClick={this.stopPropagationHandler} key={event.startHour + event.title + generateID()} style={style} className={className}>
-						<a onClick={this.removeEventHandler.bind(this, event)} href="#" className="pull-right remove-event">&#10799;</a>
-						<small className="pull-right hour-event-time-text">{event.startHour} to {event.endHour}</small>
-						{event.title}
-					</li>
-				);
+				return <CalendarEventComponent key={event.startHour + event.title + generateID()} diary={diary} entry={entry} event={event} entriesLength={entriesLength} currentStartHour={currentStartHour} currentEndHour={currentEndHour} />
 			});
 		}
 	}
