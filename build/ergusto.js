@@ -46606,7 +46606,7 @@
 																									_react2.default.createElement(
 																													'p',
 																													null,
-																													'I\'m a front end developer currently living in Amsterdam. I love building user interfaces. You can find me around the web as ',
+																													'I\'m a front end developer currently living in London. I love building user interfaces. You can find me around the web as ',
 																													_react2.default.createElement(
 																																	'strong',
 																																	null,
