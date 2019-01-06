@@ -1,0 +1,56 @@
+@import '../imports';
+
+$spacing-types: (
+	margin: margin,
+	padding: padding
+);
+
+@each $spacing-type, $spacing-property in $spacing-types {
+	@each $breakpoint, $breakpoint-value in $breakpoints {
+		$suffix: if($breakpoint == none, '', -#{$breakpoint});
+
+		@media (min-width: #{$breakpoint-value}) {
+			@each $spacing, $spacing-value in $spacings {
+				
+				$spacing-formatted: if($spacing == 1, '', -#{$spacing});
+
+				.#{$spacing-type}-all#{$spacing-formatted}#{$suffix} {
+					#{$spacing-property}-left: $spacing-value;
+					#{$spacing-property}-bottom: $spacing-value;
+					#{$spacing-property}-right: $spacing-value;
+					#{$spacing-property}-top: $spacing-value;
+				}
+
+				.#{$spacing-type}-vertical#{$spacing-formatted}#{$suffix} {
+					#{$spacing-property}-bottom: $spacing-value;
+					#{$spacing-property}-top: $spacing-value;
+				}
+
+				.#{$spacing-type}-horizontal#{$spacing-formatted}#{$suffix} {
+					#{$spacing-property}-left: $spacing-value;
+					#{$spacing-property}-right: $spacing-value;
+				}
+
+				.#{$spacing-type}-left#{$spacing-formatted}#{$suffix} {
+					#{$spacing-property}-left: $spacing-value;
+				}
+
+				.#{$spacing-type}-bottom#{$spacing-formatted}#{$suffix} {
+					#{$spacing-property}-bottom: $spacing-value;
+				}
+
+				.#{$spacing-type}-right#{$spacing-formatted}#{$suffix} {
+					#{$spacing-property}-right: $spacing-value;
+				}
+
+				.#{$spacing-type}-top#{$spacing-formatted}#{$suffix} {
+					#{$spacing-property}-top: $spacing-value;
+				}
+				
+			}
+
+		}
+
+	}
+
+}

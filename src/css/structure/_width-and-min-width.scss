@@ -1,0 +1,18 @@
+@import '../imports';
+
+$width-types: (
+	width: width,
+	max-width: max-width
+);
+
+@each $width-type, $width-property in $width-types {
+	@each $breakpoint, $breakpoint-value in $breakpoints {
+		$suffix: if($breakpoint == none, '', -#{$breakpoint});
+
+		@media (min-width: #{$breakpoint-value}) {
+			@each $width, $width-value in $widths {
+				.#{$width-type}-#{$width}#{$suffix} { #{$width-property}: #{$width-value}; }
+			}
+		}
+	}
+}
