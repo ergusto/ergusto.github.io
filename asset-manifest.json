@@ -1,16 +1,16 @@
 {
   "main.css": "/static/css/main.e5af2794.chunk.css",
-  "main.js": "/static/js/main.d3ade72f.chunk.js",
-  "main.js.map": "/static/js/main.d3ade72f.chunk.js.map",
+  "main.js": "/static/js/main.2de48eea.chunk.js",
+  "main.js.map": "/static/js/main.2de48eea.chunk.js.map",
   "static/css/1.6c726961.chunk.css": "/static/css/1.6c726961.chunk.css",
   "static/js/1.5f1fb708.chunk.js": "/static/js/1.5f1fb708.chunk.js",
   "static/js/1.5f1fb708.chunk.js.map": "/static/js/1.5f1fb708.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
-  "static/media/index.css": "/static/media/comfortaa-latin-400.dd1061d9.woff2",
+  "static/media/index.css": "/static/media/comfortaa-latin-700.af37f3ca.woff",
   "static/css/main.e5af2794.chunk.css.map": "/static/css/main.e5af2794.chunk.css.map",
   "static/css/1.6c726961.chunk.css.map": "/static/css/1.6c726961.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.03252293b6e4f3a1d04afb96171369b0.js": "/precache-manifest.03252293b6e4f3a1d04afb96171369b0.js",
+  "precache-manifest.914e9b991ae8f9728edeb15fa848cbc4.js": "/precache-manifest.914e9b991ae8f9728edeb15fa848cbc4.js",
   "service-worker.js": "/service-worker.js"
 }
