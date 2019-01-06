@@ -1,3 +1,4 @@
+import 'typeface-comfortaa';
 import React from 'react';
 
 import '../css/site.scss';
@@ -9,7 +10,7 @@ export default class App extends React.Component {
 			<div className="full-height background-color-dark-blue justify-centre comfortaa color-white">
 				<div className="align-center">
 					<h1 className="margin-bottom-medium">ergusto</h1>
-					<p>New site coming soon</p>
+					<p>New project coming soon</p>
 				</div>
 			</div>
 		);
