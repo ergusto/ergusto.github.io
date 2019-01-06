@@ -1,0 +1,41 @@
+@import '../imports';
+
+.border-left {
+	border-left: 1px solid;
+}
+
+.border-bottom {
+	border-bottom: 1px solid;
+}
+
+.border-right {
+	border-right: 1px solid;
+}
+
+.border-top {
+	border-top: 1px solid;
+}
+
+@each $key, $value in $colors {
+
+	.border-color-#{$key} {
+		border-color: $value;
+	}
+
+	.border-left-color-#{$key} {
+		border-left-color: $value;
+	}
+
+	.border-bottom-color-#{$key} {
+		border-bottom-color: $value;
+	}
+
+	.border-right-color-#{$key} {
+		border-right-color: $value;
+	}
+
+	.border-top-color-#{$key} {
+		border-top-color: $value;
+	}
+
+}

@@ -1,0 +1,9 @@
+@import '../imports';
+
+@each $key, $value in $colors {
+
+	.background-color-#{$key} {
+		background-color: $value;
+	}
+
+}
