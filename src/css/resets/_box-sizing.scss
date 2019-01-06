@@ -1,0 +1,14 @@
+/* https://www.padding-allulirish.com/2012/box-sizing-border-box-ftw/ */
+
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}

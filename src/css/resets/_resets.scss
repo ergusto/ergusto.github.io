@@ -1,19 +1,8 @@
-/* https://www.padding-allulirish.com/2012/box-sizing-border-box-ftw/ */
-
 html {
-    box-sizing: border-box;
     line-height: 1.2;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-*, *:before, *:after {
-    box-sizing: inherit;
-}
-
-* {
-    padding: 0;
-    margin: 0;
-}
-
+@import 'box-sizing';
 @import 'resets/normalize.css';

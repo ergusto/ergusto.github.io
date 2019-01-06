@@ -1,7 +1,10 @@
 import 'typeface-comfortaa';
 import React from 'react';
+import viewportBuggyfill from 'viewport-units-buggyfill';
 
 import '../css/site.scss';
+
+viewportBuggyfill.init();
 
 export default class App extends React.Component {
 
