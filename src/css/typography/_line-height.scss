@@ -1,0 +1,9 @@
+@import '../imports';
+
+@each $key, $value in $line-heights {
+
+	.line-height-#{$key} {
+		line-height: $value;
+	}
+
+}

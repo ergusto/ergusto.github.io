@@ -2,7 +2,8 @@
 
 $width-types: (
 	width: width,
-	max-width: max-width
+	max-width: max-width,
+	min-width: min-width
 );
 
 @each $width-type, $width-property in $width-types {

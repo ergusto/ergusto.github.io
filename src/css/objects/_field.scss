@@ -1,0 +1,36 @@
+.form-field {
+    display: block;
+    padding: .75rem;
+    background-color: white;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    width: 100%;
+}
+
+.form-field:focus {
+    outline: none;
+}
+
+.form-field::-webkit-input-placeholder,
+.form-field::-moz-placeholder,
+.form-field:-ms-input-placeholder,
+.form-field:-moz-placeholder,
+.form-field::placeholder{
+    color: blue;
+}
+
+.form-field-error p {
+    padding-left: .75rem;
+}
+
+.form-field-error {
+    border-color: color(red);
+    box-shadow: 0px 0px 1px red;
+}
+
+textarea, input:not([type=checkbox]):not([type=radio]) {
+    -webkit-appearance: none;
+}
