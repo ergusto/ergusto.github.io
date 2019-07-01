@@ -31,21 +31,13 @@ export const useForm = (initialValues, validators, callback) => {
     	const result = {};
 
     	for (let name in validators) {
-    		const validator = validators[name],
-    			value = values[name];
+    		const value = values[name];
 
     		let error = validateField(name, value);
 
     		if(error) {
     			result[name] = error;
     		}
-    	}
-
-    	if(Object.keys(result).length) {
-    		setErrors(prev => ({
-    			...prev,
-    			...result
-    		}));
     	}
 
     	return result;
@@ -57,6 +49,10 @@ export const useForm = (initialValues, validators, callback) => {
     	const validationResult = validateAll();
 
         if(Object.keys(validationResult).length) {
+    		setErrors(prev => ({
+    			...prev,
+    			...validationResult
+    		}));
             return;
         }
 

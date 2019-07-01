@@ -1,105 +1,98 @@
-import React, { createRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import './style.scss';
 
-export default class Menu extends React.Component {
+export default function menu() {
+	const dropdown = useRef(null),
+		button = useRef(null);
 
-	constructor(props) {
-		super(props);
-		
-		this.dropdown = createRef();
-		this.button = createRef();
-	}
+	const [showMenu, setShowMenu] = useState(false),
+		[menuHover, setMenuHover] = useState(false);
 
-	componentWillUnmount() {
-		this.removeBodyListener();
-	}
-
-	state = {
-		showMenu: false,
-		menuHover: false
+	const open = () => setShowMenu(true);
+	const close = () => {
+		setShowMenu(false);
+		setMenuHover(false);
 	};
 
-	toggle = event => {
-		event.preventDefault();
-		const { showMenu } = this.state;
+	const toggleMenu = event => {
+		if(event) event.preventDefault();
 
-		if (showMenu) {
-			this.close();
+		if(showMenu) {
+			close();
 		} else {
-			this.open();
+			open();
 		}
 	};
 
-	addBodyListener = () => {
-		document.body.addEventListener("click", this.onBodyClick);
-	};
-
-	removeBodyListener = () => {
-		document.body.removeEventListener("click", this.onBodyClick);
-	};
-
-	onBodyClick = event => {
-		if (!this.dropdown.current.contains(event.target) && !this.button.current.contains(event.target)) {
-			this.close();
+	const onBodyClick = event => {
+		if(!dropdown.current) {
+			console.log('No dropdown.current');
+			return;
 		}
+
+		if (!dropdown.current.contains(event.target) && !button.current.contains(event.target)) {
+			close();
+		}
+	};
+
+	const onMouseOver = () => {
+		setMenuHover(true);
+	};
+
+	const onMouseOut = () => {
+		setMenuHover(false);
+	};
+
+	const addBodyListener = () => {
+		document.body.addEventListener('click', onBodyClick);
+	};
+
+	const removeBodyListener = () => {
+		document.body.removeEventListener('click', onBodyClick);
+	};
+
+	useEffect(() => {
+		if(showMenu) {
+			addBodyListener();
+		} else {
+			removeBodyListener();
+		}
+	}, [showMenu]);
+
+	// Remove body listener on unmount
+	useEffect(() => {
+		return () => {
+			removeBodyListener();
+		}
+	}, []);
+
+	let menuClass = "menu box-shadow-large background-color-blue";
+
+	if (showMenu) {
+		menuClass += " menu--open";
 	}
 
-	open = () => {
-		this.setState({
-			showMenu: true
-		}, () => this.addBodyListener());
-	};
+	if(menuHover) {
+		menuClass += " menu--hovered";
+	}
 
-	close = () => {
-		this.setState({
-			showMenu: false,
-			menuHover: false
-		}, () => this.removeBodyListener());
-	};
-
-	onMouseOver = () => {
-		this.setState({
-			menuHover: true
-		});
-	};
-
-	onMouseOut = () => {
-		this.setState({
-			menuHover: false
-		})
-	};
-
-	render() {
-		const { showMenu, menuHover } = this.state;
-
-		let menuClass = "menu box-shadow-large background-color-dark-blue";
-
-		if (showMenu) {
-			menuClass += " menu--open";
-		}
-
-		if(menuHover) {
-			menuClass += " menu--hovered";
-		}
-
-		return (
-			<div className={menuClass} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>
-				<div ref={this.button} onClick={this.toggle} id="dropDown" className="menu-button cursor-pointer border-bottom-radius background-color-dark-blue">
-					<span className="font-size-small font-family-raleway color-white">Menu</span>
-				</div>
-
-				<div ref={this.dropdown} className="menu-box padding-all font-family-raleway color-white">
-					<h1 className="font-family-comfortaa inline-block font-size-bigger line-height-site-title margin-right-2 margin-left">ergusto</h1>
-					<ul className="inline-block float-right">
-						<li className="inline-block margin-right"><Link className="color-white no-decoration line-height-site-title" to="/">Intro</Link></li>
-						<li className="inline-block margin-right"><Link className="color-white no-decoration line-height-site-title" to="/calendar">Calendar</Link></li>
-						<li className="inline-block margin-right"><Link className="color-white no-decoration line-height-site-title" to="/comments">Comments</Link></li>
-					</ul>
-				</div>
+	return (
+		<div className={menuClass} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+			<div ref={button} onClick={toggleMenu} id="dropDown" className="menu-button cursor-pointer border-bottom-radius background-color-blue">
+				<span className="font-size-small font-family-raleway color-white">Menu</span>
 			</div>
-		);
-	}
+
+			<div ref={dropdown} className="menu-box padding-all font-family-raleway color-white">
+				<h1 className="font-family-comfortaa inline-block font-size-bigger line-height-site-title margin-right-2 margin-left">ergusto</h1>
+				<ul className="inline-block float-right">
+					<li className="inline-block margin-right"><Link className="color-white no-decoration line-height-site-title" to="/">Intro</Link></li>
+					<li className="inline-block margin-right"><Link className="color-white no-decoration line-height-site-title" to="/calendar">Calendar</Link></li>
+					<li className="inline-block margin-right"><Link className="color-white no-decoration line-height-site-title" to="/comments">Comments</Link></li>
+				</ul>
+			</div>
+		</div>
+	);
 
 }

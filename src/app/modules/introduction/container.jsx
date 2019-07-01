@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import Component from './component.jsx';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
 	return {};
 };
 

@@ -1,22 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { Menu } from 'modules/menu';
-import { Comments } from 'modules/comments';
 import { Calendar } from 'modules/calendar';
+import { Comments } from 'modules/comments';
 import { Introduction } from 'modules/introduction';
 import NotFound from 'not-found.jsx';
+import Reset from '../reset.jsx';
 
-const Routes = () => (
-	<Router>
-		<Menu />
-		<Switch>
-			<Route path='/' exact component={Introduction} />
-			<Route path='/calendar' exact component={Calendar} />
-			<Route path='/comments' exact component={Comments} />
-			<Route component={NotFound} />
-		</Switch>
-	</Router>
-);
+const Routes = () => {
+
+	useEffect(() => {
+		document.body.classList.add('background-color-light-grey');
+	}, []);
+
+	return (
+		<Router>
+			<Switch>
+				<Route path='/' exact component={Introduction} />
+				<Route path='/calendar' exact component={Calendar} />
+				<Route path='/comments' exact component={Comments} />
+				<Route path='/reset' exact component={Reset} />
+				<Route component={NotFound} />
+			</Switch>
+		</Router>
+	);
+};
 
 export default Routes;

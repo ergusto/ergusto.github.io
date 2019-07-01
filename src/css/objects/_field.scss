@@ -10,6 +10,10 @@
     width: 100%;
 }
 
+textarea.form-field {
+	min-height: 50px;
+}
+
 .form-field:focus {
     outline: none;
 }

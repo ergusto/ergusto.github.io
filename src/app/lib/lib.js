@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 export const toString = obj => Object.prototype.toString.call(obj);
 
 export const isString = obj => toString(obj) === '[object String]';
@@ -22,7 +20,7 @@ const hourDigits = Array.apply(null, Array(24));
 function generateHours() {
     return hourDigits.map((thing, index) => {
         let hour = index + ':00';
-        if (hour.length == 4) hour = '0' + hour;
+        if (hour.length === 4) hour = '0' + hour;
         return hour;
     });
 }
@@ -71,7 +69,7 @@ export class Calendar {
             nextMonthYear = nextMonthYear + 1;
         }
 
-        if (month == 0) {
+        if (month === 0) {
             previousMonth = 11;
             previousMonthYear = previousMonthYear - 1;
         }
@@ -81,8 +79,8 @@ export class Calendar {
 
         let monthLength = calendarDaysInEachMonth[month];
 
-        if (month == 1) {
-            if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+        if (month === 1) {
+            if((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0){
                 monthLength = 29;
             }
         }
@@ -94,7 +92,7 @@ export class Calendar {
         monthInfo.days = [];
         monthInfo.weeks = [];
         monthInfo.getNextMonth = this.getMonth.bind(this, firstDayOfNextMonth);
-        monthInfo.getPrevMonth = this.getMonth.bind(this, firstDayOfPrevMonth);
+        monthInfo.getPreviousMonth = this.getMonth.bind(this, firstDayOfPrevMonth);
 
         let day;
         let week;
@@ -117,9 +115,9 @@ export class Calendar {
                     day.dateObj = new Date(day.year, day.monthNo, day.date);
                     day.isToday = false;
 
-                    if (day.date == todayDate) {
-                        if (day.monthNo == todayMonthNo) {
-                            if (day.year == todayYear) {
+                    if (day.date === todayDate) {
+                        if (day.monthNo === todayMonthNo) {
+                            if (day.year === todayYear) {
                                 day.isToday = true;
                             }
                         }

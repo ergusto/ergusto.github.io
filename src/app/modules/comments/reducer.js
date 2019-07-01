@@ -1,12 +1,17 @@
 import { createReducer } from 'lib';
+import getInitialState from './state.js';
 
 import {
 	COMMENT_CREATE,
 	COMMENT_EDIT,
-	COMMENT_DELETE
+	COMMENT_DELETE,
+	COMMENTS_RESET
 } from './actionTypes.js';
 
 export default createReducer({
+	[COMMENTS_RESET]: (state, payload) => {
+		return getInitialState();
+	},
 	[COMMENT_CREATE]: (state, payload) => {
 		const { comment } = payload;
 

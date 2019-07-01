@@ -9,8 +9,6 @@ if (!('ontouchstart' in document.documentElement)) {
 	document.documentElement.classList.add('no-touch');
 }
 
-JavascriptTimeAgo.locale(en)
-
-document.body.classList.add('background-color-light-grey');
+JavascriptTimeAgo.locale(en);
 
 ReactDOM.render(<App />, document.getElementById('root'));

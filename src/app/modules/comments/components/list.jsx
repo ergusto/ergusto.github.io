@@ -7,8 +7,6 @@ export default function List({ parentId = null }) {
 	const { state: { comments } } = useContext(CommentsContext),
 		items = comments.filter(obj => obj.parentId === parentId);
 
-	if(!items.length) return null;
-
 	return (
 		<div className="max-width-9">
 			<ul>
