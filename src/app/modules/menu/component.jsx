@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './style.scss';
 
@@ -81,15 +82,15 @@ export default function menu() {
 	return (
 		<div className={menuClass} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
 			<div ref={button} onClick={toggleMenu} id="dropDown" className="menu-button cursor-pointer border-bottom-radius background-color-blue">
-				<span className="font-size-small font-family-raleway color-white">Menu</span>
+				<span className="color-white"><FontAwesomeIcon icon='bars' /></span>
 			</div>
 
 			<div ref={dropdown} className="menu-box padding-all font-family-raleway color-white">
 				<h1 className="font-family-comfortaa inline-block font-size-bigger line-height-site-title margin-right-2 margin-left">ergusto</h1>
 				<ul className="inline-block float-right">
-					<li className="inline-block margin-right"><Link className="color-white no-decoration line-height-site-title" to="/">Intro</Link></li>
-					<li className="inline-block margin-right"><Link className="color-white no-decoration line-height-site-title" to="/calendar">Calendar</Link></li>
-					<li className="inline-block margin-right"><Link className="color-white no-decoration line-height-site-title" to="/comments">Comments</Link></li>
+					<li className="inline-block margin-right"><Link className="color-white no-decoration font-weight-semi-bold line-height-site-title" to="/">Intro</Link></li>
+					<li className="inline-block margin-right"><Link className="color-white no-decoration font-weight-semi-bold line-height-site-title" to="/calendar">Calendar</Link></li>
+					<li className="inline-block margin-right"><Link className="color-white no-decoration font-weight-semi-bold line-height-site-title" to="/comments">Comments</Link></li>
 				</ul>
 			</div>
 		</div>

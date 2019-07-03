@@ -128,6 +128,7 @@ export class Calendar {
                     dateNo++;
                 } else {
                     day.date = null;
+					day.empty = true;
                     week.push(day);
                 }
             }

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { CalendarContext } from '../context.jsx';
-
-import Experiment from './experiment.jsx';
+import WeekComponent from './week.jsx';
 
 import './calendar.scss';
 
@@ -32,9 +31,11 @@ export default function Calendar() {
 		setNextMonth();
 	};
 
+	console.log(month.weeks);
+
 	return (
 		<div className='background-color-white border-all border-color-grey border-radius box-shadow width-100 centered max-width-14'>
-			<header className='calendar-header border-color-grey clearfix margin-bottom'>
+			<header className='calendar-header border-color-grey clearfix'>
 				<div className='float-left border-color-grey'>
 					<a href='/previous' onClick={previousOnClickHandler} className='block no-decoration padding-horizontal font-size-small color-dark-blue color-blue--on-hover font-weight-bold'>Previous</a>
 				</div>
@@ -46,7 +47,9 @@ export default function Calendar() {
 				</div>
 			</header>
 			<div className='padding-all'>
-				<Experiment />
+				<ul>
+					{month.weeks.map((week, index) => <li key={`week-${index}`}><WeekComponent week={week} /></li>)}
+				</ul>
 			</div>
 		</div>
 	);

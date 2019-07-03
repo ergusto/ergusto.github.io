@@ -1,0 +1,15 @@
+.calendar-day {
+	float: left;
+	width: 14.285%;
+	height: 120px;
+	padding: 10px;
+}
+
+.calendar-day--date:hover {
+	background-color: rgba(0, 0, 0, 0.03);
+	cursor: pointer;
+}
+
+.calendar-day--empty {
+	background-color: rgba(0, 0, 0, 0.05);
+}
