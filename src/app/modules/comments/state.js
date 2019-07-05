@@ -17,7 +17,8 @@ const getInitialState = () => {
 	};
 
 	const parentId = generateId(),
-		childId = generateId();
+		childId = generateId(),
+		grandChildId = generateId();
 
 	initialState.comments.push(makeComment({
 		text: "Hi. I'm a programmer with an interest in user interface and user experience design. My name's Fergus Ruston.",
@@ -31,14 +32,20 @@ const getInitialState = () => {
 	}));
 
 	initialState.comments.push(makeComment({
+		id: childId,
 		text: "I'm also interested in Python, Django, NodeJS, Bash, API design, and various other languages, disciplines and technologies. You can see some of my other projects [here](http://www.github.com/ergusto).",
-		parentId,
-		id: childId
+		parentId
 	}));
 
 	initialState.comments.push(makeComment({
-		text: "Most examples on this website are interactive, and use the Local Storage API to persist data between sessions. Try replying to or editing one of these comments. ",
-		parentId: childId,
+		id: grandChildId,
+		text: "Most examples on this website are interactive, and use the Local Storage API to persist data between sessions. Try replying to or editing one of these comments.",
+		parentId: childId
+	}));
+
+	initialState.comments.push(makeComment({
+		text: "You can find some other things to play with by clicking the button in the top right.",
+		parentId: grandChildId
 	}));
 
 	return initialState;

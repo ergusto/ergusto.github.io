@@ -1,3 +1,17 @@
 .calendar-header {
 	line-height: 3em;
 }
+
+.day-header-item {
+	width: 14%;
+	margin-left: 0.14%;
+	margin-right: 0.14%;
+}
+
+.calendar-previous-month {
+	left: 7px;
+}
+
+.calendar-next-month {
+	right: 7px;
+}

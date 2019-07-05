@@ -69,23 +69,23 @@ export default function menu() {
 		}
 	}, []);
 
-	let menuClass = "menu box-shadow-large background-color-blue";
+	let menuClass = "site-menu background-color-blue";
 
 	if (showMenu) {
-		menuClass += " menu--open";
+		menuClass += " site-menu--open";
 	}
 
 	if(menuHover) {
-		menuClass += " menu--hovered";
+		menuClass += " site-menu--hovered";
 	}
 
 	return (
 		<div className={menuClass} onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
-			<div ref={button} onClick={toggleMenu} id="dropDown" className="menu-button cursor-pointer border-bottom-radius background-color-blue">
+			<div ref={button} onClick={toggleMenu} id="dropDown" className="site-menu-button cursor-pointer border-bottom-radius background-color-blue">
 				<span className="color-white"><FontAwesomeIcon icon='bars' /></span>
 			</div>
 
-			<div ref={dropdown} className="menu-box padding-all font-family-raleway color-white">
+			<div ref={dropdown} className="site-menu-box padding-all font-family-raleway color-white">
 				<h1 className="font-family-comfortaa inline-block font-size-bigger line-height-site-title margin-right-2 margin-left">ergusto</h1>
 				<ul className="inline-block float-right">
 					<li className="inline-block margin-right"><Link className="color-white no-decoration font-weight-semi-bold line-height-site-title" to="/">Intro</Link></li>

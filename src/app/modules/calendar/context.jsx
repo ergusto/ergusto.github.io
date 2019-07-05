@@ -3,10 +3,8 @@ import React, { createContext } from 'react';
 const CalendarContext = createContext(null);
 
 function CalendarProvider(props) {
-	const { calendar, state, dispatch } = props;
-
 	return (
-		<CalendarContext.Provider value={{ calendar, state, dispatch }}>
+		<CalendarContext.Provider value={props}>
 			{props.children}
 		</CalendarContext.Provider>
 	);

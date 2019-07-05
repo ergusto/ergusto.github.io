@@ -1,4 +1,4 @@
-.menu {
+.site-menu {
     position: absolute;
     top: -64px;
     height: 64px;
@@ -7,7 +7,7 @@
     transition: top 200ms;
 }
 
-.menu-button {
+.site-menu-button {
     bottom: -34px;
     position: absolute;
     right: 32px;
@@ -15,10 +15,10 @@
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.175);
 }
 
-.menu--hovered {
+.site-menu--hovered {
     top: -54px;
 }
 
-.menu--open {
+.site-menu--open {
     top: 0;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import Day from './day.jsx';
 
 import './week.scss';
