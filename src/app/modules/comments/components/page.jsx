@@ -20,7 +20,7 @@ export default function Comments() {
 	}
 
 	return (
-		<div className='page font-family-raleway full-height justify-centre padding-horizontal padding-vertical-4'>
+		<div className='page font-family-raleway full-height justify-centre padding-horizontal padding-top-3 padding-bottom-2'>
 			<Menu />
 			<CommentsProvider state={state} dispatch={dispatch}>
 				<List />

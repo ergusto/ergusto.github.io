@@ -29,7 +29,7 @@ export default function DayDetail({ day, close }) {
 				<button onClick={onCloseClick} className='day-detail-close line-height-header absolute cursor-pointer inline-block no-decoration padding-top-small padding-horizontal font-size-large color-dark-blue color-blue--on-hover font-weight-bold'>
 					<FontAwesomeIcon icon='times' />
 				</button>
-				<h3 className='line-height-header color-dark-blue font-weight-semi-bold width-100 text-align-center'>{day.date} {day.month}</h3>
+				<h3 className='line-height-header color-dark-blue font-weight-semi-bold width-100 text-align-center'>{day.date} {day.month} {day.year}</h3>
 			</header>
 			<div className='padding-top padding-horizontal'>
 				<ul>
