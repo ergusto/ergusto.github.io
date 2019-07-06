@@ -69,7 +69,7 @@ export default function menu() {
 		}
 	}, []);
 
-	let menuClass = "site-menu background-color-blue";
+	let menuClass = "site-menu background-color-blue box-shadow";
 
 	if (showMenu) {
 		menuClass += " site-menu--open";

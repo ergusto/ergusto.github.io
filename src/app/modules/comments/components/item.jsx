@@ -47,7 +47,7 @@ function Item({ comment }) {
 
 	return (
 		<div>
-			<div className="background-color-white border border-color-grey border-radius overflow-hidden box-shadow">
+			<div className="background-color-white border border-color-grey border-radius-large overflow-hidden box-shadow">
 				<div className="padding-horizontal-large padding-vertical">
 					<small className="float-right color-muted-grey margin-bottom-medium block"><ReactTimeAgo date={new Date(comment.date)}/></small>
 					<small className="color-muted-grey margin-bottom-medium block">{comment.username}</small>

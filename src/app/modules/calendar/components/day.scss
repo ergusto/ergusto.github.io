@@ -1,21 +1,15 @@
 .calendar-day {
 	float: left;
-	width: 14%;
-	margin: 0.14%;
-	height: 120px;
-	padding: 10px;
+	width: 13.55%;
+	margin: 0.36%;
+	height: 121px;
 }
 
-.calendar-day.calendar-day--is-today {
-	background-color: rgba(70, 150, 229, 0.1);
-
-	&:hover {
-		background-color: rgba(70, 150, 229, 0.2);	
-	}
+.calendar-day-inner {
+	outline: none;
 }
 
-.calendar-day--date:hover {
-	background-color: rgba(0, 0, 0, 0.03);
+.calendar-day--is-not-zoomed {
 	cursor: pointer;
 }
 

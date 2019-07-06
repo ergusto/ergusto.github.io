@@ -8,10 +8,22 @@
 	margin-right: 0.14%;
 }
 
+@media (max-width: 42rem) {
+	.day-header-item span {
+		font-size: 0px;
+		display: inline-block;
+	}
+
+	.day-header-item span:first-letter {
+		font-size: 14px;
+		text-align: center;
+	}
+}
+
 .calendar-previous-month {
-	left: 7px;
+	left: 10px;
 }
 
 .calendar-next-month {
-	right: 7px;
+	right: 10px;
 }

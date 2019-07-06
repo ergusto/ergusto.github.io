@@ -20,7 +20,7 @@ export default function CalendarPage() {
 	const setPreviousMonth = () => setCurrentMonth(month.getPreviousMonth());
 
 	return (
-		<div className='page full-height padding-vertical-3 justify-centre font-family-raleway'>
+		<div className='page full-height padding-vertical-4 justify-centre font-family-raleway'>
 			<Menu />
 			<CalendarProvider calendar={calendar} month={month} setPreviousMonth={setPreviousMonth} setNextMonth={setNextMonth} state={state} dispatch={dispatch}>
 				<CalendarComponent />

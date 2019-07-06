@@ -1,0 +1,11 @@
+.day-item {
+	height: 121px;
+}
+
+.calendar-day--is-today .day-item {
+	background-color: rgb(237, 244, 252);
+
+	&:hover {
+		background-color: rgb(219, 234, 249);
+	}
+}

@@ -7,7 +7,6 @@ const CommentSchema = Yup.object().shape({
 });
 
 export default function CommentForm({ title, comment = {}, onSubmit, onCancel }) {
-
 	return (
 		<div className="background-color-white border border-color-grey border-radius overflow-hidden box-shadow font-family-raleway padding-bottom padding-horizontal padding-top-medium">
 			<small className="color-muted-grey inline-block font-weight-normal margin-bottom-medium margin-top-small">{title}</small>
