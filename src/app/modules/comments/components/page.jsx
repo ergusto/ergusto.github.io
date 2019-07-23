@@ -1,6 +1,6 @@
 import React from 'react';
-import { useLocalStorageReducer } from 'lib';
-import { Menu } from 'modules/menu';
+import { useLocalStorageReducer } from 'app/lib';
+import { Menu } from 'app/modules/menu';
 
 import { CommentsProvider } from '../context.jsx';
 import reducer from '../reducer.js';

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './day-item.scss';
 
 export default function DayItem({ day }) {

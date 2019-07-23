@@ -7,10 +7,10 @@ import { makeComment } from '../state.js';
 export default function ReplyForm({ comment, onSuccess, onCancel, actions }) {
 	const { dispatch } = useContext(CommentsContext);
 
-	const submit = data => {
+	const onSubmit = data => {
 		onSuccess();
 		dispatch({ type: COMMENT_CREATE, payload: { comment: makeComment({ ...data, parentId: comment.id }) }});
 	};
 
-	return <Form title="reply" onSubmit={submit} onCancel={onCancel} />;
+	return <Form title="reply" onSubmit={onSubmit} onCancel={onCancel} />;
 }

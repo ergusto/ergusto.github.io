@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { Calendar } from 'modules/calendar';
-import { Comments } from 'modules/comments';
-import { Introduction } from 'modules/introduction';
-import NotFound from 'not-found.jsx';
+import { Calendar } from 'app/modules/calendar';
+import { Comments } from 'app/modules/comments';
+import { Introduction } from 'app/modules/introduction';
+import NotFound from '../not-found.jsx';
 import Reset from '../reset.jsx';
 
 const Routes = () => {

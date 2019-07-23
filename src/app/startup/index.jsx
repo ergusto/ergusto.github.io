@@ -3,8 +3,6 @@ import viewportBuggyfill from 'viewport-units-buggyfill';
 
 import Routes from './routes.jsx';
 
-import './style.js';
-
 viewportBuggyfill.init();
 
 const app = () => (

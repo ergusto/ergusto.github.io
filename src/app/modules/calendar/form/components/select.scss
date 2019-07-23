@@ -1,0 +1,40 @@
+@import '../../../../../css/imports';
+
+.select-value {
+	padding: .75rem;
+	border: 1px solid transparent;
+	border-radius: 5px;
+
+	&:hover {
+		border-color: get-color(light-grey);
+		background-color: get-color(light-grey);
+	}
+
+	&:focus {
+		outline: none;
+	}
+}
+
+.select-list {
+	max-height: 260px;
+	min-width: 80px;
+	overflow-y: scroll;
+}
+
+.select-item {
+	border: 1px solid transparent;
+	padding: .75rem;
+
+	&:focus {
+		outline: none;
+	}
+
+	&:hover {
+		border-color: get-color(light-grey);
+		background-color: get-color(light-grey);	
+	}
+
+	&--active {
+		background: get-color(subdued-grey);
+	}
+}

@@ -1,0 +1,12 @@
+.calendar-textarea {
+	transition: max-height .25s ease, min-height .25s ease;
+	resize: none;
+}
+
+.calendar-textarea--closed {
+	min-height: 3.125rem;
+}
+
+.calendar-textarea--open {
+	min-height: 4.625rem;
+}

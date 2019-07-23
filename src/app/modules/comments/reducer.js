@@ -1,4 +1,4 @@
-import { createReducer } from 'lib';
+import { createReducer } from 'app/lib';
 import getInitialState from './state.js';
 
 import {

@@ -1,4 +1,4 @@
-import { Calendar } from 'lib';
+import { Calendar } from 'app/lib';
 
 let calendar = null;
 

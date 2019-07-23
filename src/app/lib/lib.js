@@ -18,7 +18,7 @@ const calendarDaysInEachMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 const hourDigits = Array.apply(null, Array(24));
 
 function generateHours() {
-    return hourDigits.map((thing, index) => {
+    return hourDigits.map((ignore, index) => {
         let hour = index + ':00';
         if (hour.length === 4) hour = '0' + hour;
         return hour;
@@ -26,6 +26,8 @@ function generateHours() {
 }
 
 const hours = generateHours();
+
+export const getHourDigit = hour => parseInt(hour.split(':')[0]);
 
 export class Calendar {
 

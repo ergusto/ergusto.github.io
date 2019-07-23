@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import posed from 'react-pose';
-import DayDetail from './day-detail.jsx';
-import DayItem from './day-item.jsx';
+import DayDetail from '../day-detail/day-detail.jsx';
+import DayItem from '../day-item/day-item.jsx';
 
 import './day.scss';
 

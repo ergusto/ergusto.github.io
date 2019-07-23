@@ -1,0 +1,20 @@
+@import '../variables/colors';
+
+@function get-color($color, $shade: 'base', $map : $colors ){
+	// Check if color exists
+	@if (map-has-key($map, $color)) {
+		$value: map-get($map, unquote($color));
+
+		@if type-of($value) == color {
+			@return $value;
+		}
+
+		// Check shade of color exists
+		@if (map-has-key($value, $shade)) {
+			@return map-get($value, $shade);
+		}
+	}
+	
+	// Else, do nothing
+	@return null;
+}

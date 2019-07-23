@@ -1,0 +1,43 @@
+@import '../../../../../css/imports';
+
+.entry-form-wrap {
+	background: rgba(0, 0, 0, 0.01);
+	height: 100%;
+	min-height: 100%;
+	width: 100%;
+	min-width: 100%;
+	padding-left: .5rem;
+	padding-right: .5rem;
+	z-index: 1;
+
+	@include for-breakpoint(mobile) {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	@include for-breakpoint(tablet) {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+
+	@include for-breakpoint(desktop) {
+		padding-left: 3rem;
+		padding-right: 3rem;
+	}
+}
+
+.entry-form-container {
+	width: 100%;
+
+	@include for-breakpoint(mobile) {
+		width: 90%;
+	}
+
+	@include for-breakpoint(tablet) {
+		width: 60%;
+	}
+
+	@include for-breakpoint(desktop) {
+		width: 60%;
+	}
+}

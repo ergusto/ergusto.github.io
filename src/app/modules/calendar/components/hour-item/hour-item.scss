@@ -1,0 +1,27 @@
+.calendar-hour {
+	transition: background-color 100ms linear;
+}
+
+.calendar-hour.hour-selected {
+	background-color: #edf4fc;
+	border-bottom: 1px solid #edf4fc;
+	border-radius: 0;
+}
+
+.calendar-hour.hour-selected-single {
+	border-radius: 0.4rem;
+}
+
+.calendar-hour.hour-selected-start {
+	border-top-left-radius: 0.4rem;
+	border-top-right-radius: 0.4rem;
+}
+
+.calendar-hour.hour-selected-end {
+	border-bottom-left-radius: 0.4rem;
+	border-bottom-right-radius: 0.4rem;
+}
+
+.no-touch .calendar-hour.hour-selected:hover, .no-touch .hour-selected.hour-hovered:hover {
+	background-color: rgb(219, 234, 249);
+}

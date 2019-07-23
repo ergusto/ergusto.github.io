@@ -1,0 +1,12 @@
+$breakpoints: (
+	none: 0rem,
+	mobile: 35rem,
+	tablet: 55rem,
+	desktop: 75rem,
+);
+
+@mixin for-breakpoint($breakpoint) {
+	@media (min-width:#{map-get($breakpoints, $breakpoint)}) {
+		@content;
+	}
+}

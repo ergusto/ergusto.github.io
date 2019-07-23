@@ -10,20 +10,12 @@
     width: 100%;
 }
 
-textarea.form-field {
-	min-height: 50px;
-}
-
 .form-field:focus {
     outline: none;
 }
 
-.form-field::-webkit-input-placeholder,
-.form-field::-moz-placeholder,
-.form-field:-ms-input-placeholder,
-.form-field:-moz-placeholder,
 .form-field::placeholder{
-    color: blue;
+
 }
 
 .form-field-error p {

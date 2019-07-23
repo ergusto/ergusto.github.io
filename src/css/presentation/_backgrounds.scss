@@ -6,7 +6,7 @@
 		background-color: $value;
 	}
 
-	.background-color-#{$key}--on-hover:hover {
+	.no-touch .background-color-#{$key}--on-hover:hover {
 		background-color: $value;
 	}
 

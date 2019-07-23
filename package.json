@@ -11,6 +11,8 @@
     "@fortawesome/pro-regular-svg-icons": "^5.9.0",
     "@fortawesome/pro-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "classnames": "^2.2.6",
+    "element-closest": "^3.0.1",
     "formik": "^1.5.7",
     "gh-pages": "^2.0.1",
     "node-sass": "^4.11.0",

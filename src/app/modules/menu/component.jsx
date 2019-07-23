@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMedia } from 'use-media';
-
 import './style.scss';
 
-export default function menu() {
+const clickEventType = ('ontouchstart' in document.documentElement) ? 'touchstart' : 'click';
+
+export default function Menu() {
 	const dropdown = useRef(null),
 		button = useRef(null);
 
@@ -32,7 +33,6 @@ export default function menu() {
 
 	const onBodyClick = event => {
 		if(!dropdown.current) {
-			console.log('No dropdown.current');
 			return;
 		}
 
@@ -50,11 +50,11 @@ export default function menu() {
 	};
 
 	const addBodyListener = () => {
-		document.body.addEventListener('click', onBodyClick);
+		document.body.addEventListener(clickEventType, onBodyClick);
 	};
 
 	const removeBodyListener = () => {
-		document.body.removeEventListener('click', onBodyClick);
+		document.body.removeEventListener(clickEventType, onBodyClick);
 	};
 
 	useEffect(() => {

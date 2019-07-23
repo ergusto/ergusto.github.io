@@ -51,7 +51,7 @@ function Item({ comment }) {
 				<div className="padding-horizontal-large padding-vertical">
 					<small className="float-right color-muted-grey margin-bottom-medium block"><ReactTimeAgo date={new Date(comment.date)}/></small>
 					<small className="color-muted-grey margin-bottom-medium block">{comment.username}</small>
-					<div className="line-height-copy font-size-medium color-black">
+					<div className="markdown-output line-height-copy font-size-medium color-black">
 						<ReactMarkdown source={comment.text} />
 					</div>
 				</div>
