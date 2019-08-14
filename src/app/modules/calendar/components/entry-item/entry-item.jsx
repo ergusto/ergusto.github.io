@@ -11,7 +11,7 @@ export default function ({ entry }) {
 	};
 
 	return (
-		<div style={style} className='background-color-blue absolute border-radius padding-all z-index-1 box-shadow-modal'>
+		<div style={style} className='background-color-blue absolute border-radius padding-all z-index-1 box-shadow-modal no-pointer-events'>
 			<p className='color-white'>{entry.title}</p>	
 		</div>
 	);

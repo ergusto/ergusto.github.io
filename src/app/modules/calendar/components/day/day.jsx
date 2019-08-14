@@ -16,7 +16,7 @@ const Frame = posed.div({
 		transition,
 		flip: true,
 		width: 'auto',
-		height: '121px' 
+		height: '121px'
 	},
 	zoomed: {
 		position: 'absolute',

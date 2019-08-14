@@ -1,0 +1,1 @@
+export { default as Skills } from './components/page.jsx';
