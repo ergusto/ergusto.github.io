@@ -1,0 +1,9 @@
+.no-wrap {
+	white-space: no-wrap;
+}
+
+.no-break {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

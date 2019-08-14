@@ -90,8 +90,8 @@ export default function EntryForm({ entry, day, onSubmit: passedOnSubmit, onCanc
 	}
 
 	return (
-		<div className='entry-form-wrap justify-centre absolute top padding-vertical-3'>
-			<div className='entry-form-container relative background-color-white padding-top-small box-shadow-large border-radius'>
+		<div className='entry-form-wrap justify-centre absolute top padding-vertical-3 z-index-9'>
+			<div className='entry-form-container relative background-color-white padding-top-small box-shadow-modal border-radius'>
 				<Formik
 					initialValues={entry}
 					validationSchema={EntrySchema}
