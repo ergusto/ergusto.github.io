@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/static/media/raleway-latin-700.dcbe8703.woff2"
   },
   {
-    "revision": "ff4bc986ca3ad426223c",
-    "url": "/static/css/main.78e431f2.chunk.css"
+    "revision": "abf83068239804975514",
+    "url": "/static/css/main.e6f56360.chunk.css"
   },
   {
     "revision": "f202fc5be52c2852b32de0c69a2c7de0",
@@ -20,10 +20,6 @@ self.__precacheManifest = [
     "url": "/static/js/runtime~main.229c360f.js"
   },
   {
-    "revision": "b71acd55014dd58d45bb54896207a957",
-    "url": "/static/media/comfortaa-latin-300.b71acd55.woff2"
-  },
-  {
     "revision": "1dd4585a797cd9a791a0141b47fbf6c7",
     "url": "/static/media/comfortaa-latin-300.1dd4585a.woff"
   },
@@ -32,16 +28,20 @@ self.__precacheManifest = [
     "url": "/static/media/comfortaa-latin-400.dd1061d9.woff2"
   },
   {
-    "revision": "5c9b39fca6fdd0e3ab010f693ae88d8e",
-    "url": "/static/media/comfortaa-latin-400.5c9b39fc.woff"
+    "revision": "b71acd55014dd58d45bb54896207a957",
+    "url": "/static/media/comfortaa-latin-300.b71acd55.woff2"
+  },
+  {
+    "revision": "af37f3cad0500ffb61179b2b70282037",
+    "url": "/static/media/comfortaa-latin-700.af37f3ca.woff"
   },
   {
     "revision": "4baa756b9b3267022ada4e0105d2d5e9",
     "url": "/static/media/comfortaa-latin-700.4baa756b.woff2"
   },
   {
-    "revision": "af37f3cad0500ffb61179b2b70282037",
-    "url": "/static/media/comfortaa-latin-700.af37f3ca.woff"
+    "revision": "5c9b39fca6fdd0e3ab010f693ae88d8e",
+    "url": "/static/media/comfortaa-latin-400.5c9b39fc.woff"
   },
   {
     "revision": "735afb75a77e96235694bf56db4bcf4e",
@@ -96,8 +96,8 @@ self.__precacheManifest = [
     "url": "/static/media/raleway-latin-600italic.c031cce6.woff2"
   },
   {
-    "revision": "ff4bc986ca3ad426223c",
-    "url": "/static/js/main.ff4bc986.chunk.js"
+    "revision": "abf83068239804975514",
+    "url": "/static/js/main.abf83068.chunk.js"
   },
   {
     "revision": "52a8c3f81d98d06743bd9e1a0c08632a",
@@ -112,20 +112,20 @@ self.__precacheManifest = [
     "url": "/static/media/raleway-latin-800italic.e571e4c8.woff2"
   },
   {
-    "revision": "0f85e4bfe865defa18588fc8e8448611",
-    "url": "/static/media/raleway-latin-900.0f85e4bf.woff2"
-  },
-  {
     "revision": "c8f1b2c3f2786b6b40e584c71e3cb77d",
     "url": "/static/media/raleway-latin-900italic.c8f1b2c3.woff2"
   },
   {
-    "revision": "b95c754a4ce48eb85c2fa77b174edd5f",
-    "url": "/static/media/raleway-latin-100italic.b95c754a.woff"
+    "revision": "0f85e4bfe865defa18588fc8e8448611",
+    "url": "/static/media/raleway-latin-900.0f85e4bf.woff2"
   },
   {
     "revision": "47d350bdf173b927414517477ece05d7",
     "url": "/static/media/raleway-latin-200.47d350bd.woff"
+  },
+  {
+    "revision": "b95c754a4ce48eb85c2fa77b174edd5f",
+    "url": "/static/media/raleway-latin-100italic.b95c754a.woff"
   },
   {
     "revision": "a62e2b876702e38f8d82e921e33b7796",
@@ -188,7 +188,7 @@ self.__precacheManifest = [
     "url": "/static/css/1.5fb2c01e.chunk.css"
   },
   {
-    "revision": "0627d455739ff3836f0d38f252bd5061",
+    "revision": "dc04984949745c4d1f2b982969f30fbe",
     "url": "/index.html"
   }
 ];
