@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { CommentsContext } from '../context.jsx';
+import { CommentsContext } from '../state/context.jsx';
 
 import Item from './item.jsx';
 

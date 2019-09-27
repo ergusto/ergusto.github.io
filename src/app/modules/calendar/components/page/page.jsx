@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useLocalStorageReducer } from 'app/lib';
-import { Menu } from 'app/modules/menu';
 
 import CalendarComponent from '../calendar/calendar.jsx';
-import { CalendarProvider } from '../../context.jsx';
-import reducer from '../../reducer.js';
-import getInitialState from '../../state.js';
-import getCalendar from '../../calendar.js';
+import { CalendarProvider } from '../../state/context.jsx';
+import reducer from '../../state/reducer.js';
+import getInitialState from '../../state/state.js';
+import getCalendar from '../../lib/calendar.js';
 
 export default function CalendarPage() {
 	const [state, dispatch] = useLocalStorageReducer('ergusto:calendar', reducer, getInitialState());
@@ -20,7 +19,6 @@ export default function CalendarPage() {
 
 	return (
 		<div className='page full-height padding-top-4 padding-bottom-3 padding-horizontal justify-centre font-family-raleway'>
-			<Menu />
 			<CalendarProvider calendar={calendar} month={month} setPreviousMonth={setPreviousMonth} setNextMonth={setNextMonth} state={state} dispatch={dispatch}>
 				<CalendarComponent />
 			</CalendarProvider>

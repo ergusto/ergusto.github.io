@@ -1,4 +1,4 @@
-import reducer from './reducer.js';
+import reducer from './state/reducer.js';
 
 export default reducer;
 

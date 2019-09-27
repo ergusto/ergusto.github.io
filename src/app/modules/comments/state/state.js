@@ -11,7 +11,7 @@ export const makeComment = comment => {
 	};
 };
 
-const getInitialState = () => {
+export default function() {
 	const initialState = {
 		comments: [],
 	};
@@ -43,5 +43,3 @@ const getInitialState = () => {
 
 	return initialState;
 };
-
-export default getInitialState;

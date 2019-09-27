@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import posed, { PoseGroup } from 'react-pose';
 import { getHourDigit } from 'app/lib';
-import { CalendarContext } from '../../context.jsx';
+import { CalendarContext } from '../../state/context.jsx';
 import HourItem from '../hour-item/hour-item.jsx';
 import EntryForm from '../entry-form/entry-form.jsx'; 
 

@@ -1,7 +1,27 @@
+@import '../imports';
+
+$height-types: (
+	height: height,
+	max-height: max-height,
+	min-height: min-height
+);
+
 .full-height {
 	min-height: 100vh;
 }
 
 .height-100 {
 	height: 100%;
+}
+
+@each $height-type, $height-property in $height-types {
+	@each $breakpoint, $breakpoint-value in $breakpoints {
+		$suffix: if($breakpoint == none, '', -#{$breakpoint});
+
+		@media (min-height: #{$breakpoint-value}) {
+			@each $height, $height-value in $heights {
+				.#{$height-type}-#{$height}#{$suffix} { #{$height-property}: #{$height-value}; }
+			}
+		}
+	}
 }

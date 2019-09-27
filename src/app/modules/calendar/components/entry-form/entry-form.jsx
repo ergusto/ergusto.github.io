@@ -3,8 +3,8 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 import { getHourDigit } from 'app/lib';
-import { CalendarContext } from '../../context.jsx';
-import { ENTRY_CREATE } from '../../actionTypes.js';
+import { CalendarContext } from '../../state/context.jsx';
+import { ENTRY_CREATE } from '../../state/actionTypes.js';
 import { FieldComponent, TextareaComponent, SelectComponent } from '../../form';
 
 import './entry-form.scss';
@@ -62,7 +62,7 @@ const FormComponent = ({ entry, day, onCancel, startHour, setStartHour, endHour,
 					</div>
 				</div>
 				<footer className='clearfix'>
-					<button type='submit' disabled={!isSubmitting && !!Object.keys(errors).length} className='button button--blue button--shift-on-hover button--shadow-on-hover float-right'>Create event</button>
+					<button type='submit' disabled={!isSubmitting && !!Object.keys(errors).length} className='button button--blue button--shift-on-hover button--shadow-on-hover float-right color-white'>Create event</button>
 					{onCancel ? <button onClick={onCancel} type='button' className='button button--grey-ghost float-right font-weight-medium color-dark-grey margin-right-medium'>Cancel</button> : null}
 				</footer>
 			</div>
@@ -90,7 +90,7 @@ export default function EntryForm({ entry, day, onSubmit: passedOnSubmit, onCanc
 	}
 
 	return (
-		<div className='entry-form-wrap justify-centre absolute top padding-vertical-3 z-index-9'>
+		<div className='entry-form-wrap justify-centre absolute top padding-vertical-3 z-index-1'>
 			<div className='entry-form-container relative background-color-white padding-top-small box-shadow-modal border-radius'>
 				<Formik
 					initialValues={entry}

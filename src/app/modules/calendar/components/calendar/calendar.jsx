@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CalendarContext } from '../../context.jsx';
+import { CalendarContext } from '../../state/context.jsx';
 import WeekComponent from '../week/week.jsx';
 
 import './calendar.scss';

@@ -1,0 +1,30 @@
+@-webkit-keyframes BackgroundPositionAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes BackgroundPositionAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes BackgroundPositionAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.skill-item {
+	transition: all .2s ease-in-out;	
+}
+
+.skill-item-background {
+	background-size: 400% 400%;
+	-webkit-animation: BackgroundPositionAnimation 3s ease infinite;
+	-moz-animation: BackgroundPositionAnimation 3s ease infinite;
+	animation: BackgroundPositionAnimation 3s ease infinite;
+}
+
+.skill-item:hover {
+	transform: scale(1.05);
+}

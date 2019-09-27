@@ -1,5 +1,9 @@
 @import '../imports';
 
+/***********
+    Default button styles
+***********/
+
 .button {
     padding: .5rem;
     cursor: pointer;
@@ -10,9 +14,82 @@
 	transition: all .3s;
 }
 
+/***********
+    Button Themes
+***********/
+
+@mixin buttonMixin($color) {
+	background: $color;
+	border-color: $color;
+
+	&:not(:disabled):hover {
+		background: darken($color, 8%);
+		border-color: darken($color, 8%);
+	}
+
+	&:not(:disabled):active {
+		background: darken($color, 25%);
+		border-color: darken($color, 25%);
+	}
+}
+
+@each $name, $color in $colors {
+
+	.button--#{$name} {
+		@include buttonMixin($color);
+	}
+
+}
+
+@each $name, $config in $buttons {
+
+	.button--#{$name} {
+		@if map-has-key($config, border-color) {
+			border-color: map-get($config, border-color);	
+		}
+
+		@if map-has-key($config, background-color) {
+			background-color: map-get($config, background-color);	
+		}
+
+		@if map-has-key($config, color) {
+			color: map-get($config, color);	
+		}
+
+		@if map-has-key($config, hover-background-color) {
+			&:not(:disabled):hover {
+				background-color: map-get($config, hover-background-color);	
+			}
+		}
+
+		@if map-has-key($config, hover-color) {
+			&:not(:disabled):hover {
+				color: map-get($config, hover-color);	
+			}
+		}
+
+		@if map-has-key($config, active-background-color) {
+			&:not(:disabled):active {
+				background-color: map-get($config, active-background-color);	
+			}
+		}
+
+		@if map-has-key($config, active-color) {
+			&:not(:disabled):active {
+				color: map-get($config, active-color);	
+			}
+		}
+	}
+
+}
+
 .button--large {
     padding: 1rem;
     font-size: 1.05rem;
+}
+
+.button--medium {
+	padding: .4rem;
 }
 
 .button--small {
@@ -82,139 +159,4 @@
 .button-group .button:last-child {
     border-bottom-right-radius: .25rem;
     border-top-right-radius: .25rem;
-}
-
-/***********
-    Button Themes
-***********/
-.button--white {
-	background-color: white;
-	border-color: white;
-}
-
-
-.button--grey-ghost, .button--ghost {
-    background-color: transparent;
-    border-color: transparent;
-}
-
-.button--grey-ghost {
-	color: get-color(dark-grey);
-}
-
-.button--ghost {
-    color: white;
-}
-
-.button--grey-ghost:not(:disabled):hover {
-    background-color: get-color(light-grey); 
-}
-
-.button--grey-ghost:not(:disabled):active {
-    background-color: get-color(subdued-grey); 
-}
-
-.button--ghost:not(:disabled):hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.button--ghost:not(:disabled):active {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.button--blue {
-    background-color: #408fec;
-    border-color: #408fec;
-    color: white;
-    transition: 0.2s;
-}
-
-.button--blue:not(:disabled):hover {
-    background-color: #3367d6;
-    border-color: #3367d6;
-}
-
-.button--blue:not(:disabled):active {
-    background-color: #234E81;
-    border-color: #234E81;
-}
-
-.button--blue:not(:disabled):focus {
-    background-color: #234E81;
-    border-color: #234E81;
-}
-
-.button--red {
-    background-color: #c73434;
-    border-color: #c73434;
-    color: white;
-    transition: 0.2s;
-}
-
-.button--red:not(:disabled):hover {
-    background-color: #ab2d2d;
-    border-color: #ab2d2d;
-}
-
-.button--red:not(:disabled):active {
-    background-color: #942727;
-    border-color: #942727;
-}
-
-.button--red:not(:disabled):focus {
-    background-color: #942727;
-    border-color: #942727;
-}
-
-.button--green {
-    background-color: #393;
-    border-color: #393;
-    color: white;
-    transition: 0.2s;
-}
-
-.button--green:not(:disabled):hover {
-    background-color: #277527;
-    border-color: #277527;
-}
-
-.button--green:not(:disabled):active {
-    background-color: #206120;
-    border-color: #206120;
-}
-
-.button--green:not(:disabled):focus {
-    background-color: #206120;
-    border-color: #206120;
-}
-
-.button--ghost {
-    background-color: none;
-    border-color: transparent;
-    transition: 0.2s;
-}
-
-.button--grey {
-    background-color: #f7f7f7;
-    border-color: #ccc;
-    transition: 0.2s;
-}
-
-.button--outline {
-    background-color: transparent;
-    border-color: #ccc;
-}
-
-.button--outline:not(:disabled):hover {
-    border-color: black;
-    color: black;
-}
-
-.button--outline:not(:disabled):active {
-    border-color: black;
-    color: black;
-}
-
-.button--outline:not(:disabled):focus {
-	outline: -webkit-focus-ring-color auto 2px;
 }

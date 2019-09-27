@@ -3,8 +3,8 @@ import posed from 'react-pose';
 import ReactMarkdown from 'react-markdown';
 import ReactTimeAgo from 'react-time-ago'
 
-import { CommentsContext } from '../context.jsx';
-import { COMMENT_DELETE } from '../actionTypes.js';
+import { CommentsContext } from '../state/context.jsx';
+import { COMMENT_DELETE } from '../state/actionTypes.js';
 import ReplyForm from './reply.jsx';
 import EditForm from './edit.jsx';
 

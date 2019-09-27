@@ -1,0 +1,7 @@
+export const CONTACT_CREATE = 'CONTACT_CREATE';
+
+export const CONTACT_EDIT = 'CONTACT_EDIT';
+
+export const CONTACT_DELETE = 'CONTACT_DELETE';
+
+export const CONTACTS_RESET = 'CONTACTS_RESET';

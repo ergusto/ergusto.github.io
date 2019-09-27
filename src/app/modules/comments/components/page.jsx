@@ -1,11 +1,10 @@
 import React from 'react';
 import { useLocalStorageReducer } from 'app/lib';
-import { Menu } from 'app/modules/menu';
 
-import { CommentsProvider } from '../context.jsx';
-import reducer from '../reducer.js';
-import getInitialState from '../state.js';
-import { COMMENTS_RESET } from '../actionTypes.js';
+import { CommentsProvider } from '../state/context.jsx';
+import reducer from '../state/reducer.js';
+import getInitialState from '../state/state.js';
+import { COMMENTS_RESET } from '../state/actionTypes.js';
 
 import List from './list.jsx';
 
@@ -21,7 +20,6 @@ export default function Comments() {
 
 	return (
 		<div className='page font-family-raleway full-height justify-centre padding-horizontal padding-top-3 padding-bottom-2'>
-			<Menu />
 			<CommentsProvider state={state} dispatch={dispatch}>
 				<List />
 			</CommentsProvider>

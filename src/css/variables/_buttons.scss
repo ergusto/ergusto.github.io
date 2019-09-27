@@ -1,0 +1,25 @@
+$buttons: (
+	example: (
+		border-color: transparent,
+		background-color: transparent,
+		color: get-color(dark-grey),
+		hover-color: get-color(light-grey),
+		hover-background-color: get-color(light-grey),
+		active-color: get-color(light-grey),
+		active-background-color: get-color(subdued-grey)
+	),
+	ghost: (
+		border-color: transparent,
+		background-color: transparent,
+		color: white,
+		hover-background-color: rgba(255, 255, 255, 0.2),
+		active-background-color: rgba(255, 255, 255, 0.1)
+	),
+	grey-ghost: (
+		border-color: transparent,
+		background-color: transparent,
+		color: get-color(dark-grey),
+		hover-background-color: get-color(light-grey),
+		active-background-color: get-color(subdued-grey)
+	)
+);

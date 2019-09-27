@@ -86,7 +86,7 @@ export default function introduction() {
 	}
 
 	return (
-		<div ref={wrapper} className='page full-height background-color-blue justify-centre color-white'>
+		<div ref={wrapper} style={{ zIndex: 100 }} className='page full-height absolute left right background-color-blue justify-centre color-white'>
 			<div className='text-align-center font-family-comfortaa'>
 				<p ref={intro} className='margin-bottom transparent'>Hi, <span className='transparent' ref={myNameIs}>my name is</span></p>
 				<h1 ref={title} className='site-title margin-bottom-medium'><span ref={f}>f</span><span>erg</span><span ref={u}>u</span><span ref={s}>s</span><span className='transparent' ref={space}>&nbsp;</span><span ref={r}>r</span><span>usto</span><span ref={n}>n</span></h1>

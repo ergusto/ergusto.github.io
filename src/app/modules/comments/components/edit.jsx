@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Form from './form.jsx';
-import { CommentsContext } from '../context.jsx';
-import { COMMENT_EDIT } from '../actionTypes.js';
+import { CommentsContext } from '../state/context.jsx';
+import { COMMENT_EDIT } from '../state/actionTypes.js';
 
 export default function EditForm({ comment, onSuccess, onCancel, actions }) {
 	const { dispatch } = useContext(CommentsContext);
